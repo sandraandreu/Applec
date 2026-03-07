@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# Environment variables
+.env
+
 # testing
 /coverage
 
@@ -29,3 +32,7 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+# Firebase
+google-services.json
+GoogleService-Info.plist
