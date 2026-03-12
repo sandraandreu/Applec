@@ -9,12 +9,17 @@ import {
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import app from "../../../plugins/firebase";
 import { useState, useEffect } from "react";
-import RegisterForm from "./RegisterForm";
-import RegisterSuccess from "./RegisterSuccess";
-import RegisterError from "./RegisterError";
+import RegisterForm from "./register-form/RegisterForm";
+import RegisterSuccess from "./register-success/RegisterSuccess";
+import RegisterError from "./register-error/RegisterError";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+export const hasMinLength = (value: string) => value.length >= 6;
+export const hasUpperCase = (value: string) => /[A-Z]/.test(value);
+export const hasLowerCase = (value: string) => /[a-z]/.test(value);
+export const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
   const { t } = useTranslation();
@@ -31,10 +36,6 @@ const Register = () => {
   const [emailInvalidMessage, setEmailInvalidMessage] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-  const [hasMinLength, setHasMinLength] = useState<boolean>(false);
-  const [hasUpperCase, setHasUpperCase] = useState<boolean>(false);
-  const [hasLowerCase, setHasLowerCase] = useState<boolean>(false);
-  const [hasNumber, setHasNumber] = useState<boolean>(false);
 
   const [user, setUser] = useState<any>(null);
 
@@ -61,30 +62,21 @@ const Register = () => {
   const passwordVerification = (value: string) => {
     if (!value) {
       setIsPasswordValid(false);
-      setHasMinLength(false);
-      setHasUpperCase(false);
-      setHasLowerCase(false);
-      setHasNumber(false);
       return;
     }
 
-    setHasMinLength(value.length >= 6);
-    setHasUpperCase(/[A-Z]/.test(value));
-    setHasLowerCase(/[a-z]/.test(value));
-    setHasNumber(/[0-9]/.test(value));
+    const isValid =
+      hasMinLength(value) &&
+      hasUpperCase(value) &&
+      hasLowerCase(value) &&
+      hasNumber(value);
 
-    const isPasswordValid =
-      value.length >= 6 &&
-      /[A-Z]/.test(value) &&
-      /[a-z]/.test(value) &&
-      /[0-9]/.test(value);
+    setIsPasswordValid(isValid);
 
-    if (isPasswordValid) {
+    if (isValid) {
       console.log("Valid Password");
-      setIsPasswordValid(true);
     } else {
       console.log("Invalid Password");
-      setIsPasswordValid(false);
     }
   };
 
@@ -115,28 +107,28 @@ const Register = () => {
   //Comprobar si ha verificado el email y guardar el user en firebase
 
   useEffect(() => {
-  if (!user) return;
+    if (!user) return;
 
-  const interval = setInterval(async () => {
-    await user.reload();
-    if (user.emailVerified) {
-      clearInterval(interval);
-      try {
-        await setDoc(doc(db, "users", user.uid), {
-          name: name,
-          email: user.email,
-          createdAt: new Date(),
-          role: "member",
-        });
-        router.push("/home");
-      } catch (error: any) {
-        console.error("Error guardando usuario:", error.message);
+    const interval = setInterval(async () => {
+      await user.reload();
+      if (user.emailVerified) {
+        clearInterval(interval);
+        try {
+          await setDoc(doc(db, "users", user.uid), {
+            name: name,
+            email: user.email,
+            createdAt: new Date(),
+            role: "member",
+          });
+          router.push("/home");
+        } catch (error: any) {
+          console.error("Error guardando usuario:", error.message);
+        }
       }
-    }
-  }, 3000);
+    }, 3000);
 
-  return () => clearInterval(interval);
-}, [user]);
+    return () => clearInterval(interval);
+  }, [user]);
 
   //Estados y acciones del formulario
 
@@ -147,10 +139,6 @@ const Register = () => {
     emailInvalidMessage,
     isEmailValid,
     isPasswordValid,
-    hasMinLength,
-    hasUpperCase,
-    hasLowerCase,
-    hasNumber,
   };
 
   const formActions = {

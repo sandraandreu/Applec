@@ -1,0 +1,34 @@
+{
+  "bienvenida": "Benvingut a Applec",
+
+  "register_title": "Crea el teu compte",
+  "register_name": "Nom",
+  "register_name_placeholder": "Com et diuen?",
+  "register_email": "Correu electrònic",
+  "register_email_placeholder": "El teu correu electrònic",
+  "register_password": "Contrasenya",
+  "register_password_placeholder": "Crea una contrasenya segura",
+  "register_button": "Crear compte",
+  "register_login_link": "Ja tens compte? Inicia sessió",
+  "register_back": "Tornar arrere",
+
+  "register_terms_start": "He llegit i accepte la ",
+  "register_terms_privacy": "política de privacitat",
+  "register_terms_and": " i els ",
+  "register_terms_conditions": "termes d'ús",
+
+  "register_error_email_invalid": "Introdueix un correu electrònic vàlid",
+  "register_error_email_taken": "Aquest correu ja té un compte. Vols iniciar sessió?",
+  "register_error_email_taken_button": "Iniciar sessió",
+  "register_error_no_connection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar",
+
+  "register_password_min_length": "Mínim 6 caràcters",
+  "register_password_uppercase": "Una majúscula",
+  "register_password_lowercase": "Una minúscula",
+  "register_password_number": "Un número",
+
+  "register_verify_title": "Revisa el teu correu",
+  "register_verify_message": "T'hem enviat un enllaç de verificació al teu correu. Obri'l per activar el teu compte.",
+  "register_verify_resend": "Reenviar correu",
+  "register_verify_resend_success": "Correu reenviat. Revisa també la carpeta de correu no desitjat."
+}
