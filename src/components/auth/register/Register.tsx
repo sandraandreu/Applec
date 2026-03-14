@@ -1,14 +1,22 @@
 import "./Register.scss";
-import { useIonRouter } from "@ionic/react";
 import { useTranslation } from "react-i18next";
+import { useIonRouter } from "@ionic/react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import app from "../../../plugins/firebase";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RegisterForm from "./register-form/RegisterForm";
 import RegisterSuccess from "./register-success/RegisterSuccess";
 import RegisterError from "./register-error/RegisterError";
@@ -22,81 +30,62 @@ export const hasLowerCase = (value: string) => /[a-z]/.test(value);
 export const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
-  const { t } = useTranslation();
   const router = useIonRouter();
+  const { t } = useTranslation();
 
   const [registerState, setRegisterState] = useState<
     "form" | "success" | "error"
   >("form");
-
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const [emailInvalidMessage, setEmailInvalidMessage] = useState<string>("");
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-
   const [user, setUser] = useState<any>(null);
-
-  //Verificaciones de email y contraseña
-
-  const emailVerification = (value: string) => {
-    if (!value) {
-      setEmailInvalidMessage("");
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsEmailValid(emailRegex.test(value));
-
-    if (isEmailValid) {
-      console.log("Valid Email Address");
-      setEmailInvalidMessage("");
-    } else {
-      console.log("Invalid Email Address");
-      setEmailInvalidMessage(t("register_error_email_invalid"));
-    }
-  };
-
-  const passwordVerification = (value: string) => {
-    if (!value) {
-      setIsPasswordValid(false);
-      return;
-    }
-
-    const isValid =
-      hasMinLength(value) &&
-      hasUpperCase(value) &&
-      hasLowerCase(value) &&
-      hasNumber(value);
-
-    setIsPasswordValid(isValid);
-
-    if (isValid) {
-      console.log("Valid Password");
-    } else {
-      console.log("Invalid Password");
-    }
-  };
+  const [usernameError, setUsernameError] = useState<string>("");
+  const [isOpen, setIsOpen] = useState(false);
 
   //Crear user en firebase
 
-  const handleRegister = async () => {
+  const handleRegister = async (
+    email: string,
+    password: string,
+    userName: string,
+  ) => {
     try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("userName", "==", userName));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        throw new Error("username-already-exists");
+      }
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password,
       );
-      setRegisterState("success");
       setUser(userCredential.user);
+
       await sendEmailVerification(userCredential.user);
+
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        userName: userName,
+        email: userCredential.user.email,
+        createdAt: new Date(),
+        role: "member",
+        isActive: false,
+      });
+
+      setRegisterState("success");
+      setIsOpen(true);
     } catch (error: any) {
+      if (error.message === "username-already-exists") {
+        setUsernameError(t("register_error_name_taken"));
+        return;
+      }
       setRegisterState("error");
       console.error("Email sign up error:", error.message);
     }
   };
+
+  //Reenviar email de merificación
 
   const handleResendEmail = async () => {
     if (user) {
@@ -104,81 +93,24 @@ const Register = () => {
     }
   };
 
-  //Comprobar si ha verificado el email y guardar el user en firebase
-
-  useEffect(() => {
-    if (!user) return;
-
-    const interval = setInterval(async () => {
-      await user.reload();
-      if (user.emailVerified) {
-        clearInterval(interval);
-        try {
-          await setDoc(doc(db, "users", user.uid), {
-            name: name,
-            email: user.email,
-            createdAt: new Date(),
-            role: "member",
-          });
-          router.push("/home");
-        } catch (error: any) {
-          console.error("Error guardando usuario:", error.message);
-        }
-      }
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [user]);
-
-  //Estados y acciones del formulario
-
-  const formState = {
-    name,
-    email,
-    password,
-    emailInvalidMessage,
-    isEmailValid,
-    isPasswordValid,
-  };
-
-  const formActions = {
-    setName,
-    setEmail,
-    setPassword,
-    emailVerification,
-    passwordVerification,
-    handleRegister,
-  };
-
   return (
     <>
       {registerState === "success" ? (
         <RegisterSuccess
+          isOpen={registerState === "success"}
           handleResendEmail={handleResendEmail}
-          onBack={() => setRegisterState("form")}
+          onClose={() => router.push("/login")}
         />
       ) : registerState === "error" ? (
         <RegisterError onBack={() => setRegisterState("form")} />
       ) : (
-        <RegisterForm state={formState} actions={formActions} />
+        <RegisterForm
+          handleRegister={handleRegister}
+          usernameError={usernameError}
+        />
       )}
     </>
   );
 };
 
 export default Register;
-
-//Mientras el usuario escribe:
-//ok Si el email no tiene formato válido → mensaje de error en tiempo real
-//ok Si la contraseña no cumple requisitos → mensaje de error en tiempo real
-//ok Si todos los campos están rellenos y son válidos → botón activo
-//ok Si algún campo está vacío o inválido → botón deshabilitado
-
-//Al hacer click en registrarse:
-//Llamar a Firebase para crear el usuario
-//Si el email ya existe, Firebase nos devuelve un error → mostramos mensaje
-//Si todo va bien, enviamos el email de verificación
-//Cada x tiempo comprobar si el correo ha sido verificado (Mensaje al usuario de lo que esta pasando)
-//Si el correo se verifica
-//Se guarda el usuario en firebase
-//Se inicia sesion a la app

@@ -2,8 +2,8 @@
   "bienvenida": "Benvingut a Applec",
 
   "register_title": "Crea el teu compte",
-  "register_name": "Nom",
-  "register_name_placeholder": "Com et diuen?",
+  "register_username": "Nom d'usuari",
+  "register_username_placeholder": "Tria un nom d'usuari",
   "register_email": "Correu electrònic",
   "register_email_placeholder": "El teu correu electrònic",
   "register_password": "Contrasenya",
@@ -16,6 +16,10 @@
   "register_terms_privacy": "política de privacitat",
   "register_terms_and": " i els ",
   "register_terms_conditions": "termes d'ús",
+
+  "register_error_required": "Aquest camp és obligatori",
+
+  "register_error_name_taken": "Aquest nom d'usuari ja està en ús",
 
   "register_error_email_invalid": "Introdueix un correu electrònic vàlid",
   "register_error_email_taken": "Aquest correu ja té un compte. Vols iniciar sessió?",

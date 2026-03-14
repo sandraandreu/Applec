@@ -1,7 +1,6 @@
-import { IonButton } from "@ionic/react";
 import "./RegisterForm.scss";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   hasMinLength,
   hasUpperCase,
@@ -9,110 +8,103 @@ import {
   hasNumber,
 } from "../Register";
 
-//Types
-
-interface RegisterFormState {
-  name: string;
+interface RegisterFormData {
+  username: string;
   email: string;
   password: string;
-  emailInvalidMessage: string;
-  isEmailValid: boolean;
-  isPasswordValid: boolean;
-}
-
-interface RegisterFormActions {
-  setName: (value: string) => void;
-  setEmail: (value: string) => void;
-  setPassword: (value: string) => void;
-  emailVerification: (value: string) => void;
-  passwordVerification: (value: string) => void;
-  handleRegister: () => void;
+  acceptsTerms: boolean;
 }
 
 interface RegisterFormProps {
-  state: RegisterFormState;
-  actions: RegisterFormActions;
+  handleRegister: (email: string, password: string, username: string) => void;
+  usernameError: string;
 }
 
-//Component
-
-const RegisterForm = ({ state, actions }: RegisterFormProps) => {
-  const [acceptsTerms, setAcceptsTerms] = useState<boolean>(false);
-
+const RegisterForm = ({ handleRegister, usernameError }: RegisterFormProps) => {
   const { t } = useTranslation();
 
   const {
-    name,
-    email,
-    password,
-    emailInvalidMessage,
-    isEmailValid,
-    isPasswordValid,
-  } = state;
-  const {
-    setName,
-    setEmail,
-    setPassword,
-    emailVerification,
-    passwordVerification,
-    handleRegister,
-  } = actions;
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<RegisterFormData>();
+
+  const password = watch("password", "");
+
+  const onSubmit = (data: RegisterFormData) => {
+    handleRegister(data.email, data.password, data.username);
+  };
 
   return (
     <>
       <h1>{t("register_title")}</h1>
-      <form>
-        <label htmlFor="register-name">{t("register_name")}</label>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="register-userusername">{t("register_username")}</label>
         <input
-          id="register-name"
+          id="register-username"
           type="text"
-          value={name}
-          placeholder={t("register_name_placeholder")}
-          onChange={(e) => setName(e.target.value)}
+          placeholder={t("register_username_placeholder")}
+          {...register("username", { required: true })}
         />
+
+        {errors.username?.type === "required" && (
+          <span>{t("register_error_required")}</span>
+        )}
+        {usernameError && <span>{usernameError}</span>}
 
         <label htmlFor="register-email">{t("register_email")}</label>
         <input
           id="register-email"
-          type="email"
-          value={email}
+          type="text"
           placeholder={t("register_email_placeholder")}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            emailVerification(e.target.value);
-          }}
+          {...register("email", {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          })}
         />
-        {emailInvalidMessage}
+
+        {errors.email?.type === "required" && (
+          <span>{t("register_error_required")}</span>
+        )}
+        {errors.email?.type === "pattern" && (
+          <span>{t("register_error_email_invalid")}</span>
+        )}
 
         <label htmlFor="register-password">{t("register_password")}</label>
         <input
           id="register-password"
           type="password"
-          value={password}
           placeholder={t("register_password_placeholder")}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            passwordVerification(e.target.value);
-          }}
+          {...register("password", {
+            required: true,
+            validate: (value) =>
+              hasMinLength(value) &&
+              hasUpperCase(value) &&
+              hasLowerCase(value) &&
+              hasNumber(value),
+          })}
         />
 
-        {/*cambiar los checkbox por imagenes que cambian */}
+        {errors.password?.type === "required" && (
+          <span>{t("register_error_required")}</span>
+        )}
+
         <div>
-          <input type="checkbox" checked={hasMinLength(state.password)} />
+          <input type="checkbox" readOnly checked={hasMinLength(password)} />
           <span>{t("register_password_min_length")}</span>
-          <input type="checkbox" checked={hasUpperCase(state.password)} />
+          <input type="checkbox" readOnly checked={hasUpperCase(password)} />
           <span>{t("register_password_uppercase")}</span>
-          <input type="checkbox" checked={hasLowerCase(state.password)} />
+          <input type="checkbox" readOnly checked={hasLowerCase(password)} />
           <span>{t("register_password_lowercase")}</span>
-          <input type="checkbox" checked={hasNumber(state.password)} />
+          <input type="checkbox" readOnly checked={hasNumber(password)} />
           <span>{t("register_password_number")}</span>
         </div>
 
         <input
           id="register-terms"
           type="checkbox"
-          checked={acceptsTerms}
-          onChange={(e) => setAcceptsTerms(e.target.checked)}
+          {...register("acceptsTerms", { required: true })}
         />
         <label htmlFor="register-terms">
           {t("register_terms_start")}
@@ -121,18 +113,10 @@ const RegisterForm = ({ state, actions }: RegisterFormProps) => {
           <a href="/terms">{t("register_terms_conditions")}</a>
         </label>
 
-        <IonButton
-          disabled={
-            !name ||
-            !email ||
-            !isEmailValid ||
-            !isPasswordValid ||
-            !acceptsTerms
-          }
-          onClick={handleRegister}
-        >
+        <button type="submit" disabled={Object.keys(errors).length > 0}>
           {t("register_button")}
-        </IonButton>
+        </button>
+
         <a href="">{t("register_login_link")}</a>
       </form>
     </>
