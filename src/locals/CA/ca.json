@@ -11,6 +11,7 @@
   "register_button": "Crear compte",
   "register_login_link": "Ja tens compte? Inicia sessió",
   "register_back": "Tornar arrere",
+  "register_close": "Tancar",
 
   "register_terms_start": "He llegit i accepte la ",
   "register_terms_privacy": "política de privacitat",
@@ -18,6 +19,7 @@
   "register_terms_conditions": "termes d'ús",
 
   "register_error_required": "Aquest camp és obligatori",
+  "register_error_terms_required": "Has d'acceptar els termes i condicions per continuar",
 
   "register_error_name_taken": "Aquest nom d'usuari ja està en ús",
 
@@ -34,5 +36,21 @@
   "register_verify_title": "Revisa el teu correu",
   "register_verify_message": "T'hem enviat un enllaç de verificació al teu correu. Obri'l per activar el teu compte.",
   "register_verify_resend": "Reenviar correu",
-  "register_verify_resend_success": "Correu reenviat. Revisa també la carpeta de correu no desitjat."
+  "register_verify_resend_success": "Correu reenviat. Revisa també la carpeta de correu no desitjat.",
+
+  "login_title": "Iniciar sessió",
+  "login_email": "Correu electrònic",
+  "login_email_placeholder": "Introdueix el teu correu",
+  "login_password": "Contrasenya",
+  "login_password_placeholder": "Introdueix la teua contrasenya",
+  "login_button": "Iniciar sessió",
+  "login_register_link": "No tens compte? Registra't",
+  "login_forgot_password": "Has oblidat la contrasenya?",
+
+  "login_error_required": "Aquest camp és obligatori",
+  "login_error_email_invalid": "El format del correu no és vàlid",
+  "login_error_invalid_credentials": "El correu o la contrasenya són incorrectes",
+
+  "login_error_email_not_verified": "Has de verificar el teu correu abans d'iniciar sessió",
+  "login_error_no_connection": "Sense connexió a internet, comprova la teua xarxa"
 }

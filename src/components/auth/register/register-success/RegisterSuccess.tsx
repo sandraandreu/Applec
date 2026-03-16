@@ -28,6 +28,10 @@ const RegisterSuccess = ({
               handleResendEmail();
             },
           },
+          {
+            text: t("register_close"),
+            role: "cancel",
+          },
         ]}
         onDidDismiss={onClose}
       ></IonAlert>

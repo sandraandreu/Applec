@@ -1,0 +1,30 @@
+import { IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Route, Redirect } from "react-router-dom";
+
+import LoginPage from "../../pages/login/LoginPage";
+import RegisterPage from "../../pages/register/RegisterPage";
+import Home from "../../pages/home/Home";
+
+const AppRoutes = () => (
+  <>
+    <IonReactRouter>
+      <IonRouterOutlet>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/home" />
+        </Route>
+        <Route exact path="/register">
+          <RegisterPage />
+        </Route>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+      </IonRouterOutlet>
+    </IonReactRouter>
+  </>
+);
+
+export default AppRoutes;

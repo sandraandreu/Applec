@@ -18,9 +18,14 @@ interface RegisterFormData {
 interface RegisterFormProps {
   handleRegister: (email: string, password: string, username: string) => void;
   usernameError: string;
+  errorConnection: string;
 }
 
-const RegisterForm = ({ handleRegister, usernameError }: RegisterFormProps) => {
+const RegisterForm = ({
+  handleRegister,
+  usernameError,
+  errorConnection,
+}: RegisterFormProps) => {
   const { t } = useTranslation();
 
   const {
@@ -102,22 +107,28 @@ const RegisterForm = ({ handleRegister, usernameError }: RegisterFormProps) => {
         </div>
 
         <input
-          id="register-terms"
+          id="acceptsTerms"
           type="checkbox"
           {...register("acceptsTerms", { required: true })}
         />
-        <label htmlFor="register-terms">
+        <label htmlFor="acceptsTerms">
           {t("register_terms_start")}
           <a href="/privacy">{t("register_terms_privacy")}</a>
           {t("register_terms_and")}
           <a href="/terms">{t("register_terms_conditions")}</a>
         </label>
 
+        {errors.acceptsTerms?.type === "required" && (
+          <span>{t("register_error_terms_required")}</span>
+        )}
+
         <button type="submit" disabled={Object.keys(errors).length > 0}>
           {t("register_button")}
         </button>
 
-        <a href="">{t("register_login_link")}</a>
+        {errorConnection && <span>{errorConnection}</span>}
+
+        <a href="/login">{t("register_login_link")}</a>
       </form>
     </>
   );

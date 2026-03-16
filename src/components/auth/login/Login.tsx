@@ -1,0 +1,122 @@
+import "./Login.scss";
+import { useTranslation } from "react-i18next";
+import { getAuth, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useIonRouter } from "@ionic/react";
+import app from "../../../plugins/firebase";
+
+const auth = getAuth(app);
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+const Login = () => {
+  const { t } = useTranslation();
+  const router = useIonRouter();
+
+  const [user, setUser] = useState<any>(null);
+  const [errorConnection, setErrorConnection] = useState<string>("");
+  const [errorCredentials, setErrorCredentials] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>();
+
+  const onSubmit = (data: LoginFormData) => {
+    handleLogin(data.email, data.password);
+  };
+
+  //Iniciar sesión
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      setUser(userCredential.user)
+
+      if (!user.emailVerified) {
+        // mostrar mensaje de no verificado
+        return;
+      }
+      router.push("/home");
+    } catch (error: any) {
+      if (error.code === "auth/invalid-credential") {
+        setErrorCredentials(t("login_error_invalid_credentials"));
+        return;
+      }
+      if (error.code === "auth/network-request-failed") {
+        setErrorConnection(t("register_error_no_connection"));
+        return;
+      }
+      console.error("Email sign up error:", error.message);
+    }
+  };
+
+  //Reenviar email de merificación
+  
+    const handleResendEmail = async () => {
+      if (user) {
+        await sendEmailVerification(user);
+      }
+    };
+
+  return (
+    <>
+      <h1>{t("login_title")}</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="login-email">{t("login_email")}</label>
+        <input
+          id="login-email"
+          type="text"
+          placeholder={t("login_email_placeholder")}
+          {...register("email", {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          })}
+        />
+
+        {errors.email?.type === "required" && (
+          <span>{t("login_error_required")}</span>
+        )}
+        {errors.email?.type === "pattern" && (
+          <span>{t("login_error_email_invalid")}</span>
+        )}
+
+        <label htmlFor="login-password">{t("login_password")}</label>
+        <input
+          id="login-password"
+          type="password"
+          placeholder={t("login_password_placeholder")}
+          {...register("password", {
+            required: true,
+          })}
+        />
+
+        {errors.password?.type === "required" && (
+          <span>{t("login_error_required")}</span>
+        )}
+
+        <button type="submit" disabled={Object.keys(errors).length > 0}>
+          {t("login_button")}
+        </button>
+
+        {errorConnection && <span>{errorConnection}</span>}
+        {errorCredentials && <span>{errorCredentials}</span>}
+
+        <a href="/register">{t("login_register_link")}</a>
+        <a href="">{t("login_forgot_password")}</a>
+      </form>
+    </>
+  );
+};
+
+export default Login;

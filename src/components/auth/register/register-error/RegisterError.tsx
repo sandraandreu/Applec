@@ -1,21 +1,35 @@
 import "./RegisterError.scss";
-import { IonButton } from "@ionic/react";
+import { IonAlert, useIonRouter } from "@ionic/react";
 import { useTranslation } from "react-i18next";
 
 interface RegisterErrorProps {
-  onBack: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const RegisterError = ({onBack }:RegisterErrorProps) => {
+const RegisterError = ({ isOpen, onClose }: RegisterErrorProps) => {
   const { t } = useTranslation();
+  const router = useIonRouter();
 
   return (
     <>
-      <h1>{t("register_error_email_taken")}</h1>
-      <IonButton onClick={onBack}>{t("register_back")}</IonButton>
-      <IonButton routerLink="/login">
-        {t("register_error_email_taken_button")}
-      </IonButton>
+      <IonAlert
+        isOpen={isOpen}
+        header={t("register_error_email_taken")}
+        buttons={[
+          {
+            text: t("register_close"),
+            role: "cancel",
+          },
+          {
+            text: t("register_error_email_taken_button"),
+            handler: () => {
+              router.push("/login");
+            },
+          },
+        ]}
+        onDidDismiss={onClose}
+      ></IonAlert>
     </>
   );
 };

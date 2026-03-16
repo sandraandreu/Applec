@@ -38,7 +38,7 @@ const Register = () => {
   >("form");
   const [user, setUser] = useState<any>(null);
   const [usernameError, setUsernameError] = useState<string>("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [errorConnection, setErrorConnection] = useState<string>("");
 
   //Crear user en firebase
 
@@ -70,15 +70,17 @@ const Register = () => {
         email: userCredential.user.email,
         createdAt: new Date(),
         role: "member",
-        isActive: false,
       });
 
       setRegisterState("success");
-      setIsOpen(true);
     } catch (error: any) {
       if (error.message === "username-already-exists") {
         setUsernameError(t("register_error_name_taken"));
         return;
+      }
+      if (error.code === "auth/network-request-failed") {
+        setErrorConnection(t("register_error_no_connection"));
+        return
       }
       setRegisterState("error");
       console.error("Email sign up error:", error.message);
@@ -102,11 +104,15 @@ const Register = () => {
           onClose={() => router.push("/login")}
         />
       ) : registerState === "error" ? (
-        <RegisterError onBack={() => setRegisterState("form")} />
+        <RegisterError
+          isOpen={registerState === "error"}
+          onClose={() => setRegisterState("form")}
+        />
       ) : (
         <RegisterForm
           handleRegister={handleRegister}
           usernameError={usernameError}
+          errorConnection={errorConnection}
         />
       )}
     </>

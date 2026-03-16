@@ -11,6 +11,7 @@
   "register_button": "Crear cuenta",
   "register_login_link": "¿Ya tienes cuenta? Inicia sesión",
   "register_back": "Volver atrás",
+  "register_close": "Cerrar",
 
   "register_terms_start": "He leído y acepto la ",
   "register_terms_privacy": "política de privacidad",
@@ -18,13 +19,13 @@
   "register_terms_conditions": "términos de uso",
 
   "register_error_required": "Este campo es obligatorio",
+  "register_error_terms_required": "Debes aceptar los términos y condiciones para continuar",
 
   "register_error_username_taken": "Este nombre de usuario ya está en uso",
 
   "register_error_email_invalid": "Introduce un correo electrónico válido",
   "register_error_email_taken": "Este correo ya tiene una cuenta. ¿Quieres iniciar sesión?",
   "register_error_email_taken_button": "Iniciar sesión",
-  "register_error_no_connection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
 
   "register_password_min_length": "Mínimo 6 caracteres",
   "register_password_uppercase": "Una mayúscula",
@@ -34,5 +35,23 @@
   "register_verify_title": "Revisa tu correo",
   "register_verify_message": "Te hemos enviado un enlace de verificación a tu correo. Ábrelo para activar tu cuenta.",
   "register_verify_resend": "Reenviar correo",
-  "register_verify_resend_success": "Correo reenviado. Revisa también la carpeta de spam."
+  "register_verify_resend_success": "Correo reenviado. Revisa también la carpeta de spam.",
+
+  "register_error_no_connection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
+
+  "login_title": "Iniciar sesión",
+  "login_email": "Correo electrónico",
+  "login_email_placeholder": "Introduce tu correo",
+  "login_password": "Contraseña",
+  "login_password_placeholder": "Introduce tu contraseña",
+  "login_button": "Iniciar sesión",
+  "login_register_link": "¿No tienes cuenta? Regístrate",
+  "login_forgot_password": "¿Olvidaste tu contraseña?",
+
+  "login_error_required": "Este campo es obligatorio",
+  "login_error_email_invalid": "El formato del correo no es válido",
+  "login_error_invalid_credentials": "El correo o la contraseña son incorrectos",
+
+  "login_error_email_not_verified": "Debes verificar tu correo antes de iniciar sesión",
+  "login_error_no_connection": "Sin conexión a internet, comprueba tu red"
 }
