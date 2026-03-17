@@ -1,10 +1,15 @@
 import "./Login.scss";
 import { useTranslation } from "react-i18next";
-import { getAuth, signInWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useIonRouter } from "@ionic/react";
 import app from "../../../plugins/firebase";
+import Alert from "../../feedback/alerts/Alert";
 
 const auth = getAuth(app);
 
@@ -17,6 +22,7 @@ const Login = () => {
   const { t } = useTranslation();
   const router = useIonRouter();
 
+  const [loginState, setLoginState] = useState<"form" | "unverified">("form");
   const [user, setUser] = useState<any>(null);
   const [errorConnection, setErrorConnection] = useState<string>("");
   const [errorCredentials, setErrorCredentials] = useState<string>("");
@@ -41,10 +47,10 @@ const Login = () => {
         password,
       );
 
-      setUser(userCredential.user)
+      setUser(userCredential.user);
 
-      if (!user.emailVerified) {
-        // mostrar mensaje de no verificado
+      if (!userCredential.user.emailVerified) {
+        setLoginState("unverified")
         return;
       }
       router.push("/home");
@@ -62,12 +68,12 @@ const Login = () => {
   };
 
   //Reenviar email de merificación
-  
-    const handleResendEmail = async () => {
-      if (user) {
-        await sendEmailVerification(user);
-      }
-    };
+
+  const handleResendEmail = async () => {
+    if (user) {
+      await sendEmailVerification(user);
+    }
+  };
 
   return (
     <>
@@ -113,10 +119,29 @@ const Login = () => {
         {errorCredentials && <span>{errorCredentials}</span>}
 
         <a href="/register">{t("login_register_link")}</a>
-        <a href="">{t("login_forgot_password")}</a>
+        <a href="/forgot-password">{t("login_forgot_password")}</a>
       </form>
+      
+      <Alert
+        isOpen={loginState === "unverified"}
+        header={t("login_error_email_not_verified_title")}
+        message={t("login_error_email_not_verified")}
+        onDismiss={() => setLoginState("form")}
+        buttons={[
+          {
+            text: t("login_verify_resend"),
+            handler: () => handleResendEmail(),
+          },
+          {
+            text: t("login_close"),
+            role: "cancel",
+          },
+        ]}
+      />
     </>
   );
 };
 
 export default Login;
+
+

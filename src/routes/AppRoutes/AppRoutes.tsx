@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router-dom";
 import LoginPage from "../../pages/login/LoginPage";
 import RegisterPage from "../../pages/register/RegisterPage";
 import Home from "../../pages/home/Home";
+import ForgotPasswordPage from "../../pages/forgotPassword/ForgotPasswordPage";
 
 const AppRoutes = () => (
   <>
@@ -21,6 +22,9 @@ const AppRoutes = () => (
         </Route>
         <Route exact path="/login">
           <LoginPage />
+        </Route>
+        <Route exact path="/forgot-password">
+          <ForgotPasswordPage />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

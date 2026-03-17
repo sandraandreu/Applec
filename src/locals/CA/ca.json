@@ -33,6 +33,10 @@
   "register_password_lowercase": "Una minúscula",
   "register_password_number": "Un número",
 
+  "register_confirm_password": "Confirmar contrasenya",
+  "register_confirm_password_placeholder": "Repeteix la teua contrasenya",
+  "register_error_password_mismatch": "Les contrasenyes no coincideixen",
+
   "register_verify_title": "Revisa el teu correu",
   "register_verify_message": "T'hem enviat un enllaç de verificació al teu correu. Obri'l per activar el teu compte.",
   "register_verify_resend": "Reenviar correu",
@@ -46,11 +50,28 @@
   "login_button": "Iniciar sessió",
   "login_register_link": "No tens compte? Registra't",
   "login_forgot_password": "Has oblidat la contrasenya?",
+  "login_close": "Tancar",
 
   "login_error_required": "Aquest camp és obligatori",
   "login_error_email_invalid": "El format del correu no és vàlid",
   "login_error_invalid_credentials": "El correu o la contrasenya són incorrectes",
 
   "login_error_email_not_verified": "Has de verificar el teu correu abans d'iniciar sessió",
-  "login_error_no_connection": "Sense connexió a internet, comprova la teua xarxa"
+  "login_error_email_not_verified_title": "Correu no verificat",
+  "login_verify_resend": "Reenviar correu",
+  "login_error_no_connection": "Sense connexió a internet, comprova la teua xarxa",
+
+  "forgot_password_title": "Has oblidat la contrasenya?",
+  "forgot_password_description": "Introdueix el teu correu i t'enviarem un enllaç per restablir la teua contrasenya.",
+  "forgot_password_email": "Correu electrònic",
+  "forgot_password_email_placeholder": "Introdueix el teu correu",
+  "forgot_password_button": "Enviar enllaç",
+  "forgot_password_back": "Tornar a l'inici de sessió",
+
+  "forgot_password_success_title": "Correu enviat",
+  "forgot_password_success_message": "Si aquest correu està registrat, rebràs un enllaç per restablir la contrasenya. Revisa també la carpeta de correu no desitjat.",
+
+  "forgot_password_error_required": "Aquest camp és obligatori",
+  "forgot_password_error_email_invalid": "Introdueix un correu electrònic vàlid",
+  "forgot_password_error_no_connection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
 }

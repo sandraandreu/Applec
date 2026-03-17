@@ -32,6 +32,10 @@
   "register_password_lowercase": "Una minúscula",
   "register_password_number": "Un número",
 
+  "register_confirm_password": "Confirmar contraseña",
+  "register_confirm_password_placeholder": "Repite tu contraseña",
+  "register_error_password_mismatch": "Las contraseñas no coinciden",
+
   "register_verify_title": "Revisa tu correo",
   "register_verify_message": "Te hemos enviado un enlace de verificación a tu correo. Ábrelo para activar tu cuenta.",
   "register_verify_resend": "Reenviar correo",
@@ -47,11 +51,29 @@
   "login_button": "Iniciar sesión",
   "login_register_link": "¿No tienes cuenta? Regístrate",
   "login_forgot_password": "¿Olvidaste tu contraseña?",
+  "login_close": "Cerrar",
 
   "login_error_required": "Este campo es obligatorio",
   "login_error_email_invalid": "El formato del correo no es válido",
   "login_error_invalid_credentials": "El correo o la contraseña son incorrectos",
 
   "login_error_email_not_verified": "Debes verificar tu correo antes de iniciar sesión",
-  "login_error_no_connection": "Sin conexión a internet, comprueba tu red"
+  "login_error_email_not_verified_title": "Correo no verificado",
+  "login_verify_resend": "Reenviar correo",
+
+  "login_error_no_connection": "Sin conexión a internet, comprueba tu red",
+
+  "forgot_password_title": "¿Olvidaste tu contraseña?",
+  "forgot_password_description": "Introduce tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+  "forgot_password_email": "Correo electrónico",
+  "forgot_password_email_placeholder": "Introduce tu correo",
+  "forgot_password_button": "Enviar enlace",
+  "forgot_password_back": "Volver al inicio de sesión",
+
+  "forgot_password_success_title": "Correo enviado",
+  "forgot_password_success_message": "Si este correo está registrado, recibirás un enlace para restablecer tu contraseña. Revisa también la carpeta de spam.",
+  
+  "forgot_password_error_required": "Este campo es obligatorio",
+  "forgot_password_error_email_invalid": "Introduce un correo electrónico válido",
+  "forgot_password_error_no_connection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
 }
