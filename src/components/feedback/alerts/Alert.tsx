@@ -20,15 +20,14 @@ const Alert = ({
   onDismiss,
   buttons,
 }: AlertProps) => {
-  return createPortal(
+  return (
     <IonAlert
       isOpen={isOpen}
       header={header}
       message={message}
       buttons={buttons}
       onDidDismiss={onDismiss}
-    />,
-    document.body
+    />
   );
 };
 

@@ -1,18 +1,42 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import './Home.css';
-import { useTranslation } from 'react-i18next';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/react";
+import "./Home.scss";
+import { useTranslation } from "react-i18next";
+import Alert from "../../components/feedback/alerts/Alert";
+import { useState } from "react";
 
 const Home = () => {
   const { t } = useTranslation();
+  const [testAlert, setTestAlert] = useState<"header" | "alert">("alert");
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-          <h1>{t('bienvenida')}</h1>
-        </IonToolbar>
-      </IonHeader>
+      {testAlert === "header" && (
+        <IonHeader>
+          <IonToolbar>
+            <h1>{t("bienvenida")}</h1>
+          </IonToolbar>
+        </IonHeader>
+      )}
+      <IonContent>
+        <Alert
+          isOpen={testAlert === "alert"}
+          header={t("login_error_email_not_verified_title")}
+          message={t("login_error_email_not_verified")}
+          onDismiss={() => setTestAlert("header")}
+          buttons={[
+            {
+              text: t("login_close"),
+              role: "cancel",
+            },
+          ]}
+        />
+      </IonContent>
     </IonPage>
   );
 };
