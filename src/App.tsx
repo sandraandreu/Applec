@@ -1,6 +1,7 @@
 import React from "react";
-import { IonApp,setupIonicReact } from "@ionic/react";
+import { IonApp, setupIonicReact } from "@ionic/react";
 import AppRoutes from "./routes/AppRoutes/AppRoutes";
+import { AuthContextProvider } from "./context/auth/AuthContextProvider";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -21,13 +22,14 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./styles/ionic-theme/_ionic-variables.css";
 
-
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <AppRoutes/>
-  </IonApp>
+  <AuthContextProvider>
+    <IonApp>
+      <AppRoutes />
+    </IonApp>
+  </AuthContextProvider>
 );
 
 export default App;

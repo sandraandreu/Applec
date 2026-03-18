@@ -1,5 +1,5 @@
 import { IonAlert } from "@ionic/react";
-import { createPortal } from "react-dom";
+import "./Alert.scss";
 
 interface AlertProps {
   isOpen: boolean;
