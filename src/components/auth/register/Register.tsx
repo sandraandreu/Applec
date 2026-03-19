@@ -20,9 +20,8 @@ import app from "../../../plugins/firebase";
 import { useState } from "react";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
-import Button from "../../button/Button";
-import Input from "../../input/Input";
-
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -127,9 +126,10 @@ const Register = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
+
       <h1>{t("register_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-
         <Input
           id="register-username"
           label={t("register_username")}
@@ -137,9 +137,11 @@ const Register = () => {
           type="text"
           registration={register("username", { required: true })}
           error={
-            errors.username?.type === "required" ? t("register_error_required") :
-            usernameError ? usernameError :
-            undefined
+            errors.username?.type === "required"
+              ? t("register_error_required")
+              : usernameError
+                ? usernameError
+                : undefined
           }
         />
 
@@ -153,9 +155,11 @@ const Register = () => {
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
           error={
-            errors.email?.type === "required" ? t("register_error_required") :
-            errors.email?.type === "pattern" ? t("register_error_email_invalid") :
-            undefined
+            errors.email?.type === "required"
+              ? t("register_error_required")
+              : errors.email?.type === "pattern"
+                ? t("register_error_email_invalid")
+                : undefined
           }
         />
 
@@ -173,8 +177,9 @@ const Register = () => {
               hasNumber(value),
           })}
           error={
-            errors.password?.type === "required" ? t("register_error_required") :
-            undefined
+            errors.password?.type === "required"
+              ? t("register_error_required")
+              : undefined
           }
         />
 
@@ -199,9 +204,11 @@ const Register = () => {
             validate: (value) => value === password,
           })}
           error={
-            errors.confirmPassword?.type === "required" ? t("register_error_required") :
-            errors.confirmPassword?.type === "validate" ? t("register_error_password_mismatch") :
-            undefined
+            errors.confirmPassword?.type === "required"
+              ? t("register_error_required")
+              : errors.confirmPassword?.type === "validate"
+                ? t("register_error_password_mismatch")
+                : undefined
           }
         />
 

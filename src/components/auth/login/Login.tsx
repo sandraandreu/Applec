@@ -11,8 +11,8 @@ import { useIonRouter } from "@ionic/react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
-import Button from "../../button/Button";
-import Input from "../../input/Input";
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 
 const auth = getAuth(app);
 
@@ -84,9 +84,10 @@ const Login = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
+
       <h1>{t("login_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        
         <Input
           id="login-email"
           label={t("login_email")}
@@ -97,9 +98,11 @@ const Login = () => {
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
           error={
-            errors.email?.type === "required" ? t("login_error_required") :
-            errors.email?.type === "pattern" ? t("login_error_email_invalid") :
-            undefined
+            errors.email?.type === "required"
+              ? t("login_error_required")
+              : errors.email?.type === "pattern"
+                ? t("login_error_email_invalid")
+                : undefined
           }
         />
 
@@ -110,8 +113,9 @@ const Login = () => {
           type="password"
           registration={register("password", { required: true })}
           error={
-            errors.password?.type === "required" ? t("login_error_required") :
-            undefined
+            errors.password?.type === "required"
+              ? t("login_error_required")
+              : undefined
           }
         />
 

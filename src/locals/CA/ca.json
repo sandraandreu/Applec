@@ -1,6 +1,9 @@
 {
   "bienvenida": "Benvingut a Applec",
 
+  "language_spanish": "Castellà",
+  "language_valencian": "Valencià",
+
   "register_title": "Crea el teu compte",
   "register_username": "Nom d'usuari",
   "register_username_placeholder": "Tria un nom d'usuari",
