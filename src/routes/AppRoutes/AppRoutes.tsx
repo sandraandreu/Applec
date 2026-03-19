@@ -1,6 +1,8 @@
-import { IonRouterOutlet, setupIonicReact } from "@ionic/react";
+import { IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
+import PrivateRoutes from "./PrivateRoutes";
+import PublicRoutes from "./PublicRoutes";
 
 import LoginPage from "../../pages/login/LoginPage";
 import RegisterPage from "../../pages/register/RegisterPage";
@@ -11,21 +13,33 @@ const AppRoutes = () => (
   <>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route exact path="/register">
-          <RegisterPage />
-        </Route>
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
-        <Route exact path="/forgot-password">
-          <ForgotPasswordPage />
-        </Route>
+
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
+
+        <Route exact path="/home" render={() => (
+          <PrivateRoutes>
+            <Home />
+          </PrivateRoutes>
+        )} />
+
+        <Route exact path="/register" render={() => (
+          <PublicRoutes>
+            <RegisterPage />
+          </PublicRoutes>
+        )} />
+
+        <Route exact path="/login" render={() => (
+          <PublicRoutes>
+            <LoginPage />
+          </PublicRoutes>
+        )} />
+
+        <Route exact path="/forgot-password" render={() => (
+          <PublicRoutes>
+            <ForgotPasswordPage />
+          </PublicRoutes>
+        )} />
+
       </IonRouterOutlet>
     </IonReactRouter>
   </>

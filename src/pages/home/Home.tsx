@@ -2,7 +2,6 @@ import {
   IonContent,
   IonHeader,
   IonPage,
-  IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import "./Home.scss";
@@ -13,7 +12,6 @@ import { useState } from "react";
 const Home = () => {
   const { t } = useTranslation();
   const [testAlert, setTestAlert] = useState<"header" | "alert">("alert");
-
 
   return (
     <IonPage>
