@@ -19,17 +19,18 @@ import {
 import app from "../../../plugins/firebase";
 import { useState } from "react";
 import Alert from "../../feedback/alerts/Alert";
+import Loading from "../../feedback/loading/Loading";
 
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 interface RegisterFormData {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    acceptsTerms: boolean;
-  }
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  acceptsTerms: boolean;
+}
 
 const hasMinLength = (value: string) => value.length >= 6;
 const hasUpperCase = (value: string) => /[A-Z]/.test(value);
@@ -40,6 +41,7 @@ const Register = () => {
   const router = useIonRouter();
   const { t } = useTranslation();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [registerState, setRegisterState] = useState<
     "form" | "success" | "error"
   >("form");
@@ -55,6 +57,7 @@ const Register = () => {
     userName: string,
   ) => {
     try {
+      setIsLoading(true);
       const usersRef = collection(db, "users");
       const q = query(usersRef, where("userName", "==", userName));
       const querySnapshot = await getDocs(q);
@@ -91,6 +94,8 @@ const Register = () => {
       }
       setRegisterState("error");
       console.error("Email sign up error:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -119,6 +124,8 @@ const Register = () => {
 
   return (
     <>
+      {isLoading && <Loading/>}
+
       <h1>{t("register_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="register-userusername">{t("register_username")}</label>
@@ -218,7 +225,7 @@ const Register = () => {
           <span>{t("register_error_terms_required")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0}>
+        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
           {t("register_button")}
         </button>
 

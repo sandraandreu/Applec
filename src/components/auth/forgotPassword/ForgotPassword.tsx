@@ -6,6 +6,7 @@ import { useState } from "react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import { useIonRouter } from "@ionic/react";
+import Loading from "../../feedback/loading/Loading";
 
 const auth = getAuth(app);
 
@@ -17,6 +18,7 @@ const ForgotPassword = () => {
   const { t } = useTranslation();
   const router = useIonRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [forgotPasswordState, setForgotPasswordState] = useState<
     "form" | "success"
   >("form");
@@ -34,19 +36,24 @@ const ForgotPassword = () => {
 
   const handleForgotPassword = async (email: string) => {
     try {
+      setIsLoading(true);
       await sendPasswordResetEmail(auth, email);
-      setForgotPasswordState("success")
+      setForgotPasswordState("success");
     } catch (error: any) {
       if (error.code === "auth/network-request-failed") {
         setErrorConnection(t("forgot_password_error_no_connection"));
         return;
       }
       console.error("Forgot password error:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isLoading && <Loading />}
+
       <h1>{t("forgot_password_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="forgot_password-email">
@@ -69,7 +76,7 @@ const ForgotPassword = () => {
           <span>{t("forgot_password_error_email_invalid")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0}>
+        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
           {t("forgot_password_button")}
         </button>
 

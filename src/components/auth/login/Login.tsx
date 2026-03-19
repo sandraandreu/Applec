@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useIonRouter } from "@ionic/react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
+import Loading from "../../feedback/loading/Loading";
 
 const auth = getAuth(app);
 
@@ -22,6 +23,7 @@ const Login = () => {
   const { t } = useTranslation();
   const router = useIonRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
   const [user, setUser] = useState<any>(null);
   const [errorConnection, setErrorConnection] = useState<string>("");
@@ -41,6 +43,7 @@ const Login = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
+      setIsLoading(true);
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -50,7 +53,7 @@ const Login = () => {
       setUser(userCredential.user);
 
       if (!userCredential.user.emailVerified) {
-        setLoginState("unverified")
+        setLoginState("unverified");
         return;
       }
       router.push("/home");
@@ -64,6 +67,8 @@ const Login = () => {
         return;
       }
       console.error("Email sign up error:", error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,6 +82,8 @@ const Login = () => {
 
   return (
     <>
+      {isLoading && <Loading />}
+
       <h1>{t("login_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="login-email">{t("login_email")}</label>
@@ -111,7 +118,7 @@ const Login = () => {
           <span>{t("login_error_required")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0}>
+        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
           {t("login_button")}
         </button>
 
@@ -121,7 +128,7 @@ const Login = () => {
         <a href="/register">{t("login_register_link")}</a>
         <a href="/forgot-password">{t("login_forgot_password")}</a>
       </form>
-      
+
       <Alert
         isOpen={loginState === "unverified"}
         header={t("login_error_email_not_verified_title")}
@@ -143,5 +150,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

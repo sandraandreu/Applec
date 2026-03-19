@@ -1,6 +1,6 @@
 import React from "react";
 import { IonApp, setupIonicReact } from "@ionic/react";
-import AppRoutes from "./routes/AppRoutes/AppRoutes";
+import AppRoutes from "./routes/appRoutes/AppRoutes";
 import { AuthContextProvider } from "./context/auth/AuthContextProvider";
 
 /* Core CSS required for Ionic components to work properly */
