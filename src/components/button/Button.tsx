@@ -1,4 +1,3 @@
-import { IonAlert } from "@ionic/react";
 import "./Button.scss";
 import Loading from "../feedback/loading/Loading";
 

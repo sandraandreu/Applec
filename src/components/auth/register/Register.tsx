@@ -20,7 +20,8 @@ import app from "../../../plugins/firebase";
 import { useState } from "react";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
-import Button from "../../button/button";
+import Button from "../../button/Button";
+import Input from "../../input/Input";
 
 
 const auth = getAuth(app);
@@ -128,43 +129,42 @@ const Register = () => {
     <>
       <h1>{t("register_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="register-userusername">{t("register_username")}</label>
-        <input
+
+        <Input
           id="register-username"
-          type="text"
+          label={t("register_username")}
           placeholder={t("register_username_placeholder")}
-          {...register("username", { required: true })}
+          type="text"
+          registration={register("username", { required: true })}
+          error={
+            errors.username?.type === "required" ? t("register_error_required") :
+            usernameError ? usernameError :
+            undefined
+          }
         />
 
-        {errors.username?.type === "required" && (
-          <span>{t("register_error_required")}</span>
-        )}
-        {usernameError && <span>{usernameError}</span>}
-
-        <label htmlFor="register-email">{t("register_email")}</label>
-        <input
+        <Input
           id="register-email"
-          type="text"
+          label={t("register_email")}
           placeholder={t("register_email_placeholder")}
-          {...register("email", {
+          type="text"
+          registration={register("email", {
             required: true,
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
+          error={
+            errors.email?.type === "required" ? t("register_error_required") :
+            errors.email?.type === "pattern" ? t("register_error_email_invalid") :
+            undefined
+          }
         />
 
-        {errors.email?.type === "required" && (
-          <span>{t("register_error_required")}</span>
-        )}
-        {errors.email?.type === "pattern" && (
-          <span>{t("register_error_email_invalid")}</span>
-        )}
-
-        <label htmlFor="register-password">{t("register_password")}</label>
-        <input
+        <Input
           id="register-password"
-          type="password"
+          label={t("register_password")}
           placeholder={t("register_password_placeholder")}
-          {...register("password", {
+          type="password"
+          registration={register("password", {
             required: true,
             validate: (value) =>
               hasMinLength(value) &&
@@ -172,11 +172,11 @@ const Register = () => {
               hasLowerCase(value) &&
               hasNumber(value),
           })}
+          error={
+            errors.password?.type === "required" ? t("register_error_required") :
+            undefined
+          }
         />
-
-        {errors.password?.type === "required" && (
-          <span>{t("register_error_required")}</span>
-        )}
 
         <div>
           <input type="checkbox" readOnly checked={hasMinLength(password)} />
@@ -189,25 +189,21 @@ const Register = () => {
           <span>{t("register_password_number")}</span>
         </div>
 
-        <label htmlFor="register-confirm-password">
-          {t("register_confirm_password")}
-        </label>
-        <input
+        <Input
           id="register-confirm-password"
-          type="password"
+          label={t("register_confirm_password")}
           placeholder={t("register_confirm_password_placeholder")}
-          {...register("confirmPassword", {
+          type="password"
+          registration={register("confirmPassword", {
             required: true,
             validate: (value) => value === password,
           })}
+          error={
+            errors.confirmPassword?.type === "required" ? t("register_error_required") :
+            errors.confirmPassword?.type === "validate" ? t("register_error_password_mismatch") :
+            undefined
+          }
         />
-
-        {errors.confirmPassword?.type === "required" && (
-          <span>{t("register_error_required")}</span>
-        )}
-        {errors.confirmPassword?.type === "validate" && (
-          <span>{t("register_error_password_mismatch")}</span>
-        )}
 
         <input
           id="acceptsTerms"

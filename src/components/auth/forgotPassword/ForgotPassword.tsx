@@ -7,7 +7,8 @@ import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import { useIonRouter } from "@ionic/react";
 import Loading from "../../feedback/loading/Loading";
-import Button from "../../button/button";
+import Button from "../../button/Button";
+import Input from "../../input/Input";
 
 const auth = getAuth(app);
 
@@ -55,25 +56,23 @@ const ForgotPassword = () => {
     <>
       <h1>{t("forgot_password_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="forgot_password-email">
-          {t("forgot_password_email")}
-        </label>
-        <input
+        <Input
           id="forgot_password-email"
-          type="text"
+          label={t("forgot_password_email")}
           placeholder={t("forgot_password_email_placeholder")}
-          {...register("email", {
+          type="text"
+          registration={register("email", {
             required: true,
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
+          error={
+            errors.email?.type === "required"
+              ? t("forgot_password_error_required")
+              : errors.email?.type === "pattern"
+                ? t("forgot_password_error_email_invalid")
+                : undefined
+          }
         />
-
-        {errors.email?.type === "required" && (
-          <span>{t("forgot_password_error_required")}</span>
-        )}
-        {errors.email?.type === "pattern" && (
-          <span>{t("forgot_password_error_email_invalid")}</span>
-        )}
 
         <Button
           text={t("forgot_password_button")}

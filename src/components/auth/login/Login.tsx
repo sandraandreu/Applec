@@ -11,7 +11,8 @@ import { useIonRouter } from "@ionic/react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
-import Button from "../../button/button";
+import Button from "../../button/Button";
+import Input from "../../input/Input";
 
 const auth = getAuth(app);
 
@@ -85,37 +86,34 @@ const Login = () => {
     <>
       <h1>{t("login_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="login-email">{t("login_email")}</label>
-        <input
+        
+        <Input
           id="login-email"
-          type="text"
+          label={t("login_email")}
           placeholder={t("login_email_placeholder")}
-          {...register("email", {
+          type="text"
+          registration={register("email", {
             required: true,
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
+          error={
+            errors.email?.type === "required" ? t("login_error_required") :
+            errors.email?.type === "pattern" ? t("login_error_email_invalid") :
+            undefined
+          }
         />
 
-        {errors.email?.type === "required" && (
-          <span>{t("login_error_required")}</span>
-        )}
-        {errors.email?.type === "pattern" && (
-          <span>{t("login_error_email_invalid")}</span>
-        )}
-
-        <label htmlFor="login-password">{t("login_password")}</label>
-        <input
+        <Input
           id="login-password"
-          type="password"
+          label={t("login_password")}
           placeholder={t("login_password_placeholder")}
-          {...register("password", {
-            required: true,
-          })}
+          type="password"
+          registration={register("password", { required: true })}
+          error={
+            errors.password?.type === "required" ? t("login_error_required") :
+            undefined
+          }
         />
-
-        {errors.password?.type === "required" && (
-          <span>{t("login_error_required")}</span>
-        )}
 
         <Button
           text={t("login_button")}
