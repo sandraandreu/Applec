@@ -11,6 +11,7 @@ import { useIonRouter } from "@ionic/react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
+import Button from "../../button/button";
 
 const auth = getAuth(app);
 
@@ -82,8 +83,6 @@ const Login = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
-
       <h1>{t("login_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="login-email">{t("login_email")}</label>
@@ -118,9 +117,12 @@ const Login = () => {
           <span>{t("login_error_required")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
-          {t("login_button")}
-        </button>
+        <Button
+          text={t("login_button")}
+          type="submit"
+          disabled={Object.keys(errors).length > 0}
+          isLoading={isLoading}
+        />
 
         {errorConnection && <span>{errorConnection}</span>}
         {errorCredentials && <span>{errorCredentials}</span>}

@@ -7,6 +7,7 @@ import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import { useIonRouter } from "@ionic/react";
 import Loading from "../../feedback/loading/Loading";
+import Button from "../../button/button";
 
 const auth = getAuth(app);
 
@@ -52,8 +53,6 @@ const ForgotPassword = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
-
       <h1>{t("forgot_password_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="forgot_password-email">
@@ -76,9 +75,12 @@ const ForgotPassword = () => {
           <span>{t("forgot_password_error_email_invalid")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
-          {t("forgot_password_button")}
-        </button>
+        <Button
+          text={t("forgot_password_button")}
+          type="submit"
+          disabled={Object.keys(errors).length > 0}
+          isLoading={isLoading}
+        />
 
         <a href="/login">{t("forgot_password_back")}</a>
 

@@ -20,6 +20,8 @@ import app from "../../../plugins/firebase";
 import { useState } from "react";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
+import Button from "../../button/button";
+
 
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -124,8 +126,6 @@ const Register = () => {
 
   return (
     <>
-      {isLoading && <Loading/>}
-
       <h1>{t("register_title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="register-userusername">{t("register_username")}</label>
@@ -225,9 +225,12 @@ const Register = () => {
           <span>{t("register_error_terms_required")}</span>
         )}
 
-        <button type="submit" disabled={Object.keys(errors).length > 0 || isLoading}>
-          {t("register_button")}
-        </button>
+        <Button
+          text={t("register_button")}
+          type="submit"
+          disabled={Object.keys(errors).length > 0}
+          isLoading={isLoading}
+        />
 
         {errorConnection && <span>{errorConnection}</span>}
 
