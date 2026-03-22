@@ -6,6 +6,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -84,10 +85,14 @@ const Register = () => {
         role: "member",
       });
 
+      await signOut(auth);
       setRegisterState("success");
     } catch (error: any) {
+      console.error("Error completo:", error);
+  console.error("Código:", error.code);
+  console.error("Mensaje:", error.message);
       if (error.message === "username-already-exists") {
-        setUsernameError(t("register_error_name_taken"));
+        setUsernameError(t("register_error_username_taken"));
         return;
       }
       if (error.code === "auth/network-request-failed") {

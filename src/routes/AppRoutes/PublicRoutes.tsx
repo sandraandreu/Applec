@@ -7,11 +7,9 @@ interface PublicRoutesProps {
 }
 
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
-  const { user } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
 
-  if (user) {
-    return <Redirect to="/home" />;
-  }
+  if (isLoading) return null;
 
   return <>{children}</>;
 };

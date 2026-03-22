@@ -78,5 +78,15 @@
 
   "forgot_password_error_required": "Este campo es obligatorio",
   "forgot_password_error_email_invalid": "Introduce un correo electrónico válido",
-  "forgot_password_error_no_connection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
+  "forgot_password_error_no_connection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
+
+  "welcome_title": "Hola, {{name}}",
+  "welcome_subtitle": "Nos alegra tenerte aquí.",
+  "welcome_description": "Applec es el espacio de tu falla para organizaros, compartir y estar conectados.",
+  "welcome_button": "Empezar",
+
+  "onboarding_title": "¿A qué falla perteneces?",
+  "onboarding_description": "Crea una nueva falla o únete a una existente con un enlace de invitación.",
+  "onboarding_create_group": "Crear una falla",
+  "onboarding_join_group": "Tengo un enlace de invitación"
 }

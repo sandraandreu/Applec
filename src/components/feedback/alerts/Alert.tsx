@@ -1,4 +1,5 @@
 import { IonAlert } from "@ionic/react";
+import { createPortal } from "react-dom";
 import "./Alert.scss";
 
 interface AlertProps {
@@ -20,14 +21,15 @@ const Alert = ({
   onDismiss,
   buttons,
 }: AlertProps) => {
-  return (
+  return createPortal(
     <IonAlert
       isOpen={isOpen}
       header={header}
       message={message}
       buttons={buttons}
       onDidDismiss={onDismiss}
-    />
+    />,
+    document.body
   );
 };
 

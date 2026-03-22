@@ -7,11 +7,11 @@ interface PrivateRoutesProps {
 }
 
 const PrivateRoutes = ({ children }: PrivateRoutesProps) => {
-  const { user } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
 
-  if (!user) {
-    return <Redirect to="/login" />;
-  }
+  if (isLoading) return null;
+
+  if (!user) return <Redirect to="/login" />;
 
   return <>{children}</>;
 };

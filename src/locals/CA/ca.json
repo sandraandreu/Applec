@@ -76,5 +76,15 @@
 
   "forgot_password_error_required": "Aquest camp és obligatori",
   "forgot_password_error_email_invalid": "Introdueix un correu electrònic vàlid",
-  "forgot_password_error_no_connection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
+  "forgot_password_error_no_connection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar",
+
+  "welcome_title": "Hola, {{name}}",
+  "welcome_subtitle": "Ens alegra tindre't ací.",
+  "welcome_description": "Applec és l'espai de la teua falla per organitzar-vos, compartir i estar connectats.",
+  "welcome_button": "Començar",
+
+  "onboarding_title": "A quina falla pertanys?",
+  "onboarding_description": "Crea una nova falla o uneix-te a una existent amb un enllaç d'invitació.",
+  "onboarding_create_group": "Crear una falla",
+  "onboarding_join_group": "Tinc un enllaç d'invitació"
 }

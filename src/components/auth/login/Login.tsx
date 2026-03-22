@@ -58,20 +58,21 @@ const Login = () => {
         setLoginState("unverified");
         return;
       }
-      router.push("/home");
+      setIsLoading(false);
+      router.push("/welcome");
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {
         setErrorCredentials(t("login_error_invalid_credentials"));
+        setIsLoading(false);
         return;
       }
       if (error.code === "auth/network-request-failed") {
         setErrorConnection(t("register_error_no_connection"));
+        setIsLoading(false);
         return;
       }
       console.error("Email sign up error:", error.message);
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   //Reenviar email de merificación

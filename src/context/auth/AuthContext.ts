@@ -3,6 +3,8 @@ import { User } from 'firebase/auth';
 
 export interface AuthContextType {
   user: User | null;
+  userName: string | null;
+  isLoading: boolean;
   logout: () => void;
 }
 
