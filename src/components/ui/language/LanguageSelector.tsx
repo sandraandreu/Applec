@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../button/Button";
 
 const LanguageSelector = () => {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("common");
 
   const [language, setLanguage] = useState<"es" | "ca">("es");
 
@@ -28,13 +28,13 @@ const LanguageSelector = () => {
   return (
     <>
       <Button
-        text={t("language_spanish")}
+        text={t("language.spanish")}
         variant="language"
         isActive={language === "es"}
         onClick={() => handleLanguageChange("es")}
       />
       <Button
-        text={t("language_valencian")}
+        text={t("language.valencian")}
         variant="language"
         isActive={language === "ca"}
         onClick={() => handleLanguageChange("ca")}

@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 
 const CreateGroup = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("groups");
 
   return (
     <>

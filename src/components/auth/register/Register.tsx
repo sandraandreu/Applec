@@ -42,7 +42,7 @@ const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
   const router = useIonRouter();
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [registerState, setRegisterState] = useState<
@@ -92,11 +92,11 @@ const Register = () => {
   console.error("Código:", error.code);
   console.error("Mensaje:", error.message);
       if (error.message === "username-already-exists") {
-        setUsernameError(t("register_error_username_taken"));
+        setUsernameError(t("register.errors.usernameTaken"));
         return;
       }
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("register_error_no_connection"));
+        setErrorConnection(t("register.errors.noConnection"));
         return;
       }
       setRegisterState("error");
@@ -133,17 +133,17 @@ const Register = () => {
     <>
       {isLoading && <Loading />}
 
-      <h1>{t("register_title")}</h1>
+      <h1>{t("register.title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="register-username"
-          label={t("register_username")}
-          placeholder={t("register_username_placeholder")}
+          label={t("register.username")}
+          placeholder={t("register.usernamePlaceholder")}
           type="text"
           registration={register("username", { required: true })}
           error={
             errors.username?.type === "required"
-              ? t("register_error_required")
+              ? t("register.errors.required")
               : usernameError
                 ? usernameError
                 : undefined
@@ -152,8 +152,8 @@ const Register = () => {
 
         <Input
           id="register-email"
-          label={t("register_email")}
-          placeholder={t("register_email_placeholder")}
+          label={t("register.email")}
+          placeholder={t("register.emailPlaceholder")}
           type="text"
           registration={register("email", {
             required: true,
@@ -161,17 +161,17 @@ const Register = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("register_error_required")
+              ? t("register.errors.required")
               : errors.email?.type === "pattern"
-                ? t("register_error_email_invalid")
+                ? t("register.errors.emailInvalid")
                 : undefined
           }
         />
 
         <Input
           id="register-password"
-          label={t("register_password")}
-          placeholder={t("register_password_placeholder")}
+          label={t("register.password")}
+          placeholder={t("register.passwordPlaceholder")}
           type="password"
           registration={register("password", {
             required: true,
@@ -183,26 +183,26 @@ const Register = () => {
           })}
           error={
             errors.password?.type === "required"
-              ? t("register_error_required")
+              ? t("register.errors.required")
               : undefined
           }
         />
 
         <div>
           <input type="checkbox" readOnly checked={hasMinLength(password)} />
-          <span>{t("register_password_min_length")}</span>
+          <span>{t("register.passwordMinLength")}</span>
           <input type="checkbox" readOnly checked={hasUpperCase(password)} />
-          <span>{t("register_password_uppercase")}</span>
+          <span>{t("register.passwordUppercase")}</span>
           <input type="checkbox" readOnly checked={hasLowerCase(password)} />
-          <span>{t("register_password_lowercase")}</span>
+          <span>{t("register.passwordLowercase")}</span>
           <input type="checkbox" readOnly checked={hasNumber(password)} />
-          <span>{t("register_password_number")}</span>
+          <span>{t("register.passwordNumber")}</span>
         </div>
 
         <Input
           id="register-confirm-password"
-          label={t("register_confirm_password")}
-          placeholder={t("register_confirm_password_placeholder")}
+          label={t("register.confirmPassword")}
+          placeholder={t("register.confirmPasswordPlaceholder")}
           type="password"
           registration={register("confirmPassword", {
             required: true,
@@ -210,9 +210,9 @@ const Register = () => {
           })}
           error={
             errors.confirmPassword?.type === "required"
-              ? t("register_error_required")
+              ? t("register.errors.required")
               : errors.confirmPassword?.type === "validate"
-                ? t("register_error_password_mismatch")
+                ? t("register.errors.passwordMismatch")
                 : undefined
           }
         />
@@ -223,18 +223,18 @@ const Register = () => {
           {...register("acceptsTerms", { required: true })}
         />
         <label htmlFor="acceptsTerms">
-          {t("register_terms_start")}
-          <a href="/privacy">{t("register_terms_privacy")}</a>
-          {t("register_terms_and")}
-          <a href="/terms">{t("register_terms_conditions")}</a>
+          {t("register.termsStart")}
+          <a href="/privacy">{t("register.termsPrivacy")}</a>
+          {t("register.termsAnd")}
+          <a href="/terms">{t("register.termsConditions")}</a>
         </label>
 
         {errors.acceptsTerms?.type === "required" && (
-          <span>{t("register_error_terms_required")}</span>
+          <span>{t("register.errors.termsRequired")}</span>
         )}
 
         <Button
-          text={t("register_button")}
+          text={t("register.button")}
           type="submit"
           disabled={Object.keys(errors).length > 0}
           isLoading={isLoading}
@@ -242,20 +242,20 @@ const Register = () => {
 
         {errorConnection && <span>{errorConnection}</span>}
 
-        <a href="/login">{t("register_login_link")}</a>
+        <a href="/login">{t("register.loginLink")}</a>
       </form>
 
       <Alert
         isOpen={registerState === "error"}
-        header={t("register_error_email_taken")}
+        header={t("register.errors.emailTaken")}
         onDismiss={() => setRegisterState("form")}
         buttons={[
           {
-            text: t("register_close"),
+            text: t("register.close"),
             role: "cancel",
           },
           {
-            text: t("register_error_email_taken_button"),
+            text: t("register.errors.emailTakenButton"),
             handler: () => router.push("/login"),
           },
         ]}
@@ -263,16 +263,16 @@ const Register = () => {
 
       <Alert
         isOpen={registerState === "success"}
-        header={t("register_verify_title")}
-        message={t("register_verify_message")}
+        header={t("register.verifyTitle")}
+        message={t("register.verifyMessage")}
         onDismiss={() => router.push("/login")}
         buttons={[
           {
-            text: t("register_verify_resend"),
+            text: t("register.verifyResend"),
             handler: () => handleResendEmail(),
           },
           {
-            text: t("register_close"),
+            text: t("register.close"),
             role: "cancel",
           },
         ]}

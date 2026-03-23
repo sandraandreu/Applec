@@ -1,39 +1,42 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import translationEs from "../locals/ES/es.json";
-import translationCa from "../locals/CA/ca.json";
 
+import esCommon from "../locales/es/common.json";
+import esAuth from "../locales/es/auth.json";
+import esWelcome from "../locales/es/welcome.json";
+import esGroups from "../locales/es/groups.json";
 
-// the translations
-// (tip move them in a JSON file and import them,
-// or even better, manage them separated from your code: https://react.i18next.com/guides/multiple-translation-files)
-
+import caCommon from "../locales/ca/common.json";
+import caAuth from "../locales/ca/auth.json";
+import caWelcome from "../locales/ca/welcome.json";
+import caGroups from "../locales/ca/groups.json";
 
 const resources = {
   es: {
-    translation: translationEs,
+    common: esCommon,
+    auth: esAuth,
+    welcome: esWelcome,
+    groups: esGroups,
   },
   ca: {
-    translation: translationCa,
+    common: caCommon,
+    auth: caAuth,
+    welcome: caWelcome,
+    groups: caGroups,
   },
 };
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
     resources,
-    lng: "es", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
-    // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage
-    // if you're using a language detector, do not define the lng option
+    lng: "es",
     fallbackLng: "es",
+    defaultNS: "common",
+    ns: ["common", "auth", "welcome", "groups"],
     interpolation: {
-      escapeValue: false, // react already safes from xss
+      escapeValue: false,
     },
   });
 
 export default i18n;
-
-// import { useTranslation } from 'react-i18next';
-// const { t } = useTranslation();
-// <h1>{t('bienvenida')}</h1>
-        

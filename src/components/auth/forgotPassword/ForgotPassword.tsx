@@ -17,7 +17,7 @@ interface ForgotPasswordFormData {
 }
 
 const ForgotPassword = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const router = useIonRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,7 +43,7 @@ const ForgotPassword = () => {
       setForgotPasswordState("success");
     } catch (error: any) {
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("forgot_password_error_no_connection"));
+        setErrorConnection(t("forgotPassword.errors.noConnection"));
         return;
       }
       console.error("Forgot password error:", error.message);
@@ -56,12 +56,12 @@ const ForgotPassword = () => {
     <>
       {isLoading && <Loading />}
 
-      <h1>{t("forgot_password_title")}</h1>
+      <h1>{t("forgotPassword.title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="forgot_password-email"
-          label={t("forgot_password_email")}
-          placeholder={t("forgot_password_email_placeholder")}
+          label={t("forgotPassword.email")}
+          placeholder={t("forgotPassword.emailPlaceholder")}
           type="text"
           registration={register("email", {
             required: true,
@@ -69,33 +69,33 @@ const ForgotPassword = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("forgot_password_error_required")
+              ? t("forgotPassword.errors.required")
               : errors.email?.type === "pattern"
-                ? t("forgot_password_error_email_invalid")
+                ? t("forgotPassword.errors.emailInvalid")
                 : undefined
           }
         />
 
         <Button
-          text={t("forgot_password_button")}
+          text={t("forgotPassword.button")}
           type="submit"
           disabled={Object.keys(errors).length > 0}
           isLoading={isLoading}
         />
 
-        <a href="/login">{t("forgot_password_back")}</a>
+        <a href="/login">{t("forgotPassword.back")}</a>
 
         {errorConnection && <span>{errorConnection}</span>}
       </form>
 
       <Alert
         isOpen={forgotPasswordState === "success"}
-        header={t("forgot_password_success_title")}
-        message={t("forgot_password_success_message")}
+        header={t("forgotPassword.successTitle")}
+        message={t("forgotPassword.successMessage")}
         onDismiss={() => setForgotPasswordState("form")}
         buttons={[
           {
-            text: t("forgot_password_back"),
+            text: t("forgotPassword.back"),
             handler: () => router.push("/login"),
           },
         ]}
