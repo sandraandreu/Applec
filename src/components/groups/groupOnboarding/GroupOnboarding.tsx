@@ -2,7 +2,7 @@ import "./GroupOnboarding.scss";
 import { useTranslation } from "react-i18next";
 
 const GroupOnboarding = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("groups");
 
   return (
     <>

@@ -22,7 +22,7 @@ interface LoginFormData {
 }
 
 const Login = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("auth");
   const router = useIonRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -62,12 +62,12 @@ const Login = () => {
       router.push("/welcome");
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {
-        setErrorCredentials(t("login_error_invalid_credentials"));
+        setErrorCredentials(t("login.errors.invalidCredentials"));
         setIsLoading(false);
         return;
       }
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("register_error_no_connection"));
+        setErrorConnection(t("login.errors.noConnection"));
         setIsLoading(false);
         return;
       }
@@ -87,12 +87,12 @@ const Login = () => {
     <>
       {isLoading && <Loading />}
 
-      <h1>{t("login_title")}</h1>
+      <h1>{t("login.title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="login-email"
-          label={t("login_email")}
-          placeholder={t("login_email_placeholder")}
+          label={t("login.email")}
+          placeholder={t("login.emailPlaceholder")}
           type="text"
           registration={register("email", {
             required: true,
@@ -100,28 +100,28 @@ const Login = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("login_error_required")
+              ? t("login.errors.required")
               : errors.email?.type === "pattern"
-                ? t("login_error_email_invalid")
+                ? t("login.errors.emailInvalid")
                 : undefined
           }
         />
 
         <Input
           id="login-password"
-          label={t("login_password")}
-          placeholder={t("login_password_placeholder")}
+          label={t("login.password")}
+          placeholder={t("login.passwordPlaceholder")}
           type="password"
           registration={register("password", { required: true })}
           error={
             errors.password?.type === "required"
-              ? t("login_error_required")
+              ? t("login.errors.required")
               : undefined
           }
         />
 
         <Button
-          text={t("login_button")}
+          text={t("login.button")}
           type="submit"
           disabled={Object.keys(errors).length > 0}
           isLoading={isLoading}
@@ -130,22 +130,22 @@ const Login = () => {
         {errorConnection && <span>{errorConnection}</span>}
         {errorCredentials && <span>{errorCredentials}</span>}
 
-        <a href="/register">{t("login_register_link")}</a>
-        <a href="/forgot-password">{t("login_forgot_password")}</a>
+        <a href="/register">{t("login.registerLink")}</a>
+        <a href="/forgot-password">{t("login.forgotPassword")}</a>
       </form>
 
       <Alert
         isOpen={loginState === "unverified"}
-        header={t("login_error_email_not_verified_title")}
-        message={t("login_error_email_not_verified")}
+        header={t("login.errors.emailNotVerifiedTitle")}
+        message={t("login.errors.emailNotVerified")}
         onDismiss={() => setLoginState("form")}
         buttons={[
           {
-            text: t("login_verify_resend"),
+            text: t("login.verifyResend"),
             handler: () => handleResendEmail(),
           },
           {
-            text: t("login_close"),
+            text: t("login.close"),
             role: "cancel",
           },
         ]}
