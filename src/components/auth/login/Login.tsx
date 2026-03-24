@@ -56,6 +56,7 @@ const Login = () => {
 
       if (!userCredential.user.emailVerified) {
         setLoginState("unverified");
+        setIsLoading(false)
         return;
       }
       setIsLoading(false);
@@ -75,7 +76,7 @@ const Login = () => {
     } 
   };
 
-  //Reenviar email de merificación
+  //Reenviar email de verificación
 
   const handleResendEmail = async () => {
     if (user) {

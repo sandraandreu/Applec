@@ -14,7 +14,7 @@ const Home = () => {
   //Estoy utilizando la home para ir haciendo pruebas:)
   return (
     <IonPage>
-      {testAlert === "header" && (
+      <IonContent>
         <IonHeader>
           <IonToolbar>
             <h1>{t("bienvenida")}</h1>
@@ -22,20 +22,7 @@ const Home = () => {
           <button onClick={logout}>Logout</button>
           <LanguageSelector />
         </IonHeader>
-      )}
-      <IonContent>
-        <Alert
-          isOpen={testAlert === "alert"}
-          header={t("login_error_email_not_verified_title")}
-          message={t("login_error_email_not_verified")}
-          onDismiss={() => setTestAlert("header")}
-          buttons={[
-            {
-              text: t("login_close"),
-              role: "cancel",
-            },
-          ]}
-        />
+        
       </IonContent>
     </IonPage>
   );

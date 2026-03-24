@@ -12,11 +12,17 @@ interface InputProps {
 }
 
 const Input = ({
-  label, placeholder, type = "text", id, error, registration
+  label,
+  placeholder,
+  type = "text",
+  id,
+  error,
+  registration,
 }: InputProps) => {
   return (
     <>
-      <label htmlFor={id}>{label}</label>
+      <div>
+        <label htmlFor={id}>{label}</label>
         <input
           id={id}
           type={type}
@@ -24,6 +30,7 @@ const Input = ({
           {...registration}
         />
         {error && <span>{error}</span>}
+      </div>
     </>
   );
 };
