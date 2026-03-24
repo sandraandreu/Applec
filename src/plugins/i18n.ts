@@ -4,25 +4,25 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import esCommon from "../locales/es/common.json";
 import esAuth from "../locales/es/auth.json";
-import esWelcome from "../locales/es/welcome.json";
+import esOnboarding from "../locales/es/onboarding.json";
 import esGroups from "../locales/es/groups.json";
 
 import caCommon from "../locales/ca/common.json";
 import caAuth from "../locales/ca/auth.json";
-import caWelcome from "../locales/ca/welcome.json";
+import caOnboarding from "../locales/ca/onboarding.json";
 import caGroups from "../locales/ca/groups.json";
 
 const resources = {
   es: {
     common: esCommon,
     auth: esAuth,
-    welcome: esWelcome,
+    onboarding: esOnboarding,
     groups: esGroups,
   },
   ca: {
     common: caCommon,
     auth: caAuth,
-    welcome: caWelcome,
+    onboarding: caOnboarding,
     groups: caGroups,
   },
 };
@@ -34,7 +34,7 @@ i18n
     resources,
     fallbackLng: "es",
     defaultNS: "common",
-    ns: ["common", "auth", "welcome", "groups"],
+    ns: ["common", "auth", "onboarding", "groups"],
     interpolation: {
       escapeValue: false,
     },

@@ -1,0 +1,11 @@
+{
+  "welcome": {
+    "title": "Hola, {{name}}",
+    "subtitle": "Nos alegra tenerte aquí.",
+    "description": "Applec es el espacio de tu falla para organizaros, compartir y estar conectados."
+  },
+  "language": {
+    "title": "¿En qué idioma prefieres usar Applec?",
+    "description": "Puedes cambiarlo cuando quieras desde tu perfil."
+  }
+}

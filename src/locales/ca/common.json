@@ -3,5 +3,21 @@
   "language": {
     "spanish": "Castellà",
     "valencian": "Valencià"
+  },
+  "buttons": {
+    "close": "Tancar",
+    "back": "Tornar",
+    "continue": "Continuar",
+    "start": "Començar",
+    "resendEmail": "Reenviar correu"
+  },
+  "fields": {
+    "email": "Correu electrònic",
+    "password": "Contrasenya"
+  },
+  "errors": {
+    "required": "Aquest camp és obligatori",
+    "emailInvalid": "Introdueix un correu electrònic vàlid",
+    "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
   }
 }

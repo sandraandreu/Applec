@@ -1,6 +1,6 @@
 import { IonPage, IonContent } from "@ionic/react";
 import "./WelcomePage.scss";
-import Welcome from "../../components/welcome/Welcome";
+import Welcome from "../../../components/onboarding/welcome/Welcome";
 
 const WelcomePage = () => {
   return (

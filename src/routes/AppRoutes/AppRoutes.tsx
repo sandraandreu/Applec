@@ -9,8 +9,9 @@ import LoginPage from "../../pages/auth/login/LoginPage";
 import RegisterPage from "../../pages/auth/register/RegisterPage";
 import ForgotPasswordPage from "../../pages/auth/forgotPassword/ForgotPasswordPage";
 import CreateGroupPage from "../../pages/groups/createGroup/CreateGroupPage";
-import GroupOnboardingPage from "../../pages/groups/groupOnboarding/GroupOnboardingPage";
-import WelcomePage from "../../pages/welcome/WelcomePage";
+import WelcomePage from "../../pages/onboarding/welcome/WelcomePage";
+import GroupPage from "../../pages/onboarding/group/GroupPage";
+import LanguagePage from "../../pages/onboarding/language/LanguagePage";
 
 const AppRoutes = () => (
   <>
@@ -60,7 +61,7 @@ const AppRoutes = () => (
 
         <Route
           exact
-          path="/welcome"
+          path="/onboarding/welcome"
           render={() => (
             <PrivateRoutes>
               <WelcomePage />
@@ -70,10 +71,20 @@ const AppRoutes = () => (
 
         <Route
           exact
-          path="/group-onboarding"
+          path="/onboarding/language"
           render={() => (
             <PrivateRoutes>
-              <GroupOnboardingPage />
+              <LanguagePage />
+            </PrivateRoutes>
+          )}
+        />
+
+        <Route
+          exact
+          path="/onboarding/group"
+          render={() => (
+            <PrivateRoutes>
+              <GroupPage />
             </PrivateRoutes>
           )}
         />

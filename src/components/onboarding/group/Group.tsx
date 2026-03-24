@@ -1,7 +1,7 @@
-import "./GroupOnboarding.scss";
+import "./Group.scss";
 import { useTranslation } from "react-i18next";
 
-const GroupOnboarding = () => {
+const Group = () => {
   const { t } = useTranslation("groups");
 
   return (
@@ -11,4 +11,4 @@ const GroupOnboarding = () => {
   );
 };
 
-export default GroupOnboarding;
+export default Group;

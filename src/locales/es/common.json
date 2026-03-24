@@ -3,5 +3,21 @@
   "language": {
     "spanish": "Castellano",
     "valencian": "Valenciano"
+  },
+  "buttons": {
+    "close": "Cerrar",
+    "back": "Volver",
+    "continue": "Continuar",
+    "start": "Empezar",
+    "resendEmail": "Reenviar correo"
+  },
+  "fields": {
+    "email": "Correo electrónico",
+    "password": "Contraseña"
+  },
+  "errors": {
+    "required": "Este campo es obligatorio",
+    "emailInvalid": "Introduce un correo electrónico válido",
+    "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
   }
 }

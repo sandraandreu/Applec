@@ -23,6 +23,7 @@ interface LoginFormData {
 
 const Login = () => {
   const { t } = useTranslation("auth");
+  const { t: tc } = useTranslation("common");
   const router = useIonRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -60,7 +61,7 @@ const Login = () => {
         return;
       }
       setIsLoading(false);
-      router.push("/welcome");
+      router.push("/onboarding/welcome");
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {
         setErrorCredentials(t("login.errors.invalidCredentials"));
@@ -68,12 +69,12 @@ const Login = () => {
         return;
       }
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("login.errors.noConnection"));
+        setErrorConnection(tc("errors.noConnection"));
         setIsLoading(false);
         return;
       }
       console.error("Email sign up error:", error.message);
-    } 
+    }
   };
 
   //Reenviar email de verificación
@@ -92,7 +93,7 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="login-email"
-          label={t("login.email")}
+          label={tc("fields.email")}
           placeholder={t("login.emailPlaceholder")}
           type="text"
           registration={register("email", {
@@ -101,22 +102,22 @@ const Login = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("login.errors.required")
+              ? tc("errors.required")
               : errors.email?.type === "pattern"
-                ? t("login.errors.emailInvalid")
+                ? tc("errors.emailInvalid")
                 : undefined
           }
         />
 
         <Input
           id="login-password"
-          label={t("login.password")}
+          label={tc("fields.password")}
           placeholder={t("login.passwordPlaceholder")}
           type="password"
           registration={register("password", { required: true })}
           error={
             errors.password?.type === "required"
-              ? t("login.errors.required")
+              ? tc("errors.required")
               : undefined
           }
         />
@@ -142,11 +143,11 @@ const Login = () => {
         onDismiss={() => setLoginState("form")}
         buttons={[
           {
-            text: t("login.verifyResend"),
+            text: tc("buttons.resendEmail"),
             handler: () => handleResendEmail(),
           },
           {
-            text: t("login.close"),
+            text: tc("buttons.close"),
             role: "cancel",
           },
         ]}

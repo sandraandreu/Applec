@@ -18,6 +18,7 @@ interface ForgotPasswordFormData {
 
 const ForgotPassword = () => {
   const { t } = useTranslation("auth");
+  const { t: tc } = useTranslation("common");
   const router = useIonRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -43,7 +44,7 @@ const ForgotPassword = () => {
       setForgotPasswordState("success");
     } catch (error: any) {
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("forgotPassword.errors.noConnection"));
+        setErrorConnection(tc("errors.noConnection"));
         return;
       }
       console.error("Forgot password error:", error.message);
@@ -60,7 +61,7 @@ const ForgotPassword = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="forgot_password-email"
-          label={t("forgotPassword.email")}
+          label={tc("fields.email")}
           placeholder={t("forgotPassword.emailPlaceholder")}
           type="text"
           registration={register("email", {
@@ -69,9 +70,9 @@ const ForgotPassword = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("forgotPassword.errors.required")
+              ? tc("errors.required")
               : errors.email?.type === "pattern"
-                ? t("forgotPassword.errors.emailInvalid")
+                ? tc("errors.emailInvalid")
                 : undefined
           }
         />

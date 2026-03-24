@@ -43,6 +43,7 @@ const hasNumber = (value: string) => /[0-9]/.test(value);
 const Register = () => {
   const router = useIonRouter();
   const { t } = useTranslation("auth");
+  const { t: tc } = useTranslation("common");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [registerState, setRegisterState] = useState<
@@ -96,7 +97,7 @@ const Register = () => {
         return;
       }
       if (error.code === "auth/network-request-failed") {
-        setErrorConnection(t("register.errors.noConnection"));
+        setErrorConnection(tc("errors.noConnection"));
         return;
       }
       setRegisterState("error");
@@ -106,7 +107,7 @@ const Register = () => {
     }
   };
 
-  //Reenviar email de merificación
+  //Reenviar email de verificación
 
   const handleResendEmail = async () => {
     if (user) {
@@ -143,7 +144,7 @@ const Register = () => {
           registration={register("username", { required: true })}
           error={
             errors.username?.type === "required"
-              ? t("register.errors.required")
+              ? tc("errors.required")
               : usernameError
                 ? usernameError
                 : undefined
@@ -152,7 +153,7 @@ const Register = () => {
 
         <Input
           id="register-email"
-          label={t("register.email")}
+          label={tc("fields.email")}
           placeholder={t("register.emailPlaceholder")}
           type="text"
           registration={register("email", {
@@ -161,16 +162,16 @@ const Register = () => {
           })}
           error={
             errors.email?.type === "required"
-              ? t("register.errors.required")
+              ? tc("errors.required")
               : errors.email?.type === "pattern"
-                ? t("register.errors.emailInvalid")
+                ? tc("errors.emailInvalid")
                 : undefined
           }
         />
 
         <Input
           id="register-password"
-          label={t("register.password")}
+          label={tc("fields.password")}
           placeholder={t("register.passwordPlaceholder")}
           type="password"
           registration={register("password", {
@@ -183,7 +184,7 @@ const Register = () => {
           })}
           error={
             errors.password?.type === "required"
-              ? t("register.errors.required")
+              ? tc("errors.required")
               : undefined
           }
         />
@@ -210,7 +211,7 @@ const Register = () => {
           })}
           error={
             errors.confirmPassword?.type === "required"
-              ? t("register.errors.required")
+              ? tc("errors.required")
               : errors.confirmPassword?.type === "validate"
                 ? t("register.errors.passwordMismatch")
                 : undefined
@@ -251,7 +252,7 @@ const Register = () => {
         onDismiss={() => setRegisterState("form")}
         buttons={[
           {
-            text: t("register.close"),
+            text: tc("buttons.close"),
             role: "cancel",
           },
           {
@@ -268,11 +269,11 @@ const Register = () => {
         onDismiss={() => router.push("/login")}
         buttons={[
           {
-            text: t("register.verifyResend"),
+            text: tc("buttons.resendEmail"),
             handler: () => handleResendEmail(),
           },
           {
-            text: t("register.close"),
+            text: tc("buttons.close"),
             role: "cancel",
           },
         ]}
