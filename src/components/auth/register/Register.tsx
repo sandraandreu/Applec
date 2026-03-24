@@ -89,8 +89,8 @@ const Register = () => {
       setRegisterState("success");
     } catch (error: any) {
       console.error("Error completo:", error);
-  console.error("Código:", error.code);
-  console.error("Mensaje:", error.message);
+      console.error("Código:", error.code);
+      console.error("Mensaje:", error.message);
       if (error.message === "username-already-exists") {
         setUsernameError(t("register_error_username_taken"));
         return;
