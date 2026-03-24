@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.scss";
 import { IonApp, setupIonicReact } from "@ionic/react";
 import AppRoutes from "./routes/appRoutes/AppRoutes";
 import { AuthContextProvider } from "./context/auth/AuthContextProvider";
