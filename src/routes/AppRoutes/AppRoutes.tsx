@@ -1,9 +1,6 @@
 import { IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Redirect } from "react-router-dom";
-//hola
-import PrivateRoutes from "./PrivateRoutes";
-import PublicRoutes from "./PublicRoutes";
 
 import Home from "../../pages/home/Home";
 import LoginPage from "../../pages/auth/login/LoginPage";
