@@ -4,6 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 //hola
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
+// hola
 
 import Home from "../../pages/home/Home";
 import LoginPage from "../../pages/auth/login/LoginPage";
@@ -14,6 +15,7 @@ import WelcomePage from "../../pages/onboarding/welcome/WelcomePage";
 import GroupPage from "../../pages/onboarding/group/GroupPage";
 import LanguagePage from "../../pages/onboarding/language/LanguagePage";
 
+// 2
 const AppRoutes = () => (
   <>
     <IonReactRouter>
@@ -105,3 +107,5 @@ const AppRoutes = () => (
 );
 
 export default AppRoutes;
+
+// 4

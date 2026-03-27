@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { Redirect } from "react-router-dom";
 import { useAuthContext } from "../../context/auth/AuthContext";
 
+// 3
 interface PrivateRoutesProps {
   children: ReactNode;
 }
