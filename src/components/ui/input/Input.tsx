@@ -9,6 +9,8 @@ interface InputProps {
   id?: string;
   error?: string;
   registration?: UseFormRegisterReturn;
+  maxLength?: number;
+  currentLength?: number;
 }
 
 const Input = ({
@@ -18,6 +20,8 @@ const Input = ({
   id,
   error,
   registration,
+  maxLength,
+  currentLength,
 }: InputProps) => {
   return (
     <>
@@ -29,6 +33,7 @@ const Input = ({
           placeholder={placeholder}
           {...registration}
         />
+        {maxLength && <span>{currentLength}/{maxLength}</span>}
         {error && <span>{error}</span>}
       </div>
     </>

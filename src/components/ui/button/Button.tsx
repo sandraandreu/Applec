@@ -13,7 +13,7 @@ interface ButtonProps {
 
 const Button = ({
   text,
-  type = "submit",
+  type = "button",
   variant = "primary",
   isActive,
   onClick,

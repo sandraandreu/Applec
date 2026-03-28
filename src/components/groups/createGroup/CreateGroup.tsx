@@ -1,20 +1,127 @@
+import Button from "../../ui/button/Button";
+import Input from "../../ui/input/Input";
 import "./CreateGroup.scss";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Loading from "../../feedback/loading/Loading";
+import { getFirestore, doc, setDoc, addDoc, collection, updateDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import app from "../../../plugins/firebase";
+import { useAuthContext } from "../../../context/auth/AuthContext";
+import { useIonRouter } from "@ionic/react";
 
-//primero tenemos que tener una pantalla que sea con dos botones para elegir si crear grupo o unirte a uno si le das a crear grupo te llevara a esta pantalla
-//en el return tiene que haber un formulario con inputs y un boton y estaran dentro de un formulario de react hook
-//los inputs seran nombre del grupo, descripcion opcional, foto opcional
-//al pulsar el boton submit primero hara todas las comprobaciones en el formulario y si hay errores te los mostrara o junto a los inputs o si es otro tipo de error con un alert
-//si todas las comprobaciones van bien mirara si ya en firebase esta creado la base de datos de groups, si no esta creada la creara, luego añadira un nuevo grupo que tendra todos los datos,el id del grupo, quien lo haya creado pasara a ser administrador del grupo, los miembros que tiene que ahora mismo sera ninguno
-//al usuario que ha creado el grupo se le añadera a su usuario el id del grupo al que pertenece
-
+const db = getFirestore(app);
+interface CreateGroupFormData {
+  name: string;
+  description: string;
+}
 
 const CreateGroup = () => {
   const { t } = useTranslation("groups");
+  const { t: tc } = useTranslation("common");
+  const router = useIonRouter();
+  const { user } = useAuthContext();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorConnection, setErrorConnection] = useState<string>("");
+
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateGroupFormData>();
+
+  const name = watch("name", "");
+  const description = watch("description", "");
+
+  const onSubmit = (data: CreateGroupFormData) => {
+    handleCreateGroup(data.name, data.description);
+  };
+
+  const handleCreateGroup = async (name: string, description: string) => {
+  try {
+    setIsLoading(true);
+
+    const inviteCode = crypto.randomUUID();
+
+    const groupRef = await addDoc(collection(db, "groups"), {
+      name: name,
+      description: description,
+      inviteCode: inviteCode,
+      adminId: user?.uid,
+      members: [{ uid: user?.uid, role: "admin" }],
+      createdAt: new Date(),
+    });
+
+    await updateDoc(doc(db, "users", user!.uid), {
+      groupId: groupRef.id,
+    });
+
+    router.push("/home");
+  } catch (error: any) {
+    if (error.code === "auth/network-request-failed") {
+      setErrorConnection(tc("errors.noConnection"));
+      return;
+    }
+    console.error("Create group error:", error.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <>
-      
+      {isLoading && <Loading />}
+
+      <h1>{t("createGroup.title")}</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          id="group-name"
+          label={t("createGroup.name")}
+          placeholder={t("createGroup.namePlaceholder")}
+          type="text"
+          registration={register("name", {
+            required: true,
+            maxLength: 50,
+          })}
+          maxLength={50}
+          currentLength={name.length}
+          error={
+            errors.name?.type === "required"
+              ? tc("errors.required")
+              : errors.name?.type === "maxLength"
+                ? t("createGroup.errors.nameTooLong")
+                : undefined
+          }
+        />
+
+        <Input
+          id="group-description"
+          label={t("createGroup.description")}
+          placeholder={t("createGroup.descriptionPlaceholder")}
+          type="text"
+          registration={register("description", {
+            maxLength: 200,
+          })}
+          maxLength={200}
+          currentLength={description.length}
+          error={
+            errors.description?.type === "maxLength"
+              ? t("createGroup.errors.descriptionTooLong")
+              : undefined
+          }
+        />
+        <Button
+          text={t("createGroup.button")}
+          type="submit"
+          disabled={Object.keys(errors).length > 0}
+          isLoading={isLoading}
+        />
+
+        {errorConnection && <span>{errorConnection}</span>}
+      </form>
     </>
   );
 };

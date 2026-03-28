@@ -7,5 +7,11 @@
   "language": {
     "title": "En quin idioma prefereixes usar Applec?",
     "description": "Pots canviar-ho quan vulgues des del teu perfil."
+  },
+  "group": {
+    "title": "A quina falla pertanys?",
+    "description": "Crea una nova falla o uneix-te a una existent amb un enllaç d'invitació.",
+    "createGroup": "Crear una falla",
+    "joinGroup": "Tinc un enllaç d'invitació"
   }
 }

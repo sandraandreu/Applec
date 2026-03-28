@@ -1,8 +1,17 @@
 {
-  "onboarding": {
-    "title": "¿A qué falla perteneces?",
-    "description": "Crea una nueva falla o únete a una existente con un enlace de invitación.",
-    "createGroup": "Crear una falla",
-    "joinGroup": "Tengo un enlace de invitación"
+  "createGroup": {
+    "title": "Crear una falla",
+    "name": "Nombre de la falla",
+    "namePlaceholder": "Nombre de tu falla",
+    "nameCounter": "{{count}}/50",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Describe tu falla (opcional)",
+    "descriptionCounter": "{{count}}/200",
+    "button": "Crear falla",
+    "errors": {
+      "nameRequired": "El nombre de la falla es obligatorio",
+      "nameTooLong": "El nombre no puede superar los 50 caracteres",
+      "descriptionTooLong": "La descripción no puede superar los 200 caracteres"
+    }
   }
 }
