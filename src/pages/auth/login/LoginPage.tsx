@@ -1,14 +1,13 @@
-import { IonPage, IonContent } from "@ionic/react";
 import "./LoginPage.scss";
 import Login from "../../../components/auth/login/Login";
 
 const LoginPage = () => {
   return (
-    <IonPage>
-      <IonContent>
+    <div className="page">
+      <main className="page-content">
         <Login />
-      </IonContent>
-    </IonPage>
+      </main>
+    </div>
   );
 };
 

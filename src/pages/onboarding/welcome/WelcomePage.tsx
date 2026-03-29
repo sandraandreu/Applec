@@ -1,14 +1,13 @@
-import { IonPage, IonContent } from "@ionic/react";
 import "./WelcomePage.scss";
 import Welcome from "../../../components/onboarding/welcome/Welcome";
 
 const WelcomePage = () => {
   return (
-    <IonPage>
-      <IonContent>
+    <div className="page">
+      <main className="page-content">
         <Welcome />
-      </IonContent>
-    </IonPage>
+      </main>
+    </div>
   );
 };
 

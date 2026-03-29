@@ -1,14 +1,13 @@
-import { IonPage, IonContent } from "@ionic/react";
 import "./GroupPage.scss";
 import Group from "../../../components/onboarding/group/Group";
 
 const GroupPage = () => {
   return (
-    <IonPage>
-      <IonContent>
+    <div className="page">
+      <main className="page-content">
         <Group />
-      </IonContent>
-    </IonPage>
+      </main>
+    </div>
   );
 };
 

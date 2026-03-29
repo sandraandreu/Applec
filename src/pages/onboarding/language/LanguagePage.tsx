@@ -1,14 +1,13 @@
-import { IonPage, IonContent } from "@ionic/react";
 import "./LanguagePage.scss";
 import Language from "../../../components/onboarding/language/Language";
 
 const LanguagePage = () => {
   return (
-    <IonPage>
-      <IonContent>
+    <div className="page">
+      <main className="page-content">
         <Language />
-      </IonContent>
-    </IonPage>
+      </main>
+    </div>
   );
 };
 

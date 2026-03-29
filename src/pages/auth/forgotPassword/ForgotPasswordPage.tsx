@@ -1,14 +1,13 @@
-import { IonPage, IonContent } from "@ionic/react";
 import "./ForgotPasswordPage.scss";
 import ForgotPassword from "../../../components/auth/forgotPassword/ForgotPassword";
 
 const ForgotPasswordPage = () => {
   return (
-    <IonPage>
-      <IonContent>
+    <div className="page">
+      <main className="page-content">
         <ForgotPassword />
-      </IonContent>
-    </IonPage>
+      </main>
+    </div>
   );
 };
 
