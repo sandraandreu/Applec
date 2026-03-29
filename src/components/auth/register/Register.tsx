@@ -1,6 +1,6 @@
 import "./Register.scss";
 import { useTranslation } from "react-i18next";
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   getAuth,
@@ -41,7 +41,7 @@ const hasLowerCase = (value: string) => /[a-z]/.test(value);
 const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
-  const router = useIonRouter();
+  const history = useHistory();
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
 
@@ -257,7 +257,7 @@ const Register = () => {
           },
           {
             text: t("register.errors.emailTakenButton"),
-            handler: () => router.push("/login"),
+            handler: () => history.push("/login"),
           },
         ]}
       />
@@ -266,7 +266,7 @@ const Register = () => {
         isOpen={registerState === "success"}
         header={t("register.verifyTitle")}
         message={t("register.verifyMessage")}
-        onDismiss={() => router.push("/login")}
+        onDismiss={() => history.push("/login")}
         buttons={[
           {
             text: tc("buttons.resendEmail"),

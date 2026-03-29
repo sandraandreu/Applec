@@ -1,4 +1,4 @@
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import LanguageSelector from "../../ui/language/LanguageSelector";
 import "./Language.scss";
 import { useTranslation } from "react-i18next";
@@ -7,7 +7,7 @@ import Button from "../../ui/button/Button";
 const Language = () => {
   const { t } = useTranslation("onboarding");
   const { t: tc } = useTranslation("common");
-  const router = useIonRouter();
+  const history = useHistory();
 
   return (
     <>
@@ -16,7 +16,7 @@ const Language = () => {
       <LanguageSelector />
       <Button
           text={tc("buttons.continue")}
-          onClick={() => router.push("/onboarding/group")}
+          onClick={() => history.push("/onboarding/group")}
         />
     </>
   );

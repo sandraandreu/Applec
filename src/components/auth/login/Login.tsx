@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/alerts/Alert";
 import Loading from "../../feedback/loading/Loading";
@@ -24,7 +24,7 @@ interface LoginFormData {
 const Login = () => {
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
-  const router = useIonRouter();
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
@@ -61,7 +61,7 @@ const Login = () => {
         return;
       }
       setIsLoading(false);
-      router.push("/onboarding/welcome");
+      history.push("/onboarding/welcome");
     } catch (error: any) {
       if (error.code === "auth/invalid-credential") {
         setErrorCredentials(t("login.errors.invalidCredentials"));
