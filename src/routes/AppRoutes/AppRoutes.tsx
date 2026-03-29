@@ -11,6 +11,7 @@ import CreateGroupPage from "../../pages/groups/createGroup/CreateGroupPage";
 import WelcomePage from "../../pages/onboarding/welcome/WelcomePage";
 import GroupPage from "../../pages/onboarding/group/GroupPage";
 import LanguagePage from "../../pages/onboarding/language/LanguagePage";
+import JoinGroupPage from "../../pages/groups/joinGroup/JoinGroupPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -21,7 +22,7 @@ const AppRoutes = () => (
         exact
         path="/home"
         render={() => (
-          <PrivateRoutes>
+          <PrivateRoutes requiresGroup>
             <Home />
           </PrivateRoutes>
         )}
@@ -93,6 +94,16 @@ const AppRoutes = () => (
         render={() => (
           <PrivateRoutes>
             <CreateGroupPage />
+          </PrivateRoutes>
+        )}
+      />
+
+      <Route
+        exact
+        path="/join-group"
+        render={() => (
+          <PrivateRoutes>
+            <JoinGroupPage/>
           </PrivateRoutes>
         )}
       />

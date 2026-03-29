@@ -5,10 +5,17 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Loading from "../../feedback/loading/Loading";
-import { getFirestore, doc, addDoc, collection, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  addDoc,
+  collection,
+  updateDoc,
+} from "firebase/firestore";
 import app from "../../../plugins/firebase";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useHistory } from "react-router-dom";
+import { useGroupContext } from "../../../context/group/GroupContext";
 
 const db = getFirestore(app);
 interface CreateGroupFormData {
@@ -21,6 +28,7 @@ const CreateGroup = () => {
   const { t: tc } = useTranslation("common");
   const history = useHistory();
   const { user } = useAuthContext();
+  const { refreshGroup } = useGroupContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorConnection, setErrorConnection] = useState<string>("");
@@ -40,36 +48,37 @@ const CreateGroup = () => {
   };
 
   const handleCreateGroup = async (name: string, description: string) => {
-  try {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    const inviteCode = crypto.randomUUID();
+      const inviteCode = crypto.randomUUID();
 
-    const groupRef = await addDoc(collection(db, "groups"), {
-      name: name,
-      description: description,
-      inviteCode: inviteCode,
-      adminId: user?.uid,
-      members: [{ uid: user?.uid, role: "admin" }],
-      createdAt: new Date(),
-    });
+      const groupRef = await addDoc(collection(db, "groups"), {
+        name: name,
+        description: description,
+        inviteCode: inviteCode,
+        adminId: user?.uid,
+        members: [{ uid: user?.uid, role: "admin" }],
+        createdAt: new Date(),
+      });
 
-    await updateDoc(doc(db, "users", user!.uid), {
-      groupId: groupRef.id,
-    });
+      await updateDoc(doc(db, "users", user!.uid), {
+        groupId: groupRef.id,
+      });
 
-    history.push("/home");
-  } catch (error: unknown) {
-    const firebaseError = error as { code?: string; message?: string };
-    if (firebaseError.code === "auth/network-request-failed") {
-      setErrorConnection(tc("errors.noConnection"));
-      return;
+      await refreshGroup();
+      history.push("/home");
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string; message?: string };
+      if (firebaseError.code === "auth/network-request-failed") {
+        setErrorConnection(tc("errors.noConnection"));
+        return;
+      }
+      console.error("Create group error:", firebaseError.message);
+    } finally {
+      setIsLoading(false);
     }
-    console.error("Create group error:", firebaseError.message);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <>

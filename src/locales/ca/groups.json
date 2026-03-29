@@ -13,5 +13,19 @@
       "nameTooLong": "El nom no pot superar els 50 caràcters",
       "descriptionTooLong": "La descripció no pot superar els 200 caràcters"
     }
+  },
+  "joinGroup": {
+    "title": "Unir-se a una falla",
+    "code": "Codi d'invitació",
+    "codePlaceholder": "Introdueix el codi",
+    "button": "Buscar falla",
+    "groupFound": "Falla trobada",
+    "joinButton": "Unir-me a aquesta falla",
+    "errors": {
+      "codeRequired": "El codi d'invitació és obligatori",
+      "codeNotFound": "El codi no és vàlid o no existeix",
+      "alreadyMember": "Ja pertanys a aquesta falla",
+      "alreadyInGroup": "Ja pertanys a una falla. Has d'eixir primer per unir-te a una altra"
+    }
   }
 }

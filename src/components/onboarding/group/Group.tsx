@@ -15,7 +15,7 @@ const Group = () => {
         text={t("group.createGroup")}
         onClick={() => history.push("/create-group")}
       />
-      <Button text={t("group.joinGroup")} onClick={() => history.push("")} />
+      <Button text={t("group.joinGroup")} onClick={() => history.push("/join-group")} />
     </>
   );
 };

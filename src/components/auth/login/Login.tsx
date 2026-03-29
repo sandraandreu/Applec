@@ -61,7 +61,7 @@ const Login = () => {
         return;
       }
       setIsLoading(false);
-      history.push("/onboarding/welcome");
+      history.push("/home");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/invalid-credential") {
