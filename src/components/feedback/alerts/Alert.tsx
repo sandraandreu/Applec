@@ -1,4 +1,4 @@
-import { IonAlert } from "@ionic/react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./Alert.scss";
 
@@ -21,14 +21,46 @@ const Alert = ({
   onDismiss,
   buttons,
 }: AlertProps) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (isOpen && !dialog.open) {
+      dialog.showModal();
+    } else if (!isOpen && dialog.open) {
+      dialog.close();
+    }
+  }, [isOpen]);
+
+  const handleButtonClick = (button: AlertProps["buttons"][number]) => {
+    button.handler?.();
+    onDismiss();
+  };
+
   return createPortal(
-    <IonAlert
-      isOpen={isOpen}
-      header={header}
-      message={message}
-      buttons={buttons}
-      onDidDismiss={onDismiss}
-    />,
+    <dialog
+      ref={dialogRef}
+      className="alert"
+      onClose={onDismiss}
+    >
+      <div className="alert__content">
+        {header && <h2 className="alert__header">{header}</h2>}
+        {message && <p className="alert__message">{message}</p>}
+        <div className="alert__buttons">
+          {buttons.map((button, index) => (
+            <button
+              key={index}
+              className={`alert__button ${button.role === "cancel" ? "alert__button--cancel" : ""}`}
+              onClick={() => handleButtonClick(button)}
+            >
+              {button.text}
+            </button>
+          ))}
+        </div>
+      </div>
+    </dialog>,
     document.body
   );
 };

@@ -1,20 +1,15 @@
-import { IonSpinner } from "@ionic/react";
 import "./Loading.scss";
-
-type SpinnerName = "bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-small" | "lines-sharp" | "lines-sharp-small";
 
 interface LoadingProps {
   message?: string;
-  name?: SpinnerName;
-  color?: string;
 }
 
-const Loading = ({ message, name = "circles", color = "primary" }: LoadingProps) => {
+const Loading = ({ message }: LoadingProps) => {
   return (
-    <>
-      <IonSpinner name={name} color={color} />
-      {message && <p>{message}</p>}
-    </>
+    <div className="loading">
+      <div className="loading__spinner" />
+      {message && <p className="loading__message">{message}</p>}
+    </div>
   );
 };
 

@@ -1,6 +1,4 @@
 import "./Button.scss";
-import Loading from "../../feedback/loading/Loading";
-
 interface ButtonProps {
   text: string;
   type?: "submit" | "button" | "reset";

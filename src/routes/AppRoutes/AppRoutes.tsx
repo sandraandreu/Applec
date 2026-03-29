@@ -1,7 +1,5 @@
-import { IonRouterOutlet } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import { Route, Redirect } from "react-router-dom";
-//hola
+import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
 
@@ -15,93 +13,91 @@ import GroupPage from "../../pages/onboarding/group/GroupPage";
 import LanguagePage from "../../pages/onboarding/language/LanguagePage";
 
 const AppRoutes = () => (
-  <>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/" render={() => <Redirect to="/home" />} />
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" render={() => <Redirect to="/home" />} />
 
-        <Route
-          exact
-          path="/home"
-          render={() => (
-            <PrivateRoutes>
-              <Home />
-            </PrivateRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/home"
+        render={() => (
+          <PrivateRoutes>
+            <Home />
+          </PrivateRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/register"
-          render={() => (
-            <PublicRoutes>
-              <RegisterPage />
-            </PublicRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/register"
+        render={() => (
+          <PublicRoutes>
+            <RegisterPage />
+          </PublicRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/login"
-          render={() => (
-            <PublicRoutes>
-              <LoginPage />
-            </PublicRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/login"
+        render={() => (
+          <PublicRoutes>
+            <LoginPage />
+          </PublicRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/forgot-password"
-          render={() => (
-            <PublicRoutes>
-              <ForgotPasswordPage />
-            </PublicRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/forgot-password"
+        render={() => (
+          <PublicRoutes>
+            <ForgotPasswordPage />
+          </PublicRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/onboarding/welcome"
-          render={() => (
-            <PrivateRoutes>
-              <WelcomePage />
-            </PrivateRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/onboarding/welcome"
+        render={() => (
+          <PrivateRoutes>
+            <WelcomePage />
+          </PrivateRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/onboarding/language"
-          render={() => (
-            <PrivateRoutes>
-              <LanguagePage />
-            </PrivateRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/onboarding/language"
+        render={() => (
+          <PrivateRoutes>
+            <LanguagePage />
+          </PrivateRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/onboarding/group"
-          render={() => (
-            <PrivateRoutes>
-              <GroupPage />
-            </PrivateRoutes>
-          )}
-        />
+      <Route
+        exact
+        path="/onboarding/group"
+        render={() => (
+          <PrivateRoutes>
+            <GroupPage />
+          </PrivateRoutes>
+        )}
+      />
 
-        <Route
-          exact
-          path="/create-group"
-          render={() => (
-            <PrivateRoutes>
-              <CreateGroupPage />
-            </PrivateRoutes>
-          )}
-        />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </>
+      <Route
+        exact
+        path="/create-group"
+        render={() => (
+          <PrivateRoutes>
+            <CreateGroupPage />
+          </PrivateRoutes>
+        )}
+      />
+    </Switch>
+  </BrowserRouter>
 );
 
 export default AppRoutes;

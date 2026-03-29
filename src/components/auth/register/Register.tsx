@@ -1,6 +1,6 @@
 import "./Register.scss";
 import { useTranslation } from "react-i18next";
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   getAuth,
@@ -41,7 +41,7 @@ const hasLowerCase = (value: string) => /[a-z]/.test(value);
 const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
-  const router = useIonRouter();
+  const history = useHistory();
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
 
@@ -49,7 +49,7 @@ const Register = () => {
   const [registerState, setRegisterState] = useState<
     "form" | "success" | "error"
   >("form");
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<import("firebase/auth").User | null>(null);
   const [usernameError, setUsernameError] = useState<string>("");
   const [errorConnection, setErrorConnection] = useState<string>("");
 
@@ -88,20 +88,21 @@ const Register = () => {
 
       await signOut(auth);
       setRegisterState("success");
-    } catch (error: any) {
-      console.error("Error completo:", error);
-      console.error("Código:", error.code);
-      console.error("Mensaje:", error.message);
-      if (error.message === "username-already-exists") {
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string; message?: string };
+      console.error("Error completo:", firebaseError);
+      console.error("Código:", firebaseError.code);
+      console.error("Mensaje:", firebaseError.message);
+      if (firebaseError.message === "username-already-exists") {
         setUsernameError(t("register.errors.usernameTaken"));
         return;
       }
-      if (error.code === "auth/network-request-failed") {
+      if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
       setRegisterState("error");
-      console.error("Email sign up error:", error.message);
+      console.error("Email sign up error:", firebaseError.message);
     } finally {
       setIsLoading(false);
     }
@@ -257,7 +258,7 @@ const Register = () => {
           },
           {
             text: t("register.errors.emailTakenButton"),
-            handler: () => router.push("/login"),
+            handler: () => history.push("/login"),
           },
         ]}
       />
@@ -266,7 +267,7 @@ const Register = () => {
         isOpen={registerState === "success"}
         header={t("register.verifyTitle")}
         message={t("register.verifyMessage")}
-        onDismiss={() => router.push("/login")}
+        onDismiss={() => history.push("/login")}
         buttons={[
           {
             text: tc("buttons.resendEmail"),

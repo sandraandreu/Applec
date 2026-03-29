@@ -5,11 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Loading from "../../feedback/loading/Loading";
-import { getFirestore, doc, setDoc, addDoc, collection, updateDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getFirestore, doc, addDoc, collection, updateDoc } from "firebase/firestore";
 import app from "../../../plugins/firebase";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 
 const db = getFirestore(app);
 interface CreateGroupFormData {
@@ -20,7 +19,7 @@ interface CreateGroupFormData {
 const CreateGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
-  const router = useIonRouter();
+  const history = useHistory();
   const { user } = useAuthContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -59,13 +58,14 @@ const CreateGroup = () => {
       groupId: groupRef.id,
     });
 
-    router.push("/home");
-  } catch (error: any) {
-    if (error.code === "auth/network-request-failed") {
+    history.push("/home");
+  } catch (error: unknown) {
+    const firebaseError = error as { code?: string; message?: string };
+    if (firebaseError.code === "auth/network-request-failed") {
       setErrorConnection(tc("errors.noConnection"));
       return;
     }
-    console.error("Create group error:", error.message);
+    console.error("Create group error:", firebaseError.message);
   } finally {
     setIsLoading(false);
   }
