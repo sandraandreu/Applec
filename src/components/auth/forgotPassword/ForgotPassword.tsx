@@ -42,12 +42,13 @@ const ForgotPassword = () => {
       setIsLoading(true);
       await sendPasswordResetEmail(auth, email);
       setForgotPasswordState("success");
-    } catch (error: any) {
-      if (error.code === "auth/network-request-failed") {
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string; message?: string };
+      if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
-      console.error("Forgot password error:", error.message);
+      console.error("Forgot password error:", firebaseError.message);
     } finally {
       setIsLoading(false);
     }

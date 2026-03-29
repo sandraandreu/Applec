@@ -28,7 +28,7 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<import("firebase/auth").User | null>(null);
   const [errorConnection, setErrorConnection] = useState<string>("");
   const [errorCredentials, setErrorCredentials] = useState<string>("");
 
@@ -62,18 +62,19 @@ const Login = () => {
       }
       setIsLoading(false);
       history.push("/onboarding/welcome");
-    } catch (error: any) {
-      if (error.code === "auth/invalid-credential") {
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string; message?: string };
+      if (firebaseError.code === "auth/invalid-credential") {
         setErrorCredentials(t("login.errors.invalidCredentials"));
         setIsLoading(false);
         return;
       }
-      if (error.code === "auth/network-request-failed") {
+      if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         setIsLoading(false);
         return;
       }
-      console.error("Email sign up error:", error.message);
+      console.error("Email sign up error:", firebaseError.message);
     }
   };
 

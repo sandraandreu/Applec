@@ -1,11 +1,11 @@
-import { useIonRouter } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import "./Group.scss";
 import { useTranslation } from "react-i18next";
 import Button from "../../ui/button/Button";
 
 const Group = () => {
   const { t } = useTranslation("onboarding");
-  const router = useIonRouter();
+  const history = useHistory();
 
   return (
     <>
@@ -13,9 +13,9 @@ const Group = () => {
       <p>{t("group.description")}</p>
       <Button
         text={t("group.createGroup")}
-        onClick={() => router.push("/create-group")}
+        onClick={() => history.push("/create-group")}
       />
-      <Button text={t("group.joinGroup")} onClick={() => router.push("")} />
+      <Button text={t("group.joinGroup")} onClick={() => history.push("")} />
     </>
   );
 };

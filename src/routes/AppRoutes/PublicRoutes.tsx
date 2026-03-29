@@ -1,5 +1,4 @@
 import { type ReactNode } from "react";
-import { Redirect } from "react-router-dom";
 import { useAuthContext } from "../../context/auth/AuthContext";
 
 interface PublicRoutesProps {
@@ -7,7 +6,7 @@ interface PublicRoutesProps {
 }
 
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
-  const { user, isLoading } = useAuthContext();
+  const { isLoading } = useAuthContext();
 
   if (isLoading) return null;
 

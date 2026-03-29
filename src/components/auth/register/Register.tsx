@@ -49,7 +49,7 @@ const Register = () => {
   const [registerState, setRegisterState] = useState<
     "form" | "success" | "error"
   >("form");
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<import("firebase/auth").User | null>(null);
   const [usernameError, setUsernameError] = useState<string>("");
   const [errorConnection, setErrorConnection] = useState<string>("");
 
@@ -88,20 +88,21 @@ const Register = () => {
 
       await signOut(auth);
       setRegisterState("success");
-    } catch (error: any) {
-      console.error("Error completo:", error);
-      console.error("Código:", error.code);
-      console.error("Mensaje:", error.message);
-      if (error.message === "username-already-exists") {
+    } catch (error: unknown) {
+      const firebaseError = error as { code?: string; message?: string };
+      console.error("Error completo:", firebaseError);
+      console.error("Código:", firebaseError.code);
+      console.error("Mensaje:", firebaseError.message);
+      if (firebaseError.message === "username-already-exists") {
         setUsernameError(t("register.errors.usernameTaken"));
         return;
       }
-      if (error.code === "auth/network-request-failed") {
+      if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
       setRegisterState("error");
-      console.error("Email sign up error:", error.message);
+      console.error("Email sign up error:", firebaseError.message);
     } finally {
       setIsLoading(false);
     }
