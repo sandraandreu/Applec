@@ -1,0 +1,46 @@
+.password-requirements {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+  color: #444;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  input[type="checkbox"] {
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  label {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+}
+
+form {
+  > span {
+    display: block;
+    font-size: 0.875rem;
+    color: #c0392b;
+    margin: 4px 0 8px;
+  }
+
+  a {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
+}

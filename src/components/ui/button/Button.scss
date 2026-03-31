@@ -1,8 +1,47 @@
 .button {
-padding: 12px;
-background-color: aquamarine;
-}
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  border: 1px solid #1a1a1a;
+  border-radius: 4px;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 8px;
 
-.language {
-    background-color: pink;
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &.secondary {
+    background-color: #fff;
+    color: #1a1a1a;
+  }
+
+  &.danger {
+    background-color: #c0392b;
+    border-color: #c0392b;
+    color: #fff;
+  }
+
+  &.language {
+    display: inline-block;
+    width: auto;
+    padding: 6px 14px;
+    background-color: #fff;
+    color: #1a1a1a;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+    margin-top: 0;
+
+    &.active {
+      background-color: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+  }
 }

@@ -190,15 +190,11 @@ const Register = () => {
           }
         />
 
-        <div>
-          <input type="checkbox" readOnly checked={hasMinLength(password)} />
-          <span>{t("register.passwordMinLength")}</span>
-          <input type="checkbox" readOnly checked={hasUpperCase(password)} />
-          <span>{t("register.passwordUppercase")}</span>
-          <input type="checkbox" readOnly checked={hasLowerCase(password)} />
-          <span>{t("register.passwordLowercase")}</span>
-          <input type="checkbox" readOnly checked={hasNumber(password)} />
-          <span>{t("register.passwordNumber")}</span>
+        <div className="password-requirements">
+          <div><input type="checkbox" readOnly checked={hasMinLength(password)} /><span>{t("register.passwordMinLength")}</span></div>
+          <div><input type="checkbox" readOnly checked={hasUpperCase(password)} /><span>{t("register.passwordUppercase")}</span></div>
+          <div><input type="checkbox" readOnly checked={hasLowerCase(password)} /><span>{t("register.passwordLowercase")}</span></div>
+          <div><input type="checkbox" readOnly checked={hasNumber(password)} /><span>{t("register.passwordNumber")}</span></div>
         </div>
 
         <Input
@@ -219,20 +215,22 @@ const Register = () => {
           }
         />
 
-        <input
-          id="acceptsTerms"
-          type="checkbox"
-          {...register("acceptsTerms", { required: true })}
-        />
-        <label htmlFor="acceptsTerms">
-          {t("register.termsStart")}
-          <a href="/privacy">{t("register.termsPrivacy")}</a>
-          {t("register.termsAnd")}
-          <a href="/terms">{t("register.termsConditions")}</a>
-        </label>
+        <div className="terms-row">
+          <input
+            id="acceptsTerms"
+            type="checkbox"
+            {...register("acceptsTerms", { required: true })}
+          />
+          <label htmlFor="acceptsTerms">
+            {t("register.termsStart")}
+            <a href="/privacy">{t("register.termsPrivacy")}</a>
+            {t("register.termsAnd")}
+            <a href="/terms">{t("register.termsConditions")}</a>
+          </label>
+        </div>
 
         {errors.acceptsTerms?.type === "required" && (
-          <span>{t("register.errors.termsRequired")}</span>
+          <span className="field__error">{t("register.errors.termsRequired")}</span>
         )}
 
         <Button

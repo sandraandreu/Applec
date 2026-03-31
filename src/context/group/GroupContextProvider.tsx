@@ -54,14 +54,14 @@ export const GroupContextProvider = ({
   useEffect(() => {
     if (authLoading) return;
 
-    if (!user) {
+    if (user === null) {
       setGroupId(null);
       setName(null);
       setDescription(null);
       setInviteCode(null);
       setAdminId(null);
       setMembers(null);
-      setIsLoading(false);
+      setIsLoading(true);
       return;
     }
 
@@ -79,6 +79,11 @@ export const GroupContextProvider = ({
     isLoading,
     refreshGroup,
   };
+
+  console.log("authLoading:", authLoading);
+  console.log("user:", user?.uid);
+  console.log("groupId:", groupId);
+  console.log("groupLoading:", isLoading);
 
   return (
     <GroupContext.Provider value={contextValue}>

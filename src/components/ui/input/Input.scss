@@ -1,7 +1,36 @@
-div {
-    margin-bottom: 16px;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
 }
 
-span {
-    color: red;
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.field__input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  background-color: #fff;
+
+  &:focus {
+    outline: 2px solid #1a1a1a;
+    outline-offset: 1px;
+  }
+}
+
+.field__error {
+  font-size: 0.75rem;
+  color: #c0392b;
+}
+
+.field__counter {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: right;
 }

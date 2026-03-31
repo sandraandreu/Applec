@@ -26,7 +26,7 @@ const LanguageSelector = () => {
   };
 
   return (
-    <>
+    <div className="language-selector">
       <Button
         text={t("language.spanish")}
         variant="language"
@@ -39,7 +39,7 @@ const LanguageSelector = () => {
         isActive={language === "ca"}
         onClick={() => handleLanguageChange("ca")}
       />
-    </>
+    </div>
   );
 };
 
