@@ -1,9 +1,9 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { GroupContext } from "./GroupContext";
+import type { GroupData } from "./GroupContext";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import app from "../../plugins/firebase";
 import { useAuthContext } from "../auth/AuthContext";
-import { group } from "console";
 
 const db = getFirestore(app);
 
@@ -16,14 +16,7 @@ export const GroupContextProvider = ({
 }: GroupContextProviderProps) => {
   const { user, isLoading: authLoading } = useAuthContext();
 
-  const [groupId, setGroupId] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const [description, setDescription] = useState<string | null>(null);
-  const [inviteCode, setInviteCode] = useState<string | null>(null);
-  const [adminId, setAdminId] = useState<string | null>(null);
-  const [members, setMembers] = useState<
-    { uid: string; role: string }[] | null
-  >(null);
+  const [group, setGroup] = useState<GroupData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const loadGroup = useCallback(async () => {
@@ -36,12 +29,14 @@ export const GroupContextProvider = ({
       const groupDoc = await getDoc(doc(db, "groups", gId));
       if (groupDoc.exists()) {
         const data = groupDoc.data();
-        setGroupId(gId);
-        setName(data.name);
-        setDescription(data.description);
-        setInviteCode(data.inviteCode);
-        setAdminId(data.adminId);
-        setMembers(data.members);
+        setGroup({
+          groupId: gId,
+          name: data.name,
+          description: data.description,
+          inviteCode: data.inviteCode,
+          adminId: data.adminId,
+          members: data.members,
+        });
       }
     }
     setIsLoading(false);
@@ -56,12 +51,7 @@ export const GroupContextProvider = ({
     if (authLoading) return;
 
     if (user === null) {
-      setGroupId(null);
-      setName(null);
-      setDescription(null);
-      setInviteCode(null);
-      setAdminId(null);
-      setMembers(null);
+      setGroup(null);
       setIsLoading(true);
       return;
     }
@@ -71,17 +61,12 @@ export const GroupContextProvider = ({
   }, [user, authLoading, loadGroup]);
 
   const contextValue = {
-    groupId,
-    name,
-    description,
-    inviteCode,
-    adminId,
-    members,
+    group,
     isLoading,
     refreshGroup,
   };
 
-  console.log(groupId)
+  console.log(group?.groupId)
 
   return (
     <GroupContext.Provider value={contextValue}>

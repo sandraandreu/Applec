@@ -7,7 +7,8 @@ import Button from "../../ui/button/Button";
 
 const InviteGroup = () => {
   const { t } = useTranslation("groups");
-  const { inviteCode } = useGroupContext();
+  const { group } = useGroupContext();
+  const inviteCode = group?.inviteCode ?? null;
   const history = useHistory();
 
   const [copied, setCopied] = useState<boolean>(false);

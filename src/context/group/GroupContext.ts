@@ -1,12 +1,16 @@
 import { createContext, useContext } from 'react';
 
+export interface GroupData {
+  groupId: string;
+  name: string;
+  description: string;
+  inviteCode: string;
+  adminId: string;
+  members: { uid: string; role: string }[];
+}
+
 export interface GroupContextType {
-  groupId: string | null;
-  name: string | null;
-  description: string | null;
-  inviteCode: string | null;
-  adminId: string | null;
-  members: { uid: string; role: string }[] | null;
+  group: GroupData | null;
   isLoading: boolean;
   refreshGroup: () => Promise<void>;
 }

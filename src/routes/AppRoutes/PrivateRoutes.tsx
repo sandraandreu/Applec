@@ -11,13 +11,13 @@ interface PrivateRoutesProps {
 
 const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) => {
   const { user, isLoading: authLoading } = useAuthContext();
-  const { groupId, isLoading: groupLoading } = useGroupContext();
+  const { group, isLoading: groupLoading } = useGroupContext();
 
   if (authLoading || groupLoading) return null;
 
   if (!user) return <Redirect to="/landing" />;
 
-  if (requiresGroup && !groupId) return <Redirect to="/onboarding/welcome" />;
+  if (requiresGroup && !group) return <Redirect to="/onboarding/welcome" />;
 
   return <>{children}</>;
 };
