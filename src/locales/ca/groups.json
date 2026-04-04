@@ -27,5 +27,14 @@
       "alreadyMember": "Ja pertanys a aquesta falla",
       "alreadyInGroup": "Ja pertanys a una falla. Has d'eixir primer per unir-te a una altra"
     }
+  },
+  "invite": {
+    "title": "La teua falla està llesta!",
+    "subtitle": "Ara convida als membres perquè s'unisquen.",
+    "code": "Codi",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "Copiat!",
+    "skip": "Ara no, invitaré més tard"
   }
 }

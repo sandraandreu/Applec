@@ -1,4 +1,12 @@
 {
+  "landing": {
+    "title": "Todo lo que necesita tu comisión.",
+    "subtitle": "Eventos, asistencia y tu falla, en un solo lugar.",
+    "register": "Crea tu cuenta",
+    "login": "Ya tengo cuenta",
+    "terms": "Al continuar aceptas los ",
+    "termsLink": "Términos y condiciones"
+  },
   "welcome": {
     "title": "Hola, {{name}}",
     "subtitle": "Nos alegra tenerte aquí.",

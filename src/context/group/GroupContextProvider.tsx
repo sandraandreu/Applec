@@ -3,6 +3,7 @@ import { GroupContext } from "./GroupContext";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import app from "../../plugins/firebase";
 import { useAuthContext } from "../auth/AuthContext";
+import { group } from "console";
 
 const db = getFirestore(app);
 
@@ -80,10 +81,7 @@ export const GroupContextProvider = ({
     refreshGroup,
   };
 
-  console.log("authLoading:", authLoading);
-  console.log("user:", user?.uid);
-  console.log("groupId:", groupId);
-  console.log("groupLoading:", isLoading);
+  console.log(groupId)
 
   return (
     <GroupContext.Provider value={contextValue}>

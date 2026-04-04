@@ -1,4 +1,12 @@
 {
+  "landing": {
+    "title": "Tot el que necessita la teua comissió.",
+    "subtitle": "Esdeveniments, assistència i la teua falla, en un sol lloc.",
+    "register": "Crea el teu compte",
+    "login": "Ja tinc compte",
+    "terms": "En continuar acceptes els ",
+    "termsLink": "Termes i condicions"
+  },
   "welcome": {
     "title": "Hola, {{name}}",
     "subtitle": "Ens alegra tindre't ací.",

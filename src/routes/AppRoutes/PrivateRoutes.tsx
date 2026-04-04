@@ -15,7 +15,7 @@ const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) 
 
   if (authLoading || groupLoading) return null;
 
-  if (!user) return <Redirect to="/login" />;
+  if (!user) return <Redirect to="/landing" />;
 
   if (requiresGroup && !groupId) return <Redirect to="/onboarding/welcome" />;
 

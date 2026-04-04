@@ -67,7 +67,7 @@ const CreateGroup = () => {
       });
 
       await refreshGroup();
-      history.push("/home");
+      history.push("/invite-group");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/network-request-failed") {
