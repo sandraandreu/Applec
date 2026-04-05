@@ -12,7 +12,7 @@ import {
   getDocs,
   arrayUnion,
 } from "firebase/firestore";
-import Loading from "../../feedback/loading/Loading";
+import Loading from "../../feedback/Loading";
 import Input from "../../ui/input/Input";
 import Button from "../../ui/button/Button";
 import app from "../../../plugins/firebase";

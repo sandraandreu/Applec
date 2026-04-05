@@ -1,0 +1,13 @@
+{
+  "members": {
+    "title": "Miembros",
+    "search": "Buscar miembro...",
+    "empty": "Aún no hay más miembros en tu falla.",
+    "emptySearch": "No se encontraron miembros con ese nombre.",
+    "roles": {
+      "admin": "Administrador",
+      "organizer": "Organizador",
+      "member": "Miembro"
+    }
+  }
+}
