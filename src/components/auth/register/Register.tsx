@@ -19,8 +19,8 @@ import {
 } from "firebase/firestore";
 import app from "../../../plugins/firebase";
 import { useState } from "react";
-import Alert from "../../feedback/alerts/Alert";
-import Loading from "../../feedback/loading/Loading";
+import Alert from "../../feedback/Alert";
+import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
 

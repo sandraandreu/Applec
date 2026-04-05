@@ -7,7 +7,8 @@ import Button from "../../ui/button/Button";
 
 const InviteGroup = () => {
   const { t } = useTranslation("groups");
-  const { inviteCode } = useGroupContext();
+  const { group } = useGroupContext();
+  const inviteCode = group?.inviteCode ?? null;
   const history = useHistory();
 
   const [copied, setCopied] = useState<boolean>(false);
@@ -32,29 +33,32 @@ const InviteGroup = () => {
   };
 
   return (
-    <>
-      <h1>{t("invite.title")}</h1>
-      <p>{t("invite.subtitle")}</p>
-
-      <div>
-        <p>{t("invite.code")}</p>
-        <p>{inviteCode}</p>
+    <div className="invite-group">
+      <div className="invite-group__header">
+        <h1>{t("invite.title")}</h1>
+        <p>{t("invite.subtitle")}</p>
       </div>
 
-      <Button
-        text={copied ? t("invite.copied") : t("invite.copy")}
-        onClick={handleCopy}
-      />
+      <div className="invite-group__code">
+        <p className="invite-group__code-label">{t("invite.code")}</p>
+        <p className="invite-group__code-value">{inviteCode}</p>
+      </div>
 
-      <Button
-        text={t("invite.share")}
-        onClick={handleShare}
-      />
+      <div className="invite-group__actions">
+        <Button
+          text={copied ? t("invite.copied") : t("invite.copy")}
+          onClick={handleCopy}
+        />
+        <Button
+          text={t("invite.share")}
+          onClick={handleShare}
+        />
+      </div>
 
-      <a onClick={() => history.push("/home")}>
+      <a className="invite-group__skip" onClick={() => history.push("/home")}>
         {t("invite.skip")}
       </a>
-    </>
+    </div>
   );
 };
 

@@ -4,7 +4,7 @@ import "./CreateGroup.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import Loading from "../../feedback/loading/Loading";
+import Loading from "../../feedback/Loading";
 import {
   getFirestore,
   doc,

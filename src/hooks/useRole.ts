@@ -3,9 +3,9 @@ import { useGroupContext } from "../context/group/GroupContext";
 
 const useRole = () => {
   const { user } = useAuthContext();
-  const { members } = useGroupContext();
+  const { group } = useGroupContext();
 
-  const currentMember = members?.find((member) => {
+  const currentMember = group?.members?.find((member) => {
     return member.uid === user?.uid;
   });
 

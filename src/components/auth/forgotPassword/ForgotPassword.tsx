@@ -4,9 +4,9 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import app from "../../../plugins/firebase";
-import Alert from "../../feedback/alerts/Alert";
+import Alert from "../../feedback/Alert";
 import { useHistory } from "react-router-dom";
-import Loading from "../../feedback/loading/Loading";
+import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
 

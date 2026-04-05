@@ -9,8 +9,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import app from "../../../plugins/firebase";
-import Alert from "../../feedback/alerts/Alert";
-import Loading from "../../feedback/loading/Loading";
+import Alert from "../../feedback/Alert";
+import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
 
