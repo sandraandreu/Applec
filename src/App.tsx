@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import AppRoutes from "./routes/appRoutes/AppRoutes";
+import AppRoutes from "./routes/AppRoutes/AppRoutes";
 import { AuthContextProvider } from "./context/auth/AuthContextProvider";
 
 const App: React.FC = () => (
