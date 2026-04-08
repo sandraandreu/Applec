@@ -1,13 +1,12 @@
 import "./JoinGroupPage.scss";
 import JoinGroup from "../../../components/groups/joinGroup/JoinGroup";
+import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
 
 const JoinGroupPage = () => {
   return (
-    <div className="page">
-      <main className="page-content">
-        <JoinGroup />
-      </main>
-    </div>
+    <BaseLayout>
+      <JoinGroup />
+    </BaseLayout>
   );
 };
 

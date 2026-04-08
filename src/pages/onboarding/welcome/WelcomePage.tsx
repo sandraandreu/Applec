@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import "./WelcomePage.scss";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import Button from "../../../components/ui/button/Button";
+import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
 
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
@@ -11,17 +12,15 @@ const WelcomePage = () => {
   const { userName } = useAuthContext();
 
   return (
-    <div className="page">
-      <main className="page-content">
-        <h1>{t("welcome.title", { name: userName })}</h1>
-        <p>{t("welcome.subtitle")}</p>
-        <p>{t("welcome.description")}</p>
-        <Button
-          text={tc("buttons.start")}
-          onClick={() => navigate("/onboarding/language")}
-        />
-      </main>
-    </div>
+    <BaseLayout>
+      <h1>{t("welcome.title", { name: userName })}</h1>
+      <p>{t("welcome.subtitle")}</p>
+      <p>{t("welcome.description")}</p>
+      <Button
+        text={tc("buttons.start")}
+        onClick={() => navigate("/onboarding/language")}
+      />
+    </BaseLayout>
   );
 };
 

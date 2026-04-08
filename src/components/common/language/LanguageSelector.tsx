@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./LanguageSelector.scss";
 import { useTranslation } from "react-i18next";
-import Button from "../button/Button";
+import Button from "../../ui/button/Button";
 
 const LanguageSelector = () => {
   const { t, i18n } = useTranslation("common");

@@ -1,13 +1,12 @@
 import "./RegisterPage.scss";
 import Register from "../../../components/auth/register/Register";
+import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
 
 const RegisterPage = () => {
   return (
-    <div className="page">
-      <main className="page-content">
-        <Register />
-      </main>
-    </div>
+    <BaseLayout>
+      <Register />
+    </BaseLayout>
   );
 };
 

@@ -1,13 +1,12 @@
 import "./InviteGroupPage.scss";
 import InviteGroup from "../../../components/groups/inviteGroup/InviteGroup";
+import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
 
 const InviteGroupPage = () => {
   return (
-    <div className="page">
-      <main className="page-content">
-        <InviteGroup />
-      </main>
-    </div>
+    <BaseLayout>
+      <InviteGroup />
+    </BaseLayout>
   );
 };
 

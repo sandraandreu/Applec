@@ -1,13 +1,12 @@
 import "./ForgotPasswordPage.scss";
 import ForgotPassword from "../../../components/auth/forgotPassword/ForgotPassword";
+import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
 
 const ForgotPasswordPage = () => {
   return (
-    <div className="page">
-      <main className="page-content">
-        <ForgotPassword />
-      </main>
-    </div>
+    <BaseLayout>
+      <ForgotPassword />
+    </BaseLayout>
   );
 };
 
