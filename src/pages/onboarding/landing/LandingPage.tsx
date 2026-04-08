@@ -1,11 +1,11 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./LandingPage.scss";
 import Button from "../../../components/ui/button/Button";
 
 const LandingPage = () => {
   const { t } = useTranslation("onboarding");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div className="page">
@@ -19,11 +19,11 @@ const LandingPage = () => {
           <div className="landing__actions">
             <Button
               text={t("landing.register")}
-              onClick={() => history.push("/register")}
+              onClick={() => navigate("/register")}
             />
             <Button
               text={t("landing.login")}
-              onClick={() => history.push("/login")}
+              onClick={() => navigate("/login")}
             />
           </div>
 

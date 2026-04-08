@@ -19,7 +19,7 @@ import app from "../../../plugins/firebase";
 import { FirebaseError } from "firebase/app";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const db = getFirestore(app);
 
@@ -32,7 +32,7 @@ const JoinGroup = () => {
   const { t: tc } = useTranslation("common");
   const { user } = useAuthContext();
   const { refreshGroup } = useGroupContext();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [groupFound, setGroupFound] = useState<{
     id: string;
@@ -96,7 +96,7 @@ const JoinGroup = () => {
       });
 
       await refreshGroup();
-      history.push("/home");
+      navigate("/home");
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
         setErrorConnection(tc("errors.noConnection"));

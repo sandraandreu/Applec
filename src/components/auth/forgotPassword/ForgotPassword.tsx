@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/Alert";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
@@ -19,7 +19,7 @@ interface ForgotPasswordFormData {
 const ForgotPassword = () => {
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [forgotPasswordState, setForgotPasswordState] = useState<
@@ -98,7 +98,7 @@ const ForgotPassword = () => {
         buttons={[
           {
             text: t("forgotPassword.back"),
-            handler: () => history.push("/login"),
+            handler: () => navigate("/login"),
           },
         ]}
       />

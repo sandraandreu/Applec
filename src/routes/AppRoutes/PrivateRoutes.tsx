@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
 
@@ -15,9 +15,9 @@ const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) 
 
   if (authLoading || groupLoading) return null;
 
-  if (!user) return <Redirect to="/landing" />;
+  if (!user) return <Navigate to="/landing" replace />;
 
-  if (requiresGroup && !group) return <Redirect to="/onboarding/welcome" />;
+  if (requiresGroup && !group) return <Navigate to="/onboarding/welcome" replace />;
 
   return <>{children}</>;
 };

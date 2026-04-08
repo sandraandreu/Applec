@@ -1,11 +1,11 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./GroupPage.scss";
 import Button from "../../../components/ui/button/Button";
 
 const GroupPage = () => {
   const { t } = useTranslation("onboarding");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div className="page">
@@ -14,11 +14,11 @@ const GroupPage = () => {
         <p>{t("group.description")}</p>
         <Button
           text={t("group.createGroup")}
-          onClick={() => history.push("/create-group")}
+          onClick={() => navigate("/create-group")}
         />
         <Button
           text={t("group.joinGroup")}
-          onClick={() => history.push("/join-group")}
+          onClick={() => navigate("/join-group")}
         />
       </main>
     </div>

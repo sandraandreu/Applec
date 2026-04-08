@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
@@ -17,119 +17,108 @@ import LandingPage from "../../pages/onboarding/landing/LandingPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/" render={() => <Redirect to="/landing" />} />
+    <Routes>
+      <Route path="/" element={<Navigate to="/landing" replace />} />
 
       <Route
-        exact
         path="/home"
-        render={() => (
+        element={
           <PrivateRoutes requiresGroup>
             <Home />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/landing"
-        render={() => (
+        element={
           <PublicRoutes>
             <LandingPage />
           </PublicRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/register"
-        render={() => (
+        element={
           <PublicRoutes>
             <RegisterPage />
           </PublicRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/login"
-        render={() => (
+        element={
           <PublicRoutes>
             <LoginPage />
           </PublicRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/forgot-password"
-        render={() => (
+        element={
           <PublicRoutes>
             <ForgotPasswordPage />
           </PublicRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/onboarding/welcome"
-        render={() => (
+        element={
           <PrivateRoutes>
             <WelcomePage />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/onboarding/language"
-        render={() => (
+        element={
           <PrivateRoutes>
             <LanguagePage />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/onboarding/group"
-        render={() => (
+        element={
           <PrivateRoutes>
             <GroupPage />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/create-group"
-        render={() => (
+        element={
           <PrivateRoutes>
             <CreateGroupPage />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/invite-group"
-        render={() => (
+        element={
           <PrivateRoutes>
             <InviteGroupPage />
           </PrivateRoutes>
-        )}
+        }
       />
 
       <Route
-        exact
         path="/join-group"
-        render={() => (
+        element={
           <PrivateRoutes>
-            <JoinGroupPage/>
+            <JoinGroupPage />
           </PrivateRoutes>
-        )}
+        }
       />
-    </Switch>
+    </Routes>
   </BrowserRouter>
 );
 

@@ -2,14 +2,14 @@ import { useTranslation } from "react-i18next";
 import "./InviteGroup.scss";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../ui/button/Button";
 
 const InviteGroup = () => {
   const { t } = useTranslation("groups");
   const { group } = useGroupContext();
   const inviteCode = group?.inviteCode ?? null;
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -55,7 +55,7 @@ const InviteGroup = () => {
         />
       </div>
 
-      <a className="invite-group__skip" onClick={() => history.push("/home")}>
+      <a className="invite-group__skip" onClick={() => navigate("/home")}>
         {t("invite.skip")}
       </a>
     </div>

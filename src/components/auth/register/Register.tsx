@@ -1,6 +1,6 @@
 import "./Register.scss";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   getAuth,
@@ -41,7 +41,7 @@ const hasLowerCase = (value: string) => /[a-z]/.test(value);
 const hasNumber = (value: string) => /[0-9]/.test(value);
 
 const Register = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
 
@@ -256,7 +256,7 @@ const Register = () => {
           },
           {
             text: t("register.errors.emailTakenButton"),
-            handler: () => history.push("/login"),
+            handler: () => navigate("/login"),
           },
         ]}
       />
@@ -265,7 +265,7 @@ const Register = () => {
         isOpen={registerState === "success"}
         header={t("register.verifyTitle")}
         message={t("register.verifyMessage")}
-        onDismiss={() => history.push("/login")}
+        onDismiss={() => navigate("/login")}
         buttons={[
           {
             text: tc("buttons.resendEmail"),

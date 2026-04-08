@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import app from "../../../plugins/firebase";
 import Alert from "../../feedback/Alert";
 import Loading from "../../feedback/Loading";
@@ -24,7 +24,7 @@ interface LoginFormData {
 const Login = () => {
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
@@ -61,7 +61,7 @@ const Login = () => {
         return;
       }
       setIsLoading(false);
-      history.push("/home");
+      navigate("/home");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/invalid-credential") {

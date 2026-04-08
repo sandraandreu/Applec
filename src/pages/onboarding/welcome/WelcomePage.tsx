@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./WelcomePage.scss";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -7,7 +7,7 @@ import Button from "../../../components/ui/button/Button";
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
   const { t: tc } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const { userName } = useAuthContext();
 
   return (
@@ -18,7 +18,7 @@ const WelcomePage = () => {
         <p>{t("welcome.description")}</p>
         <Button
           text={tc("buttons.start")}
-          onClick={() => history.push("/onboarding/language")}
+          onClick={() => navigate("/onboarding/language")}
         />
       </main>
     </div>

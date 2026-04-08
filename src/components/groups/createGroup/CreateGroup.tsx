@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import app from "../../../plugins/firebase";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGroupContext } from "../../../context/group/GroupContext";
 
 const db = getFirestore(app);
@@ -26,7 +26,7 @@ interface CreateGroupFormData {
 const CreateGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
   const { user } = useAuthContext();
   const { refreshGroup } = useGroupContext();
 
@@ -67,7 +67,7 @@ const CreateGroup = () => {
       });
 
       await refreshGroup();
-      history.push("/invite-group");
+      navigate("/invite-group");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/network-request-failed") {

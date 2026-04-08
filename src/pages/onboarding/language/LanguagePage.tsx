@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./LanguagePage.scss";
 import LanguageSelector from "../../../components/ui/language/LanguageSelector";
@@ -7,7 +7,7 @@ import Button from "../../../components/ui/button/Button";
 const LanguagePage = () => {
   const { t } = useTranslation("onboarding");
   const { t: tc } = useTranslation("common");
-  const history = useHistory();
+  const navigate = useNavigate();
 
   return (
     <div className="page">
@@ -17,7 +17,7 @@ const LanguagePage = () => {
         <LanguageSelector />
         <Button
           text={tc("buttons.continue")}
-          onClick={() => history.push("/onboarding/group")}
+          onClick={() => navigate("/onboarding/group")}
         />
       </main>
     </div>
