@@ -2,26 +2,15 @@ import { useTranslation } from "react-i18next";
 import "./JoinGroup.scss";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  getFirestore,
-  doc,
-  updateDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  arrayUnion,
-} from "firebase/firestore";
 import Loading from "../../feedback/Loading";
 import Input from "../../ui/input/Input";
 import Button from "../../ui/button/Button";
-import app from "../../../plugins/firebase";
 import { FirebaseError } from "firebase/app";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useNavigate } from "react-router-dom";
-
-const db = getFirestore(app);
+import { findGroupByInviteCode, addMemberToGroup } from "../../../services/group.service";
+import { updateUserGroup } from "../../../services/user.service";
 
 interface JoinGroupFormData {
   code: string;
@@ -59,21 +48,14 @@ const JoinGroup = () => {
       setErrorCode("");
       setGroupFound(null);
 
-      const groupsRef = collection(db, "groups");
-      const q = query(groupsRef, where("inviteCode", "==", code));
-      const querySnapshot = await getDocs(q);
+      const group = await findGroupByInviteCode(code);
 
-      if (querySnapshot.empty) {
+      if (!group) {
         setErrorCode(t("joinGroup.errors.codeNotFound"));
         return;
       }
 
-      const groupDoc = querySnapshot.docs[0];
-      setGroupFound({
-        id: groupDoc.id,
-        name: groupDoc.data().name,
-        description: groupDoc.data().description,
-      });
+      setGroupFound(group);
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
         setErrorConnection(tc("errors.noConnection"));
@@ -87,14 +69,8 @@ const JoinGroup = () => {
     try {
       setIsLoading(true);
 
-      await updateDoc(doc(db, "groups", groupFound!.id), {
-        members: arrayUnion({ uid: user?.uid, role: "member" }),
-      });
-
-      await updateDoc(doc(db, "users", user!.uid), {
-        groupId: groupFound!.id,
-      });
-
+      await addMemberToGroup(groupFound!.id, user!.uid);
+      await updateUserGroup(user!.uid, groupFound!.id);
       await refreshGroup();
       navigate("/home");
     } catch (error: unknown) {

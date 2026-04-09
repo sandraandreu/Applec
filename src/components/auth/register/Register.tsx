@@ -2,30 +2,13 @@ import "./Register.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signOut,
-} from "firebase/auth";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
-import app from "../../../plugins/firebase";
 import { useState } from "react";
 import Alert from "../../feedback/Alert";
 import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
-
-const auth = getAuth(app);
-const db = getFirestore(app);
+import { registerUser, logoutUser, sendVerificationEmail } from "../../../services/auth.service";
+import { createUserProfile, isUsernameTaken } from "../../../services/user.service";
 
 interface RegisterFormData {
   username: string;
@@ -49,11 +32,9 @@ const Register = () => {
   const [registerState, setRegisterState] = useState<
     "form" | "success" | "error"
   >("form");
-  const [user, setUser] = useState<import("firebase/auth").User | null>(null);
+  const [registeredUser, setRegisteredUser] = useState<import("firebase/auth").User | null>(null);
   const [usernameError, setUsernameError] = useState<string>("");
   const [errorConnection, setErrorConnection] = useState<string>("");
-
-  //Crear user en firebase
 
   const handleRegister = async (
     email: string,
@@ -62,37 +43,28 @@ const Register = () => {
   ) => {
     try {
       setIsLoading(true);
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("userName", "==", userName));
-      const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
+      const taken = await isUsernameTaken(userName);
+      if (taken) {
         throw new Error("username-already-exists");
       }
 
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      setUser(userCredential.user);
+      const userCredential = await registerUser(email, password);
+      setRegisteredUser(userCredential.user);
 
-      await sendEmailVerification(userCredential.user);
+      await sendVerificationEmail(userCredential.user);
 
-      await setDoc(doc(db, "users", userCredential.user.uid), {
-        userName: userName,
+      await createUserProfile(userCredential.user.uid, {
+        userName,
         email: userCredential.user.email,
         createdAt: new Date(),
         role: "member",
       });
 
-      await signOut(auth);
+      await logoutUser();
       setRegisterState("success");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
-      console.error("Error completo:", firebaseError);
-      console.error("Código:", firebaseError.code);
-      console.error("Mensaje:", firebaseError.message);
       if (firebaseError.message === "username-already-exists") {
         setUsernameError(t("register.errors.usernameTaken"));
         return;
@@ -108,15 +80,11 @@ const Register = () => {
     }
   };
 
-  //Reenviar email de verificación
-
   const handleResendEmail = async () => {
-    if (user) {
-      await sendEmailVerification(user);
+    if (registeredUser) {
+      await sendVerificationEmail(registeredUser);
     }
   };
-
-  //Formulario
 
   const {
     register,

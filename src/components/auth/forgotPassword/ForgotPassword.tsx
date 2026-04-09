@@ -1,16 +1,13 @@
 import "./ForgotPassword.scss";
 import { useTranslation } from "react-i18next";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import app from "../../../plugins/firebase";
 import Alert from "../../feedback/Alert";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
-
-const auth = getAuth(app);
+import { sendPasswordReset } from "../../../services/auth.service";
 
 interface ForgotPasswordFormData {
   email: string;
@@ -40,7 +37,7 @@ const ForgotPassword = () => {
   const handleForgotPassword = async (email: string) => {
     try {
       setIsLoading(true);
-      await sendPasswordResetEmail(auth, email);
+      await sendPasswordReset(email);
       setForgotPasswordState("success");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };

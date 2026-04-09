@@ -1,20 +1,13 @@
 import "./Login.scss";
 import { useTranslation } from "react-i18next";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import app from "../../../plugins/firebase";
 import Alert from "../../feedback/Alert";
 import Loading from "../../feedback/Loading";
 import Button from "../../ui/button/Button";
 import Input from "../../ui/input/Input";
-
-const auth = getAuth(app);
+import { loginUser, sendVerificationEmail } from "../../../services/auth.service";
 
 interface LoginFormData {
   email: string;
@@ -28,7 +21,7 @@ const Login = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
-  const [user, setUser] = useState<import("firebase/auth").User | null>(null);
+  const [unverifiedUser, setUnverifiedUser] = useState<import("firebase/auth").User | null>(null);
   const [errorConnection, setErrorConnection] = useState<string>("");
   const [errorCredentials, setErrorCredentials] = useState<string>("");
 
@@ -42,22 +35,16 @@ const Login = () => {
     handleLogin(data.email, data.password);
   };
 
-  //Iniciar sesión
-
   const handleLogin = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
+      const userCredential = await loginUser(email, password);
 
-      setUser(userCredential.user);
+      setUnverifiedUser(userCredential.user);
 
       if (!userCredential.user.emailVerified) {
         setLoginState("unverified");
-        setIsLoading(false)
+        setIsLoading(false);
         return;
       }
       setIsLoading(false);
@@ -78,11 +65,9 @@ const Login = () => {
     }
   };
 
-  //Reenviar email de verificación
-
   const handleResendEmail = async () => {
-    if (user) {
-      await sendEmailVerification(user);
+    if (unverifiedUser) {
+      await sendVerificationEmail(unverifiedUser);
     }
   };
 

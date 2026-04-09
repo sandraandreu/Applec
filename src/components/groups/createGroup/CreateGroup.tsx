@@ -5,19 +5,12 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Loading from "../../feedback/Loading";
-import {
-  getFirestore,
-  doc,
-  addDoc,
-  collection,
-  updateDoc,
-} from "firebase/firestore";
-import app from "../../../plugins/firebase";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useGroupContext } from "../../../context/group/GroupContext";
+import { createGroup } from "../../../services/group.service";
+import { updateUserGroup } from "../../../services/user.service";
 
-const db = getFirestore(app);
 interface CreateGroupFormData {
   name: string;
   description: string;
@@ -51,21 +44,13 @@ const CreateGroup = () => {
     try {
       setIsLoading(true);
 
-      const inviteCode = crypto.randomUUID();
-
-      const groupRef = await addDoc(collection(db, "groups"), {
-        name: name,
-        description: description,
-        inviteCode: inviteCode,
-        adminId: user?.uid,
-        members: [{ uid: user?.uid, role: "admin" }],
-        createdAt: new Date(),
+      const groupId = await createGroup({
+        name,
+        description,
+        adminUid: user!.uid,
       });
 
-      await updateDoc(doc(db, "users", user!.uid), {
-        groupId: groupRef.id,
-      });
-
+      await updateUserGroup(user!.uid, groupId);
       await refreshGroup();
       navigate("/invite-group");
     } catch (error: unknown) {

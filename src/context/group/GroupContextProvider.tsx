@@ -1,11 +1,9 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { GroupContext } from "./GroupContext";
 import type { GroupData } from "./GroupContext";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
-import app from "../../plugins/firebase";
 import { useAuthContext } from "../auth/AuthContext";
-
-const db = getFirestore(app);
+import { getUserProfile } from "../../services/user.service";
+import { getGroupById } from "../../services/group.service";
 
 export interface GroupContextProviderProps {
   children: ReactNode;
@@ -22,22 +20,11 @@ export const GroupContextProvider = ({
   const loadGroup = useCallback(async () => {
     if (!user) return;
 
-    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const profile = await getUserProfile(user.uid);
 
-    if (userDoc.exists() && userDoc.data().groupId) {
-      const gId = userDoc.data().groupId;
-      const groupDoc = await getDoc(doc(db, "groups", gId));
-      if (groupDoc.exists()) {
-        const data = groupDoc.data();
-        setGroup({
-          groupId: gId,
-          name: data.name,
-          description: data.description,
-          inviteCode: data.inviteCode,
-          adminId: data.adminId,
-          members: data.members,
-        });
-      }
+    if (profile?.groupId) {
+      const groupData = await getGroupById(profile.groupId);
+      setGroup(groupData);
     }
     setIsLoading(false);
   }, [user]);
@@ -65,8 +52,6 @@ export const GroupContextProvider = ({
     isLoading,
     refreshGroup,
   };
-
-  console.log(group?.groupId)
 
   return (
     <GroupContext.Provider value={contextValue}>
