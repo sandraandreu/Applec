@@ -24,20 +24,24 @@ const Input = ({
   currentLength,
 }: InputProps) => {
   return (
-    <>
-      <div className="field">
-        <label className="field__label" htmlFor={id}>{label}</label>
-        <input
-          id={id}
-          type={type}
-          placeholder={placeholder}
-          className="field__input"
-          {...registration}
-        />
-        {maxLength && <span className="field__counter">{currentLength}/{maxLength}</span>}
-        {error && <span className="field__error">{error}</span>}
-      </div>
-    </>
+    <div className="field">
+      <label className="field__label" htmlFor={id}>
+        {label}
+      </label>
+      <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        className="field__input"
+        {...registration}
+      />
+      {maxLength && (
+        <span className="field__counter">
+          {currentLength}/{maxLength}
+        </span>
+      )}
+      {error && <span className="field__error">{error}</span>}
+    </div>
   );
 };
 
