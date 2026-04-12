@@ -21,7 +21,7 @@ const MemberCard = ({ name, fullName, role }: MemberCardProps) => {
       <div className={`member-card__avatar member-card__avatar--${role}`}>{initials}</div>
       <div className="member-card__info">
         <span className="member-card__name">{name}</span>
-        <span className="member-card__email">{fullName}</span>
+        <span className="member-card__fullName">{fullName}</span>
       </div>
       <div className={`member-card__role member-card__role--${role}`}>{roleLabel}</div>
     </div>

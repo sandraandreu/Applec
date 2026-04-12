@@ -5,10 +5,14 @@
     "onlyMember": "Ets l'únic membre de la teua falla. Convida més persones per començar!",
     "invite": "Convidar membres",
     "emptySearch": "No s'han trobat membres amb aqueix nom.",
+    "emptyFilter": "No hi ha membres amb aquest rol.",
+    "filters": {
+      "all": "Tots"
+    },
     "roles": {
       "admin": "Administrador",
-      "organizer": "Organitzador",
-      "member": "Membre"
+      "organizers": "Organitzadors",
+      "members": "Membres"
     }
   }
 }

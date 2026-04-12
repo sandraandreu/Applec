@@ -31,15 +31,15 @@
   }
 
   &__name {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  &__email {
-    font-size: 12px;
+  &__fullName {
+    font-size: 16px;
     color: #888;
     white-space: nowrap;
     overflow: hidden;
@@ -47,7 +47,7 @@
   }
 
   &__role {
-    font-size: 12px;
+    font-size: 16px;
     flex-shrink: 0;
     padding: 2px 8px;
     border-radius: 999px;

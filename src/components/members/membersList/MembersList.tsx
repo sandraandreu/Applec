@@ -8,20 +8,31 @@ import Loading from "../../feedback/Loading";
 
 interface MembersListProps {
   searchValue: string;
+  activeFilter: "all" | "admin" | "organizer" | "member";
 }
 
-const MembersList = ({ searchValue }: MembersListProps) => {
+const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const { t } = useTranslation("members");
   const navigate = useNavigate();
   const { group, isLoading } = useGroupContext();
 
   if (isLoading) return <Loading />;
 
-  const filteredMembers = group?.members.filter((member) =>
-    member.userName?.toLowerCase().includes(searchValue.toLowerCase()),
-  );
+  const filteredMembers = group?.members.filter((member) => {
+    const matchesSearch = member.userName
+      ?.toLowerCase()
+      .includes(searchValue.toLowerCase());
+    const matchesFilter =
+      activeFilter === "all" || member.role === activeFilter;
+    return matchesSearch && matchesFilter;
+  });
 
   const isOnlyMember = group?.members.length === 1;
+
+  const admins = filteredMembers?.filter((m) => m.role === "admin") ?? [];
+  const organizers =
+    filteredMembers?.filter((m) => m.role === "organizer") ?? [];
+  const members = filteredMembers?.filter((m) => m.role === "member") ?? [];
 
   if (isOnlyMember) {
     return (
@@ -35,20 +46,65 @@ const MembersList = ({ searchValue }: MembersListProps) => {
     );
   }
 
-  if (searchValue && filteredMembers?.length === 0) {
-    return <p>{t("members.emptySearch")}</p>;
+  if (filteredMembers?.length === 0) {
+    return <p>{searchValue ? t("members.emptySearch") : activeFilter !== "all" ? t("members.emptyFilter") : t("members.onlyMember")}</p>;
   }
 
   return (
-    <div>
-      {filteredMembers?.map((member) => (
-        <MemberCard
-          key={member.uid}
-          name={member.userName}
-          fullName={member.fullName}
-          role={member.role}
-        />
-      ))}
+    <div className="members-list">
+      {admins.length > 0 && (
+        <div>
+          <h2 className="members-list__section-title">
+            {t("members.roles.admin")}
+          </h2>
+          <div className="members-list__cards">
+            {admins.map((member) => (
+              <MemberCard
+                key={member.uid}
+                name={member.userName}
+                fullName={member.fullName}
+                role={member.role}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {organizers.length > 0 && (
+        <div>
+          <h2 className="members-list__section-title">
+            {t("members.roles.organizers")}
+          </h2>
+          <div className="members-list__cards">
+            {organizers.map((member) => (
+              <MemberCard
+                key={member.uid}
+                name={member.userName}
+                fullName={member.fullName}
+                role={member.role}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {members.length > 0 && (
+        <div>
+          <h2 className="members-list__section-title">
+            {t("members.roles.members")}
+          </h2>
+          <div className="members-list__cards">
+            {members.map((member) => (
+              <MemberCard
+                key={member.uid}
+                name={member.userName}
+                fullName={member.fullName}
+                role={member.role}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

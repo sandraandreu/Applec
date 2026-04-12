@@ -18,8 +18,8 @@
   },
   "group": {
     "title": "¿A qué falla perteneces?",
-    "description": "Crea una nueva falla o únete a una existente con un enlace de invitación.",
+    "description": "Crea una nueva falla o únete a una existente con un código de invitación.",
     "createGroup": "Crear una falla",
-    "joinGroup": "Tengo un enlace de invitación"
+    "joinGroup": "Tengo un código de invitación"
   }
 }

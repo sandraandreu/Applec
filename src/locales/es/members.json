@@ -5,10 +5,14 @@
     "onlyMember": "Eres el único miembro de tu falla. ¡Invita a más personas para empezar!",
     "invite": "Invitar miembros",
     "emptySearch": "No se encontraron miembros con ese nombre.",
+    "emptyFilter": "No hay miembros con este rol.",
+    "filters": {
+      "all": "Todos"
+    },
     "roles": {
       "admin": "Administrador",
-      "organizer": "Organizador",
-      "member": "Miembro"
+      "organizers": "Organizadores",
+      "members": "Miembros"
     }
   }
 }
