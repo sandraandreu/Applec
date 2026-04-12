@@ -45,7 +45,7 @@ const MembersList = ({ searchValue }: MembersListProps) => {
         <MemberCard
           key={member.uid}
           name={member.userName}
-          email={member.email}
+          fullName={member.fullName}
           role={member.role}
         />
       ))}

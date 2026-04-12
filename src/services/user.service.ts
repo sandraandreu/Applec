@@ -13,6 +13,7 @@ import app from "../plugins/firebase";
 
 interface UserProfile {
   userName: string;
+  fullName: string;
   email: string | null;
   createdAt: Date;
   role: string;

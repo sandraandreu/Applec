@@ -14,6 +14,7 @@ export interface AuthContextProviderProps {
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [fullName, setFullName] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const logout = async () => {
@@ -26,8 +27,10 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       if (firebaseUser) {
         const profile = await getUserProfile(firebaseUser.uid);
         setUserName(profile?.userName ?? null);
+        setFullName(profile?.fullName ?? null);
       } else {
         setUserName(null);
+        setFullName(null);
       }
       setIsLoading(false);
     });
@@ -35,7 +38,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     return unsubscribe;
   }, []);
 
-  const contextValue = { user, userName, isLoading, logout };
+  const contextValue = { user, userName, fullName, isLoading, logout };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

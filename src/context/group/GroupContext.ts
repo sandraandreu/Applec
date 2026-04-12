@@ -6,7 +6,7 @@ export interface GroupData {
   description: string;
   inviteCode: string;
   adminId: string;
-  members: { uid: string; role: string; userName: string; email: string }[];
+  members: { uid: string; role: string; userName: string; fullName: string; email: string }[];
 }
 
 export interface GroupContextType {

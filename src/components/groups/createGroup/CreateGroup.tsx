@@ -20,7 +20,7 @@ const CreateGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
-  const { user, userName } = useAuthContext();
+  const { user, userName, fullName } = useAuthContext();
   const { refreshGroup } = useGroupContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -49,6 +49,7 @@ const CreateGroup = () => {
         description,
         adminUid: user!.uid,
         adminUserName: userName ?? "",
+        adminFullName: fullName ?? "",
         adminEmail: user!.email ?? "",
       });
 

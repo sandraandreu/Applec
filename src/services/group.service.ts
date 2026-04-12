@@ -36,7 +36,8 @@ interface CreateGroupData {
   description: string;
   adminUid: string;
   adminUserName: string;
-  adminEmail:string;
+  adminFullName: string;
+  adminEmail: string;
 }
 
 export const createGroup = async ({
@@ -44,7 +45,8 @@ export const createGroup = async ({
   description,
   adminUid,
   adminUserName,
-  adminEmail
+  adminFullName,
+  adminEmail,
 }: CreateGroupData): Promise<string> => {
   const inviteCode = crypto.randomUUID();
   const ref = await addDoc(collection(db, "groups"), {
@@ -52,7 +54,7 @@ export const createGroup = async ({
     description,
     inviteCode,
     adminId: adminUid,
-    members: [{ uid: adminUid, role: "admin", userName: adminUserName, email: adminEmail  }],
+    members: [{ uid: adminUid, role: "admin", userName: adminUserName, fullName: adminFullName, email: adminEmail }],
     createdAt: new Date(),
   });
   return ref.id;
@@ -76,9 +78,10 @@ export const addMemberToGroup = async (
   groupId: string,
   uid: string,
   userName: string,
+  fullName: string,
   email: string,
 ): Promise<void> => {
   await updateDoc(doc(db, "groups", groupId), {
-    members: arrayUnion({ uid, role: "member", userName, email }),
+    members: arrayUnion({ uid, role: "member", userName, fullName, email }),
   });
 };

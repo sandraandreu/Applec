@@ -9,7 +9,7 @@ interface PublicRoutesProps {
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
   const { user, isLoading } = useAuthContext();
 
-  if (user) {
+  if (user && user.emailVerified) {
     return <Navigate to="/home" replace />;
   }
 

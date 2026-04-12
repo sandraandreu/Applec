@@ -11,6 +11,7 @@ import { registerUser, logoutUser, sendVerificationEmail } from "../../../servic
 import { createUserProfile, isUsernameTaken } from "../../../services/user.service";
 
 interface RegisterFormData {
+  fullName: string;
   username: string;
   email: string;
   password: string;
@@ -40,41 +41,52 @@ const Register = () => {
     email: string,
     password: string,
     userName: string,
+    fullName: string,
   ) => {
     try {
       setIsLoading(true);
 
-      const taken = await isUsernameTaken(userName);
-      if (taken) {
-        throw new Error("username-already-exists");
-      }
-
+      // 1. Crear el usuario en Auth primero (queda autenticado para poder consultar Firestore)
       const userCredential = await registerUser(email, password);
-      setRegisteredUser(userCredential.user);
 
-      await sendVerificationEmail(userCredential.user);
+      try {
+        // 2. Comprobar username ya autenticados
+        const taken = await isUsernameTaken(userName);
+        if (taken) {
+          await userCredential.user.delete();
+          setUsernameError(t("register.errors.usernameTaken"));
+          return;
+        }
 
-      await createUserProfile(userCredential.user.uid, {
-        userName,
-        email: userCredential.user.email,
-        createdAt: new Date(),
-        role: "member",
-      });
+        await sendVerificationEmail(userCredential.user);
+        setRegisteredUser(userCredential.user);
 
-      await logoutUser();
-      setRegisterState("success");
+        await createUserProfile(userCredential.user.uid, {
+          userName,
+          fullName,
+          email: userCredential.user.email,
+          createdAt: new Date(),
+          role: "member",
+        });
+
+        await logoutUser();
+        setRegisterState("success");
+      } catch (innerError: unknown) {
+        // Si algo falla después de crear el usuario en Auth, lo eliminamos para no dejar basura
+        await userCredential.user.delete().catch((_) => _);
+        throw innerError;
+      }
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
-      if (firebaseError.message === "username-already-exists") {
-        setUsernameError(t("register.errors.usernameTaken"));
-        return;
-      }
       if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
-      setRegisterState("error");
-      console.error("Email sign up error:", firebaseError.message);
+      if (firebaseError.code === "auth/email-already-in-use") {
+        setRegisterState("error");
+        return;
+      }
+      console.error("Register error:", firebaseError.code, firebaseError.message);
     } finally {
       setIsLoading(false);
     }
@@ -96,7 +108,7 @@ const Register = () => {
   const password = watch("password", "");
 
   const onSubmit = (data: RegisterFormData) => {
-    handleRegister(data.email, data.password, data.username);
+    handleRegister(data.email, data.password, data.username, data.fullName);
   };
 
   return (
@@ -105,6 +117,24 @@ const Register = () => {
 
       <h1>{t("register.title")}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          id="register-fullname"
+          label={t("register.fullName")}
+          placeholder={t("register.fullNamePlaceholder")}
+          type="text"
+          registration={register("fullName", {
+            required: true,
+            pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
+          })}
+          error={
+            errors.fullName?.type === "required"
+              ? tc("errors.required")
+              : errors.fullName?.type === "pattern"
+                ? t("register.errors.fullNameInvalid")
+                : undefined
+          }
+        />
+
         <Input
           id="register-username"
           label={t("register.username")}
