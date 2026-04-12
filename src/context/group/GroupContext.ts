@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from "react";
 
 export interface GroupData {
   groupId: string;
@@ -6,7 +6,7 @@ export interface GroupData {
   description: string;
   inviteCode: string;
   adminId: string;
-  members: { uid: string; role: string }[];
+  members: { uid: string; role: string; userName: string; email: string }[];
 }
 
 export interface GroupContextType {
@@ -20,7 +20,9 @@ export const GroupContext = createContext<GroupContextType | null>(null);
 export const useGroupContext = () => {
   const value = useContext(GroupContext);
   if (value === null) {
-    throw new Error('El contexto no se puede usar fuera de un context provider');
+    throw new Error(
+      "El contexto no se puede usar fuera de un context provider",
+    );
   }
   return value;
 };

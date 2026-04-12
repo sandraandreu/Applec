@@ -2,7 +2,8 @@
   "members": {
     "title": "Membres",
     "search": "Buscar membre...",
-    "empty": "Encara no hi ha més membres a la teua falla.",
+    "onlyMember": "Ets l'únic membre de la teua falla. Convida més persones per començar!",
+    "invite": "Convidar membres",
     "emptySearch": "No s'han trobat membres amb aqueix nom.",
     "roles": {
       "admin": "Administrador",

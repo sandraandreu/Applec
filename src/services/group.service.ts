@@ -35,12 +35,16 @@ interface CreateGroupData {
   name: string;
   description: string;
   adminUid: string;
+  adminUserName: string;
+  adminEmail:string;
 }
 
 export const createGroup = async ({
   name,
   description,
   adminUid,
+  adminUserName,
+  adminEmail
 }: CreateGroupData): Promise<string> => {
   const inviteCode = crypto.randomUUID();
   const ref = await addDoc(collection(db, "groups"), {
@@ -48,7 +52,7 @@ export const createGroup = async ({
     description,
     inviteCode,
     adminId: adminUid,
-    members: [{ uid: adminUid, role: "admin" }],
+    members: [{ uid: adminUid, role: "admin", userName: adminUserName, email: adminEmail  }],
     createdAt: new Date(),
   });
   return ref.id;
@@ -71,8 +75,10 @@ export const findGroupByInviteCode = async (
 export const addMemberToGroup = async (
   groupId: string,
   uid: string,
+  userName: string,
+  email: string,
 ): Promise<void> => {
   await updateDoc(doc(db, "groups", groupId), {
-    members: arrayUnion({ uid, role: "member" }),
+    members: arrayUnion({ uid, role: "member", userName, email }),
   });
 };

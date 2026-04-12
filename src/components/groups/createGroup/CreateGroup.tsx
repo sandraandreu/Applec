@@ -20,7 +20,7 @@ const CreateGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, userName } = useAuthContext();
   const { refreshGroup } = useGroupContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,6 +48,8 @@ const CreateGroup = () => {
         name,
         description,
         adminUid: user!.uid,
+        adminUserName: userName ?? "",
+        adminEmail: user!.email ?? "",
       });
 
       await updateUserGroup(user!.uid, groupId);

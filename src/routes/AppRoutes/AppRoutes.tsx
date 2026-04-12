@@ -14,6 +14,7 @@ import LanguagePage from "../../pages/onboarding/language/LanguagePage";
 import JoinGroupPage from "../../pages/groups/joinGroup/JoinGroupPage";
 import InviteGroupPage from "../../pages/groups/inviteGroup/InviteGroupPage";
 import LandingPage from "../../pages/onboarding/landing/LandingPage";
+import MembersPage from "../../pages/members/MembersPage";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -115,6 +116,15 @@ const AppRoutes = () => (
         element={
           <PrivateRoutes>
             <JoinGroupPage />
+          </PrivateRoutes>
+        }
+      />
+
+      <Route
+        path="/members"
+        element={
+          <PrivateRoutes>
+            <MembersPage />
           </PrivateRoutes>
         }
       />

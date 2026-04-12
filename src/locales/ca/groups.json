@@ -29,8 +29,10 @@
     }
   },
   "invite": {
-    "title": "La teua falla està llesta!",
-    "subtitle": "Ara convida als membres perquè s'unisquen.",
+    "titleCreate": "La teua falla està llesta!",
+    "subtitleCreate": "Ara convida als membres perquè s'unisquen.",
+    "titleInvite": "Convida més membres",
+    "subtitleInvite": "Comparteix el codi amb les persones que vulgues afegir a la teua falla.",
     "code": "Codi",
     "share": "Compartir",
     "copy": "Copiar",

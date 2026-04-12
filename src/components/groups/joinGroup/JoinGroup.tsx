@@ -9,7 +9,10 @@ import { FirebaseError } from "firebase/app";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useNavigate } from "react-router-dom";
-import { findGroupByInviteCode, addMemberToGroup } from "../../../services/group.service";
+import {
+  findGroupByInviteCode,
+  addMemberToGroup,
+} from "../../../services/group.service";
 import { updateUserGroup } from "../../../services/user.service";
 
 interface JoinGroupFormData {
@@ -19,7 +22,7 @@ interface JoinGroupFormData {
 const JoinGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
-  const { user } = useAuthContext();
+  const { user, userName } = useAuthContext();
   const { refreshGroup } = useGroupContext();
   const navigate = useNavigate();
 
@@ -69,7 +72,12 @@ const JoinGroup = () => {
     try {
       setIsLoading(true);
 
-      await addMemberToGroup(groupFound!.id, user!.uid);
+      await addMemberToGroup(
+        groupFound!.id,
+        user!.uid,
+        userName ?? "",
+        user!.email ?? "",
+      );
       await updateUserGroup(user!.uid, groupFound!.id);
       await refreshGroup();
       navigate("/home");
@@ -124,7 +132,7 @@ const JoinGroup = () => {
             onClick={handleJoin}
             isLoading={isLoading}
           />
-          <button onClick={() => setGroupFound(null)}>{tc("cancel")}</button>
+          <Button text={tc("cancel")} onClick={() => setGroupFound(null)} />
         </div>
       )}
     </>

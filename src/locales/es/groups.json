@@ -29,8 +29,10 @@
     }
   },
   "invite": {
-    "title": "¡Tu falla está lista!",
-    "subtitle": "Ahora invita a los miembros para que se unan.",
+    "titleCreate": "¡Tu falla está lista!",
+    "subtitleCreate": "Ahora invita a los miembros para que se unan.",
+    "titleInvite": "Invita a más miembros",
+    "subtitleInvite": "Comparte el código con las personas que quieras añadir a tu falla.",
     "code": "Código",
     "share": "Compartir",
     "copy": "Copiar",

@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import "./InviteGroup.scss";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../ui/button/Button";
 
 const InviteGroup = () => {
@@ -10,6 +10,9 @@ const InviteGroup = () => {
   const { group } = useGroupContext();
   const inviteCode = group?.inviteCode ?? null;
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const fromCreate = location.state?.fromCreate === true;
 
   const [copied, setCopied] = useState<boolean>(false);
 
@@ -35,8 +38,8 @@ const InviteGroup = () => {
   return (
     <div className="invite-group">
       <div className="invite-group__header">
-        <h1>{t("invite.title")}</h1>
-        <p>{t("invite.subtitle")}</p>
+        <h1>{fromCreate ? t("invite.titleCreate") : t("invite.titleInvite")}</h1>
+        <p>{fromCreate ? t("invite.subtitleCreate") : t("invite.subtitleInvite")}</p>
       </div>
 
       <div className="invite-group__code">
