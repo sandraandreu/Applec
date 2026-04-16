@@ -1,9 +1,15 @@
 .alert {
-  border: none;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 0;
-  max-width: 400px;
+  max-width: 360px;
   width: 90%;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.4);
@@ -15,36 +21,37 @@
 
   &__header {
     margin: 0 0 8px;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
+    color: #1a1a1a;
   }
 
   &__message {
-    margin: 0 0 20px;
+    margin: 0 0 24px;
     color: #666;
     font-size: 1rem;
-    line-height: 1.4;
+    line-height: 1.6;
   }
 
   &__buttons {
     display: flex;
-    justify-content: flex-end;
     gap: 8px;
+    justify-content: flex-end;
   }
 
   &__button {
-    padding: 8px 16px;
-    border: none;
+    padding: 10px 20px;
+    border: 1px solid #1a1a1a;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
-    background-color: #3880ff;
+    background-color: #1a1a1a;
     color: #fff;
 
     &--cancel {
-      background-color: transparent;
-      color: #666;
+      background-color: #fff;
+      color: #1a1a1a;
     }
 
     &:hover {
