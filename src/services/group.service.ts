@@ -15,17 +15,22 @@ import type { GroupData } from "../context/group/GroupContext";
 export const getGroupById = async (
   groupId: string,
 ): Promise<GroupData | null> => {
-  const snap = await getDoc(doc(db, "groups", groupId));
-  if (!snap.exists()) return null;
-  const data = snap.data();
-  return {
-    groupId,
-    name: data.name,
-    description: data.description,
-    inviteCode: data.inviteCode,
-    adminId: data.adminId,
-    members: data.members,
-  };
+  try {
+    const snap = await getDoc(doc(db, "groups", groupId));
+    if (!snap.exists()) return null;
+    const data = snap.data();
+    return {
+      groupId,
+      name: data.name,
+      description: data.description,
+      inviteCode: data.inviteCode,
+      adminId: data.adminId,
+      members: data.members,
+    };
+  } catch (error) {
+    console.error("getGroupById error:", error);
+    return null;
+  }
 };
 
 interface CreateGroupData {
@@ -60,15 +65,20 @@ export const createGroup = async ({
 export const findGroupByInviteCode = async (
   code: string,
 ): Promise<{ id: string; name: string; description: string } | null> => {
-  const q = query(collection(db, "groups"), where("inviteCode", "==", code));
-  const snap = await getDocs(q);
-  if (snap.empty) return null;
-  const groupDoc = snap.docs[0];
-  return {
-    id: groupDoc.id,
-    name: groupDoc.data().name,
-    description: groupDoc.data().description,
-  };
+  try {
+    const q = query(collection(db, "groups"), where("inviteCode", "==", code));
+    const snap = await getDocs(q);
+    if (snap.empty) return null;
+    const groupDoc = snap.docs[0];
+    return {
+      id: groupDoc.id,
+      name: groupDoc.data().name,
+      description: groupDoc.data().description,
+    };
+  } catch (error) {
+    console.error("findGroupByInviteCode error:", error);
+    return null;
+  }
 };
 
 export const addMemberToGroup = async (
@@ -78,7 +88,12 @@ export const addMemberToGroup = async (
   fullName: string,
   email: string,
 ): Promise<void> => {
-  await updateDoc(doc(db, "groups", groupId), {
-    members: arrayUnion({ uid, role: "member", username, fullName, email }),
-  });
+  try {
+    await updateDoc(doc(db, "groups", groupId), {
+      members: arrayUnion({ uid, role: "member", username, fullName, email }),
+    });
+  } catch (error) {
+    console.error("addMemberToGroup error:", error);
+    throw error;
+  }
 };
