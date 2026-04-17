@@ -1,5 +1,4 @@
 import {
-  getFirestore,
   doc,
   getDoc,
   addDoc,
@@ -10,10 +9,8 @@ import {
   getDocs,
   arrayUnion,
 } from "firebase/firestore";
-import app from "../plugins/firebase";
+import { db } from "../plugins/firebase";
 import type { GroupData } from "../context/group/GroupContext";
-
-const db = getFirestore(app);
 
 export const getGroupById = async (
   groupId: string,
@@ -35,7 +32,7 @@ interface CreateGroupData {
   name: string;
   description: string;
   adminUid: string;
-  adminUserName: string;
+  adminUsername: string;
   adminFullName: string;
   adminEmail: string;
 }
@@ -44,7 +41,7 @@ export const createGroup = async ({
   name,
   description,
   adminUid,
-  adminUserName,
+  adminUsername,
   adminFullName,
   adminEmail,
 }: CreateGroupData): Promise<string> => {
@@ -54,7 +51,7 @@ export const createGroup = async ({
     description,
     inviteCode,
     adminId: adminUid,
-    members: [{ uid: adminUid, role: "admin", userName: adminUserName, fullName: adminFullName, email: adminEmail }],
+    members: [{ uid: adminUid, role: "admin", username: adminUsername, fullName: adminFullName, email: adminEmail }],
     createdAt: new Date(),
   });
   return ref.id;
@@ -77,11 +74,11 @@ export const findGroupByInviteCode = async (
 export const addMemberToGroup = async (
   groupId: string,
   uid: string,
-  userName: string,
+  username: string,
   fullName: string,
   email: string,
 ): Promise<void> => {
   await updateDoc(doc(db, "groups", groupId), {
-    members: arrayUnion({ uid, role: "member", userName, fullName, email }),
+    members: arrayUnion({ uid, role: "member", username, fullName, email }),
   });
 };

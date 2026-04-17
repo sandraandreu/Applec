@@ -19,7 +19,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   if (isLoading) return <Loading />;
 
   const filteredMembers = group?.members.filter((member) => {
-    const matchesSearch = member.userName
+    const matchesSearch = member.username
       ?.toLowerCase()
       .includes(searchValue.toLowerCase());
     const matchesFilter =
@@ -61,7 +61,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {admins.map((member) => (
               <MemberCard
                 key={member.uid}
-                name={member.userName}
+                username={member.username}
                 fullName={member.fullName}
                 role={member.role}
               />
@@ -79,7 +79,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {organizers.map((member) => (
               <MemberCard
                 key={member.uid}
-                name={member.userName}
+                username={member.username}
                 fullName={member.fullName}
                 role={member.role}
               />
@@ -97,7 +97,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {members.map((member) => (
               <MemberCard
                 key={member.uid}
-                name={member.userName}
+                username={member.username}
                 fullName={member.fullName}
                 role={member.role}
               />

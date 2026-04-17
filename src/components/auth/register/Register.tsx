@@ -40,7 +40,7 @@ const Register = () => {
   const handleRegister = async (
     email: string,
     password: string,
-    userName: string,
+    username: string,
     fullName: string,
   ) => {
     try {
@@ -51,7 +51,7 @@ const Register = () => {
 
       try {
         // 2. Comprobar username ya autenticados
-        const taken = await isUsernameTaken(userName);
+        const taken = await isUsernameTaken(username);
         if (taken) {
           await userCredential.user.delete();
           setUsernameError(t("register.errors.usernameTaken"));
@@ -62,7 +62,7 @@ const Register = () => {
         setRegisteredUser(userCredential.user);
 
         await createUserProfile(userCredential.user.uid, {
-          userName,
+          username,
           fullName,
           email: userCredential.user.email,
           createdAt: new Date(),

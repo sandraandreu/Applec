@@ -9,11 +9,11 @@ const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
-  const { userName } = useAuthContext();
+  const { profile } = useAuthContext();
 
   return (
     <BaseLayout>
-      <h1>{t("welcome.title", { name: userName })}</h1>
+      <h1>{t("welcome.title", { name: profile?.username })}</h1>
       <p>{t("welcome.subtitle")}</p>
       <p>{t("welcome.description")}</p>
       <Button

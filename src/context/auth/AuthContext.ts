@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
 import { User } from 'firebase/auth';
+import type { UserProfile } from '../../models/user.model';
 
 export interface AuthContextType {
   user: User | null;
-  userName: string | null;
-  fullName: string | null;
+  profile: UserProfile | null;
   isLoading: boolean;
   logout: () => void;
 }

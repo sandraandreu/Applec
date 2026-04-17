@@ -22,7 +22,7 @@ interface JoinGroupFormData {
 const JoinGroup = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
-  const { user, userName, fullName } = useAuthContext();
+  const { user, profile } = useAuthContext();
   const { refreshGroup } = useGroupContext();
   const navigate = useNavigate();
 
@@ -75,8 +75,8 @@ const JoinGroup = () => {
       await addMemberToGroup(
         groupFound!.id,
         user!.uid,
-        userName ?? "",
-        fullName ?? "",
+        profile?.username ?? "",
+        profile?.fullName ?? "",
         user!.email ?? "",
       );
       await updateUserGroup(user!.uid, groupFound!.id);

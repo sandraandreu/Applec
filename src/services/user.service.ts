@@ -1,5 +1,4 @@
 import {
-  getFirestore,
   doc,
   getDoc,
   setDoc,
@@ -9,42 +8,55 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import app from "../plugins/firebase";
+import { db } from "../plugins/firebase";
+import type { UserProfile, UserProfileCreate } from "../models/user.model";
 
-interface UserProfile {
-  userName: string;
-  fullName: string;
-  email: string | null;
-  createdAt: Date;
-  role: string;
-}
-
-const db = getFirestore(app);
+export type { UserProfile };
 
 export const getUserProfile = async (
   uid: string,
-): Promise<(UserProfile & { groupId?: string }) | null> => {
-  const snap = await getDoc(doc(db, "users", uid));
-  if (!snap.exists()) return null;
-  return snap.data() as UserProfile & { groupId?: string };
+): Promise<UserProfile | null> => {
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    if (!snap.exists()) return null;
+    return snap.data() as UserProfile;
+  } catch (error) {
+    console.error("getUserProfile error:", error);
+    return null;
+  }
 };
 
 export const createUserProfile = async (
   uid: string,
-  data: UserProfile,
+  data: UserProfileCreate,
 ): Promise<void> => {
-  await setDoc(doc(db, "users", uid), data);
+  try {
+    await setDoc(doc(db, "users", uid), data);
+  } catch (error) {
+    console.error("createUserProfile error:", error);
+    throw error;
+  }
 };
 
 export const updateUserGroup = async (
   uid: string,
   groupId: string,
 ): Promise<void> => {
-  await updateDoc(doc(db, "users", uid), { groupId });
+  try {
+    await updateDoc(doc(db, "users", uid), { groupId });
+  } catch (error) {
+    console.error("updateUserGroup error:", error);
+    throw error;
+  }
 };
 
-export const isUsernameTaken = async (userName: string): Promise<boolean> => {
-  const q = query(collection(db, "users"), where("userName", "==", userName));
-  const snap = await getDocs(q);
-  return !snap.empty;
+export const isUsernameTaken = async (username: string): Promise<boolean> => {
+  try {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const snap = await getDocs(q);
+    return !snap.empty;
+  } catch (error) {
+    console.error("isUsernameTaken error:", error);
+    throw error;
+  }
 };

@@ -1,11 +1,10 @@
 import { type ReactNode, useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import app from "../../plugins/firebase";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../../plugins/firebase";
 import { logoutUser } from "../../services/auth.service";
 import { getUserProfile } from "../../services/user.service";
-
-const auth = getAuth(app);
+import type { UserProfile } from "../../models/user.model";
 
 export interface AuthContextProviderProps {
   children: ReactNode;
@@ -13,8 +12,7 @@ export interface AuthContextProviderProps {
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
-  const [fullName, setFullName] = useState<string | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const logout = async () => {
@@ -24,21 +22,14 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
-      if (firebaseUser) {
-        const profile = await getUserProfile(firebaseUser.uid);
-        setUserName(profile?.userName ?? null);
-        setFullName(profile?.fullName ?? null);
-      } else {
-        setUserName(null);
-        setFullName(null);
-      }
+      setProfile(firebaseUser ? await getUserProfile(firebaseUser.uid) : null);
       setIsLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
-  const contextValue = { user, userName, fullName, isLoading, logout };
+  const contextValue = { user, profile, isLoading, logout };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

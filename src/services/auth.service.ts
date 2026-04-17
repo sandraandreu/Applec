@@ -1,5 +1,4 @@
 import {
-  getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -8,9 +7,7 @@ import {
   UserCredential,
   User,
 } from "firebase/auth";
-import app from "../plugins/firebase";
-
-const auth = getAuth(app);
+import { auth } from "../plugins/firebase";
 
 export const loginUser = async (
   email: string,
