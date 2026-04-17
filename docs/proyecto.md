@@ -19,35 +19,10 @@ Sustituye WhatsApp y Google Forms por una herramienta centralizada donde organiz
 ## Equipo
 
 Proyecto de máster — 2 personas:
-- **Sandra** — desarrollo frontend (lógica, componentes, servicios, contexto)
-- **Compañera** — diseño UX/UI en Figma + implementación de CSS/estilos
+- **Sandra** — desarrollo frontend (lógica, componentes, servicios, contexto) + implementación de CSS/estilos
+- **Inma** — diseño UX/UI en Figma + implementación de CSS/estilos
 
 La presentación es ante empresas, por lo que el nivel de calidad y profesionalidad del producto debe ser alto.
-
-## Git
-
-**Ramas:**
-- `main` — versión estable, solo se mergea cuando todo está seguro
-- `developer` — rama de integración, se mergea desde las feature branches
-- `feature/nombre` o `refactor/nombre` — una rama por funcionalidad o tarea
-
-**Flujo:** feature branch → developer → main
-
-**Formato de commits** (Conventional Commits):
-```
-type(scope): descripción corta en inglés
-
-feat(members): add role filter and grouped list
-fix(auth): handle email already in use error
-refactor(group): centralize firebase instances
-style(members): update card layout spacing
-chore(deps): update firebase sdk
-```
-Tipos: `feat` · `fix` · `refactor` · `style` · `chore` · `docs`
-
-**Nombres de rama:** kebab-case con prefijo, ej. `feature/navigation`, `refactor/user-service`.
-
----
 
 ## Fecha de presentación
 
@@ -87,47 +62,6 @@ Tipos: `feat` · `fix` · `refactor` · `style` · `chore` · `docs`
 - **Modelos:** `UserProfile` en `src/models/user.model.ts`. `UserProfileCreate = Omit<UserProfile, 'groupId'>`.
 - **Campo nombre:** siempre `username` (nunca `userName`) — se refactorizó y debe mantenerse.
 
-### Estructura de carpetas actual
-```
-src/
-  components/
-    alert/
-    base-layout/
-    language-selector/
-    loading/
-    member-card/
-    member-list/
-  context/
-    auth/               # AuthContext.ts + AuthContextProvider.tsx
-    group/              # GroupContext.ts + GroupContextProvider.tsx
-  hooks/                # useRole.ts
-  models/               # user.model.ts
-  pages/
-    auth/
-      login/            # LoginPage.tsx + Login.tsx
-      register/         # RegisterPage.tsx + Register.tsx
-      forgot-password/  # ForgotPasswordPage.tsx + ForgotPassword.tsx
-    groups/
-      create-group/     # CreateGroupPage.tsx + CreateGroup.tsx
-      invite-group/     # InviteGroupPage.tsx + InviteGroup.tsx
-      join-group/       # JoinGroupPage.tsx + JoinGroup.tsx
-    home/               # Home.tsx (placeholder)
-    members/            # MembersPage.tsx
-    onboarding/
-      landing/
-      welcome/
-      group/
-      language/
-  plugins/              # firebase.ts
-  routes/
-    appRoutes/          # AppRoutes.tsx, PrivateRoutes.tsx, PublicRoutes.tsx
-  services/             # auth.service.ts, user.service.ts, group.service.ts
-  ui-kit/
-    button/
-    input/
-    search/
-```
-
 ---
 
 ## Modelos de datos (Firestore)
@@ -155,28 +89,6 @@ Otros: `status` (`active` | `deadline-closed` | `finished` | `cancelled`), `crea
 
 ### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}` *(pendiente)*
 Campos: `userId`, `eventId`, `response` (`yes` | `no`), `confirmedAt`
-
----
-
-## Estado actual de funcionalidades
-
-### Implementado ✓
-- Auth: registro (fullName + username + email + contraseña), login, recuperar contraseña
-- Onboarding: landing → welcome → idioma → elección de grupo
-- Grupos: crear grupo (admin asignado automáticamente), invitar por enlace, unirse por código
-- Miembros: listado con búsqueda, filtros por rol, agrupado por rol, estados vacíos
-- Selección de idioma: castellano / valenciano
-- Guards de rutas: PrivateRoutes (requiere auth, opcionalmente requiresGroup), PublicRoutes
-
-### Pendiente ✗
-- **Navegación** (próximo) — menús de navegación para acceder a las páginas principales
-- **Miembros** (en curso) — gestión completa: aceptar/rechazar solicitudes, expulsar, cambiar rol
-- Home (solo placeholder)
-- Eventos: crear, editar, eliminar, vista calendario
-- Asistencia: confirmación, listado de asistentes
-- Perfil: editar nombre, cambiar idioma
-- Notificaciones
-- Build con Capacitor para iOS/Android
 
 ---
 

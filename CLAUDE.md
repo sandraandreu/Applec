@@ -1,0 +1,67 @@
+# CLAUDE.md — Falles App
+
+## Comandos
+
+```bash
+npm start        # servidor de desarrollo
+npm run lint     # ESLint sobre src/ (.ts y .tsx)
+npm test         # tests (jest + testing-library)
+npm run build    # build de producción
+```
+
+## Convenciones de nombres
+
+- Carpetas: kebab-case (`forgot-password/`, `member-card/`)
+- Componentes: PascalCase (`MemberCard.tsx`)
+- Archivos SCSS: kebab-case, mismo nombre que la carpeta (`member-card.scss`)
+- Campo nombre de usuario: siempre `username` (nunca `userName`) — se refactorizó en todo el proyecto
+
+**Clases CSS/SCSS — BEM obligatorio:**
+```
+.block {}
+.block__element {}
+.block--modifier {}
+.block__element--modifier {}
+```
+Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighted`, `.member-card--inactive`
+
+## Arquitectura
+
+**Firebase:** `auth` y `db` se exportan exclusivamente desde `src/plugins/firebase.ts`. Nunca instanciar `getAuth()` ni `getFirestore()` en otros archivos.
+
+**Servicios:** todos los métodos tienen try/catch.
+- Lectura → devuelve `null` en error
+- Escritura → re-lanza el error (`throw error`)
+
+**AuthContext:** expone `{ user, profile, isLoading, logout }`. `profile` es `UserProfile | null`.
+
+**Co-ubicación:** componentes específicos de una página van dentro de su carpeta de página. Reutilizables → `src/components/`. Primitivas UI sin lógica de dominio → `src/ui-kit/`.
+
+## i18n
+
+Archivos en `src/locales/{es,ca}/{namespace}.json`. Namespaces: `common`, `auth`, `groups`, `members`, `onboarding`.
+
+Formato de clave: `namespace:seccion.clave` (ej. `members:members.title`, `common:buttons.close`).
+
+Siempre añadir la traducción en **ambos idiomas** al mismo tiempo.
+
+## Git
+
+Flujo: `feature/nombre` → `developer` → `main`
+
+Commits (Conventional Commits, descripción en inglés):
+```
+feat(members): add role filter and grouped list
+fix(auth): handle email already in use error
+refactor(group): centralize firebase instances
+style(members): update card layout spacing
+chore(deps): update firebase sdk
+docs(readme): update setup instructions
+```
+
+## Contexto del proyecto
+
+- Visión, stack, arquitectura, modelos de datos, diseño: `docs/proyecto.md`
+- Funcionalidades MVP y estado de implementación: `docs/funcionalidades-mvp.md`
+- Reglas de negocio (roles, eventos, asistencia, grupos): `docs/reglas-de-negocio.md`
+- Plan de trabajo semanal: `docs/plan-mvp.md`
