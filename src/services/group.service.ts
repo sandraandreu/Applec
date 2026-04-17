@@ -50,16 +50,21 @@ export const createGroup = async ({
   adminFullName,
   adminEmail,
 }: CreateGroupData): Promise<string> => {
-  const inviteCode = crypto.randomUUID();
-  const ref = await addDoc(collection(db, "groups"), {
-    name,
-    description,
-    inviteCode,
-    adminId: adminUid,
-    members: [{ uid: adminUid, role: "admin", username: adminUsername, fullName: adminFullName, email: adminEmail }],
-    createdAt: new Date(),
-  });
-  return ref.id;
+  try {
+    const inviteCode = crypto.randomUUID();
+    const ref = await addDoc(collection(db, "groups"), {
+      name,
+      description,
+      inviteCode,
+      adminId: adminUid,
+      members: [{ uid: adminUid, role: "admin", username: adminUsername, fullName: adminFullName, email: adminEmail }],
+      createdAt: new Date(),
+    });
+    return ref.id;
+  } catch (error) {
+    console.error("createGroup error:", error);
+    throw error;
+  }
 };
 
 export const findGroupByInviteCode = async (
