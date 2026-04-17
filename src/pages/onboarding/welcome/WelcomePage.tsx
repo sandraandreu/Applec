@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./WelcomePage.scss";
+import "./welcome.scss";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import Button from "../../../components/ui/button/Button";
-import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
+import Button from "../../../ui-kit/button/Button";
+import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./LandingPage.scss";
-import Button from "../../../components/ui/button/Button";
-import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
+import "./landing.scss";
+import Button from "../../../ui-kit/button/Button";
+import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const LandingPage = () => {
   const { t } = useTranslation("onboarding");

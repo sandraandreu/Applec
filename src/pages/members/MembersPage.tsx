@@ -1,7 +1,7 @@
-import "./MembersPage.scss";
-import Search from "../../components/ui/search/Search";
-import MembersList from "../../components/members/membersList/MembersList";
-import BaseLayout from "../../components/layout/baseLayout/BaseLayout";
+import "./members.scss";
+import Search from "../../ui-kit/search/Search";
+import MembersList from "../../components/member-list/MembersList";
+import BaseLayout from "../../components/base-layout/BaseLayout";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../context/group/GroupContext";

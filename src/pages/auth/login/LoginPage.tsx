@@ -1,6 +1,6 @@
-import "./LoginPage.scss";
-import Login from "../../../components/auth/login/Login";
-import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
+import "./login.scss";
+import Login from "./Login";
+import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const LoginPage = () => {
   return (

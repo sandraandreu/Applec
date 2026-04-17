@@ -1,6 +1,6 @@
-import "./RegisterPage.scss";
-import Register from "../../../components/auth/register/Register";
-import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
+import "./register.scss";
+import Register from "./Register";
+import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const RegisterPage = () => {
   return (

@@ -1,7 +1,7 @@
-import "./Home.scss";
+import "./home.scss";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
-import BaseLayout from "../../components/layout/baseLayout/BaseLayout";
+import BaseLayout from "../../components/base-layout/BaseLayout";
 
 const Home = () => {
   const { logout } = useAuthContext();

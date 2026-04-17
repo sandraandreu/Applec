@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./GroupPage.scss";
-import Button from "../../../components/ui/button/Button";
-import BaseLayout from "../../../components/layout/baseLayout/BaseLayout";
+import "./group.scss";
+import Button from "../../../ui-kit/button/Button";
+import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const GroupPage = () => {
   const { t } = useTranslation("onboarding");

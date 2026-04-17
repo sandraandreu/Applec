@@ -6,13 +6,13 @@ import PublicRoutes from "./PublicRoutes";
 import Home from "../../pages/home/Home";
 import LoginPage from "../../pages/auth/login/LoginPage";
 import RegisterPage from "../../pages/auth/register/RegisterPage";
-import ForgotPasswordPage from "../../pages/auth/forgotPassword/ForgotPasswordPage";
-import CreateGroupPage from "../../pages/groups/createGroup/CreateGroupPage";
+import ForgotPasswordPage from "../../pages/auth/forgot-password/ForgotPasswordPage";
+import CreateGroupPage from "../../pages/groups/create-group/CreateGroupPage";
 import WelcomePage from "../../pages/onboarding/welcome/WelcomePage";
 import GroupPage from "../../pages/onboarding/group/GroupPage";
 import LanguagePage from "../../pages/onboarding/language/LanguagePage";
-import JoinGroupPage from "../../pages/groups/joinGroup/JoinGroupPage";
-import InviteGroupPage from "../../pages/groups/inviteGroup/InviteGroupPage";
+import JoinGroupPage from "../../pages/groups/join-group/JoinGroupPage";
+import InviteGroupPage from "../../pages/groups/invite-group/InviteGroupPage";
 import LandingPage from "../../pages/onboarding/landing/LandingPage";
 import MembersPage from "../../pages/members/MembersPage";
 
