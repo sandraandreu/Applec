@@ -70,10 +70,11 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 ```ts
 interface UserProfile {
   username: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string | null;
   createdAt: Date;
-  role: string;       // 'admin' | 'organizer' | 'member'
+  role: "admin" | "organizer" | "member";
   groupId?: string;
 }
 ```

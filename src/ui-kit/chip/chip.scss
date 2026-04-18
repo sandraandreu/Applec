@@ -1,0 +1,19 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--admin {
+    background: #ffe8ed;
+    color: #ff1c4e;
+  }
+
+  &--organizer {
+    background: #ccf4f3;
+    color: #00c8c5;
+  }
+}

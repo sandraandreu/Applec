@@ -29,14 +29,4 @@
     text-overflow: ellipsis;
   }
 
-  &__role {
-    font-size: 16px;
-    flex-shrink: 0;
-    padding: 2px 8px;
-    border-radius: 999px;
-
-    &--admin      { background: #ede9fe; color: #4f46e5; }
-    &--organizer  { background: #cffafe; color: #0891b2; }
-    &--member     { background: #f3f4f6; color: #555;    }
-  }
 }

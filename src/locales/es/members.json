@@ -11,6 +11,7 @@
     },
     "roles": {
       "admin": "Administrador",
+      "organizer": "Organizador",
       "organizers": "Organizadores",
       "members": "Miembros"
     }
