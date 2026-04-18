@@ -11,6 +11,7 @@ interface InputProps {
   registration?: UseFormRegisterReturn;
   maxLength?: number;
   currentLength?: number;
+  required?: boolean;
 }
 
 const Input = ({
@@ -22,11 +23,12 @@ const Input = ({
   registration,
   maxLength,
   currentLength,
+  required,
 }: InputProps) => {
   return (
     <div className="field">
       <label className="field__label" htmlFor={id}>
-        {label}
+        {label}{required && <span className="field__required"> *</span>}
       </label>
       <input
         id={id}

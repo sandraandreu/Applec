@@ -25,6 +25,8 @@ npm run build    # build de producción
 ```
 Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighted`, `.member-card--inactive`
 
+**Unidades px — siempre pares:** nunca usar valores impares (`11px`, `13px`). Usar siempre `12px`, `14px`, etc.
+
 ## Arquitectura
 
 **Firebase:** `auth` y `db` se exportan exclusivamente desde `src/plugins/firebase.ts`. Nunca instanciar `getAuth()` ni `getFirestore()` en otros archivos.

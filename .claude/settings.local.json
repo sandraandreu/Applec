@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "mcp__figma-console__figma_navigate",
+      "mcp__figma-console__figma_get_text_styles",
+      "mcp__figma-console__figma_get_styles",
+      "mcp__figma-console__figma_get_file_data",
+      "mcp__figma-console__figma_execute",
+      "mcp__figma-console__figma_get_status"
     ]
   }
 }
