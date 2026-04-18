@@ -1,0 +1,56 @@
+.style-guide {
+  padding: 32px 24px 80px;
+
+  &__title {
+    margin-bottom: 48px;
+  }
+
+  &__section {
+    margin-bottom: 64px;
+
+    &-title {
+      margin-bottom: 32px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #1a1a1a;
+    }
+  }
+
+  &__component {
+    margin-bottom: 40px;
+  }
+
+  &__component-name {
+    margin-bottom: 16px;
+    color: #7d7d7d;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-family: monospace;
+    color: #7d7d7d;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+
+    &--centered {
+      align-items: center;
+    }
+  }
+
+  &__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

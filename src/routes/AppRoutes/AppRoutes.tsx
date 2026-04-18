@@ -15,6 +15,7 @@ import JoinGroupPage from "../../pages/groups/join-group/JoinGroupPage";
 import InviteGroupPage from "../../pages/groups/invite-group/InviteGroupPage";
 import LandingPage from "../../pages/onboarding/landing/LandingPage";
 import MembersPage from "../../pages/members/MembersPage";
+import StyleGuide from "../../pages/style-guide/StyleGuide";
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -128,6 +129,8 @@ const AppRoutes = () => (
           </PrivateRoutes>
         }
       />
+
+      <Route path="/style-guide" element={<StyleGuide />} />
     </Routes>
   </BrowserRouter>
 );
