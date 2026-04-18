@@ -1,5 +1,5 @@
 import React from 'react';
-import "./styles/global.scss" 
+import "./scss/style.scss";
 import './plugins/i18n';
 import { createRoot } from 'react-dom/client';
 import App from './App';

@@ -59,9 +59,18 @@ chore(deps): update firebase sdk
 docs(readme): update setup instructions
 ```
 
+## Rules automáticas
+
+Se cargan automáticamente según el archivo que se edite:
+
+- @.claude/rules/scss-bem.md — BEM y consolidación de estilos
+- @.claude/rules/services-pattern.md — patrón try/catch y Firebase singleton
+- @.claude/rules/i18n-rule.md — claves en ambos idiomas, namespaces
+- @.claude/rules/component-patterns.md — co-ubicación, umbral de components/, nombres
+
 ## Contexto del proyecto
 
 - Visión, stack, arquitectura, modelos de datos, diseño: `docs/proyecto.md`
 - Funcionalidades MVP y estado de implementación: `docs/funcionalidades-mvp.md`
 - Reglas de negocio (roles, eventos, asistencia, grupos): `docs/reglas-de-negocio.md`
-- Plan de trabajo semanal: `docs/plan-mvp.md`
+- Plan de implementación: `docs/superpowers/plans/2026-04-17-mvp-falles-app.md`
