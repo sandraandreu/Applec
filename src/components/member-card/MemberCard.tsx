@@ -18,6 +18,9 @@ const MemberCard = ({ firstName, lastName, email, role }: MemberCardProps) => {
         <span className="member-card__email">{email}</span>
       </div>
       <Chip role={role} variant="short" />
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M7.1875 4.37451L12.8125 9.99951L7.1875 15.6245" stroke="#666666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
     </div>
   );
 };
