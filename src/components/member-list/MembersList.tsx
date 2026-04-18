@@ -16,7 +16,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const navigate = useNavigate();
   const { group, isLoading } = useGroupContext();
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading message={t("members.loading")} />;
 
   const filteredMembers = group?.members.filter((member) => {
     const matchesSearch = member.username

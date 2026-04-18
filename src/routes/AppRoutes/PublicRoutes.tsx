@@ -1,6 +1,7 @@
 import { type ReactNode } from "react";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { Navigate } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
 
 interface PublicRoutesProps {
   children: ReactNode;
@@ -13,7 +14,7 @@ const PublicRoutes = ({ children }: PublicRoutesProps) => {
     return <Navigate to="/home" replace />;
   }
 
-  if (isLoading) return null;
+  if (isLoading) return <Loading />;
 
   return <>{children}</>;
 };

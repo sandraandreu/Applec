@@ -122,8 +122,12 @@ const StyleGuide = () => {
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">Loading</h3>
           <div className="style-guide__row">
-            <Loading />
-            <Loading message="Cargando miembros..." />
+            <div className="style-guide__loading-preview">
+              <Loading />
+            </div>
+            <div className="style-guide__loading-preview">
+              <Loading message="Cargando miembros..." />
+            </div>
           </div>
         </div>
 

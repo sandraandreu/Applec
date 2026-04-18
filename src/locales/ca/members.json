@@ -6,6 +6,7 @@
     "invite": "Convidar membres",
     "emptySearch": "No s'han trobat membres amb aqueix nom.",
     "emptyFilter": "No hi ha membres amb aquest rol.",
+    "loading": "Carregant membres...",
     "filters": {
       "all": "Tots"
     },
