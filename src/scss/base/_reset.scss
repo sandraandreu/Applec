@@ -1,15 +1,32 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+ *, *::before, *::after {                                                                    
+    box-sizing: border-box;
+    margin: 0;                                                                                
+    padding: 0;   
+  }
 
-button,
-input,
-textarea,
-select {
-  font-family: inherit;
-  font-size: inherit;
-}
+  html {
+    -webkit-text-size-adjust: 100%; // evita que iOS escale el texto al rotar
+  }
+
+  body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased; // suaviza el renderizado de fuentes en iOS/macOS
+  }
+
+  img, svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  button, input, textarea, select {
+    font: inherit;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }

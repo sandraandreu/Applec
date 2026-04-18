@@ -1,16 +1,15 @@
 .button {
-  display: block;
-  width: 100%;
-  padding: 10px 20px;
-  border: 1px solid #1a1a1a;
-  border-radius: 4px;
-  background-color: #1a1a1a;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: #0068ff;
+  color: #ffffff;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  border-radius: 22px;
+  padding: 12px 40px;
 
   &:disabled {
     opacity: 0.45;
@@ -18,30 +17,24 @@
   }
 
   &.secondary {
-    background-color: #fff;
-    color: #1a1a1a;
-  }
-
-  &.danger {
-    background-color: #c0392b;
-    border-color: #c0392b;
-    color: #fff;
+    background-color: transparent;
+    border: 1px solid #0068ff;
+    color: #0068ff;
   }
 
   &.language {
-    display: inline-block;
-    width: auto;
-    padding: 6px 14px;
-    background-color: #fff;
+    width: 280px;
+    height: 80px;
+    gap: 12px;
+    background-color: #f7f7f5;
+    border: 1px solid #7d7d7d;
+    border-radius: 22px;
+    padding: 12px 40px;
     color: #1a1a1a;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    margin-top: 0;
 
-    &.active {
-      background-color: #1a1a1a;
-      color: #fff;
-      border-color: #1a1a1a;
+    &.active-language {
+      background-color: #d7e3fd;
+      border-color: #0068ff;
     }
   }
 }

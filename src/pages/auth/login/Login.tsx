@@ -82,6 +82,7 @@ const Login = () => {
           label={tc("fields.email")}
           placeholder={t("login.emailPlaceholder")}
           type="text"
+          required
           registration={register("email", {
             required: true,
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -100,6 +101,7 @@ const Login = () => {
           label={tc("fields.password")}
           placeholder={t("login.passwordPlaceholder")}
           type="password"
+          required
           registration={register("password", { required: true })}
           error={
             errors.password?.type === "required"

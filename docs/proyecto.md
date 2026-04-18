@@ -94,12 +94,25 @@ Campos: `userId`, `eventId`, `response` (`yes` | `no`), `confirmedAt`
 
 ## Diseño (Figma)
 
-El diseño está en progreso y **aún no se ha aplicado al código**.
+El diseño final está completo en Figma y se está implementando en el código.
+
+### Tipografía
+- **Bricolage Grotesque ExtraBold** — títulos (h1: 40px, h2: 32px, h3: 24px)
+- **Bricolage Grotesque SemiBold** — botones (20px)
+- **General Sans Medium** — cuerpo, labels, subtítulos (16-18px)
+- **General Sans Semibold** — links, metadatos (16px)
+- Mínimo de fuente: 16px en toda la app
 
 ### Paleta y estética
 - Paleta: azules, rosas/rojos, amarillos, verdes — tonos pastel y vivos
 - Estética limpia y moderna con ilustraciones en estados vacíos y onboarding
-- Mobile-first, pensado para acciones rápidas
+- Mobile-only — app Capacitor para iOS y Android
+
+### Colores principales
+- Primary: `#0068FF` · Secondary: `#3772FF`
+- Text: `#1A1A1A` / `#4C4C4C` / `#7D7D7D`
+- Error: `#FF1C4E`
+- Card border: `#D5D5D5` · Input border: `#7D7D7D`
 
 ### Navegación — Bottom navigation bar (5 ítems)
 La barra inferior varía según el rol: admin/organizador tienen acceso completo, los miembros ven menos ítems.
@@ -130,7 +143,7 @@ El menú de miembros tiene menos ítems que el de admin/organizadores (las pági
 - Sección "Mi cuenta": Editar perfil · Mis vinculados · Notificaciones · Idioma
 - Sección "Mi falla": Compartir acceso · Configuración del grupo · Cerrar sesión
 
-No aplicar cambios de diseño hasta que el Figma esté completo y se tome la decisión de implementarlo.
+La conexión con Figma se hace via Figma Console MCP (CDP mode): lanzar Figma con `--remote-debugging-port=9222`.
 
 ---
 

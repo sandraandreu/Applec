@@ -1,9 +1,12 @@
+import { ReactNode } from "react";
 import "./button.scss";
+
 interface ButtonProps {
   text: string;
   type?: "submit" | "button" | "reset";
-  variant?: "primary" | "secondary" | "danger" | "language";
-  isActive?: boolean;
+  variant?: "primary" | "secondary" | "language";
+  icon?: ReactNode;
+  isActiveLanguage?: boolean;
   onClick?: () => void;
   disabled?: boolean;
   isLoading?: boolean;
@@ -13,7 +16,8 @@ const Button = ({
   text,
   type = "button",
   variant = "primary",
-  isActive,
+  icon,
+  isActiveLanguage,
   onClick,
   disabled = false,
   isLoading = false,
@@ -23,8 +27,9 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`button ${variant} ${isActive ? "active" : ""}`}
+      className={`button ${variant} ${isActiveLanguage ? "active-language" : ""}`}
     >
+      {icon}
       {text}
     </button>
   );
