@@ -49,7 +49,8 @@ const CreateGroup = () => {
         description,
         adminUid: user!.uid,
         adminUsername: profile?.username ?? "",
-        adminFullName: profile?.fullName ?? "",
+        adminFirstName: profile?.firstName ?? "",
+        adminLastName: profile?.lastName ?? "",
         adminEmail: user!.email ?? "",
       });
 

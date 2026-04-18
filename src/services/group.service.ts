@@ -38,7 +38,8 @@ interface CreateGroupData {
   description: string;
   adminUid: string;
   adminUsername: string;
-  adminFullName: string;
+  adminFirstName: string;
+  adminLastName: string;
   adminEmail: string;
 }
 
@@ -47,7 +48,8 @@ export const createGroup = async ({
   description,
   adminUid,
   adminUsername,
-  adminFullName,
+  adminFirstName,
+  adminLastName,
   adminEmail,
 }: CreateGroupData): Promise<string> => {
   try {
@@ -57,7 +59,7 @@ export const createGroup = async ({
       description,
       inviteCode,
       adminId: adminUid,
-      members: [{ uid: adminUid, role: "admin", username: adminUsername, fullName: adminFullName, email: adminEmail }],
+      members: [{ uid: adminUid, role: "admin", username: adminUsername, firstName: adminFirstName, lastName: adminLastName, email: adminEmail }],
       createdAt: new Date(),
     });
     return ref.id;
@@ -90,12 +92,13 @@ export const addMemberToGroup = async (
   groupId: string,
   uid: string,
   username: string,
-  fullName: string,
+  firstName: string,
+  lastName: string,
   email: string,
 ): Promise<void> => {
   try {
     await updateDoc(doc(db, "groups", groupId), {
-      members: arrayUnion({ uid, role: "member", username, fullName, email }),
+      members: arrayUnion({ uid, role: "member", username, firstName, lastName, email }),
     });
   } catch (error) {
     console.error("addMemberToGroup error:", error);

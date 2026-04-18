@@ -76,7 +76,8 @@ const JoinGroup = () => {
         groupFound!.id,
         user!.uid,
         profile?.username ?? "",
-        profile?.fullName ?? "",
+        profile?.firstName ?? "",
+        profile?.lastName ?? "",
         user!.email ?? "",
       );
       await updateUserGroup(user!.uid, groupFound!.id);

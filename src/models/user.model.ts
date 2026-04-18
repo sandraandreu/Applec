@@ -1,6 +1,7 @@
 export interface UserProfile {
   username: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   email: string | null;
   createdAt: Date;
   role: string;

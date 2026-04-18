@@ -61,8 +61,9 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {admins.map((member) => (
               <MemberCard
                 key={member.uid}
-                username={member.username}
-                fullName={member.fullName}
+                firstName={member.firstName}
+                lastName={member.lastName}
+                email={member.email}
                 role={member.role}
               />
             ))}
@@ -79,8 +80,9 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {organizers.map((member) => (
               <MemberCard
                 key={member.uid}
-                username={member.username}
-                fullName={member.fullName}
+                firstName={member.firstName}
+                lastName={member.lastName}
+                email={member.email}
                 role={member.role}
               />
             ))}
@@ -97,8 +99,9 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             {members.map((member) => (
               <MemberCard
                 key={member.uid}
-                username={member.username}
-                fullName={member.fullName}
+                firstName={member.firstName}
+                lastName={member.lastName}
+                email={member.email}
                 role={member.role}
               />
             ))}

@@ -13,7 +13,7 @@ const WelcomePage = () => {
 
   return (
     <BaseLayout>
-      <h1>{t("welcome.title", { name: profile?.username })}</h1>
+      <h1>{t("welcome.title", { name: profile?.firstName })}</h1>
       <p>{t("welcome.subtitle")}</p>
       <p>{t("welcome.description")}</p>
       <Button
