@@ -27,6 +27,10 @@ Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighte
 
 **Unidades px — siempre pares:** nunca usar valores impares (`11px`, `13px`). Usar siempre `12px`, `14px`, etc.
 
+## Flujo de trabajo
+
+**Nunca escribir código sin aprobación previa.** Antes de implementar cualquier cambio hay que proponer el enfoque y esperar confirmación explícita de la usuaria.
+
 ## Arquitectura
 
 **Firebase:** `auth` y `db` se exportan exclusivamente desde `src/plugins/firebase.ts`. Nunca instanciar `getAuth()` ni `getFirestore()` en otros archivos.

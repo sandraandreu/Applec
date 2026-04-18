@@ -4,7 +4,7 @@ export interface UserProfile {
   lastName: string;
   email: string | null;
   createdAt: Date;
-  role: string;
+  role: "admin" | "organizer" | "member";
   groupId?: string;
 }
 

@@ -1,0 +1,31 @@
+.avatar {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  color: #fff;
+
+  &--sm {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  &--md {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  &--lg {
+    width: 80px;
+    height: 80px;
+    font-size: 28px;
+  }
+
+  &--admin     { background: #e5384f; }
+  &--organizer { background: #0da994; }
+  &--member    { background: #0068ff; }
+}
