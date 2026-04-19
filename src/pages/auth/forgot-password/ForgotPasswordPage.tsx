@@ -59,12 +59,15 @@ const ForgotPasswordPage = () => {
       <BackButton />
 
       <div className="forgot-password-page__content">
-        <h1 className="forgot-password-page__title">
-          {t("forgotPassword.title")}
-        </h1>
-        <p className="forgot-password-page__description margin-buttom48px">
-          {t("forgotPassword.description")}
-        </p>
+        <div className="forgot-password-page__header">
+          <h1 className="forgot-password-page__title">
+            {t("forgotPassword.title")}
+          </h1>
+          <p className="forgot-password-page__description margin-buttom48px">
+            {t("forgotPassword.description")}
+          </p>
+        </div>
+
         <form
           className="forgot-password-page__form"
           onSubmit={handleSubmit(onSubmit)}
