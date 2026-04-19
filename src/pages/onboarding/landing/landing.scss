@@ -1,34 +1,32 @@
-.landing {
+.landing-page {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 48px;
+  background: #cce1ff;
+  min-height: 100vh;
+  padding: 24px 32px;
 
-  .landing__header {
-    margin-bottom: 2rem;
+  &__header {
+    text-align: center;
 
-    h1 {
-      margin-bottom: 0.5rem;
+    .landing-page__tittle {
+      margin-bottom: 16px;
     }
 
-    p {
-      margin-bottom: 0;
-      color: #555;
+    .landing-page__description {
+      color: #4c4c4c;
     }
   }
 
-  .landing__actions {
+  &__img {
+    width: 100%;
+    height: auto;
+  }
+
+  &__actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 2rem;
-  }
-
-  .landing__terms {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 0;
-
-    a {
-      text-decoration: underline;
-    }
+    gap: 16px;
   }
 }
