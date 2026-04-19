@@ -7,7 +7,9 @@
       "mcp__figma-console__figma_get_styles",
       "mcp__figma-console__figma_get_file_data",
       "mcp__figma-console__figma_execute",
-      "mcp__figma-console__figma_get_status"
+      "mcp__figma-console__figma_get_status",
+      "mcp__figma-console__figma_get_component_for_development_deep",
+      "mcp__figma-console__figma_get_selection"
     ]
   }
 }

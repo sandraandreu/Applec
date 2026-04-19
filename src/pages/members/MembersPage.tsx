@@ -1,7 +1,6 @@
 import "./members.scss";
 import Search from "../../ui-kit/search/Search";
 import MembersList from "../../components/member-list/MembersList";
-import BaseLayout from "../../components/base-layout/BaseLayout";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../context/group/GroupContext";
@@ -24,8 +23,7 @@ const MembersPage = () => {
   const totalCount = group?.members.length ?? 0;
 
   return (
-    <BaseLayout>
-      <div className="members-page">
+    <div className="members-page">
         <h1 className="members-page__title">{t("members.title")}</h1>
 
         <div className="members-page__filters">
@@ -61,8 +59,7 @@ const MembersPage = () => {
         />
 
         <MembersList searchValue={searchValue} activeFilter={activeFilter} />
-      </div>
-    </BaseLayout>
+    </div>
   );
 };
 
