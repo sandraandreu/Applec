@@ -7,8 +7,16 @@ import Alert from "../../../components/alert/Alert";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import { registerUser, logoutUser, sendVerificationEmail } from "../../../services/auth.service";
-import { createUserProfile, isUsernameTaken } from "../../../services/user.service";
+import {
+  registerUser,
+  logoutUser,
+  sendVerificationEmail,
+} from "../../../services/auth.service";
+import BackButton from "../../../ui-kit/icons/BackButton";
+import {
+  createUserProfile,
+  isUsernameTaken,
+} from "../../../services/user.service";
 
 interface RegisterFormData {
   fullName: string;
@@ -30,8 +38,12 @@ const RegisterPage = () => {
   const { t: tc } = useTranslation("common");
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [registerState, setRegisterState] = useState<"form" | "success" | "error">("form");
-  const [registeredUser, setRegisteredUser] = useState<import("firebase/auth").User | null>(null);
+  const [registerState, setRegisterState] = useState<
+    "form" | "success" | "error"
+  >("form");
+  const [registeredUser, setRegisteredUser] = useState<
+    import("firebase/auth").User | null
+  >(null);
   const [usernameError, setUsernameError] = useState<string>("");
   const [errorConnection, setErrorConnection] = useState<string>("");
 
@@ -81,7 +93,11 @@ const RegisterPage = () => {
         setRegisterState("error");
         return;
       }
-      console.error("Register error:", firebaseError.code, firebaseError.message);
+      console.error(
+        "Register error:",
+        firebaseError.code,
+        firebaseError.message,
+      );
     } finally {
       setIsLoading(false);
     }
@@ -107,136 +123,145 @@ const RegisterPage = () => {
   };
 
   return (
-    <>
+    <div className="register-page">
       {isLoading && <Loading />}
 
-      <h1>{t("register.title")}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          id="register-fullname"
-          label={t("register.fullName")}
-          placeholder={t("register.fullNamePlaceholder")}
-          type="text"
-          registration={register("fullName", {
-            required: true,
-            pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
-          })}
-          error={
-            errors.fullName?.type === "required"
-              ? tc("errors.required")
-              : errors.fullName?.type === "pattern"
-                ? t("register.errors.fullNameInvalid")
-                : undefined
-          }
-        />
+      <BackButton />
 
-        <Input
-          id="register-username"
-          label={t("register.username")}
-          placeholder={t("register.usernamePlaceholder")}
-          type="text"
-          registration={register("username", { required: true })}
-          error={
-            errors.username?.type === "required"
-              ? tc("errors.required")
-              : usernameError
-                ? usernameError
-                : undefined
-          }
-        />
-
-        <Input
-          id="register-email"
-          label={tc("fields.email")}
-          placeholder={t("register.emailPlaceholder")}
-          type="text"
-          registration={register("email", {
-            required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          })}
-          error={
-            errors.email?.type === "required"
-              ? tc("errors.required")
-              : errors.email?.type === "pattern"
-                ? tc("errors.emailInvalid")
-                : undefined
-          }
-        />
-
-        <Input
-          id="register-password"
-          label={tc("fields.password")}
-          placeholder={t("register.passwordPlaceholder")}
-          type="password"
-          registration={register("password", {
-            required: true,
-            validate: (value) =>
-              hasMinLength(value) &&
-              hasUpperCase(value) &&
-              hasLowerCase(value) &&
-              hasNumber(value),
-          })}
-          error={
-            errors.password?.type === "required"
-              ? tc("errors.required")
-              : undefined
-          }
-        />
-
-        <div className="password-requirements">
-          <div><input type="checkbox" readOnly checked={hasMinLength(password)} /><span>{t("register.passwordMinLength")}</span></div>
-          <div><input type="checkbox" readOnly checked={hasUpperCase(password)} /><span>{t("register.passwordUppercase")}</span></div>
-          <div><input type="checkbox" readOnly checked={hasLowerCase(password)} /><span>{t("register.passwordLowercase")}</span></div>
-          <div><input type="checkbox" readOnly checked={hasNumber(password)} /><span>{t("register.passwordNumber")}</span></div>
-        </div>
-
-        <Input
-          id="register-confirm-password"
-          label={t("register.confirmPassword")}
-          placeholder={t("register.confirmPasswordPlaceholder")}
-          type="password"
-          registration={register("confirmPassword", {
-            required: true,
-            validate: (value) => value === password,
-          })}
-          error={
-            errors.confirmPassword?.type === "required"
-              ? tc("errors.required")
-              : errors.confirmPassword?.type === "validate"
-                ? t("register.errors.passwordMismatch")
-                : undefined
-          }
-        />
-
-        <div className="terms-row">
-          <input
-            id="acceptsTerms"
-            type="checkbox"
-            {...register("acceptsTerms", { required: true })}
+      <div className="register-page__content">
+        <h1 className="register-page__title">{t("register.title")}</h1>
+        <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            id="register-fullname"
+            label={t("register.fullName")}
+            placeholder={t("register.fullNamePlaceholder")}
+            type="text"
+            required
+            registration={register("fullName", {
+              required: true,
+              pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
+            })}
+            error={
+              errors.fullName?.type === "required"
+                ? tc("errors.required")
+                : errors.fullName?.type === "pattern"
+                  ? t("register.errors.fullNameInvalid")
+                  : undefined
+            }
           />
-          <label htmlFor="acceptsTerms">
-            {t("register.termsStart")}
-            <a href="/privacy">{t("register.termsPrivacy")}</a>
-            {t("register.termsAnd")}
-            <a href="/terms">{t("register.termsConditions")}</a>
-          </label>
-        </div>
 
-        {errors.acceptsTerms?.type === "required" && (
-          <span className="field__error">{t("register.errors.termsRequired")}</span>
-        )}
+          <Input
+            id="register-username"
+            label={t("register.username")}
+            placeholder={t("register.usernamePlaceholder")}
+            type="text"
+            required
+            registration={register("username", { required: true })}
+            error={
+              errors.username?.type === "required"
+                ? tc("errors.required")
+                : usernameError
+                  ? usernameError
+                  : undefined
+            }
+          />
 
-        <Button
-          text={t("register.button")}
-          type="submit"
-          disabled={Object.keys(errors).length > 0}
-          isLoading={isLoading}
-        />
+          <Input
+            id="register-email"
+            label={tc("fields.email")}
+            placeholder={t("register.emailPlaceholder")}
+            type="text"
+            required
+            registration={register("email", {
+              required: true,
+              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            })}
+            error={
+              errors.email?.type === "required"
+                ? tc("errors.required")
+                : errors.email?.type === "pattern"
+                  ? tc("errors.emailInvalid")
+                  : undefined
+            }
+          />
 
-        {errorConnection && <span>{errorConnection}</span>}
+          <Input
+            id="register-password"
+            label={tc("fields.password")}
+            placeholder={t("register.passwordPlaceholder")}
+            type="password"
+            required
+            registration={register("password", {
+              required: true,
+              validate: (value) =>
+                hasMinLength(value) &&
+                hasUpperCase(value) &&
+                hasLowerCase(value) &&
+                hasNumber(value),
+            })}
+            error={
+              errors.password?.type === "required"
+                ? tc("errors.required")
+                : errors.password
+                  ? t("register.errors.passwordInvalid")
+                  : undefined
+            }
+          />
 
-        <a href="/login">{t("register.loginLink")}</a>
-      </form>
+          <Input
+            id="register-confirm-password"
+            label={t("register.confirmPassword")}
+            placeholder={t("register.confirmPasswordPlaceholder")}
+            type="password"
+            required
+            registration={register("confirmPassword", {
+              required: true,
+              validate: (value) => value === password,
+            })}
+            error={
+              errors.confirmPassword?.type === "required"
+                ? tc("errors.required")
+                : errors.confirmPassword?.type === "validate"
+                  ? t("register.errors.passwordMismatch")
+                  : undefined
+            }
+          />
+
+          <div className="register-page__terms">
+            <input
+              id="acceptsTerms"
+              type="checkbox"
+              {...register("acceptsTerms", { required: true })}
+            />
+            <label htmlFor="acceptsTerms">
+              {t("register.termsStart")}
+              <a href="/privacy">{t("register.termsPrivacy")}</a>
+              {t("register.termsAnd")}
+              <a href="/terms">{t("register.termsConditions")}</a>
+            </label>
+          </div>
+
+          {errors.acceptsTerms?.type === "required" && (
+            <span className="field__error">
+              {t("register.errors.termsRequired")}
+            </span>
+          )}
+
+          {errorConnection && <span>{errorConnection}</span>}
+
+          <Button
+            text={t("register.button")}
+            type="submit"
+            disabled={Object.keys(errors).length > 0}
+            isLoading={isLoading}
+          />
+        </form>
+
+      </div>
+
+      <a className="register-page__login" href="/login">
+        {t("register.loginLink")}
+      </a>
 
       <Alert
         isOpen={registerState === "error"}
@@ -270,7 +295,7 @@ const RegisterPage = () => {
           },
         ]}
       />
-    </>
+    </div>
   );
 };
 

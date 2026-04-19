@@ -19,7 +19,6 @@ interface LoginFormData {
   password: string;
 }
 
-
 const LoginPage = () => {
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
@@ -86,61 +85,67 @@ const LoginPage = () => {
 
       <BackButton />
 
-      <h1 className="login-page__title">{t("login.title")}</h1>
-      <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          id="login-email"
-          label={tc("fields.email")}
-          placeholder={t("login.emailPlaceholder")}
-          type="text"
-          required
-          registration={register("email", {
-            required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          })}
-          error={
-            errors.email?.type === "required"
-              ? tc("errors.required")
-              : errors.email?.type === "pattern"
-                ? tc("errors.emailInvalid")
+      <div className="login-page__content">
+        <h1 className="login-page__title">{t("login.title")}</h1>
+        <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            id="login-email"
+            label={tc("fields.email")}
+            placeholder={t("login.emailPlaceholder")}
+            type="text"
+            required
+            registration={register("email", {
+              required: true,
+              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            })}
+            error={
+              errors.email?.type === "required"
+                ? tc("errors.required")
+                : errors.email?.type === "pattern"
+                  ? tc("errors.emailInvalid")
+                  : undefined
+            }
+          />
+
+          <Input
+            id="login-password"
+            label={tc("fields.password")}
+            placeholder={t("login.passwordPlaceholder")}
+            type={showPassword ? "text" : "password"}
+            required
+            registration={register("password", { required: true })}
+            error={
+              errors.password?.type === "required"
+                ? tc("errors.required")
                 : undefined
-          }
-        />
+            }
+            endIcon={
+              <EyeToggleIcon
+                showPassword={showPassword}
+                onToggle={() => setShowPassword(!showPassword)}
+              />
+            }
+          />
 
-        <Input
-          id="login-password"
-          label={tc("fields.password")}
-          placeholder={t("login.passwordPlaceholder")}
-          type={showPassword ? "text" : "password"}
-          required
-          registration={register("password", { required: true })}
-          error={
-            errors.password?.type === "required"
-              ? tc("errors.required")
-              : undefined
-          }
-          endIcon={
-            <EyeToggleIcon
-              showPassword={showPassword}
-              onToggle={() => setShowPassword(!showPassword)}
-            />
-          }
-        />
+          <a className="login-page__forgot" href="/forgot-password">
+            {t("login.forgotPassword")}
+          </a>
 
-        <a className="login-page__forgot" href="/forgot-password">{t("login.forgotPassword")}</a>
-      </form>
+          {errorConnection && <span className="login-page__error">{errorConnection}</span>}
+          {errorCredentials && <span className="login-page__error">{errorCredentials}</span>}
 
-      <Button
-        text={t("login.button")}
-        type="submit"
-        disabled={Object.keys(errors).length > 0}
-        isLoading={isLoading}
-      />
+          <Button
+            text={t("login.button")}
+            type="submit"
+            disabled={Object.keys(errors).length > 0}
+            isLoading={isLoading}
+          />
+        </form>
+      </div>
 
-      {errorConnection && <span>{errorConnection}</span>}
-      {errorCredentials && <span>{errorCredentials}</span>}
-
-      <a className="login-page__register" href="/register">{t("login.registerLink")}</a>
+      <a className="login-page__register" href="/register">
+        {t("login.registerLink")}
+      </a>
 
       <Alert
         isOpen={loginState === "unverified"}
