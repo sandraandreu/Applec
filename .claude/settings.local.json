@@ -8,7 +8,6 @@
       "mcp__figma-console__figma_get_file_data",
       "mcp__figma-console__figma_execute",
       "mcp__figma-console__figma_get_status",
-<<<<<<< HEAD
       "Bash(git checkout *)",
       "mcp__figma-console__figma_search_components",
       "mcp__figma-console__figma_get_design_system_summary",
@@ -19,10 +18,6 @@
       "mcp__figma-console__figma_get_variables",
       "mcp__figma-console__figma_get_component_for_development_deep",
       "Bash(xargs grep *)"
-=======
-      "mcp__figma-console__figma_get_component_for_development_deep",
-      "mcp__figma-console__figma_get_selection"
->>>>>>> feature/styles-final-design
     ]
   }
 }

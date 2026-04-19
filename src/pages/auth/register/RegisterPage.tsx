@@ -230,13 +230,6 @@ const RegisterPage = () => {
             }
           />
 
-          <div className="register-page__password-requirements">
-            <div><input type="checkbox" readOnly checked={hasMinLength(password)} /><span>{t("register.passwordMinLength")}</span></div>
-            <div><input type="checkbox" readOnly checked={hasUpperCase(password)} /><span>{t("register.passwordUppercase")}</span></div>
-            <div><input type="checkbox" readOnly checked={hasLowerCase(password)} /><span>{t("register.passwordLowercase")}</span></div>
-            <div><input type="checkbox" readOnly checked={hasNumber(password)} /><span>{t("register.passwordNumber")}</span></div>
-          </div>
-
           <Input
             id="register-confirm-password"
             label={t("register.confirmPassword")}
