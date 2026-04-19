@@ -129,7 +129,7 @@ const RegisterPage = () => {
       <BackButton />
 
       <div className="register-page__content">
-        <h1 className="register-page__title">{t("register.title")}</h1>
+        <h1 className="register-page__title margin-buttom48px">{t("register.title")}</h1>
         <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="register-fullname"
@@ -227,7 +227,7 @@ const RegisterPage = () => {
             }
           />
 
-          <div className="register-page__terms">
+          <div className="register-page__terms margin-buttom48px">
             <input
               id="acceptsTerms"
               type="checkbox"

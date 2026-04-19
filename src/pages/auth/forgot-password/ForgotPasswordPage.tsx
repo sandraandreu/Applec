@@ -8,6 +8,7 @@ import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import { sendPasswordReset } from "../../../services/auth.service";
+import BackButton from "../../../ui-kit/icons/BackButton";
 
 interface ForgotPasswordFormData {
   email: string;
@@ -19,7 +20,9 @@ const ForgotPasswordPage = () => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [forgotPasswordState, setForgotPasswordState] = useState<"form" | "success">("form");
+  const [forgotPasswordState, setForgotPasswordState] = useState<
+    "form" | "success"
+  >("form");
   const [errorConnection, setErrorConnection] = useState<string>("");
 
   const {
@@ -50,40 +53,61 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <>
+    <div className="forgot-password-page">
       {isLoading && <Loading />}
 
-      <h1>{t("forgotPassword.title")}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          id="forgot_password-email"
-          label={tc("fields.email")}
-          placeholder={t("forgotPassword.emailPlaceholder")}
-          type="text"
-          registration={register("email", {
-            required: true,
-            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-          })}
-          error={
-            errors.email?.type === "required"
-              ? tc("errors.required")
-              : errors.email?.type === "pattern"
-                ? tc("errors.emailInvalid")
-                : undefined
-          }
-        />
+      <BackButton />
 
-        <Button
-          text={t("forgotPassword.button")}
-          type="submit"
-          disabled={Object.keys(errors).length > 0}
-          isLoading={isLoading}
-        />
+      <div className="forgot-password-page__content">
+        <h1 className="forgot-password-page__title">
+          {t("forgotPassword.title")}
+        </h1>
+        <p className="forgot-password-page__description margin-buttom48px">
+          {t("forgotPassword.description")}
+        </p>
+        <form
+          className="forgot-password-page__form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="margin-buttom48px">
+            <Input
+              id="forgot_password-email"
+              label={tc("fields.email")}
+              placeholder={t("forgotPassword.emailPlaceholder")}
+              type="text"
+              required
+              registration={register("email", {
+                required: true,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              })}
+              error={
+                errors.email?.type === "required"
+                  ? tc("errors.required")
+                  : errors.email?.type === "pattern"
+                    ? tc("errors.emailInvalid")
+                    : undefined
+              }
+            />
 
-        <a href="/login">{t("forgotPassword.back")}</a>
+            {errorConnection && (
+              <span className="forgot-password-page__error">
+                {errorConnection}
+              </span>
+            )}
+          </div>
 
-        {errorConnection && <span>{errorConnection}</span>}
-      </form>
+          <Button
+            text={t("forgotPassword.button")}
+            type="submit"
+            disabled={Object.keys(errors).length > 0}
+            isLoading={isLoading}
+          />
+        </form>
+      </div>
+
+      <a className="forgot-password-page__login" href="/login">
+        {t("forgotPassword.back")}
+      </a>
 
       <Alert
         isOpen={forgotPasswordState === "success"}
@@ -97,7 +121,7 @@ const ForgotPasswordPage = () => {
           },
         ]}
       />
-    </>
+    </div>
   );
 };
 
