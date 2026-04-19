@@ -19,7 +19,8 @@ import {
 } from "../../../services/user.service";
 
 interface RegisterFormData {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   password: string;
@@ -51,7 +52,8 @@ const RegisterPage = () => {
     email: string,
     password: string,
     username: string,
-    fullName: string,
+    firstName: string,
+    lastName: string,
   ) => {
     try {
       setIsLoading(true);
@@ -71,7 +73,8 @@ const RegisterPage = () => {
 
         await createUserProfile(userCredential.user.uid, {
           username,
-          fullName,
+          firstName,
+          lastName,
           email: userCredential.user.email,
           createdAt: new Date(),
           role: "member",
@@ -119,7 +122,7 @@ const RegisterPage = () => {
   const password = watch("password", "");
 
   const onSubmit = (data: RegisterFormData) => {
-    handleRegister(data.email, data.password, data.username, data.fullName);
+    handleRegister(data.email, data.password, data.username, data.firstName, data.lastName);
   };
 
   return (
@@ -132,20 +135,39 @@ const RegisterPage = () => {
         <h1 className="register-page__title margin-buttom48px">{t("register.title")}</h1>
         <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
-            id="register-fullname"
-            label={t("register.fullName")}
-            placeholder={t("register.fullNamePlaceholder")}
+            id="register-firstname"
+            label={t("register.firstName")}
+            placeholder={t("register.firstNamePlaceholder")}
             type="text"
             required
-            registration={register("fullName", {
+            registration={register("firstName", {
               required: true,
               pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
             })}
             error={
-              errors.fullName?.type === "required"
+              errors.firstName?.type === "required"
                 ? tc("errors.required")
-                : errors.fullName?.type === "pattern"
-                  ? t("register.errors.fullNameInvalid")
+                : errors.firstName?.type === "pattern"
+                  ? t("register.errors.nameInvalid")
+                  : undefined
+            }
+          />
+
+          <Input
+            id="register-lastname"
+            label={t("register.lastName")}
+            placeholder={t("register.lastNamePlaceholder")}
+            type="text"
+            required
+            registration={register("lastName", {
+              required: true,
+              pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
+            })}
+            error={
+              errors.lastName?.type === "required"
+                ? tc("errors.required")
+                : errors.lastName?.type === "pattern"
+                  ? t("register.errors.nameInvalid")
                   : undefined
             }
           />
@@ -207,6 +229,13 @@ const RegisterPage = () => {
                   : undefined
             }
           />
+
+          <div className="register-page__password-requirements">
+            <div><input type="checkbox" readOnly checked={hasMinLength(password)} /><span>{t("register.passwordMinLength")}</span></div>
+            <div><input type="checkbox" readOnly checked={hasUpperCase(password)} /><span>{t("register.passwordUppercase")}</span></div>
+            <div><input type="checkbox" readOnly checked={hasLowerCase(password)} /><span>{t("register.passwordLowercase")}</span></div>
+            <div><input type="checkbox" readOnly checked={hasNumber(password)} /><span>{t("register.passwordNumber")}</span></div>
+          </div>
 
           <Input
             id="register-confirm-password"

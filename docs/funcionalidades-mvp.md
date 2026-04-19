@@ -11,7 +11,7 @@ Las funcionalidades imprescindibles para resolver el problema principal.
 
 El usuario crea cuenta con nombre, email y contraseña. En accesos posteriores entra directamente a su grupo. Recuperación de contraseña por email.
 
-**Campos requeridos en registro:** nombre completo, username, email, contraseña.
+**Campos requeridos en registro:** nombre, apellidos, username, email, contraseña.
 
 **Estados de interfaz:** vacío → con datos → loading → error / éxito (redirección automática).
 

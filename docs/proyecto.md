@@ -81,7 +81,7 @@ interface UserProfile {
 
 ### Group — `groups/{groupId}`
 Campos: `name`, `description`, `createdAt`, `adminUid`, `inviteCode`
-Array `members`: `{ uid, username, role }`
+Array `members`: `{ uid, username, firstName, lastName, email, role }`
 
 ### Event — `groups/{groupId}/events/{eventId}` *(pendiente)*
 Campos obligatorios: `name`, `date`, `time`, `confirmationDeadline`

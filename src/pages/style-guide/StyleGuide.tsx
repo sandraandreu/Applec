@@ -1,16 +1,20 @@
 import { useState } from "react";
 import "./style-guide.scss";
+import Avatar from "../../ui-kit/avatar/Avatar";
+import BackButton from "../../ui-kit/icons/BackButton";
 import Button from "../../ui-kit/button/Button";
+import Chip from "../../ui-kit/chip/Chip";
+import EyeToggleIcon from "../../ui-kit/icons/EyeToggleIcon";
 import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
-import Avatar from "../../ui-kit/avatar/Avatar";
-import Chip from "../../ui-kit/chip/Chip";
-import MemberCard from "../../components/member-card/MemberCard";
 import Alert from "../../components/alert/Alert";
+import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
+import MemberCard from "../../components/member-card/MemberCard";
 
 const StyleGuide = () => {
   const [alertOpen, setAlertOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="style-guide">
@@ -105,6 +109,19 @@ const StyleGuide = () => {
             <Chip role="organizer" variant="full" />
           </div>
         </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">BackButton</h3>
+          <BackButton />
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">EyeToggleIcon</h3>
+          <div className="style-guide__row style-guide__row--centered">
+            <EyeToggleIcon showPassword={showPassword} onToggle={() => setShowPassword(!showPassword)} />
+            <span>{showPassword ? "Visible" : "Oculto"}</span>
+          </div>
+        </div>
       </section>
 
       <section className="style-guide__section">
@@ -129,6 +146,11 @@ const StyleGuide = () => {
               <Loading message="Cargando miembros..." />
             </div>
           </div>
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">LanguageSelector</h3>
+          <LanguageSelector />
         </div>
 
         <div className="style-guide__component">

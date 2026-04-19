@@ -11,13 +11,8 @@ const WelcomePage = () => {
   const { profile } = useAuthContext();
 
   return (
-<<<<<<< HEAD
-    <BaseLayout>
-      <h1>{t("welcome.title", { name: profile?.firstName })}</h1>
-=======
     <div className="welcome-page">
       <h1>{t("welcome.title", { name: profile?.username })}</h1>
->>>>>>> feature/styles-final-design
       <p>{t("welcome.subtitle")}</p>
       <p>{t("welcome.description")}</p>
       <Button
