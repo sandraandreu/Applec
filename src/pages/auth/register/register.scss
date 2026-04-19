@@ -1,46 +1,44 @@
-.password-requirements {
-  margin-bottom: 16px;
+.register-page {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 1rem;
-  color: #444;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #feffe7 12.02%, #cce1ff 90.87%);
+  min-height: 100vh;
+  padding: 24px 32px;
 
-  div {
+
+  &__title {
+    text-align: center;
+  }
+
+  &__form {
     display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-}
-
-.terms-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 8px;
-
-  input[type="checkbox"] {
-    margin-top: 3px;
-    flex-shrink: 0;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  label {
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-}
+  &__password-requirements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
-form {
-  > span {
-    display: block;
-    font-size: 1rem;
-    color: #c0392b;
-    margin: 4px 0 8px;
+    &_item {
+      display: flex;
+      gap: 4px;
+    }
   }
 
-  a {
-    display: block;
-    margin-top: 12px;
-    font-size: 1rem;
+  &__terms {
+    input {
+      margin-right: 4px;
+    }
+
+    a {
+      display: inline;
+    }
+  }
+
+  &__login {
+    text-align: center;
   }
 }

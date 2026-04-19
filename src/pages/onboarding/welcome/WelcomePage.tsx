@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import "./welcome.scss";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import Button from "../../../ui-kit/button/Button";
-import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
@@ -12,15 +11,20 @@ const WelcomePage = () => {
   const { profile } = useAuthContext();
 
   return (
+<<<<<<< HEAD
     <BaseLayout>
       <h1>{t("welcome.title", { name: profile?.firstName })}</h1>
+=======
+    <div className="welcome-page">
+      <h1>{t("welcome.title", { name: profile?.username })}</h1>
+>>>>>>> feature/styles-final-design
       <p>{t("welcome.subtitle")}</p>
       <p>{t("welcome.description")}</p>
       <Button
         text={tc("buttons.start")}
         onClick={() => navigate("/onboarding/language")}
       />
-    </BaseLayout>
+    </div>
   );
 };
 

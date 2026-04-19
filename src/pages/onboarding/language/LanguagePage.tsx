@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import "./language.scss";
 import LanguageSelector from "../../../components/language-selector/LanguageSelector";
 import Button from "../../../ui-kit/button/Button";
-import BaseLayout from "../../../components/base-layout/BaseLayout";
 
 const LanguagePage = () => {
   const { t } = useTranslation("onboarding");
@@ -11,7 +10,7 @@ const LanguagePage = () => {
   const navigate = useNavigate();
 
   return (
-    <BaseLayout>
+    <div className="language-page">
       <h1>{t("language.title")}</h1>
       <p>{t("language.description")}</p>
       <LanguageSelector />
@@ -19,7 +18,7 @@ const LanguagePage = () => {
         text={tc("buttons.continue")}
         onClick={() => navigate("/onboarding/group")}
       />
-    </BaseLayout>
+    </div>
   );
 };
 
