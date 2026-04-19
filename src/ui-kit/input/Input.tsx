@@ -1,5 +1,5 @@
 import "./input.scss";
-
+import { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps {
@@ -12,6 +12,7 @@ interface InputProps {
   maxLength?: number;
   currentLength?: number;
   required?: boolean;
+  endIcon?: ReactNode;
 }
 
 const Input = ({
@@ -24,19 +25,23 @@ const Input = ({
   maxLength,
   currentLength,
   required,
+  endIcon,
 }: InputProps) => {
   return (
     <div className="field">
       <label className="field__label" htmlFor={id}>
         {label}{required && <span className="field__required"> *</span>}
       </label>
-      <input
-        id={id}
-        type={type}
-        placeholder={placeholder}
-        className="field__input"
-        {...registration}
-      />
+      <div className="field__input-wrapper">
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          className={`field__input${endIcon ? " field__input--with-icon" : ""}`}
+          {...registration}
+        />
+        {endIcon && <span className="field__icon">{endIcon}</span>}
+      </div>
       {maxLength && (
         <span className="field__counter">
           {currentLength}/{maxLength}

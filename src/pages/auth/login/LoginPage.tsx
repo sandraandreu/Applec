@@ -7,12 +7,18 @@ import Alert from "../../../components/alert/Alert";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import { loginUser, sendVerificationEmail } from "../../../services/auth.service";
+import {
+  loginUser,
+  sendVerificationEmail,
+} from "../../../services/auth.service";
+import BackButton from "../../../ui-kit/icons/BackButton";
+import EyeToggleIcon from "../../../ui-kit/icons/EyeToggleIcon";
 
 interface LoginFormData {
   email: string;
   password: string;
 }
+
 
 const LoginPage = () => {
   const { t } = useTranslation("auth");
@@ -21,9 +27,12 @@ const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [loginState, setLoginState] = useState<"form" | "unverified">("form");
-  const [unverifiedUser, setUnverifiedUser] = useState<import("firebase/auth").User | null>(null);
+  const [unverifiedUser, setUnverifiedUser] = useState<
+    import("firebase/auth").User | null
+  >(null);
   const [errorConnection, setErrorConnection] = useState<string>("");
   const [errorCredentials, setErrorCredentials] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
     register,
@@ -72,11 +81,13 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <div className="login-page">
       {isLoading && <Loading />}
 
-      <h1>{t("login.title")}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <BackButton />
+
+      <h1 className="login-page__title">{t("login.title")}</h1>
+      <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
         <Input
           id="login-email"
           label={tc("fields.email")}
@@ -100,7 +111,7 @@ const LoginPage = () => {
           id="login-password"
           label={tc("fields.password")}
           placeholder={t("login.passwordPlaceholder")}
-          type="password"
+          type={showPassword ? "text" : "password"}
           required
           registration={register("password", { required: true })}
           error={
@@ -108,21 +119,28 @@ const LoginPage = () => {
               ? tc("errors.required")
               : undefined
           }
+          endIcon={
+            <EyeToggleIcon
+              showPassword={showPassword}
+              onToggle={() => setShowPassword(!showPassword)}
+            />
+          }
         />
 
-        <Button
-          text={t("login.button")}
-          type="submit"
-          disabled={Object.keys(errors).length > 0}
-          isLoading={isLoading}
-        />
-
-        {errorConnection && <span>{errorConnection}</span>}
-        {errorCredentials && <span>{errorCredentials}</span>}
-
-        <a href="/register">{t("login.registerLink")}</a>
-        <a href="/forgot-password">{t("login.forgotPassword")}</a>
+        <a className="login-page__forgot" href="/forgot-password">{t("login.forgotPassword")}</a>
       </form>
+
+      <Button
+        text={t("login.button")}
+        type="submit"
+        disabled={Object.keys(errors).length > 0}
+        isLoading={isLoading}
+      />
+
+      {errorConnection && <span>{errorConnection}</span>}
+      {errorCredentials && <span>{errorCredentials}</span>}
+
+      <a className="login-page__register" href="/register">{t("login.registerLink")}</a>
 
       <Alert
         isOpen={loginState === "unverified"}
@@ -140,7 +158,7 @@ const LoginPage = () => {
           },
         ]}
       />
-    </>
+    </div>
   );
 };
 

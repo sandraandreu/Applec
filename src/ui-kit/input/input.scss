@@ -4,15 +4,41 @@
   gap: 8px;
 }
 
+.field__input-wrapper {
+  position: relative;
+}
+
 .field__input {
   padding: 12px 14px;
-  border: 1px solid #7d7d7d ;
+  border: 1px solid #7d7d7d;
   border-radius: 10px;
   width: 100%;
   background-color: #fff;
 
   &:focus {
     border-color: #0068ff;
+  }
+
+  &--with-icon {
+    padding-right: 44px;
+  }
+}
+
+.field__icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -26,6 +52,6 @@
   text-align: right;
 }
 
-.field__required {                                                                          
-    color: #0068ff;
-  } 
+.field__required {
+  color: #0068ff;
+}
