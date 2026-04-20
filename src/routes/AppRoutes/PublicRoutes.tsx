@@ -8,13 +8,13 @@ interface PublicRoutesProps {
 }
 
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
-  const { user, isLoading } = useAuthContext();
-
-  if (user && user.emailVerified) {
-    return <Navigate to="/home" replace />;
-  }
+  const { user, profile, isLoading } = useAuthContext();
 
   if (isLoading) return <Loading />;
+
+  if (user && user.emailVerified) {
+    return <Navigate to={profile?.groupId ? "/home" : "/onboarding/welcome"} replace />;
+  }
 
   return <>{children}</>;
 };

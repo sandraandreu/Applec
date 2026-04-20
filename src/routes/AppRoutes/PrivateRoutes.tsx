@@ -11,14 +11,14 @@ interface PrivateRoutesProps {
 }
 
 const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) => {
-  const { user, isLoading: authLoading } = useAuthContext();
-  const { group, isLoading: groupLoading } = useGroupContext();
+  const { user, profile, isLoading: authLoading } = useAuthContext();
+  const { isLoading: groupLoading } = useGroupContext();
 
-  if (authLoading || groupLoading) return <Loading />;
+  if (authLoading || (requiresGroup && groupLoading)) return <Loading />;
 
-  if (!user) return <Navigate to="/landing" replace />;
+  if (!user || !user.emailVerified) return <Navigate to="/landing" replace />;
 
-  if (requiresGroup && !group) return <Navigate to="/onboarding/welcome" replace />;
+  if (requiresGroup && !profile?.groupId) return <Navigate to="/onboarding/welcome" replace />;
 
   return <>{children}</>;
 };
