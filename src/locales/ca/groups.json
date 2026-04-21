@@ -1,15 +1,15 @@
 {
   "createGroup": {
-    "title": "Crear una falla",
-    "name": "Nom de la falla",
+    "title": "La teua falla comença ací",
+    "subtitle": "Com a administrador podràs convidar membres i gestionar tots els esdeveniments des d'un mateix lloc.",
+    "name": "Nom",
     "namePlaceholder": "Nom de la teua falla",
-    "nameCounter": "{{count}}/50",
-    "image": "Imatge de la falla",
+    "image": "Foto o logo",
     "button": "Crear falla",
     "errors": {
-      "nameRequired": "El nom de la falla és obligatori",
-      "nameTooLong": "El nom no pot superar els 50 caràcters",
-      "imageTooLarge": "La imatge no pot superar els 5 MB"
+      "nameRequired": "El nom és obligatori",
+      "nameTooLong": "El nom no pot tindre més de 50 caràcters",
+      "imageTooLarge": "La imatge no pot pesar més de 5 MB"
     }
   },
   "joinGroup": {

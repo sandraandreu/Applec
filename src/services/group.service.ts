@@ -74,7 +74,17 @@ export const createGroup = async ({
   adminEmail,
 }: CreateGroupData): Promise<string> => {
   try {
-    const inviteCode = crypto.randomUUID();
+    const generateCode = () => {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    };
+
+    let inviteCode = generateCode();
+    let codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
+    while (codeExists) {
+      inviteCode = generateCode();
+      codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
+    }
     const ref = await addDoc(collection(db, "groups"), {
       name,
       ...(imageUrl && { imageUrl }),

@@ -7,6 +7,7 @@ import Chip from "../../ui-kit/chip/Chip";
 import EyeToggleIcon from "../../ui-kit/icons/EyeToggleIcon";
 import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
+import Stepper from "../../ui-kit/stepper/Stepper";
 import Alert from "../../components/alert/Alert";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
@@ -113,6 +114,15 @@ const StyleGuide = () => {
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">BackButton</h3>
           <BackButton />
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">Stepper</h3>
+          <div className="style-guide__stack">
+            <Stepper currentStep={1} totalSteps={3} />
+            <Stepper currentStep={2} totalSteps={3} />
+            <Stepper currentStep={3} totalSteps={3} />
+          </div>
         </div>
 
         <div className="style-guide__component">

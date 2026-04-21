@@ -39,7 +39,7 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 | Formularios | react-hook-form |
 | Routing | react-router-dom |
 | i18n | react-i18next — Castellano `es` (por defecto) + Valenciano `ca` |
-| Backend | Firebase Auth + Firestore |
+| Backend | Firebase Auth + Firestore + Storage |
 | Mobile | Capacitor (iOS + Android — se convierte tras el build web) |
 | Estado | React Context API |
 
@@ -56,7 +56,7 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 - Primitivas UI genéricas sin lógica de dominio → `src/ui-kit/`
 
 ### Patrones clave
-- **Firebase:** `auth` y `db` se exportan desde `src/plugins/firebase.ts`. Nunca instanciar localmente en otros archivos.
+- **Firebase:** `auth`, `db` y `storage` se exportan desde `src/plugins/firebase.ts`. Nunca instanciar localmente en otros archivos.
 - **Servicios:** todos los métodos tienen try/catch. Los métodos de lectura devuelven `null` en caso de error; los de escritura re-lanzan el error.
 - **AuthContext:** expone `{ user, profile, isLoading, logout }`. `profile` es `UserProfile | null`.
 - **Modelos:** `UserProfile` en `src/models/user.model.ts`. `UserProfileCreate = Omit<UserProfile, 'groupId'>`.
@@ -80,7 +80,7 @@ interface UserProfile {
 ```
 
 ### Group — `groups/{groupId}`
-Campos: `name`, `description`, `createdAt`, `adminUid`, `inviteCode`
+Campos: `name`, `imageUrl?` (URL de Firebase Storage), `createdAt`, `adminId`, `inviteCode` (6 caracteres alfanuméricos, único y verificado)
 Array `members`: `{ uid, username, firstName, lastName, email, role }`
 
 ### Event — `groups/{groupId}/events/{eventId}` *(pendiente)*

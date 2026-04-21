@@ -27,9 +27,9 @@ El usuario elige entre castellano y valenciano. Por defecto: castellano. Se pued
 ### 3. Crear grupo de falla
 **Estado:** ✓ Implementado
 
-Un usuario registrado crea un grupo privado. Se convierte automáticamente en Administrador. Se genera un enlace de invitación único.
+Un usuario registrado crea un grupo privado. Se convierte automáticamente en Administrador. Se genera un código de invitación único de 6 caracteres alfanuméricos.
 
-**Campos:** nombre (obligatorio, máx. 60 caracteres), descripción (opcional, máx. 300 caracteres).
+**Campos:** nombre (obligatorio, máx. 50 caracteres), imagen/logo (opcional, máx. 5 MB).
 
 ---
 
