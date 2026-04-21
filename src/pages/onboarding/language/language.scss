@@ -1,0 +1,28 @@
+.language-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #FFFFFD;
+  min-height: 100vh;
+  padding: 24px 32px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    align-items: center;
+  }
+
+  &__header {
+    text-align: center;
+    
+    .language-page__title {
+        margin-bottom: 16px;
+    }
+
+    .language-page__description {
+      color: #4c4c4c;
+    }
+  }
+
+}

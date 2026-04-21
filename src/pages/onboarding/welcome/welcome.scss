@@ -1,0 +1,32 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #B2EEEE;
+  min-height: 100vh;
+  padding: 24px 32px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin: auto 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+
+    .welcome-page__description {
+      color: #4c4c4c;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+  }
+
+}

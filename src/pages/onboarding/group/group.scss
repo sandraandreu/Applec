@@ -1,0 +1,39 @@
+.group-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #FDE6FF;
+  min-height: 100vh;
+  padding: 24px 32px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin: auto 0;
+  }
+
+  &__header {
+   text-align: center;
+    
+    .group-page__title {
+        margin-bottom: 16px;
+    }
+
+    .group-page__description {
+      color: #4c4c4c;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+  }
+
+  &__actions{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+}

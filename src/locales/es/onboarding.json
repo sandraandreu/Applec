@@ -8,9 +8,9 @@
     "termsLink": "Términos y condiciones"
   },
   "welcome": {
-    "title": "Hola, {{name}}",
-    "subtitle": "Nos alegra tenerte aquí.",
-    "description": "Applec es el espacio de tu falla para organizaros, compartir y estar conectados."
+    "title": "¡Hola, {{name}}!",
+    "subtitle": "Tu falla te estaba esperando.",
+    "description": "Tu falla organizada y siempre al día. Todos los eventos de tu comisión en un mismo lugar."
   },
   "language": {
     "title": "¿En qué idioma prefieres usar Applec?",
@@ -20,6 +20,6 @@
     "title": "¿A qué falla perteneces?",
     "description": "Crea una nueva falla o únete a una existente con un código de invitación.",
     "createGroup": "Crear una falla",
-    "joinGroup": "Tengo un código de invitación"
+    "joinGroup": "Unirme con código"
   }
 }

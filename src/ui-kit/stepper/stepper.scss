@@ -1,0 +1,16 @@
+.stepper {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(26, 26, 26, 0.25);
+
+    &--active {
+      background: #1a1a1a;
+    }
+  }
+}
