@@ -86,7 +86,7 @@ const LoginPage = () => {
       <BackButton />
 
       <div className="login-page__content">
-        <h1 className="login-page__title margin-buttom48px">{t("login.title")}</h1>
+        <h1 className="login-page__title margin-bottom-48px">{t("login.title")}</h1>
         <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="login-email"
@@ -127,7 +127,7 @@ const LoginPage = () => {
             }
           />
 
-          <a className="login-page__forgot margin-buttom48px" href="/forgot-password">
+          <a className="login-page__forgot margin-bottom-48px" href="/forgot-password">
             {t("login.forgotPassword")}
           </a>
 

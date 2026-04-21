@@ -117,7 +117,7 @@ const CreateGroupPage = () => {
               <>
                 <img
                   src={imagePreview}
-                  alt="preview"
+                  alt="Imagen del grupo seleccionada"
                   className="create-group-page__image-preview"
                 />
                 <div className="create-group-page__image-edit">

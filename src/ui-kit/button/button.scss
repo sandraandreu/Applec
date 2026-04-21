@@ -17,13 +17,13 @@
     cursor: not-allowed;
   }
 
-  &.secondary {
+  &--secondary {
     background-color: transparent;
     border: 1px solid #0068ff;
     color: #0068ff;
   }
 
-  &.language {
+  &--language {
     width: 280px;
     height: 80px;
     gap: 12px;
@@ -33,7 +33,7 @@
     padding: 12px 40px;
     color: #1a1a1a;
 
-    &.active-language {
+    &--active {
       background-color: #d7e3fd;
       border-color: #0068ff;
     }

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #FDE6FF;
+  background: #fde6ff;
   min-height: 100vh;
   padding: 24px 32px;
 
@@ -14,15 +14,15 @@
   }
 
   &__header {
-   text-align: center;
-    
-    .group-page__title {
-        margin-bottom: 16px;
-    }
+    text-align: center;
+  }
 
-    .group-page__description {
-      color: #4c4c4c;
-    }
+  &__title {
+    margin-bottom: 16px;
+  }
+
+  &__description {
+    color: #4c4c4c;
   }
 
   &__img {
@@ -30,7 +30,7 @@
     height: auto;
   }
 
-  &__actions{
+  &__actions {
     display: flex;
     flex-direction: column;
     gap: 16px;

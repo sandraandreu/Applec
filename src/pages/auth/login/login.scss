@@ -8,11 +8,11 @@
   padding: 24px 32px;
 
 
-  &__title{
+  &__title {
     text-align: center;
   }
 
-  &__form{
+  &__form {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -21,7 +21,7 @@
   &__forgot {
     margin-top: -8px;
     text-align: center;
-    color: #7D7D7D;
+    color: #7d7d7d;
   }
 
   &__error {

@@ -9,6 +9,7 @@ const Search = ({ placeholder, onChange }: SearchProps) => {
   return (
     <div className="search">
       <svg
+        className="search__icon"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

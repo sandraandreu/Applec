@@ -63,7 +63,7 @@ const ForgotPasswordPage = () => {
           <h1 className="forgot-password-page__title">
             {t("forgotPassword.title")}
           </h1>
-          <p className="forgot-password-page__description margin-buttom48px">
+          <p className="forgot-password-page__description margin-bottom-48px">
             {t("forgotPassword.description")}
           </p>
         </div>
@@ -72,7 +72,7 @@ const ForgotPasswordPage = () => {
           className="forgot-password-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="margin-buttom48px">
+          <div className="margin-bottom-48px">
             <Input
               id="forgot_password-email"
               label={tc("fields.email")}

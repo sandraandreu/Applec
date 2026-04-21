@@ -132,7 +132,7 @@ const RegisterPage = () => {
       <BackButton />
 
       <div className="register-page__content">
-        <h1 className="register-page__title margin-buttom48px">{t("register.title")}</h1>
+        <h1 className="register-page__title margin-bottom-48px">{t("register.title")}</h1>
         <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="register-firstname"
@@ -249,17 +249,18 @@ const RegisterPage = () => {
             }
           />
 
-          <div className="register-page__terms margin-buttom48px">
+          <div className="register-page__terms margin-bottom-48px">
             <input
               id="acceptsTerms"
               type="checkbox"
+              className="register-page__terms-checkbox"
               {...register("acceptsTerms", { required: true })}
             />
             <label htmlFor="acceptsTerms">
               {t("register.termsStart")}
-              <a href="/privacy">{t("register.termsPrivacy")}</a>
+              <a className="register-page__terms-link" href="/privacy">{t("register.termsPrivacy")}</a>
               {t("register.termsAnd")}
-              <a href="/terms">{t("register.termsConditions")}</a>
+              <a className="register-page__terms-link" href="/terms">{t("register.termsConditions")}</a>
             </label>
           </div>
 

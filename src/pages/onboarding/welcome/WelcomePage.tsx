@@ -4,7 +4,7 @@ import "./welcome.scss";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import Button from "../../../ui-kit/button/Button";
 import Stepper from "../../../ui-kit/stepper/Stepper";
-import welcomeIlustration from "../../../assets/images/welcomeIlustration.png";
+import welcomeIllustration from "../../../assets/images/welcome-illustration.png";
 
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
@@ -24,7 +24,7 @@ const WelcomePage = () => {
         </div>
 
         <div className="welcome-page__img">
-          <img src={welcomeIlustration} alt="" />
+          <img src={welcomeIllustration} alt="" />
         </div>
 
         <Button

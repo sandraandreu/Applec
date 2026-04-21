@@ -43,7 +43,6 @@
     padding: 10px 20px;
     border: 1px solid #1a1a1a;
     border-radius: 4px;
-    cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
     background-color: #1a1a1a;
@@ -52,10 +51,6 @@
     &--cancel {
       background-color: #fff;
       color: #1a1a1a;
-    }
-
-    &:hover {
-      opacity: 0.85;
     }
   }
 }

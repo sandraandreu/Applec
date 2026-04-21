@@ -22,18 +22,18 @@
     flex-wrap: wrap;
     gap: 8px;
 
-    &_item {
+    &__item {
       display: flex;
       gap: 4px;
     }
   }
 
   &__terms {
-    input {
+    &-checkbox {
       margin-right: 4px;
     }
 
-    a {
+    &-link {
       display: inline;
     }
   }

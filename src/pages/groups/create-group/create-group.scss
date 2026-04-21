@@ -14,14 +14,14 @@
 
   &__header {
     text-align: center;
-    
-    .create-group-page__title {
-        margin-bottom: 16px;
-    }
+  }
 
-    .create-group-page__description {
-      color: #4c4c4c;
-    }
+  &__title {
+    margin-bottom: 16px;
+  }
+
+  &__description {
+    color: #4c4c4c;
   }
 
   &__image-picker {
@@ -40,7 +40,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     overflow: hidden;
     background: #ffffff;
   }

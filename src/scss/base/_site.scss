@@ -1,11 +1,11 @@
-.app {                                                                                      
-    min-height: 100vh;                                                                        
-    max-width: 490px;
-    margin: 0 auto;
-    overflow-x: hidden;
-  }
+.app {
+  min-height: 100vh;
+  max-width: 490px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
 
-  .page {
-    min-height: 100vh;
-    padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); // evita que el contenido quede tapado por el notch (arriba) y el home indicator (abajo) en iPhone
-  }
+.page {
+  min-height: 100vh;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); // evita que el contenido quede tapado por el notch (arriba) y el home indicator (abajo) en iPhone
+}

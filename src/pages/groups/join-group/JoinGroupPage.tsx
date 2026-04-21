@@ -121,7 +121,7 @@ const JoinGroupPage = () => {
             isLoading={isLoading}
           />
 
-          {errorConnection && <span>{errorConnection}</span>}
+          {errorConnection && <span className="join-group-page__error">{errorConnection}</span>}
         </form>
       ) : (
         <div>

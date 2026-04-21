@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #B2EEEE;
+  background: #b2eeee;
   min-height: 100vh;
   padding: 24px 32px;
 
@@ -18,10 +18,10 @@
     flex-direction: column;
     gap: 16px;
     text-align: center;
+  }
 
-    .welcome-page__description {
-      color: #4c4c4c;
-    }
+  &__description {
+    color: #4c4c4c;
   }
 
   &__img {

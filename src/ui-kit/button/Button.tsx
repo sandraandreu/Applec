@@ -27,7 +27,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`button ${variant} ${isActiveLanguage ? "active-language" : ""}`}
+      className={`button button--${variant} ${isActiveLanguage ? "button--language--active" : ""}`}
     >
       {icon}
       {text}

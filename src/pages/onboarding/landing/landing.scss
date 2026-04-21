@@ -9,14 +9,14 @@
 
   &__header {
     text-align: center;
+  }
 
-    .landing-page__tittle {
-      margin-bottom: 16px;
-    }
+  &__title {
+    margin-bottom: 16px;
+  }
 
-    .landing-page__description {
-      color: #4c4c4c;
-    }
+  &__description {
+    color: #4c4c4c;
   }
 
   &__img {

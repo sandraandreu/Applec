@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import illustration from "../../../assets/images/invite-group-ilustration.png";
+import illustration from "../../../assets/images/invite-group-illustration.png";
 
 const InviteGroupPage = () => {
   const { t } = useTranslation("groups");
@@ -47,7 +47,7 @@ const InviteGroupPage = () => {
       <img
         className="invite-group-page__illustration"
         src={illustration}
-        alt="illustration"
+        alt=""
       />
 
       <div className="invite-group-page__actions">

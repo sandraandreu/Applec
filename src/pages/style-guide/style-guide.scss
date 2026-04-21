@@ -7,12 +7,12 @@
 
   &__section {
     margin-bottom: 64px;
+  }
 
-    &-title {
-      margin-bottom: 32px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #1a1a1a;
-    }
+  &__section-title {
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #1a1a1a;
   }
 
   &__component {

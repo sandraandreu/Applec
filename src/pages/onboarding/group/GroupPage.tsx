@@ -4,7 +4,7 @@ import "./group.scss";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/icons/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
-import groupIlustration from "../../../assets/images/group-onboarding-ilustration.png";
+import groupIllustration from "../../../assets/images/group-onboarding-illustration.png";
 
 const GroupPage = () => {
   const { t } = useTranslation("onboarding");
@@ -23,7 +23,7 @@ const GroupPage = () => {
         </div>
 
         <div className="group-page__img">
-          <img src={groupIlustration} alt="" />
+          <img src={groupIllustration} alt="" />
         </div>
 
         <div className="group-page__actions">
