@@ -29,7 +29,6 @@ const JoinGroupPage = () => {
   const [groupFound, setGroupFound] = useState<{
     id: string;
     name: string;
-    description: string;
   } | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorConnection, setErrorConnection] = useState<string>("");
@@ -128,7 +127,6 @@ const JoinGroupPage = () => {
         <div>
           <h2>{t("joinGroup.groupFound")}</h2>
           <p>{groupFound.name}</p>
-          <p>{groupFound.description}</p>
           <Button
             text={t("joinGroup.joinButton")}
             onClick={handleJoin}

@@ -3,7 +3,6 @@ import { createContext, useContext } from "react";
 export interface GroupData {
   groupId: string;
   name: string;
-  description: string;
   inviteCode: string;
   adminId: string;
   members: { uid: string; role: "admin" | "organizer" | "member"; username: string; firstName: string; lastName: string; email: string }[];

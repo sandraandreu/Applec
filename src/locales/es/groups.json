@@ -4,14 +4,10 @@
     "name": "Nombre de la falla",
     "namePlaceholder": "Nombre de tu falla",
     "nameCounter": "{{count}}/50",
-    "description": "Descripción",
-    "descriptionPlaceholder": "Describe tu falla (opcional)",
-    "descriptionCounter": "{{count}}/200",
     "button": "Crear falla",
     "errors": {
       "nameRequired": "El nombre de la falla es obligatorio",
-      "nameTooLong": "El nombre no puede superar los 50 caracteres",
-      "descriptionTooLong": "La descripción no puede superar los 200 caracteres"
+      "nameTooLong": "El nombre no puede superar los 50 caracteres"
     }
   },
   "joinGroup": {

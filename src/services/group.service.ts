@@ -22,7 +22,6 @@ export const getGroupById = async (
     return {
       groupId,
       name: data.name,
-      description: data.description,
       inviteCode: data.inviteCode,
       adminId: data.adminId,
       members: data.members,
@@ -35,7 +34,6 @@ export const getGroupById = async (
 
 interface CreateGroupData {
   name: string;
-  description: string;
   adminUid: string;
   adminUsername: string;
   adminFirstName: string;
@@ -45,7 +43,6 @@ interface CreateGroupData {
 
 export const createGroup = async ({
   name,
-  description,
   adminUid,
   adminUsername,
   adminFirstName,
@@ -56,7 +53,6 @@ export const createGroup = async ({
     const inviteCode = crypto.randomUUID();
     const ref = await addDoc(collection(db, "groups"), {
       name,
-      description,
       inviteCode,
       adminId: adminUid,
       members: [{ uid: adminUid, role: "admin", username: adminUsername, firstName: adminFirstName, lastName: adminLastName, email: adminEmail }],
@@ -71,7 +67,7 @@ export const createGroup = async ({
 
 export const findGroupByInviteCode = async (
   code: string,
-): Promise<{ id: string; name: string; description: string } | null> => {
+): Promise<{ id: string; name: string } | null> => {
   try {
     const q = query(collection(db, "groups"), where("inviteCode", "==", code));
     const snap = await getDocs(q);
@@ -80,7 +76,6 @@ export const findGroupByInviteCode = async (
     return {
       id: groupDoc.id,
       name: groupDoc.data().name,
-      description: groupDoc.data().description,
     };
   } catch (error) {
     console.error("findGroupByInviteCode error:", error);

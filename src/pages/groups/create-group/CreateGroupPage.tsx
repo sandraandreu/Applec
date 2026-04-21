@@ -13,7 +13,6 @@ import { updateUserGroup } from "../../../services/user.service";
 
 interface CreateGroupFormData {
   name: string;
-  description: string;
 }
 
 const CreateGroupPage = () => {
@@ -34,19 +33,17 @@ const CreateGroupPage = () => {
   } = useForm<CreateGroupFormData>();
 
   const name = watch("name", "");
-  const description = watch("description", "");
 
   const onSubmit = (data: CreateGroupFormData) => {
-    handleCreateGroup(data.name, data.description);
+    handleCreateGroup(data.name);
   };
 
-  const handleCreateGroup = async (name: string, description: string) => {
+  const handleCreateGroup = async (name: string) => {
     try {
       setIsLoading(true);
 
       const groupId = await createGroup({
         name,
-        description,
         adminUid: user!.uid,
         adminUsername: profile?.username ?? "",
         adminFirstName: profile?.firstName ?? "",
@@ -95,22 +92,6 @@ const CreateGroupPage = () => {
           }
         />
 
-        <Input
-          id="group-description"
-          label={t("createGroup.description")}
-          placeholder={t("createGroup.descriptionPlaceholder")}
-          type="text"
-          registration={register("description", {
-            maxLength: 200,
-          })}
-          maxLength={200}
-          currentLength={description.length}
-          error={
-            errors.description?.type === "maxLength"
-              ? t("createGroup.errors.descriptionTooLong")
-              : undefined
-          }
-        />
         <Button
           text={t("createGroup.button")}
           type="submit"
