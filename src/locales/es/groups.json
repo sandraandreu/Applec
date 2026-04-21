@@ -4,10 +4,12 @@
     "name": "Nombre de la falla",
     "namePlaceholder": "Nombre de tu falla",
     "nameCounter": "{{count}}/50",
+    "image": "Imagen de la falla",
     "button": "Crear falla",
     "errors": {
       "nameRequired": "El nombre de la falla es obligatorio",
-      "nameTooLong": "El nombre no puede superar los 50 caracteres"
+      "nameTooLong": "El nombre no puede superar los 50 caracteres",
+      "imageTooLarge": "La imagen no puede superar los 5 MB"
     }
   },
   "joinGroup": {

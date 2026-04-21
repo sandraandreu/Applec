@@ -8,8 +8,10 @@ import Loading from "../../../components/loading/Loading";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useGroupContext } from "../../../context/group/GroupContext";
-import { createGroup } from "../../../services/group.service";
+import { createGroup, uploadGroupImage, updateGroupImage } from "../../../services/group.service";
 import { updateUserGroup } from "../../../services/user.service";
+
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 interface CreateGroupFormData {
   name: string;
@@ -24,6 +26,9 @@ const CreateGroupPage = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorConnection, setErrorConnection] = useState<string>("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string>("");
 
   const {
     register,
@@ -33,6 +38,22 @@ const CreateGroupPage = () => {
   } = useForm<CreateGroupFormData>();
 
   const name = watch("name", "");
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      setImageError(t("createGroup.errors.imageTooLarge"));
+      setImageFile(null);
+      setImagePreview(null);
+      return;
+    }
+
+    setImageError("");
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
 
   const onSubmit = (data: CreateGroupFormData) => {
     handleCreateGroup(data.name);
@@ -50,6 +71,11 @@ const CreateGroupPage = () => {
         adminLastName: profile?.lastName ?? "",
         adminEmail: user!.email ?? "",
       });
+
+      if (imageFile) {
+        const imageUrl = await uploadGroupImage(imageFile, groupId);
+        await updateGroupImage(groupId, imageUrl);
+      }
 
       await updateUserGroup(user!.uid, groupId);
       await refreshGroup();
@@ -92,10 +118,33 @@ const CreateGroupPage = () => {
           }
         />
 
+        <div className="create-group__image">
+          <label className="create-group__image-label" htmlFor="group-image">
+            {t("createGroup.image")}
+          </label>
+          {imagePreview && (
+            <img
+              className="create-group__image-preview"
+              src={imagePreview}
+              alt="preview"
+            />
+          )}
+          <input
+            id="group-image"
+            className="create-group__image-input"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          {imageError && (
+            <span className="create-group__image-error">{imageError}</span>
+          )}
+        </div>
+
         <Button
           text={t("createGroup.button")}
           type="submit"
-          disabled={Object.keys(errors).length > 0}
+          disabled={Object.keys(errors).length > 0 || !!imageError}
           isLoading={isLoading}
         />
 
