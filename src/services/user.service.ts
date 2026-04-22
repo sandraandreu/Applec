@@ -20,8 +20,7 @@ export const getUserProfile = async (
     const snap = await getDoc(doc(db, "users", uid));
     if (!snap.exists()) return null;
     return snap.data() as UserProfile;
-  } catch (error) {
-    console.error("getUserProfile error:", error);
+  } catch {
     return null;
   }
 };
@@ -33,7 +32,6 @@ export const createUserProfile = async (
   try {
     await setDoc(doc(db, "users", uid), data);
   } catch (error) {
-    console.error("createUserProfile error:", error);
     throw error;
   }
 };
@@ -45,7 +43,6 @@ export const updateUserGroup = async (
   try {
     await updateDoc(doc(db, "users", uid), { groupId });
   } catch (error) {
-    console.error("updateUserGroup error:", error);
     throw error;
   }
 };
@@ -56,7 +53,6 @@ export const isUsernameTaken = async (username: string): Promise<boolean> => {
     const snap = await getDocs(q);
     return !snap.empty;
   } catch (error) {
-    console.error("isUsernameTaken error:", error);
     throw error;
   }
 };

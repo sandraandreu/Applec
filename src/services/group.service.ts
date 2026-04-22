@@ -28,8 +28,7 @@ export const getGroupById = async (
       adminId: data.adminId,
       members: data.members,
     };
-  } catch (error) {
-    console.error("getGroupById error:", error);
+  } catch {
     return null;
   }
 };
@@ -50,7 +49,6 @@ export const uploadGroupImage = async (file: File, groupId: string): Promise<str
     await uploadBytes(storageRef, file);
     return await getDownloadURL(storageRef);
   } catch (error) {
-    console.error("uploadGroupImage error:", error);
     throw error;
   }
 };
@@ -59,7 +57,6 @@ export const updateGroupImage = async (groupId: string, imageUrl: string): Promi
   try {
     await updateDoc(doc(db, "groups", groupId), { imageUrl });
   } catch (error) {
-    console.error("updateGroupImage error:", error);
     throw error;
   }
 };
@@ -95,7 +92,6 @@ export const createGroup = async ({
     });
     return ref.id;
   } catch (error) {
-    console.error("createGroup error:", error);
     throw error;
   }
 };
@@ -112,8 +108,7 @@ export const findGroupByInviteCode = async (
       id: groupDoc.id,
       name: groupDoc.data().name,
     };
-  } catch (error) {
-    console.error("findGroupByInviteCode error:", error);
+  } catch {
     return null;
   }
 };
@@ -131,7 +126,6 @@ export const addMemberToGroup = async (
       members: arrayUnion({ uid, role: "member", username, firstName, lastName, email }),
     });
   } catch (error) {
-    console.error("addMemberToGroup error:", error);
     throw error;
   }
 };
