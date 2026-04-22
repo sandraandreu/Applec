@@ -82,4 +82,3 @@ Se cargan automáticamente según el archivo que se edite:
 - Reglas de negocio (roles, eventos, asistencia, grupos): `docs/reglas-de-negocio.md`
 - Plan de implementación: `docs/superpowers/plans/2026-04-17-mvp-falles-app.md`
 - Herramientas y checklist de calidad (a11y, contraste, performance): `docs/recursos-calidad.md`
-- Auditoría de calidad completa: `docs/AUDITORIA_CALIDAD_WEB.md`
