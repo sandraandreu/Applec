@@ -35,9 +35,9 @@ Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighte
 
 **Firebase:** `auth` y `db` se exportan exclusivamente desde `src/plugins/firebase.ts`. Nunca instanciar `getAuth()` ni `getFirestore()` en otros archivos.
 
-**Servicios:** todos los métodos tienen try/catch.
+**Servicios:** solo los métodos de lectura tienen try/catch.
 - Lectura → devuelve `null` en error
-- Escritura → re-lanza el error (`throw error`)
+- Escritura → sin try/catch, el error sube solo al componente
 
 **AuthContext:** expone `{ user, profile, isLoading, logout }`. `profile` es `UserProfile | null`.
 

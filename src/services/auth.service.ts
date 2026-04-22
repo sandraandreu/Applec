@@ -13,44 +13,24 @@ export const loginUser = async (
   email: string,
   password: string,
 ): Promise<UserCredential> => {
-  try {
-    return await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    throw error;
-  }
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
 export const registerUser = async (
   email: string,
   password: string,
 ): Promise<UserCredential> => {
-  try {
-    return await createUserWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    throw error;
-  }
+  return createUserWithEmailAndPassword(auth, email, password);
 };
 
 export const logoutUser = async (): Promise<void> => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    throw error;
-  }
+  await signOut(auth);
 };
 
 export const sendPasswordReset = async (email: string): Promise<void> => {
-  try {
-    await sendPasswordResetEmail(auth, email);
-  } catch (error) {
-    throw error;
-  }
+  await sendPasswordResetEmail(auth, email);
 };
 
 export const sendVerificationEmail = async (user: User): Promise<void> => {
-  try {
-    await sendEmailVerification(user);
-  } catch (error) {
-    throw error;
-  }
+  await sendEmailVerification(user);
 };

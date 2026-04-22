@@ -44,21 +44,13 @@ interface CreateGroupData {
 }
 
 export const uploadGroupImage = async (file: File, groupId: string): Promise<string> => {
-  try {
-    const storageRef = ref(storage, `groups/${groupId}/image`);
-    await uploadBytes(storageRef, file);
-    return await getDownloadURL(storageRef);
-  } catch (error) {
-    throw error;
-  }
+  const storageRef = ref(storage, `groups/${groupId}/image`);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
 };
 
 export const updateGroupImage = async (groupId: string, imageUrl: string): Promise<void> => {
-  try {
-    await updateDoc(doc(db, "groups", groupId), { imageUrl });
-  } catch (error) {
-    throw error;
-  }
+  await updateDoc(doc(db, "groups", groupId), { imageUrl });
 };
 
 export const createGroup = async ({
@@ -70,30 +62,26 @@ export const createGroup = async ({
   adminLastName,
   adminEmail,
 }: CreateGroupData): Promise<string> => {
-  try {
-    const generateCode = () => {
-      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-      return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
-    };
+  const generateCode = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  };
 
-    let inviteCode = generateCode();
-    let codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
-    while (codeExists) {
-      inviteCode = generateCode();
-      codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
-    }
-    const ref = await addDoc(collection(db, "groups"), {
-      name,
-      ...(imageUrl && { imageUrl }),
-      inviteCode,
-      adminId: adminUid,
-      members: [{ uid: adminUid, role: "admin", username: adminUsername, firstName: adminFirstName, lastName: adminLastName, email: adminEmail }],
-      createdAt: new Date(),
-    });
-    return ref.id;
-  } catch (error) {
-    throw error;
+  let inviteCode = generateCode();
+  let codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
+  while (codeExists) {
+    inviteCode = generateCode();
+    codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
   }
+  const ref = await addDoc(collection(db, "groups"), {
+    name,
+    ...(imageUrl && { imageUrl }),
+    inviteCode,
+    adminId: adminUid,
+    members: [{ uid: adminUid, role: "admin", username: adminUsername, firstName: adminFirstName, lastName: adminLastName, email: adminEmail }],
+    createdAt: new Date(),
+  });
+  return ref.id;
 };
 
 export const findGroupByInviteCode = async (
@@ -121,11 +109,7 @@ export const addMemberToGroup = async (
   lastName: string,
   email: string,
 ): Promise<void> => {
-  try {
-    await updateDoc(doc(db, "groups", groupId), {
-      members: arrayUnion({ uid, role: "member", username, firstName, lastName, email }),
-    });
-  } catch (error) {
-    throw error;
-  }
+  await updateDoc(doc(db, "groups", groupId), {
+    members: arrayUnion({ uid, role: "member", username, firstName, lastName, email }),
+  });
 };

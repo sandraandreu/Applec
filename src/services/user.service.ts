@@ -29,30 +29,18 @@ export const createUserProfile = async (
   uid: string,
   data: UserProfileCreate,
 ): Promise<void> => {
-  try {
-    await setDoc(doc(db, "users", uid), data);
-  } catch (error) {
-    throw error;
-  }
+  await setDoc(doc(db, "users", uid), data);
 };
 
 export const updateUserGroup = async (
   uid: string,
   groupId: string,
 ): Promise<void> => {
-  try {
-    await updateDoc(doc(db, "users", uid), { groupId });
-  } catch (error) {
-    throw error;
-  }
+  await updateDoc(doc(db, "users", uid), { groupId });
 };
 
 export const isUsernameTaken = async (username: string): Promise<boolean> => {
-  try {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const snap = await getDocs(q);
-    return !snap.empty;
-  } catch (error) {
-    throw error;
-  }
+  const q = query(collection(db, "users"), where("username", "==", username));
+  const snap = await getDocs(q);
+  return !snap.empty;
 };

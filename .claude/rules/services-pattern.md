@@ -28,13 +28,9 @@ export const getData = async (...): Promise<T | null> => {
 };
 ```
 
-**Métodos de escritura** → re-lanzan el error en el catch:
+**Métodos de escritura** → sin try/catch. El error sube solo al componente:
 ```ts
 export const saveData = async (...): Promise<void> => {
-  try {
-    // ...
-  } catch (error) {
-    throw error;
-  }
+  await doSomething();
 };
 ```
