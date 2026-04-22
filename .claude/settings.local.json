@@ -22,7 +22,8 @@
       "Bash(mv \"C:/Users/sandr/Desktop/applec/src/assets/images/landing-ilustration.png\" \"C:/Users/sandr/Desktop/applec/src/assets/images/landing-illustration.png\")",
       "Bash(mv \"C:/Users/sandr/Desktop/applec/src/assets/images/group-onboarding-ilustration.png\" \"C:/Users/sandr/Desktop/applec/src/assets/images/group-onboarding-illustration.png\")",
       "Bash(mv \"C:/Users/sandr/Desktop/applec/src/assets/images/welcomeIlustration.png\" \"C:/Users/sandr/Desktop/applec/src/assets/images/welcome-illustration.png\")",
-      "Bash(mv \"C:/Users/sandr/Desktop/applec/src/assets/images/invite-group-ilustration.png\" \"C:/Users/sandr/Desktop/applec/src/assets/images/invite-group-illustration.png\")"
+      "Bash(mv \"C:/Users/sandr/Desktop/applec/src/assets/images/invite-group-ilustration.png\" \"C:/Users/sandr/Desktop/applec/src/assets/images/invite-group-illustration.png\")",
+      "Bash(git mv *)"
     ]
   }
 }
