@@ -10,7 +10,12 @@
     "continue": "Continuar",
     "cancel": "Cancelar",
     "start": "Empezar",
-    "resendEmail": "Reenviar correo"
+    "resendEmail": "Reenviar correo",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
+  },
+  "search": {
+    "label": "Buscar"
   },
   "fields": {
     "email": "Correo electrónico",
