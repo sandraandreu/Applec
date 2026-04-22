@@ -30,3 +30,15 @@ Ejemplos:
 | `events.json` | Eventos, estados, asistencia |
 
 Antes de crear un namespace nuevo, verificar que no encaja en uno existente.
+
+## Sin strings hardcodeados en JSX
+
+Toda cadena de texto visible para el usuario debe pasar por `t()`. No hay strings pequeños que no importen — importa la consistencia.
+
+```tsx
+// ✗ Mal
+<button>Logout</button>
+
+// ✓ Bien
+<button>{t("buttons.logout")}</button>
+```

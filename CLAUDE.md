@@ -70,9 +70,10 @@ docs(readme): update setup instructions
 Se cargan automáticamente según el archivo que se edite:
 
 - @.claude/rules/scss-bem.md — BEM y consolidación de estilos
-- @.claude/rules/services-pattern.md — patrón try/catch y Firebase singleton
-- @.claude/rules/i18n-rule.md — claves en ambos idiomas, namespaces
+- @.claude/rules/services-pattern.md — patrón try/catch, Firebase singleton, sin console.error
+- @.claude/rules/i18n-rule.md — claves en ambos idiomas, namespaces, sin strings hardcodeados
 - @.claude/rules/component-patterns.md — co-ubicación, umbral de components/, nombres
+- @.claude/rules/accessibility.md — aria-label, Link vs a, landmarks, semántica HTML
 
 ## Contexto del proyecto
 
