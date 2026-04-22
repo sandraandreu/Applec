@@ -12,7 +12,8 @@
     "start": "Començar",
     "resendEmail": "Reenviar correu",
     "showPassword": "Mostrar contrasenya",
-    "hidePassword": "Ocultar contrasenya"
+    "hidePassword": "Ocultar contrasenya",
+    "logout": "Tancar sessió"
   },
   "search": {
     "label": "Cercar"

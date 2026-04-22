@@ -25,8 +25,8 @@ const InviteGroupPage = () => {
     if (!inviteCode) return;
     if (navigator.share) {
       await navigator.share({
-        title: "Applec",
-        text: `Únete a mi falla con el código: ${inviteCode}`,
+        title: t("invite.shareTitle"),
+        text: t("invite.shareText", { inviteCode }),
       });
     } else {
       handleCopy();

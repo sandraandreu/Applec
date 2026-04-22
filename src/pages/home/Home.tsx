@@ -10,7 +10,7 @@ const Home = () => {
     <div className="home-page">
       <header className="toolbar">
         <h1>{t("bienvenida")}</h1>
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout}>{t("buttons.logout")}</button>
       </header>
     </div>
   );
