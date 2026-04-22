@@ -188,3 +188,5 @@ Elementos identificados en la auditoría `docs/AUDITORIA_CALIDAD_WEB.md` que han
 - **Contraste botón secundario** — `#0068ff` sobre `#cce1ff` no supera WCAG AA (3.56:1). Pendiente decisión de diseño con Inma sobre el fondo de la landing o alternativa de paleta.
 - **Ilustraciones PNG → SVG** — Las ilustraciones de onboarding y landing están en PNG. Inma debe exportarlas en SVG desde Figma para que escalen correctamente en pantallas 2x/3x.
 - **Font fallback CLS** — Se han añadido `@font-face` fallback con `size-adjust` para reducir el CLS de las fuentes externas. Los valores son aproximados y pueden necesitar ajuste fino una vez se verifique visualmente en dispositivo real.
+
+Ver herramientas y referencias completas en `docs/recursos-calidad.md`.

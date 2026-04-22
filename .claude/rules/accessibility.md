@@ -57,3 +57,12 @@ Toda página debe tener exactamente un `<main>`. Ya está envuelto en `App.tsx` 
 ## Semántica HTML
 
 Botón = ejecuta una acción. Enlace = lleva a un destino. No usar `<a>` sin `href` como botón ni `<div>` con `onClick` como elemento interactivo.
+
+## Verificación antes de un PR
+
+Antes de mergear cualquier cambio visual, repasar el checklist de `docs/recursos-calidad.md`. Herramientas clave:
+
+- **axe DevTools** (extensión de Chrome) — detecta automáticamente el 40-60% de problemas de accesibilidad
+- **WebAIM Contrast Checker** — https://webaim.org/resources/contrastchecker/ — mínimo 4.5:1 para texto normal, 3:1 para texto grande o negrita
+
+Ver referencias completas en `docs/recursos-calidad.md`.
