@@ -8,7 +8,9 @@ const App: React.FC = () => (
   <AuthContextProvider>
     <GroupContextProvider>
       <div className="app">
-        <AppRoutes />
+        <main className="app__main">
+          <AppRoutes />
+        </main>
       </div>
     </GroupContextProvider>
   </AuthContextProvider>
