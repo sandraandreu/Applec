@@ -14,7 +14,7 @@ import caOnboarding from "../locales/ca/onboarding.json";
 import caGroups from "../locales/ca/groups.json";
 import caMembers from "../locales/ca/members.json";
 
-const resources = {
+export const resources = {
   es: {
     common: esCommon,
     auth: esAuth,
@@ -27,7 +27,7 @@ const resources = {
     auth: caAuth,
     onboarding: caOnboarding,
     groups: caGroups,
-    mmembers: caMembers,
+    members: caMembers,
   },
 };
 
@@ -38,7 +38,7 @@ i18n
     resources,
     fallbackLng: "es",
     defaultNS: "common",
-    ns: ["common", "auth", "onboarding", "groups"],
+    ns: ["common", "auth", "onboarding", "groups", "members"],
     interpolation: {
       escapeValue: false,
     },
