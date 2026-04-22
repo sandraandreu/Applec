@@ -175,6 +175,16 @@ Cada semana reserva **2-3 horas de margen** para imprevistos, bugs o ajustes de 
 | Preparación presentación (horas de Sandra) | 13h | — | 13h |
 | **Total horas Sandra** | **105h** | **~16-26h** | **~121-131h** |
 
+### Comparativa con y sin IA
+
+| Concepto | Con IA | Sin IA |
+|---|---|---|
+| Desarrollo (semanas 1-6) | ~92h | ~280-350h |
+| Preparación presentación | ~13h | ~13h |
+| **Total Sandra** | **~105-131h** | **~293-363h** |
+
+Sin IA el desarrollo requeriría entre 3 y 4 veces más tiempo, haciendo inviable completar el MVP antes del 11 de junio a un ritmo de 18-20h semanales (serían necesarios entre 4 y 5 meses).
+
 ---
 
 ## Estrategia para la presentación
