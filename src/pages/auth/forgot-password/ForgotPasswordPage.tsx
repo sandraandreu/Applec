@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Alert from "../../../components/alert/Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
@@ -108,9 +108,9 @@ const ForgotPasswordPage = () => {
         </form>
       </div>
 
-      <a className="forgot-password-page__login" href="/login">
+      <Link className="forgot-password-page__login" to="/login">
         {t("forgotPassword.back")}
-      </a>
+      </Link>
 
       <Alert
         isOpen={forgotPasswordState === "success"}

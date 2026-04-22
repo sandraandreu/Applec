@@ -2,7 +2,7 @@ import "./invite-group.scss";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import illustration from "../../../assets/images/invite-group-illustration.png";
 
 const InviteGroupPage = () => {
@@ -109,7 +109,7 @@ const InviteGroupPage = () => {
         </button>
       </div>
 
-      <a href="/home">{t("invite.skip")}</a>
+      <Link to="/home" className="invite-group__skip">{t("invite.skip")}</Link>
     </div>
   );
 };

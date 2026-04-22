@@ -2,7 +2,7 @@ import "./login.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Alert from "../../../components/alert/Alert";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -127,9 +127,9 @@ const LoginPage = () => {
             }
           />
 
-          <a className="login-page__forgot margin-bottom-48px" href="/forgot-password">
+          <Link className="login-page__forgot margin-bottom-48px" to="/forgot-password">
             {t("login.forgotPassword")}
-          </a>
+          </Link>
 
           {errorConnection && <span className="login-page__error">{errorConnection}</span>}
           {errorCredentials && <span className="login-page__error">{errorCredentials}</span>}
@@ -143,9 +143,9 @@ const LoginPage = () => {
         </form>
       </div>
 
-      <a className="login-page__register" href="/register">
+      <Link className="login-page__register" to="/register">
         {t("login.registerLink")}
-      </a>
+      </Link>
 
       <Alert
         isOpen={loginState === "unverified"}

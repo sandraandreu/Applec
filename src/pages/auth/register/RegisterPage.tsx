@@ -1,6 +1,6 @@
 import "./register.scss";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Alert from "../../../components/alert/Alert";
@@ -258,9 +258,9 @@ const RegisterPage = () => {
             />
             <label htmlFor="acceptsTerms">
               {t("register.termsStart")}
-              <a className="register-page__terms-link" href="/privacy">{t("register.termsPrivacy")}</a>
+              <a className="register-page__terms-link" href="https://applec.com/privacy" target="_blank" rel="noopener noreferrer">{t("register.termsPrivacy")}</a>
               {t("register.termsAnd")}
-              <a className="register-page__terms-link" href="/terms">{t("register.termsConditions")}</a>
+              <a className="register-page__terms-link" href="https://applec.com/terms" target="_blank" rel="noopener noreferrer">{t("register.termsConditions")}</a>
             </label>
           </div>
 
@@ -282,9 +282,9 @@ const RegisterPage = () => {
 
       </div>
 
-      <a className="register-page__login" href="/login">
+      <Link className="register-page__login" to="/login">
         {t("register.loginLink")}
-      </a>
+      </Link>
 
       <Alert
         isOpen={registerState === "error"}
