@@ -83,10 +83,10 @@ interface UserProfile {
 Campos: `name`, `imageUrl?` (URL de Firebase Storage), `createdAt`, `adminId`, `inviteCode` (6 caracteres alfanuméricos, único y verificado)
 Array `members`: `{ uid, username, firstName, lastName, email, role }`
 
-### Event — `groups/{groupId}/events/{eventId}` *(pendiente)*
-Campos obligatorios: `name`, `date`, `time`, `confirmationDeadline`
-Campos opcionales: `location`, `description`
-Otros: `status` (`active` | `deadline-closed` | `finished` | `cancelled`), `createdBy`
+### Event — `groups/{groupId}/events/{eventId}`
+Campos obligatorios: `name`, `date`, `startTime`, `location`, `requiresConfirmation`, `sendReminder`, `createdBy`, `createdAt`, `groupId`
+Campos opcionales: `description`, `endTime`, `confirmationDeadline`, `cancelledAt`
+El estado (`activo` | `plazo-cerrado` | `finalizado` | `cancelado`) se deriva con `getEventStatus()` — no se almacena en Firestore.
 
 ### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}` *(pendiente)*
 Campos: `userId`, `eventId`, `response` (`yes` | `no`), `confirmedAt`
