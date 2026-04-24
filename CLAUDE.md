@@ -67,6 +67,8 @@ docs(readme): update setup instructions
 
 **Autoría:** nunca añadir `Co-Authored-By: Claude` ni ninguna referencia a la IA en los commits. El autor es siempre Sandra.
 
+**Push:** hacer siempre `git push` después de cada commit.
+
 ## Rules automáticas
 
 Se cargan automáticamente según el archivo que se edite:
