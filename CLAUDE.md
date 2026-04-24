@@ -65,6 +65,8 @@ chore(deps): update firebase sdk
 docs(readme): update setup instructions
 ```
 
+**Autoría:** nunca añadir `Co-Authored-By: Claude` ni ninguna referencia a la IA en los commits. El autor es siempre Sandra.
+
 ## Rules automáticas
 
 Se cargan automáticamente según el archivo que se edite:

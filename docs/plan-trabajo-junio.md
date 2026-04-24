@@ -62,7 +62,7 @@ Cada semana reserva **2-3 horas de margen** para imprevistos, bugs o ajustes de 
 
 | Tarea | Horas |
 |---|---|
-| Modelo de datos del evento (TypeScript) | 1h |
+| ✓ Modelo de datos del evento (TypeScript) | 1h |
 | Servicio de eventos (Firebase/Firestore) | 3h |
 | Bottom navigation bar con lógica de roles + SCSS | 5h |
 | Rediseño pantalla Home con datos reales + SCSS | 5h |
