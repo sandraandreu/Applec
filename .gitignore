@@ -33,6 +33,9 @@ yarn-error.log*
 # Optional eslint cache
 .eslintcache
 
+# Personal docs
+docs/plan-trabajo-junio.md
+
 # Firebase
 google-services.json
 GoogleService-Info.plist
