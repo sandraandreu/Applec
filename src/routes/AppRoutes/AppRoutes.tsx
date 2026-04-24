@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
+import MainLayout from "../../components/main-layout/MainLayout";
 
 import Home from "../../pages/home/Home";
 import LoginPage from "../../pages/auth/login/LoginPage";
@@ -26,7 +27,9 @@ const AppRoutes = () => (
         path="/home"
         element={
           <PrivateRoutes requiresGroup>
-            <Home />
+            <MainLayout>
+              <Home />
+            </MainLayout>
           </PrivateRoutes>
         }
       />
@@ -124,8 +127,10 @@ const AppRoutes = () => (
       <Route
         path="/members"
         element={
-          <PrivateRoutes>
-            <MembersPage />
+          <PrivateRoutes requiresGroup>
+            <MainLayout>
+              <MembersPage />
+            </MainLayout>
           </PrivateRoutes>
         }
       />

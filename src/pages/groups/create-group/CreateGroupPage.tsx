@@ -14,7 +14,7 @@ import {
   uploadGroupImage,
   updateGroupImage,
 } from "../../../services/group.service";
-import { updateUserGroup } from "../../../services/user.service";
+import { updateUserGroup, updateUserRole } from "../../../services/user.service";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -26,7 +26,7 @@ const CreateGroupPage = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
-  const { user, profile } = useAuthContext();
+  const { user, profile, refreshProfile } = useAuthContext();
   const { refreshGroup } = useGroupContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -79,8 +79,11 @@ const CreateGroupPage = () => {
         await updateGroupImage(groupId, imageUrl);
       }
 
-      await updateUserGroup(user!.uid, groupId);
-      await refreshGroup();
+      await Promise.all([
+        updateUserGroup(user!.uid, groupId),
+        updateUserRole(user!.uid, "admin"),
+      ]);
+      await Promise.all([refreshGroup(), refreshProfile()]);
       navigate("/invite-group");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };

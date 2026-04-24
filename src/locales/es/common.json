@@ -26,5 +26,15 @@
     "required": "Este campo es obligatorio",
     "emailInvalid": "Introduce un correo electrónico válido",
     "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
+  },
+  "nav": {
+    "tabBar": "Navegación principal",
+    "feed": "Feed",
+    "events": "Eventos",
+    "calendar": "Calendario",
+    "members": "Miembros",
+    "profile": "Perfil",
+    "createEvent": "Crear evento",
+    "notifications": "Notificaciones"
   }
 }

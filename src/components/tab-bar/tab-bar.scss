@@ -1,0 +1,18 @@
+.tab-bar {
+  background-color: #ffffff;
+  border-top: 1px solid #d5d5d5;
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+  }
+}

@@ -26,5 +26,15 @@
     "required": "Aquest camp és obligatori",
     "emailInvalid": "Introdueix un correu electrònic vàlid",
     "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
+  },
+  "nav": {
+    "tabBar": "Navegació principal",
+    "feed": "Feed",
+    "events": "Esdeveniments",
+    "calendar": "Calendari",
+    "members": "Membres",
+    "profile": "Perfil",
+    "createEvent": "Crear esdeveniment",
+    "notifications": "Notificacions"
   }
 }

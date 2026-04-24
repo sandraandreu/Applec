@@ -39,6 +39,13 @@ export const updateUserGroup = async (
   await updateDoc(doc(db, "users", uid), { groupId });
 };
 
+export const updateUserRole = async (
+  uid: string,
+  role: "admin" | "organizer" | "member",
+): Promise<void> => {
+  await updateDoc(doc(db, "users", uid), { role });
+};
+
 export const isUsernameTaken = async (username: string): Promise<boolean> => {
   const q = query(collection(db, "users"), where("username", "==", username));
   const snap = await getDocs(q);

@@ -19,6 +19,11 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     await logoutUser();
   };
 
+  const refreshProfile = async () => {
+    if (!user) return;
+    setProfile(await getUserProfile(user.uid));
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
@@ -29,7 +34,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     return unsubscribe;
   }, []);
 
-  const contextValue = { user, profile, isLoading, logout };
+  const contextValue = { user, profile, isLoading, logout, refreshProfile };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
