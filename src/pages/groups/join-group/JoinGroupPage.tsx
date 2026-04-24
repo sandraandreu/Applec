@@ -71,15 +71,17 @@ const JoinGroupPage = () => {
     try {
       setIsLoading(true);
 
-      await addMemberToGroup(
-        groupFound!.id,
-        user!.uid,
-        profile?.username ?? "",
-        profile?.firstName ?? "",
-        profile?.lastName ?? "",
-        user!.email ?? "",
-      );
-      await updateUserGroup(user!.uid, groupFound!.id);
+      await Promise.all([
+        addMemberToGroup(
+          groupFound!.id,
+          user!.uid,
+          profile?.username ?? "",
+          profile?.firstName ?? "",
+          profile?.lastName ?? "",
+          user!.email ?? "",
+        ),
+        updateUserGroup(user!.uid, groupFound!.id),
+      ]);
       await refreshGroup();
       navigate("/home");
     } catch (error: unknown) {
