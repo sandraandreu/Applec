@@ -1,4 +1,4 @@
-import "./member-card.scss";
+import "./members.scss";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import Chip from "../../ui-kit/chip/Chip";
 

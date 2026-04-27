@@ -29,5 +29,23 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
 
+.members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__section-title {
+    font-size: var(--font-size-body-s);
+    font-weight: 600;
+    color: #9ca3af;
+    margin: 0 0 8px 0;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 }

@@ -5,7 +5,7 @@
 
 ---
 
-## Semana 1 — 17-24 abril · Modelo, servicio, navegación y Home
+## Semana 1 — 17-24 abril · Modelo, servicio y navegación
 
 ### T01 · Modelo de evento
 
@@ -36,38 +36,18 @@
 
 ---
 
-### T03 · Navegación — Bottom navigation bar
+### T03 · Navegación — Tab bar y layout principal ✅ completado
 
 **Archivos:**
-- Crear: `src/components/bottom-nav/BottomNav.tsx`
-- Crear: `src/components/bottom-nav/bottom-nav.scss`
-- Modificar: `src/components/base-layout/BaseLayout.tsx`
-- Modificar: `src/routes/appRoutes/AppRoutes.tsx`
+- `src/components/tab-bar/TabBar.tsx`
+- `src/components/top-bar/TopBar.tsx`
+- `src/components/main-layout/MainLayout.tsx`
 
-**Criterios de aceptación:**
-- [ ] Barra de navegación inferior visible en todas las pantallas privadas con grupo
-- [ ] Ítems para admin/organizer: Inicio · Eventos · Miembros · Perfil
-- [ ] Ítems para member: Inicio · Eventos · Perfil (sin acceso a gestión)
-- [ ] El ítem activo se resalta visualmente
-- [ ] La barra no aparece en pantallas de auth ni onboarding
-
----
-
-### T04 · Pantalla Home
-
-**Archivos:**
-- Modificar: `src/pages/home/Home.tsx`
-- Crear: `src/pages/home/home.scss`
-- Modificar: `src/locales/es/common.json` y `src/locales/ca/common.json`
-
-**Criterios de aceptación:**
-- [ ] Muestra los próximos 3 eventos del grupo ordenados por fecha
-- [ ] Muestra el número total de miembros del grupo
-- [ ] Estado vacío si no hay eventos próximos
-- [ ] Estado de loading mientras se cargan los datos
-- [ ] Estado de error si falla la carga
-- [ ] Botón "Crear evento" visible solo para admin y organizer
-- [ ] Traducciones en `es` y `ca`
+**Notas:**
+- Implementado con tabs: Feed · Calendario · Eventos · Miembros · Perfil
+- La pantalla principal (post-login) es `/events`, no existe tab "Inicio"
+- `/feed` está preparado para una funcionalidad futura (fuera del MVP)
+- La ruta `/home` era provisional y quedará eliminada al implementar T05
 
 ---
 
@@ -83,12 +63,14 @@
 - Modificar: `src/routes/appRoutes/AppRoutes.tsx`
 
 **Criterios de aceptación:**
+- [ ] Es la pantalla principal de la app tras el login/onboarding (el redirect apunta a `/events`)
 - [ ] Lista todos los eventos del grupo ordenados por fecha
 - [ ] Cada evento muestra: nombre, fecha y estado
 - [ ] Estado vacío si no hay eventos
 - [ ] Estado de loading y de error
 - [ ] Botón "Crear evento" visible solo para admin y organizer
 - [ ] Al pulsar un evento navega al detalle
+- [ ] La ruta `/home` redirige a `/events` (limpieza de la ruta provisional)
 - [ ] Ruta: `/events`
 
 ---

@@ -35,6 +35,7 @@ yarn-error.log*
 
 # Personal docs
 docs/plan-trabajo-junio.md
+docs/specs/
 
 # Firebase
 google-services.json

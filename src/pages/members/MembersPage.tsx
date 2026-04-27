@@ -1,6 +1,6 @@
 import "./members.scss";
 import Search from "../../ui-kit/search/Search";
-import MembersList from "../../components/member-list/MembersList";
+import MembersList from "../../components/members/MembersList";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../context/group/GroupContext";

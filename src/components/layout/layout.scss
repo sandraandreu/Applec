@@ -1,3 +1,14 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
 .top-bar {
   display: flex;
   align-items: center;
@@ -26,5 +37,24 @@
     padding: 8px;
     background: none;
     border: none;
+  }
+}
+
+.tab-bar {
+  background-color: var(--white);
+  border-top: 1px solid var(--color-border);
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
   }
 }

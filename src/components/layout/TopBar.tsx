@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
-import "./top-bar.scss";
+import "./layout.scss";
 
 const TopBar = () => {
   const { t } = useTranslation("common");

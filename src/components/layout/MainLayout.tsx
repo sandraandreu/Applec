@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import TopBar from "../top-bar/TopBar";
-import TabBar from "../tab-bar/TabBar";
-import "./main-layout.scss";
+import TopBar from "./TopBar";
+import TabBar from "./TabBar";
+import "./layout.scss";
 
 interface Props {
   children: ReactNode;

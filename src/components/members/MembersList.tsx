@@ -1,6 +1,6 @@
-import "./member-list.scss";
+import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
-import MemberCard from "../member-card/MemberCard";
+import MemberCard from "./MemberCard";
 import { useTranslation } from "react-i18next";
 import Button from "../../ui-kit/button/Button";
 import { useNavigate } from "react-router-dom";

@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
-import MainLayout from "../../components/main-layout/MainLayout";
+import MainLayout from "../../components/layout/MainLayout";
 
 import Home from "../../pages/home/Home";
 import LoginPage from "../../pages/auth/login/LoginPage";

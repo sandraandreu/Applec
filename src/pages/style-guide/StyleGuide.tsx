@@ -11,7 +11,7 @@ import Stepper from "../../ui-kit/stepper/Stepper";
 import Alert from "../../components/alert/Alert";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
-import MemberCard from "../../components/member-card/MemberCard";
+import MemberCard from "../../components/members/MemberCard";
 
 const ColorSwatch = ({ variable, hex, label }: { variable: string; hex: string; label?: string }) => (
   <div className="style-guide__swatch">
