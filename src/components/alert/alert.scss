@@ -1,6 +1,6 @@
 .alert {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-card);
   padding: 0;
   max-width: 360px;
   width: 90%;
@@ -21,15 +21,15 @@
 
   &__header {
     margin: 0 0 8px;
-    font-size: 1.25rem;
+    font-size: var(--font-size-body-l);
     font-weight: 600;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
   }
 
   &__message {
     margin: 0 0 24px;
     color: #666;
-    font-size: 1rem;
+    font-size: var(--font-size-body-s);
     line-height: 1.6;
   }
 
@@ -41,16 +41,16 @@
 
   &__button {
     padding: 10px 20px;
-    border: 1px solid #1a1a1a;
-    border-radius: 4px;
-    font-size: 1rem;
+    border: 1px solid var(--color-text-primary);
+    border-radius: var(--radius-input);
+    font-size: var(--font-size-body-s);
     font-weight: 500;
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: var(--color-text-primary);
+    color: var(--color-text-inverse);
 
     &--cancel {
-      background-color: #fff;
-      color: #1a1a1a;
+      background-color: var(--white);
+      color: var(--color-text-primary);
     }
   }
 }

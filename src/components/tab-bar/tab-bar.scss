@@ -1,6 +1,6 @@
 .tab-bar {
-  background-color: #ffffff;
-  border-top: 1px solid #d5d5d5;
+  background-color: var(--white);
+  border-top: 1px solid var(--color-border);
 
   &__items {
     display: flex;

@@ -13,17 +13,17 @@
   &__spinner {
     width: 48px;
     height: 48px;
-    border: 4px solid #e0e0e0;
-    border-top-color: #0068ff;
+    border: 4px solid var(--color-border-light);
+    border-top-color: var(--color-brand);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
 
   &__message {
     margin: 0;
-    font-size: 16px;
+    font-size: var(--font-size-body-s);
     font-weight: 500;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
     text-align: center;
   }
 }

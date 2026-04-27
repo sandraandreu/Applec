@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #d5d5d5;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--color-border);
 
   &__logo {
     width: 42px;

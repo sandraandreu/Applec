@@ -1,19 +1,19 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  border-radius: 12px;
+  border-radius: var(--radius-chip);
   padding: 6px 12px;
-  font-size: 16px;
+  font-size: var(--font-size-body-s);
   font-weight: 600;
   white-space: nowrap;
 
   &--admin {
-    background: #ffe8ed;
-    color: #ff1c4e;
+    background: var(--red-50);
+    color: var(--color-error);
   }
 
   &--organizer {
-    background: #ccf4f3;
-    color: #00c8c5;
+    background: var(--teal-200);
+    color: var(--color-accent-teal);
   }
 }

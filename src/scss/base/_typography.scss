@@ -17,49 +17,49 @@
 }
 
 body {
-  font-family: 'General Sans', "General Sans Fallback", sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
-  font-size: 16px;
-  color: #1a1a1a;
+  font-size: var(--font-size-body-s);
+  color: var(--color-text-primary);
 }
 
 h1 {
-  font-family: 'Bricolage Grotesque', "Bricolage Fallback", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
-  font-size: 32px;
+  font-size: var(--font-size-h1);
   line-height: 1;
 }
 
 .h1--large {
-  font-size: 40px;
+  font-size: var(--font-size-display);
   line-height: 42px;
 }
 
 h2 {
-  font-family: 'Bricolage Grotesque', "Bricolage Fallback", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
-  font-size: 24px;
+  font-size: var(--font-size-h2);
   line-height: 1.1;
 }
 
 h3 {
-  font-family: 'Bricolage Grotesque', "Bricolage Fallback", sans-serif;
+  font-family: var(--font-display);
   font-weight: 800;
-  font-size: 20px;
+  font-size: var(--font-size-body-l);
   line-height: 1.2;
 }
 
 p {
-  font-size: 16px;
+  font-size: var(--font-size-body-s);
   line-height: 1.5;
 }
 
 small {
-  font-size: 16px;
+  font-size: var(--font-size-body-s);
 }
 
 a {
-  color: #3772ff;
+  color: var(--color-link);
   font-weight: 500;
   text-decoration: underline;
   text-underline-offset: 3px;

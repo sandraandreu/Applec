@@ -5,7 +5,7 @@
   padding: 24px 16px;
 
   &__title {
-    font-size: 22px;
+    font-size: var(--size-22);
     font-weight: 600;
     margin: 0;
   }
@@ -18,16 +18,16 @@
 
   &__filter-btn {
     padding: 6px 14px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     border: 1px solid #d1d5db;
     background: #fff;
     color: #555;
-    font-size: 1rem;
+    font-size: var(--font-size-body-s);
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 
     &--active {
       background: #1f2937;
-      color: #fff;
+      color: var(--color-text-inverse);
       border-color: #1f2937;
     }
   }

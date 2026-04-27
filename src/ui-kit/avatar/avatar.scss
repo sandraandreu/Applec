@@ -5,18 +5,18 @@
   justify-content: center;
   font-weight: 700;
   flex-shrink: 0;
-  color: #fff;
+  color: var(--color-text-inverse);
 
   &--sm {
     width: 32px;
     height: 32px;
-    font-size: 12px;
+    font-size: var(--font-size-pill);
   }
 
   &--md {
     width: 48px;
     height: 48px;
-    font-size: 16px;
+    font-size: var(--font-size-body-s);
   }
 
   &--lg {
@@ -27,5 +27,5 @@
 
   &--admin     { background: #e5384f; }
   &--organizer { background: #0da994; }
-  &--member    { background: #0068ff; }
+  &--member    { background: var(--color-brand); }
 }

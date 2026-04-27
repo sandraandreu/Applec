@@ -12,7 +12,7 @@
   &__section-title {
     margin-bottom: 32px;
     padding-bottom: 12px;
-    border-bottom: 2px solid #1a1a1a;
+    border-bottom: 2px solid var(--color-text-primary);
   }
 
   &__component {
@@ -21,7 +21,7 @@
 
   &__component-name {
     margin-bottom: 16px;
-    color: #7d7d7d;
+    color: var(--color-text-muted);
   }
 
   &__item {
@@ -32,9 +32,9 @@
   }
 
   &__label {
-    font-size: 12px;
+    font-size: var(--font-size-pill);
     font-family: monospace;
-    color: #7d7d7d;
+    color: var(--color-text-muted);
   }
 
   &__row {
@@ -48,19 +48,121 @@
     }
   }
 
-  &__loading-preview {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    overflow: hidden;
-    transform: translateZ(0);
-  }
-
   &__stack {
     display: flex;
     flex-direction: column;
     gap: 16px;
+  }
+
+  &__loading-preview {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  // ── Colores ──────────────────────────────────────────
+
+  &__swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+
+  &__swatch {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  &__swatch-color {
+    height: 64px;
+  }
+
+  &__swatch-info {
+    padding: 8px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__swatch-var {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-primary);
+    word-break: break-all;
+  }
+
+  &__swatch-hex {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-muted);
+  }
+
+  // ── Tipografía showcase ───────────────────────────────
+
+  &__type-button {
+    font-family: var(--font-display);
+    font-size: var(--font-size-button);
+    font-weight: 700;
+  }
+
+  &__type-date-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-date-title);
+    font-weight: 700;
+  }
+
+  &__type-date {
+    font-family: var(--font-display);
+    font-size: var(--font-size-date);
+    font-weight: 700;
+  }
+
+  &__type-body-l {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-l);
+  }
+
+  &__type-body-m {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-m);
+  }
+
+  &__type-pill {
+    font-family: var(--font-body);
+    font-size: var(--font-size-pill);
+    font-weight: 600;
+  }
+
+  &__type--bold {
+    font-weight: 600;
+  }
+
+  // ── Border Radius ─────────────────────────────────────
+
+  &__radius-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-end;
+  }
+
+  &__radius-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__radius-box {
+    width: 100px;
+    height: 40px;
+    background: var(--color-bg-blue);
+    border: 2px solid var(--color-brand);
   }
 }

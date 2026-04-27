@@ -13,6 +13,34 @@ import LanguageSelector from "../../components/language-selector/LanguageSelecto
 import Loading from "../../components/loading/Loading";
 import MemberCard from "../../components/member-card/MemberCard";
 
+const ColorSwatch = ({ variable, hex, label }: { variable: string; hex: string; label?: string }) => (
+  <div className="style-guide__swatch">
+    <div className="style-guide__swatch-color" style={{ background: `var(${variable})` }} />
+    <div className="style-guide__swatch-info">
+      <span className="style-guide__swatch-var">{label ?? variable}</span>
+      <span className="style-guide__swatch-hex">{hex}</span>
+    </div>
+  </div>
+);
+
+const GradientSwatch = ({ variable, label }: { variable: string; label: string }) => (
+  <div className="style-guide__swatch">
+    <div className="style-guide__swatch-color" style={{ background: `var(${variable})` }} />
+    <div className="style-guide__swatch-info">
+      <span className="style-guide__swatch-var">{variable}</span>
+      <span className="style-guide__swatch-hex">{label}</span>
+    </div>
+  </div>
+);
+
+const RadiusSwatch = ({ variable, value }: { variable: string; value: string }) => (
+  <div className="style-guide__radius-item">
+    <div className="style-guide__radius-box" style={{ borderRadius: `var(${variable})` }} />
+    <span className="style-guide__label">{variable}</span>
+    <span className="style-guide__label">{value}</span>
+  </div>
+);
+
 const StyleGuide = () => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,35 +49,139 @@ const StyleGuide = () => {
     <div className="style-guide">
       <h1 className="style-guide__title">Style Guide</h1>
 
+      {/* ── COLORES ── */}
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Texto</h2>
+        <div className="style-guide__swatch-grid">
+          <ColorSwatch variable="--color-text-primary"   hex="#121212" />
+          <ColorSwatch variable="--color-text-secondary" hex="#4C4C4C" />
+          <ColorSwatch variable="--color-text-muted"     hex="#7D7D7D" />
+          <ColorSwatch variable="--color-text-inverse"   hex="#FAFAFA" />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Marca</h2>
+        <div className="style-guide__swatch-grid">
+          <ColorSwatch variable="--color-brand" hex="#0068FF" />
+          <ColorSwatch variable="--color-error" hex="#FF1C4E" />
+          <ColorSwatch variable="--color-link"  hex="#3772FF" />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Accents</h2>
+        <div className="style-guide__swatch-grid">
+          <ColorSwatch variable="--color-accent-teal"   hex="#00C8C5" />
+          <ColorSwatch variable="--color-accent-orange" hex="#FF7E00" />
+          <ColorSwatch variable="--color-accent-purple" hex="#F581FF" />
+          <ColorSwatch variable="--color-accent-yellow" hex="#FBFF85" />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Fondos pastel</h2>
+        <div className="style-guide__swatch-grid">
+          <ColorSwatch variable="--color-bg-blue"   hex="#E5F0FF" />
+          <ColorSwatch variable="--color-bg-teal"   hex="#B2EEEE" />
+          <ColorSwatch variable="--color-bg-pink"   hex="#FCE6FF" />
+          <ColorSwatch variable="--color-bg-yellow" hex="#FEFFE7" />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Gradientes</h2>
+        <div className="style-guide__swatch-grid">
+          <GradientSwatch variable="--color-bg-gradient-blue" label="#CCE1FF → #FEFFE7" />
+          <GradientSwatch variable="--color-bg-gradient-teal" label="#B2EEEE → #FEFFE7" />
+          <GradientSwatch variable="--color-bg-gradient-pink" label="#FCE6FF → #FEFFE7" />
+          <GradientSwatch variable="--color-bg-gradient-red"  label="#FFD2DC → #FEFFE7" />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Colores — Bordes</h2>
+        <div className="style-guide__swatch-grid">
+          <ColorSwatch variable="--color-border"       hex="#D5D5D5" />
+          <ColorSwatch variable="--color-border-light" hex="#E0E0E0" />
+        </div>
+      </section>
+
+      {/* ── TIPOGRAFÍA ── */}
       <section className="style-guide__section">
         <h2 className="style-guide__section-title">Tipografía</h2>
 
         <div className="style-guide__item">
-          <span className="style-guide__label">h1 · Bricolage Grotesque 800 · 40px</span>
-          <h1>Título principal</h1>
+          <span className="style-guide__label">--font-size-display · Bricolage ExtraBold · 40px</span>
+          <h1 className="h1--large">Display</h1>
         </div>
         <div className="style-guide__item">
-          <span className="style-guide__label">h2 · Bricolage Grotesque 800 · 32px</span>
-          <h2>Título secundario</h2>
+          <span className="style-guide__label">--font-size-h1 · Bricolage ExtraBold · 32px</span>
+          <h1>Heading 1</h1>
         </div>
         <div className="style-guide__item">
-          <span className="style-guide__label">h3 · Bricolage Grotesque 800 · 24px</span>
-          <h3>Título terciario</h3>
+          <span className="style-guide__label">--font-size-h2 · Bricolage ExtraBold · 24px</span>
+          <h2>Heading 2</h2>
         </div>
         <div className="style-guide__item">
-          <span className="style-guide__label">Body · General Sans 500 · 16px</span>
-          <p>Texto de cuerpo. Lorem ipsum dolor sit amet consectetur.</p>
+          <span className="style-guide__label">--font-size-button · Bricolage Bold · 24px</span>
+          <span className="style-guide__type-button">Botón</span>
         </div>
         <div className="style-guide__item">
-          <span className="style-guide__label">Link · General Sans 600 · 16px · #3772ff</span>
+          <span className="style-guide__label">--font-size-date-title · Bricolage Bold · 18px</span>
+          <span className="style-guide__type-date-title">Fecha título</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-date · Bricolage Bold · 16px</span>
+          <span className="style-guide__type-date">Fecha</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-l · General Sans · 20px</span>
+          <span className="style-guide__type-body-l">Body large — subtítulos</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-l · General Sans SemiBold · 20px</span>
+          <span className="style-guide__type-body-l style-guide__type--bold">Body large bold</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-m · General Sans · 18px</span>
+          <span className="style-guide__type-body-m">Body medium — texto</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-m · General Sans SemiBold · 18px</span>
+          <span className="style-guide__type-body-m style-guide__type--bold">Body medium bold</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-s · General Sans · 16px</span>
+          <p>Body small — texto base</p>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-body-s · General Sans SemiBold · 16px</span>
+          <p><strong>Body small bold</strong></p>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--font-size-pill · General Sans SemiBold · 12px</span>
+          <span className="style-guide__type-pill">Pills / etiquetas</span>
+        </div>
+        <div className="style-guide__item">
+          <span className="style-guide__label">--color-link · General Sans · 16px</span>
           <a href="#">Enlace de ejemplo</a>
-        </div>
-        <div className="style-guide__item">
-          <span className="style-guide__label">Small · 16px</span>
-          <small>Texto pequeño de apoyo</small>
         </div>
       </section>
 
+      {/* ── RADIUS ── */}
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Border Radius</h2>
+        <div className="style-guide__radius-grid">
+          <RadiusSwatch variable="--radius-input"  value="10px" />
+          <RadiusSwatch variable="--radius-card"   value="12px" />
+          <RadiusSwatch variable="--radius-chip"   value="12px" />
+          <RadiusSwatch variable="--radius-button" value="22px" />
+          <RadiusSwatch variable="--radius-pill"   value="100px" />
+        </div>
+      </section>
+
+      {/* ── UI KIT ── */}
       <section className="style-guide__section">
         <h2 className="style-guide__section-title">UI Kit</h2>
 
@@ -134,6 +266,7 @@ const StyleGuide = () => {
         </div>
       </section>
 
+      {/* ── COMPONENTS ── */}
       <section className="style-guide__section">
         <h2 className="style-guide__section-title">Components</h2>
 

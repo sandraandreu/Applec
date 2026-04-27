@@ -1,0 +1,121 @@
+:root {
+
+  // ─── PRIMITIVOS ───────────────────────────────────────
+
+  // Neutrals
+  --neutral-900: #121212;
+  --neutral-600: #4C4C4C;
+  --neutral-400: #7D7D7D;
+  --neutral-300: #E0E0E0;
+  --neutral-200: #D5D5D5;
+  --neutral-50:  #FAFAFA;
+  --white:       #FFFFFF;
+
+  // Blue
+  --blue-500: #0068FF;
+  --blue-400: #3772FF;
+  --blue-200: #CCE1FF;
+  --blue-100: #E5F0FF;
+
+  // Red
+  --red-500: #FF1C4E;
+  --red-100: #FFD2DC;
+  --red-50:  #FFE8ED;
+
+  // Teal
+  --teal-500: #00C8C5;
+  --teal-200: #CCF4F3;
+  --teal-100: #B2EEEE;
+
+  // Orange
+  --orange-500: #FF7E00;
+  --orange-100: #FFE5CC;
+
+  // Purple
+  --purple-500: #F581FF;
+  --purple-100: #FCE6FF;
+
+  // Yellow
+  --yellow-500: #FBFF85;
+  --yellow-100: #FEFFE7;
+
+  // Sizes
+  --size-10:  10px;
+  --size-12:  12px;
+  --size-16:  16px;
+  --size-18:  18px;
+  --size-20:  20px;
+  --size-22:  22px;
+  --size-24:  24px;
+  --size-32:  32px;
+  --size-40:  40px;
+  --size-100: 100px;
+
+  // Font families
+  --font-bricolage:    'Bricolage Grotesque', "Bricolage Fallback", sans-serif;
+  --font-general-sans: 'General Sans', "General Sans Fallback", sans-serif;
+
+
+  // ─── SEMÁNTICOS — COLORES ─────────────────────────────
+
+  // Text
+  --color-text-primary:   var(--neutral-900);
+  --color-text-secondary: var(--neutral-600);
+  --color-text-muted:     var(--neutral-400);
+  --color-text-inverse:   var(--neutral-50);
+
+  // Brand
+  --color-brand: var(--blue-500);
+  --color-link:  var(--blue-400);
+  --color-error: var(--red-500);
+
+  // Borders
+  --color-border:       var(--neutral-200);
+  --color-border-light: var(--neutral-300);
+
+  // Accents
+  --color-accent-teal:   var(--teal-500);
+  --color-accent-orange: var(--orange-500);
+  --color-accent-purple: var(--purple-500);
+  --color-accent-yellow: var(--yellow-500);
+
+  // Pastel backgrounds
+  --color-bg-blue:   var(--blue-100);
+  --color-bg-teal:   var(--teal-100);
+  --color-bg-pink:   var(--purple-100);
+  --color-bg-yellow: var(--yellow-100);
+
+  // Gradient backgrounds
+  --color-bg-gradient-blue: linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));
+  --color-bg-gradient-teal: linear-gradient(to bottom, var(--teal-100),   var(--yellow-100));
+  --color-bg-gradient-pink: linear-gradient(to bottom, var(--purple-100), var(--yellow-100));
+  --color-bg-gradient-red:  linear-gradient(to bottom, var(--red-100),    var(--yellow-100));
+
+
+  // ─── SEMÁNTICOS — RADIUS ──────────────────────────────
+
+  --radius-input:  var(--size-10);
+  --radius-card:   var(--size-12);
+  --radius-chip:   var(--size-12);
+  --radius-button: var(--size-22);
+  --radius-pill:   var(--size-100);
+
+
+  // ─── SEMÁNTICOS — TIPOGRAFÍA ──────────────────────────
+
+  // Font families
+  --font-display: var(--font-bricolage);
+  --font-body:    var(--font-general-sans);
+
+  // Font sizes
+  --font-size-display:    var(--size-40);
+  --font-size-h1:         var(--size-32);
+  --font-size-h2:         var(--size-24);
+  --font-size-button:     var(--size-24);
+  --font-size-date-title: var(--size-18);
+  --font-size-date:       var(--size-16);
+  --font-size-body-l:     var(--size-20);
+  --font-size-body-m:     var(--size-18);
+  --font-size-body-s:     var(--size-16);
+  --font-size-pill:       var(--size-12);
+}
