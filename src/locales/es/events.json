@@ -1,0 +1,91 @@
+{
+  "events": {
+    "title": "Eventos",
+    "empty": "No hay eventos",
+    "error": "Error al cargar los eventos",
+    "filters": {
+      "all": "Todos",
+      "active": "Activos",
+      "deadline-closed": "Plazo cerrado",
+      "finished": "Finalizados",
+      "upcoming": "Próximos",
+      "pending": "Pendientes de confirmar",
+      "past": "Pasados"
+    }
+  },
+  "status": {
+    "activo": "Activo",
+    "plazo-cerrado": "Plazo cerrado",
+    "finalizado": "Finalizado",
+    "cancelado": "Cancelado"
+  },
+  "card": {
+    "edit": "Editar evento",
+    "going": "Confirmado: voy",
+    "pending": "Sin respuesta"
+  },
+  "detail": {
+    "title": "Detalle del evento",
+    "date": "Fecha",
+    "time": "Hora",
+    "location": "Lugar",
+    "description": "Descripción",
+    "deadline": "Plazo de confirmación",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "notFound": "Evento no encontrado",
+    "error": "Error al cargar el evento"
+  },
+  "delete": {
+    "confirm": "¿Eliminar este evento?",
+    "message": "Esta acción no se puede deshacer.",
+    "success": "Evento eliminado",
+    "error": "Error al eliminar el evento"
+  },
+  "create": {
+    "title": "Crear evento",
+    "name": "Nombre del evento",
+    "namePlaceholder": "Escribe el nombre del evento",
+    "date": "Fecha",
+    "startTime": "Hora de inicio",
+    "endTime": "Hora de fin",
+    "location": "Lugar",
+    "locationPlaceholder": "Escribe el lugar del evento",
+    "description": "Descripción",
+    "descriptionPlaceholder": "Escribe una descripción...",
+    "deadline": "Plazo de confirmación",
+    "requiresConfirmation": "Requiere confirmación",
+    "sendReminder": "Enviar recordatorio",
+    "isSpecial": "Evento especial",
+    "submit": "Crear evento",
+    "error": "Error al crear el evento"
+  },
+  "edit": {
+    "title": "Editar evento",
+    "submit": "Guardar cambios",
+    "error": "Error al actualizar el evento"
+  },
+  "attendance": {
+    "going": "Voy",
+    "notGoing": "No voy",
+    "deadlinePassed": "El plazo de confirmación ha pasado",
+    "error": "Error al guardar la respuesta"
+  },
+  "attendanceList": {
+    "title": "Asistencia",
+    "going": "Van",
+    "notGoing": "No van",
+    "noResponse": "Sin respuesta",
+    "empty": "Sin respuestas aún",
+    "error": "Error al cargar la asistencia"
+  },
+  "validation": {
+    "nameRequired": "El nombre del evento es obligatorio",
+    "dateRequired": "La fecha es obligatoria",
+    "datePast": "La fecha no puede ser en el pasado",
+    "timeRequired": "La hora de inicio es obligatoria",
+    "deadlineAfterDate": "El plazo no puede ser posterior a la fecha del evento",
+    "nameMaxLength": "El nombre no puede superar los 80 caracteres",
+    "descriptionMaxLength": "La descripción no puede superar los 500 caracteres"
+  }
+}

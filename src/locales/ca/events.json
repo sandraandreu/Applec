@@ -1,0 +1,91 @@
+{
+  "events": {
+    "title": "Esdeveniments",
+    "empty": "No hi ha esdeveniments",
+    "error": "Error en carregar els esdeveniments",
+    "filters": {
+      "all": "Tots",
+      "active": "Actius",
+      "deadline-closed": "Termini tancat",
+      "finished": "Finalitzats",
+      "upcoming": "Pròxims",
+      "pending": "Pendents de confirmar",
+      "past": "Passats"
+    }
+  },
+  "status": {
+    "activo": "Actiu",
+    "plazo-cerrado": "Termini tancat",
+    "finalizado": "Finalitzat",
+    "cancelado": "Cancel·lat"
+  },
+  "card": {
+    "edit": "Editar esdeveniment",
+    "going": "Confirmat: hi vaig",
+    "pending": "Sense resposta"
+  },
+  "detail": {
+    "title": "Detall de l'esdeveniment",
+    "date": "Data",
+    "time": "Hora",
+    "location": "Lloc",
+    "description": "Descripció",
+    "deadline": "Termini de confirmació",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "notFound": "Esdeveniment no trobat",
+    "error": "Error en carregar l'esdeveniment"
+  },
+  "delete": {
+    "confirm": "Eliminar aquest esdeveniment?",
+    "message": "Aquesta acció no es pot desfer.",
+    "success": "Esdeveniment eliminat",
+    "error": "Error en eliminar l'esdeveniment"
+  },
+  "create": {
+    "title": "Crear esdeveniment",
+    "name": "Nom de l'esdeveniment",
+    "namePlaceholder": "Escriu el nom de l'esdeveniment",
+    "date": "Data",
+    "startTime": "Hora d'inici",
+    "endTime": "Hora de fi",
+    "location": "Lloc",
+    "locationPlaceholder": "Escriu el lloc de l'esdeveniment",
+    "description": "Descripció",
+    "descriptionPlaceholder": "Escriu una descripció...",
+    "deadline": "Termini de confirmació",
+    "requiresConfirmation": "Requereix confirmació",
+    "sendReminder": "Enviar recordatori",
+    "isSpecial": "Esdeveniment especial",
+    "submit": "Crear esdeveniment",
+    "error": "Error en crear l'esdeveniment"
+  },
+  "edit": {
+    "title": "Editar esdeveniment",
+    "submit": "Desar canvis",
+    "error": "Error en actualitzar l'esdeveniment"
+  },
+  "attendance": {
+    "going": "Hi vaig",
+    "notGoing": "No hi vaig",
+    "deadlinePassed": "El termini de confirmació ha passat",
+    "error": "Error en desar la resposta"
+  },
+  "attendanceList": {
+    "title": "Assistència",
+    "going": "Hi van",
+    "notGoing": "No hi van",
+    "noResponse": "Sense resposta",
+    "empty": "Sense respostes encara",
+    "error": "Error en carregar l'assistència"
+  },
+  "validation": {
+    "nameRequired": "El nom de l'esdeveniment és obligatori",
+    "dateRequired": "La data és obligatòria",
+    "datePast": "La data no pot ser en el passat",
+    "timeRequired": "L'hora d'inici és obligatòria",
+    "deadlineAfterDate": "El termini no pot ser posterior a la data de l'esdeveniment",
+    "nameMaxLength": "El nom no pot superar els 80 caràcters",
+    "descriptionMaxLength": "La descripció no pot superar els 500 caràcters"
+  }
+}
