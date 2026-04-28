@@ -13,15 +13,14 @@ export interface FallesEvent {
   description?: string;
   endTime?: string;
   confirmationDeadline?: Date;
-  cancelledAt?: Date;
+  isSpecial?: boolean
 }
 
 export type FallesEventCreate = Omit<FallesEvent, "id" | "createdAt">;
 
-export type EventStatus = "activo" | "plazo-cerrado" | "finalizado" | "cancelado";
+export type EventStatus = "activo" | "plazo-cerrado" | "finalizado" ;
 
 export const getEventStatus = (event: FallesEvent): EventStatus => {
-  if (event.cancelledAt) return "cancelado";
   const now = new Date();
   if (now > event.date) return "finalizado";
   if (event.requiresConfirmation && event.confirmationDeadline && now > event.confirmationDeadline) return "plazo-cerrado";

@@ -26,7 +26,9 @@
       "Bash(git mv *)",
       "Bash(git push *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "mcp__figma-console__figma_capture_screenshot",
+      "Bash(git stash *)"
     ]
   }
 }

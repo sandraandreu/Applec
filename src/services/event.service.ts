@@ -5,6 +5,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
+  deleteDoc,
   query,
   orderBy,
   Timestamp,
@@ -32,7 +33,6 @@ const toEvent = (id: string, data: DocumentData): FallesEvent => ({
   confirmationDeadline: data.confirmationDeadline
     ? toDate(data.confirmationDeadline)
     : undefined,
-  cancelledAt: data.cancelledAt ? toDate(data.cancelledAt) : undefined,
 });
 
 export const getEvents = async (groupId: string): Promise<FallesEvent[] | null> => {
@@ -84,7 +84,5 @@ export const deleteEvent = async (
   groupId: string,
   eventId: string,
 ): Promise<void> => {
-  await updateDoc(doc(db, "groups", groupId, "events", eventId), {
-    cancelledAt: new Date(),
-  });
+  await deleteDoc(doc(db, "groups", groupId, "events", eventId));
 };
