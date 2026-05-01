@@ -13,7 +13,7 @@ const PublicRoutes = ({ children }: PublicRoutesProps) => {
   if (isLoading) return <Loading />;
 
   if (user && user.emailVerified) {
-    return <Navigate to={profile?.groupId ? "/home" : "/onboarding/welcome"} replace />;
+    return <Navigate to={profile?.groupId ? "/events" : "/onboarding/welcome"} replace />;
   }
 
   return <>{children}</>;

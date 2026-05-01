@@ -16,6 +16,7 @@ import JoinGroupPage from "../../pages/groups/join-group/JoinGroupPage";
 import InviteGroupPage from "../../pages/groups/invite-group/InviteGroupPage";
 import LandingPage from "../../pages/onboarding/landing/LandingPage";
 import MembersPage from "../../pages/members/MembersPage";
+import EventsListPage from "../../pages/events/events-list/EventsListPage";
 import StyleGuide from "../../pages/style-guide/StyleGuide";
 
 const AppRoutes = () => (
@@ -130,6 +131,17 @@ const AppRoutes = () => (
           <PrivateRoutes requiresGroup>
             <MainLayout>
               <MembersPage />
+            </MainLayout>
+          </PrivateRoutes>
+        }
+      />
+
+      <Route
+        path="/events"
+        element={
+          <PrivateRoutes requiresGroup>
+            <MainLayout>
+              <EventsListPage />
             </MainLayout>
           </PrivateRoutes>
         }

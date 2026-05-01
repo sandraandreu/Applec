@@ -9,7 +9,7 @@ const INACTIVE = "#4C4C4C";
 const getActiveTab = (pathname: string) => {
   if (pathname === "/feed") return "feed";
   if (pathname === "/events/calendar") return "calendar";
-  if (pathname.startsWith("/events") || pathname === "/home") return "events";
+  if (pathname.startsWith("/events")) return "events";
   if (pathname.startsWith("/members")) return "members";
   if (pathname.startsWith("/profile")) return "profile";
   return null;
@@ -25,7 +25,6 @@ const TabBar = () => {
   const active = getActiveTab(pathname);
   const isAdminOrOrganizer = profile.role === "admin" || profile.role === "organizer";
 
-  console.log("profile completo:", profile);
   return (
     <nav className="tab-bar" aria-label={t("nav.tabBar")}>
       <div className="tab-bar__items">

@@ -26,7 +26,7 @@
     .event-card--special & {
       align-self: stretch;
       border-right: none;
-      background: linear-gradient(to bottom, var(--blue-200), var(--yellow-100));
+      background: var(--color-bg-gradient-blue);
     }
   }
 
@@ -71,17 +71,18 @@
     text-overflow: ellipsis;
   }
 
-  &--finished {
-    .event-card__day { color: #7D7D7D; }
-    .event-card__month { color: #7D7D7D; }
-    .event-card__name { color: #7D7D7D; }
-  }
-
   &--not-going {
     .event-card__day { color: var(--color-not-going); }
     .event-card__month { color: var(--color-not-going); }
     .event-card__name { color: var(--color-not-going); text-decoration: line-through; }
     .event-card__meta { color: var(--color-not-going); text-decoration: line-through; }
+  }
+
+  &--finished {
+    .event-card__day { color: var(--color-text-muted); }
+    .event-card__month { color: var(--color-text-muted); }
+    .event-card__name { color: var(--color-text-muted); }
+    .event-card__meta { color: var(--color-text-muted); }
   }
 
   &__action {
@@ -113,7 +114,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: var(--orange-500);
+      background: var(--color-pending);
     }
   }
 }
@@ -122,6 +123,16 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  &__empty {
+    font-size: var(--font-size-body-m);
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 40px 0;
+  }
 }
 
 .events-filter {
@@ -133,16 +144,17 @@
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
-    border-radius: 22px;
-    border: 1px solid #3772FF;
-    background: #E5F0FF;
+    border-radius: var(--radius-button);
+    border: 1px solid var(--color-brand);
+    background: var(--color-bg-blue);
     appearance: none;
   }
 
   &__label {
-    font-size: 16px;
+    font-size: var(--font-size-body-s);
     font-weight: 500;
-    color: #3772FF;
+    color: var(--color-brand);
+    text-align: left;
   }
 
   &__chevron {
@@ -156,16 +168,15 @@
 
   &__dropdown {
     position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    min-width: 100%;
-    background: #E5F0FF;
-    border: 1px solid #3772FF;
-    border-radius: 12px;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: var(--color-bg-blue);
+    border: 1px solid var(--color-brand);
+    border-radius: var(--radius-card);
     overflow: hidden;
     z-index: 10;
     list-style: none;
-    padding: 4px 0;
     margin: 0;
   }
 
@@ -185,8 +196,9 @@
   }
 
   &__count {
-    font-size: 16px;
+    font-size: var(--font-size-body-s);
     font-weight: 500;
-    color: #3772FF;
+    color: var(--color-brand);
+    opacity: 0.7;
   }
 }

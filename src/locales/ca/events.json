@@ -1,7 +1,7 @@
 {
   "events": {
     "title": "Esdeveniments",
-    "empty": "No hi ha esdeveniments",
+    "empty": "Encara no hi ha esdeveniments",
     "error": "Error en carregar els esdeveniments",
     "filters": {
       "all": "Tots",

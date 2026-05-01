@@ -56,7 +56,7 @@ const LoginPage = () => {
         return;
       }
       setIsLoading(false);
-      navigate("/home");
+      navigate("/events");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/invalid-credential") {

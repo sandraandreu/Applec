@@ -83,7 +83,7 @@ const JoinGroupPage = () => {
         updateUserGroup(user!.uid, groupFound!.id),
       ]);
       await refreshGroup();
-      navigate("/home");
+      navigate("/events");
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
         setErrorConnection(tc("errors.noConnection"));

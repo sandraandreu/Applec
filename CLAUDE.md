@@ -45,7 +45,7 @@ Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighte
 
 ## i18n
 
-Archivos en `src/locales/{es,ca}/{namespace}.json`. Namespaces: `common`, `auth`, `groups`, `members`, `onboarding`.
+Archivos en `src/locales/{es,ca}/{namespace}.json`. Namespaces: `common`, `auth`, `groups`, `members`, `onboarding`, `events`.
 
 Formato de clave: `namespace:seccion.clave` (ej. `members:members.title`, `common:buttons.close`).
 
@@ -64,6 +64,8 @@ style(members): update card layout spacing
 chore(deps): update firebase sdk
 docs(readme): update setup instructions
 ```
+
+**Mensajes cortos:** una sola línea, sin cuerpo ni bullets. Nunca usar heredoc ni bloque multilínea.
 
 **Autoría:** nunca añadir `Co-Authored-By: Claude` ni ninguna referencia a la IA en los commits. El autor es siempre Sandra.
 

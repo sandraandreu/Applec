@@ -48,7 +48,7 @@ const EventsFilter = ({ options, selected, onChange }: EventsFilterProps) => {
           fill="none"
           aria-hidden="true"
         >
-          <path d="M3.9375 6.46558L9 11.5281L14.0625 6.46558" stroke="#3772FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M3.9375 6.46558L9 11.5281L14.0625 6.46558" stroke="#0068FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </button>
 

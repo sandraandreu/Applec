@@ -85,7 +85,7 @@ Array `members`: `{ uid, username, firstName, lastName, email, role }`
 
 ### Event — `groups/{groupId}/events/{eventId}`
 Campos obligatorios: `name`, `date`, `startTime`, `location`, `requiresConfirmation`, `sendReminder`, `createdBy`, `createdAt`, `groupId`
-Campos opcionales: `description`, `endTime`, `confirmationDeadline`, `cancelledAt`
+Campos opcionales: `description`, `endTime`, `confirmationDeadline`, `isSpecial`
 El estado (`activo` | `plazo-cerrado` | `finalizado` | `cancelado`) se deriva con `getEventStatus()` — no se almacena en Firestore.
 
 ### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}` *(pendiente)*
@@ -161,6 +161,7 @@ La conexión con Figma se hace via Figma Console MCP (CDP mode): lanzar Figma co
 | `groups.json` | Crear grupo, unirse, invitar |
 | `members.json` | Lista de miembros, roles, búsqueda |
 | `onboarding.json` | Landing, welcome, language, group choice |
+| `events.json` | Eventos, estados, filtros, asistencia, formularios |
 
 **Uso de claves:** `namespace:seccion.clave`, ej. `members:members.title`, `common:buttons.close`
 

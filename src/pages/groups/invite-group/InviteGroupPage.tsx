@@ -109,7 +109,7 @@ const InviteGroupPage = () => {
         </button>
       </div>
 
-      <Link to="/home" className="invite-group__skip">{t("invite.skip")}</Link>
+      <Link to="/events" className="invite-group__skip">{t("invite.skip")}</Link>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 {
   "events": {
     "title": "Eventos",
-    "empty": "No hay eventos",
+    "empty": "Todavía no hay eventos",
     "error": "Error al cargar los eventos",
     "filters": {
       "all": "Todos",
