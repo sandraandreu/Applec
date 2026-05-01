@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
+import { getEventStatus } from "../../models/event.model";
 import "./events.scss";
 
 type AttendanceResponse = "yes" | "no" | null;
@@ -14,6 +15,9 @@ interface EventCardProps {
 
 const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCardProps) => {
   const { t, i18n } = useTranslation("events");
+
+  const status = getEventStatus(event);
+  const isFinished = status === "finalizado";
 
   const isEditable = role === "admin" || (role === "organizer" && event.createdBy === userId);
   const showIndicator = role === "member" && event.requiresConfirmation;
@@ -31,6 +35,7 @@ const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCard
     "event-card",
     event.isSpecial ? "event-card--special" : "",
     isNotGoing ? "event-card--not-going" : "",
+    isFinished ? "event-card--finished" : "",
   ]
     .filter(Boolean)
     .join(" ");
@@ -52,7 +57,7 @@ const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCard
         </div>
       </Link>
 
-      <div className="event-card__action">
+      {!isFinished && <div className="event-card__action">
         {isEditable && (
           <Link
             to={`/events/${event.id}/edit`}
@@ -77,7 +82,7 @@ const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCard
         {isPending && (
           <div className="event-card__indicator event-card__indicator--pending" aria-label={t("card.pending")} />
         )}
-      </div>
+      </div>}
     </div>
   );
 };

@@ -12,6 +12,75 @@ import Alert from "../../components/alert/Alert";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
 import MemberCard from "../../components/members/MemberCard";
+import EventCard from "../../components/events/EventCard";
+import EventsFilter from "../../components/events/EventsFilter";
+import type { FilterOption, FilterKey } from "../../components/events/EventsFilter";
+import type { FallesEvent } from "../../models/event.model";
+
+const mockEventBase: FallesEvent = {
+  id: "evt-1",
+  groupId: "group-1",
+  createdBy: "user-admin",
+  name: "Cena de la Falla",
+  date: new Date(2026, 5, 5),
+  location: "Restaurante El Mercat",
+  startTime: "21:00",
+  requiresConfirmation: true,
+  sendReminder: false,
+  createdAt: new Date(),
+};
+
+const mockEventSpecial: FallesEvent = {
+  ...mockEventBase,
+  id: "evt-2",
+  name: "Ofrenda a la Virgen",
+  date: new Date(2026, 5, 12),
+  startTime: "10:00",
+  location: "Plaça de la Mare de Déu",
+  isSpecial: true,
+};
+
+const mockEventLongName: FallesEvent = {
+  ...mockEventBase,
+  id: "evt-3",
+  name: "Reunión extraordinaria de la comisión de fiestas mayores",
+  date: new Date(2026, 4, 28),
+  startTime: "19:30",
+  location: "Local social",
+};
+
+const mockEventNoConfirmation: FallesEvent = {
+  ...mockEventBase,
+  id: "evt-4",
+  name: "Plantà",
+  date: new Date(2026, 5, 20),
+  startTime: "08:00",
+  location: "Carrer Major",
+  requiresConfirmation: false,
+};
+
+const mockEventFinished: FallesEvent = {
+  ...mockEventBase,
+  id: "evt-5",
+  name: "Cena de Sobaquillo",
+  date: new Date(2026, 2, 17),
+  startTime: "21:00",
+  location: "Plaza del Ángel",
+};
+
+const adminFilterOptions: FilterOption[] = [
+  { key: "all", label: "Todos", count: 8 },
+  { key: "active", label: "Activos", count: 3 },
+  { key: "deadline-closed", label: "Plazo cerrado", count: 1 },
+  { key: "finished", label: "Finalizados", count: 4 },
+];
+
+const memberFilterOptions: FilterOption[] = [
+  { key: "all", label: "Todos", count: 8 },
+  { key: "upcoming", label: "Próximos", count: 4 },
+  { key: "pending", label: "Sin respuesta", count: 2 },
+  { key: "past", label: "Pasados", count: 4 },
+];
 
 const ColorSwatch = ({ variable, hex, label }: { variable: string; hex: string; label?: string }) => (
   <div className="style-guide__swatch">
@@ -44,6 +113,8 @@ const RadiusSwatch = ({ variable, value }: { variable: string; value: string }) 
 const StyleGuide = () => {
   const [alertOpen, setAlertOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [adminFilter, setAdminFilter] = useState<FilterKey>("all");
+  const [memberFilter, setMemberFilter] = useState<FilterKey>("all");
 
   return (
     <div className="style-guide">
@@ -280,6 +351,57 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
+          <h3 className="style-guide__component-name">EventCard</h3>
+          <div className="style-guide__stack">
+            <span className="style-guide__label">Admin — botón editar</span>
+            <EventCard event={mockEventBase} role="admin" userId="user-admin" />
+
+            <span className="style-guide__label">Organizador — evento de otro (sin editar)</span>
+            <EventCard event={mockEventBase} role="organizer" userId="user-other" />
+
+            <span className="style-guide__label">Miembro — sin respuesta (punto naranja)</span>
+            <EventCard event={mockEventBase} role="member" userId="user-1" attendanceResponse={null} />
+
+            <span className="style-guide__label">Miembro — va (check azul)</span>
+            <EventCard event={mockEventBase} role="member" userId="user-1" attendanceResponse="yes" />
+
+            <span className="style-guide__label">Miembro — no va (tachado)</span>
+            <EventCard event={mockEventBase} role="member" userId="user-1" attendanceResponse="no" />
+
+            <span className="style-guide__label">Evento especial (gradiente en fecha)</span>
+            <EventCard event={mockEventSpecial} role="member" userId="user-1" attendanceResponse="yes" />
+
+            <span className="style-guide__label">Sin confirmación requerida (sin indicador)</span>
+            <EventCard event={mockEventNoConfirmation} role="member" userId="user-1" />
+
+            <span className="style-guide__label">Nombre largo (truncado)</span>
+            <EventCard event={mockEventLongName} role="admin" userId="user-admin" />
+
+            <span className="style-guide__label">Evento finalizado (texto gris, sin acciones)</span>
+            <EventCard event={mockEventFinished} role="admin" userId="user-admin" />
+          </div>
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">EventsFilter</h3>
+          <div className="style-guide__stack">
+            <span className="style-guide__label">Admin / Organizador</span>
+            <EventsFilter
+              options={adminFilterOptions}
+              selected={adminFilter}
+              onChange={setAdminFilter}
+            />
+
+            <span className="style-guide__label">Miembro</span>
+            <EventsFilter
+              options={memberFilterOptions}
+              selected={memberFilter}
+              onChange={setMemberFilter}
+            />
+          </div>
+        </div>
+
+        <div className="style-guide__component">
           <h3 className="style-guide__component-name">Loading</h3>
           <div className="style-guide__row">
             <div className="style-guide__loading-preview">
@@ -310,6 +432,7 @@ const StyleGuide = () => {
             ]}
           />
         </div>
+        
       </section>
     </div>
   );
