@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #fffffd;
+  background: var(--color-surface);
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: var(--gap-section);
     align-items: center;
   }
 
@@ -18,7 +18,7 @@
   }
 
   &__title {
-    margin-bottom: 16px;
+    margin-bottom: var(--size-16);
   }
 
   &__description {

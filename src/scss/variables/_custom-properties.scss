@@ -70,11 +70,16 @@
   --color-text-inverse:   var(--neutral-50);
 
   // Brand
-  --color-brand:     var(--blue-500);
-  --color-link:      var(--blue-400);
+  --color-brand: var(--blue-500);
+  --color-link:  var(--blue-400);
+
+  // Feedback
   --color-error:     var(--red-500);
   --color-not-going: var(--red-500);
   --color-pending:   var(--orange-500);
+
+  // Surfaces
+  --color-surface: var(--white);
 
   // Borders
   --color-border:       var(--neutral-200);
@@ -114,6 +119,13 @@
   --font-display: var(--font-bricolage);
   --font-body:    var(--font-general-sans);
 
+  // Font weights
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
   // Font sizes
   --font-size-display:    var(--size-40);
   --font-size-h1:         var(--size-32);
@@ -129,30 +141,20 @@
 
   // ─── SEMÁNTICOS — ESPACIADO ───────────────────────────
 
-  // Escala abstracta
-  --space-xs:  var(--size-4);
-  --space-s:   var(--size-8);
-  --space-sm:  var(--size-12);
-  --space-m:   var(--size-16);
-  --space-l:   var(--size-24);
-  --space-xl:  var(--size-32);
-  --space-2xl: var(--size-40);
-  --space-3xl: var(--size-48);
-
   // Gaps
-  --gap-xs:      var(--space-xs);
-  --gap-s:       var(--space-s);
-  --gap-m:       var(--space-sm);
-  --gap-form:    var(--space-m);
-  --gap-l:       var(--space-l);
-  --gap-section: var(--space-3xl);
+  --gap-tight:   var(--size-4);
+  --gap-items:   var(--size-8);
+  --gap-compact: var(--size-12);
+  --gap-form:    var(--size-16);
+  --gap-groups:  var(--size-24);
+  --gap-section: var(--size-48);
 
   // Paddings
-  --padding-page:   var(--space-l) var(--space-xl);
+  --padding-page:   var(--size-24) var(--size-32);
   --padding-card:   var(--size-14);
-  --padding-input:  var(--space-sm) var(--size-14);
-  --padding-chip:   var(--size-6)  var(--space-sm);
-  --padding-bar:    var(--space-m);
-  --padding-action: var(--space-s);
-  --padding-empty:  var(--space-2xl) 0;
+  --padding-input:  var(--size-12) var(--size-14);
+  --padding-chip:   var(--size-6)  var(--size-12);
+  --padding-bar:    var(--size-16);
+  --padding-action: var(--size-8);
+  --padding-empty:  var(--size-40) 0;
 }

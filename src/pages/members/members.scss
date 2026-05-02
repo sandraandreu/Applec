@@ -1,26 +1,26 @@
 .members-page {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--gap-form);
   padding: 24px 16px;
 
   &__title {
     font-size: var(--size-22);
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin: 0;
   }
 
   &__filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--gap-items);
   }
 
   &__filter-btn {
-    padding: 6px 14px;
+    padding: var(--size-6) var(--size-14);
     border-radius: var(--radius-pill);
     border: 1px solid #d1d5db;
-    background: #fff;
+    background: var(--color-surface);
     color: #555;
     font-size: var(--font-size-body-s);
     transition: background 0.15s, color 0.15s, border-color 0.15s;

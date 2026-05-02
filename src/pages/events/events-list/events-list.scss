@@ -1,16 +1,16 @@
 .events-list-page {
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 22px;
+    margin-bottom: var(--size-24);
   }
 
   &__title {
     font-size: var(--font-size-h1);
-    font-weight: 800;
+    font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
   }
 
@@ -18,9 +18,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: var(--gap-items);
     font-size: var(--font-size-body-m);
     color: var(--color-error);
-    padding: 40px 0;
+    padding: var(--padding-empty);
   }
 }

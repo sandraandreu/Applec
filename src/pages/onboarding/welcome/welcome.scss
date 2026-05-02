@@ -4,19 +4,19 @@
   justify-content: space-between;
   background: var(--color-bg-teal);
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: var(--gap-section);
     margin: auto 0;
   }
 
   &__header {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--gap-form);
     text-align: center;
   }
 

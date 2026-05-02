@@ -4,12 +4,12 @@
   justify-content: space-between;
   background: var(--color-bg-pink);
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: var(--gap-section);
     margin: auto 0;
   }
 
@@ -18,7 +18,7 @@
   }
 
   &__title {
-    margin-bottom: 16px;
+    margin-bottom: var(--size-16);
   }
 
   &__description {
@@ -33,7 +33,7 @@
   &__actions {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--gap-form);
   }
 
 }

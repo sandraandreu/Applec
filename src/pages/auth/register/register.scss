@@ -4,7 +4,7 @@
   justify-content: space-between;
   background: var(--color-bg-gradient-blue);
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__title {
     text-align: center;
@@ -13,23 +13,23 @@
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--gap-form);
   }
 
   &__password-requirements {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: var(--gap-items);
 
     &__item {
       display: flex;
-      gap: 4px;
+      gap: var(--gap-tight);
     }
   }
 
   &__terms {
     &-checkbox {
-      margin-right: 4px;
+      margin-right: var(--size-4);
     }
 
     &-link {

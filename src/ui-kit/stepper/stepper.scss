@@ -1,11 +1,11 @@
 .stepper {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: var(--gap-items);
 
   &__dot {
-    width: 8px;
-    height: 8px;
+    width: var(--size-8);
+    height: var(--size-8);
     border-radius: 50%;
     background: rgba(26, 26, 26, 0.25);
 

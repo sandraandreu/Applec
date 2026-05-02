@@ -1,7 +1,7 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--gap-items);
 }
 
 .field__input-wrapper {
@@ -9,11 +9,11 @@
 }
 
 .field__input {
-  padding: 12px 14px;
+  padding: var(--padding-input);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-input);
   width: 100%;
-  background-color: var(--white);
+  background-color: var(--color-surface);
 
   &:focus {
     border-color: var(--color-brand);
@@ -26,7 +26,7 @@
 
 .field__icon {
   position: absolute;
-  right: 14px;
+  right: var(--size-14);
   top: 50%;
   transform: translateY(-50%);
   display: flex;

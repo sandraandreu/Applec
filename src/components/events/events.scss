@@ -20,7 +20,7 @@
     justify-content: center;
     width: 78px;
     flex-shrink: 0;
-    padding: 18px 14px;
+    padding: var(--size-18) var(--size-14);
     border-right: 1px solid var(--color-border);
 
     .event-card--special & {
@@ -31,15 +31,15 @@
   }
 
   &__day {
-    font-size: 24px;
-    font-weight: 700;
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
     color: var(--color-brand);
     line-height: 1.2;
   }
 
   &__month {
     font-size: var(--font-size-body-s);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
     text-transform: uppercase;
     line-height: 1.2;
@@ -50,12 +50,12 @@
     flex-direction: column;
     flex: 1;
     min-width: 0;
-    padding: 18px 14px;
+    padding: var(--size-18) var(--size-14);
   }
 
   &__name {
     font-size: var(--font-size-body-m);
-    font-weight: 700;
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-secondary);
     white-space: nowrap;
     overflow: hidden;
@@ -64,7 +64,7 @@
 
   &__meta {
     font-size: var(--font-size-body-s);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
     white-space: nowrap;
     overflow: hidden;
@@ -89,7 +89,7 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    padding-right: 14px;
+    padding-right: var(--size-14);
   }
 
   &__edit {
@@ -104,15 +104,15 @@
     justify-content: center;
 
     &--going {
-      width: 24px;
-      height: 24px;
+      width: var(--size-24);
+      height: var(--size-24);
       border-radius: 50%;
       background: var(--color-brand);
     }
 
     &--pending {
-      width: 12px;
-      height: 12px;
+      width: var(--size-12);
+      height: var(--size-12);
       border-radius: 50%;
       background: var(--color-pending);
     }
@@ -122,7 +122,7 @@
 .events-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--gap-compact);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -131,7 +131,7 @@
     font-size: var(--font-size-body-m);
     color: var(--color-text-muted);
     text-align: center;
-    padding: 40px 0;
+    padding: var(--padding-empty);
   }
 }
 
@@ -142,8 +142,8 @@
   &__trigger {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
+    gap: var(--gap-items);
+    padding: var(--size-8) var(--size-14);
     border-radius: var(--radius-button);
     border: 1px solid var(--color-brand);
     background: var(--color-bg-blue);
@@ -152,7 +152,7 @@
 
   &__label {
     font-size: var(--font-size-body-s);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-brand);
     text-align: left;
   }
@@ -168,7 +168,7 @@
 
   &__dropdown {
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + var(--size-8));
     right: 0;
     min-width: 180px;
     background: var(--color-bg-blue);
@@ -185,19 +185,19 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 10px 14px;
+    padding: var(--size-10) var(--size-14);
     background: none;
     border: none;
     appearance: none;
 
     &--selected .events-filter__label {
-      font-weight: 700;
+      font-weight: var(--font-weight-bold);
     }
   }
 
   &__count {
     font-size: var(--font-size-body-s);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     color: var(--color-brand);
     opacity: 0.7;
   }

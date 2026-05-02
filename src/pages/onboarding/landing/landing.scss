@@ -2,17 +2,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 48px;
+  gap: var(--gap-section);
   background: var(--color-bg-blue);
   min-height: 100vh;
-  padding: 24px 32px;
+  padding: var(--padding-page);
 
   &__header {
     text-align: center;
   }
 
   &__title {
-    margin-bottom: 16px;
+    margin-bottom: var(--size-16);
   }
 
   &__description {
@@ -27,6 +27,6 @@
   &__actions {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--gap-form);
   }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import Button from "../../ui-kit/button/Button";
 import "./alert.scss";
 
 interface AlertProps {
@@ -50,13 +51,12 @@ const Alert = ({
         {message && <p className="alert__message">{message}</p>}
         <div className="alert__buttons">
           {buttons.map((button, index) => (
-            <button
+            <Button
               key={index}
-              className={`alert__button ${button.role === "cancel" ? "alert__button--cancel" : ""}`}
+              text={button.text}
+              variant={button.role === "cancel" ? "secondary" : "primary"}
               onClick={() => handleButtonClick(button)}
-            >
-              {button.text}
-            </button>
+            />
           ))}
         </div>
       </div>

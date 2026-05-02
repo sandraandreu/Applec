@@ -18,14 +18,14 @@
 
 body {
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-body-s);
   color: var(--color-text-primary);
 }
 
 h1 {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   font-size: var(--font-size-h1);
   line-height: 1;
 }
@@ -37,14 +37,14 @@ h1 {
 
 h2 {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   font-size: var(--font-size-h2);
   line-height: 1.1;
 }
 
 h3 {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   font-size: var(--font-size-body-l);
   line-height: 1.2;
 }
@@ -60,7 +60,7 @@ small {
 
 a {
   color: var(--color-link);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   text-decoration: underline;
   text-underline-offset: 3px;
 }

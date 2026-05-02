@@ -2,9 +2,9 @@
   display: inline-flex;
   align-items: center;
   border-radius: var(--radius-chip);
-  padding: 6px 12px;
+  padding: var(--padding-chip);
   font-size: var(--font-size-body-s);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   white-space: nowrap;
 
   &--admin {
