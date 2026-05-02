@@ -40,8 +40,12 @@
   --yellow-100: #FEFFE7;
 
   // Sizes
+  --size-4:   4px;
+  --size-6:   6px;
+  --size-8:   8px;
   --size-10:  10px;
   --size-12:  12px;
+  --size-14:  14px;
   --size-16:  16px;
   --size-18:  18px;
   --size-20:  20px;
@@ -49,6 +53,7 @@
   --size-24:  24px;
   --size-32:  32px;
   --size-40:  40px;
+  --size-48:  48px;
   --size-100: 100px;
 
   // Font families
@@ -120,4 +125,34 @@
   --font-size-body-m:     var(--size-18);
   --font-size-body-s:     var(--size-16);
   --font-size-pill:       var(--size-12);
+
+
+  // ─── SEMÁNTICOS — ESPACIADO ───────────────────────────
+
+  // Escala abstracta
+  --space-xs:  var(--size-4);
+  --space-s:   var(--size-8);
+  --space-sm:  var(--size-12);
+  --space-m:   var(--size-16);
+  --space-l:   var(--size-24);
+  --space-xl:  var(--size-32);
+  --space-2xl: var(--size-40);
+  --space-3xl: var(--size-48);
+
+  // Gaps
+  --gap-xs:      var(--space-xs);
+  --gap-s:       var(--space-s);
+  --gap-m:       var(--space-sm);
+  --gap-form:    var(--space-m);
+  --gap-l:       var(--space-l);
+  --gap-section: var(--space-3xl);
+
+  // Paddings
+  --padding-page:   var(--space-l) var(--space-xl);
+  --padding-card:   var(--size-14);
+  --padding-input:  var(--space-sm) var(--size-14);
+  --padding-chip:   var(--size-6)  var(--space-sm);
+  --padding-bar:    var(--space-m);
+  --padding-action: var(--space-s);
+  --padding-empty:  var(--space-2xl) 0;
 }
