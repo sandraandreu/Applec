@@ -30,7 +30,9 @@
       "mcp__figma-console__figma_capture_screenshot",
       "Bash(git stash *)",
       "Bash(git log *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(sort -t'x' -k1 -n)",
+      "Bash(sort -t: -k3)"
     ]
   }
 }

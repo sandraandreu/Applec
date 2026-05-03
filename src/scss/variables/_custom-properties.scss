@@ -81,6 +81,15 @@
   // Surfaces
   --color-surface: var(--white);
 
+  // Overlays
+  --color-overlay-backdrop:   hsl(0 0% 0% / 0.4);
+  --color-overlay-white:      hsl(0 0% 100% / 0.75);
+  --color-overlay-white-soft: hsl(0 0% 100% / 0.6);
+  --color-stepper-inactive:   hsl(0 0% 10% / 0.25);
+
+  // Shadows
+  --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.1);
+
   // Borders
   --color-border:       var(--neutral-200);
   --color-border-light: var(--neutral-300);
