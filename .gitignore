@@ -34,8 +34,7 @@ yarn-error.log*
 .eslintcache
 
 # Personal docs
-docs/plan-trabajo-junio.md
-docs/specs/
+docs/
 
 # Firebase
 google-services.json
