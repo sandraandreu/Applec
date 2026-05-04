@@ -26,15 +26,21 @@
   },
   "detail": {
     "title": "Detalle del evento",
-    "date": "Fecha",
-    "time": "Hora",
+    "dateTime": "Fecha y hora",
     "location": "Lugar",
-    "description": "Descripción",
-    "deadline": "Plazo de confirmación",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "notFound": "Evento no encontrado",
-    "error": "Error al cargar el evento"
+    "description": "Descripción del evento",
+    "attendees": "Asistentes",
+    "viewAll": "Ver asistentes",
+    "edit": "Editar evento",
+    "delete": "Eliminar evento",
+    "error": "Error al cargar el evento",
+    "going": {
+      "title": "¿Te vienes?",
+      "yes": "Sí",
+      "no": "No",
+      "save": "Guardar",
+      "addLinked": "Votar por mis vinculados"
+    }
   },
   "delete": {
     "confirm": "¿Eliminar este evento?",

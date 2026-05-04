@@ -1,0 +1,118 @@
+.event-detail-page {
+  padding: var(--padding-page);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+  }
+
+  &__principal-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    gap: var(--size-14);
+  }
+
+  &__field-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--size-8);
+    background: var(--blue-200);
+    border-radius: var(--size-8);
+    flex-shrink: 0;
+  }
+
+  &__field-content {
+    font-size: var(--font-size-body-s);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tight);
+  }
+
+  &__field-label {
+    color: var(--color-text-muted);
+  }
+
+  &__field-value {
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
+
+  &__description-label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+  }
+
+  &__description-text {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-primary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &__attendees {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__attendees__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__attendees__label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__going {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__going-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  &__going-buttons {
+    display: flex;
+    gap: var(--gap-compact);
+  }
+
+  &__going-btn {
+    flex: 1;
+  }
+}

@@ -34,7 +34,7 @@
 .members-list {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-groups);
+  gap: var(--gap-content);
 
   &__section-title {
     font-size: var(--font-size-body-s);

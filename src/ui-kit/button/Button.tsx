@@ -1,19 +1,23 @@
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import "./button.scss";
 
 interface ButtonProps {
   text: string;
+  to?: string;
   type?: "submit" | "button" | "reset";
-  variant?: "primary" | "secondary" | "language";
+  variant?: "primary" | "secondary" | "language" | "especial" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "linked";
   icon?: ReactNode;
   isActiveLanguage?: boolean;
   onClick?: () => void;
   disabled?: boolean;
   isLoading?: boolean;
+  className?: string;
 }
 
 const Button = ({
   text,
+  to,
   type = "button",
   variant = "primary",
   icon,
@@ -21,13 +25,27 @@ const Button = ({
   onClick,
   disabled = false,
   isLoading = false,
+  className = "",
 }: ButtonProps) => {
+  const classes = [`button`, `button--${variant}`, isActiveLanguage ? "button--language--active" : "", className]
+    .filter(Boolean)
+    .join(" ");
+
+  if (to) {
+    return (
+      <Link to={to} className={classes}>
+        {icon}
+        {text}
+      </Link>
+    );
+  }
+
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`button button--${variant} ${isActiveLanguage ? "button--language--active" : ""}`}
+      className={classes}
     >
       {icon}
       {text}

@@ -258,10 +258,68 @@ const StyleGuide = () => {
 
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">Button</h3>
-          <div className="style-guide__row">
-            <Button text="Primary" />
-            <Button text="Secondary" variant="secondary" />
-            <Button text="Disabled" disabled />
+          <div className="style-guide__stack">
+            <div className="style-guide__item">
+              <span className="style-guide__label">primary</span>
+              <Button text="Confirmar asistencia" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">primary · con icono · como Link (prop to)</span>
+              <Button
+                text="Editar evento"
+                to="/events"
+                icon={<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">secondary</span>
+              <Button text="Cancelar" variant="secondary" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">especial</span>
+              <Button text="Guardar" variant="especial" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">danger · con icono</span>
+              <Button
+                text="Eliminar evento"
+                variant="danger"
+                icon={<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M10 11v6M14 11v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">going-no-active</span>
+              <Button text="No" variant="going-no-active" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">going-yes · con icono</span>
+              <Button
+                text="Sí"
+                variant="going-yes"
+                icon={<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">going-yes-active · con icono</span>
+              <Button
+                text="Sí"
+                variant="going-yes-active"
+                icon={<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">linked · disabled</span>
+              <Button
+                text="Votar por mis vinculados"
+                variant="linked"
+                disabled
+                icon={<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M25 15.9985H7M16 6.99854V24.9985V6.99854Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">disabled</span>
+              <Button text="Acción no disponible" disabled />
+            </div>
           </div>
         </div>
 
