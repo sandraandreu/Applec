@@ -63,7 +63,7 @@ El Admin/Organizador ve la lista completa (nombre, rol, estado). El Admin puede 
 ---
 
 ### 7. Crear evento
-**Estado:** ✗ Pendiente
+**Estado:** ✗ Pendiente (T08)
 
 Solo Admin y Organizadores pueden crear eventos.
 
@@ -79,7 +79,7 @@ Al guardar: aparece en el calendario del grupo + notificación a todos los miemb
 ---
 
 ### 8. Calendario común
-**Estado:** ✗ Pendiente
+**Estado:** ✗ Pendiente (T06)
 
 Visible para todos los miembros. Eventos ordenados por fecha, navegación por mes/semana. Al seleccionar un evento: detalle completo (nombre, fecha, hora, lugar, descripción, fecha límite).
 
@@ -92,20 +92,26 @@ Visible para todos los miembros. Eventos ordenados por fecha, navegación por me
 ---
 
 ### 9. Confirmación de asistencia
-**Estado:** ✗ Pendiente
+**Estado:** ✓ UI implementada, ✗ lógica Firestore pendiente (T11 + T12)
 
-Cada miembro confirma: **sí** o **no**. No confirmar = "sin respuesta" (no es un "no").
+Cada miembro confirma: **sí** o **no**. No confirmar = "sin respuesta" (pendiente).
 
 Se puede cambiar la respuesta mientras el plazo esté abierto. Al cerrar el plazo queda bloqueada.
 
 Los miembros solo ven su propia confirmación. El listado completo es solo para Admin y Organizadores.
 
+**Diseño acordado:**
+- Sin botón "Guardar" — guardado dinámico al tocar Sí/No
+- Sin voto = estado pendiente (ningún botón resaltado)
+- Botones actuales: No (outline) / Sí (relleno con check) — se resalta el seleccionado
+- Sección de vinculados debajo: si no tiene ninguno → botón "añadir vinculados"; si tiene → lista con opción de votar por cada uno
+
 ---
 
 ### 10. Listado de asistentes
-**Estado:** ✗ Pendiente
+**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes (T12)
 
-Solo visible para Admin y Organizadores. Tres secciones: "Confirman asistencia" / "No asisten" / "Sin respuesta". Se actualiza en tiempo real.
+Integrado directamente en la página de detalle del evento (no es una página separada). Visible solo para Admin y Organizadores. Lista con filtros: Todos / Confirmados / Pendientes / No van. Avatar en color según asistencia: azul (confirmado), gris (pendiente), rojo (no va) con nombre tachado.
 
 ---
 

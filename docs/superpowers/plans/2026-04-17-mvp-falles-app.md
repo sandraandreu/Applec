@@ -7,32 +7,32 @@
 
 ## Semana 1 — 17-24 abril · Modelo, servicio y navegación
 
-### T01 · Modelo de evento
+### T01 · Modelo de evento ✅ completado
 
 **Archivos:**
-- Crear: `src/models/event.model.ts`
+- `src/models/event.model.ts`
 
 **Criterios de aceptación:**
-- [ ] Existe la interfaz `Event` con campos obligatorios: `id`, `groupId`, `name`, `date`, `time`, `confirmationDeadline`, `status`, `createdBy`, `createdAt`
-- [ ] Campos opcionales: `location`, `description`
-- [ ] Existe el tipo `EventStatus`: `'activo' | 'plazo-cerrado' | 'finalizado' | 'cancelado'`
-- [ ] Existe el tipo `EventCreate` (Event sin `id` ni `createdAt`)
+- [x] Existe la interfaz `FallesEvent` con campos obligatorios: `id`, `groupId`, `name`, `date`, `startTime`, `confirmationDeadline`, `status`, `createdBy`, `createdAt`
+- [x] Campos opcionales: `location`, `description`, `endTime`, `requiresConfirmation`, `sendReminder`, `isSpecial`
+- [x] Existe el tipo `EventStatus`: `'activo' | 'plazo-cerrado' | 'finalizado' | 'cancelado'`
+- [x] Existe `getEventStatus(event)` que calcula el estado a partir de la fecha y el deadline
 
 ---
 
-### T02 · Servicio de eventos
+### T02 · Servicio de eventos ✅ completado
 
 **Archivos:**
-- Crear: `src/services/event.service.ts`
+- `src/services/event.service.ts`
 
 **Criterios de aceptación:**
-- [ ] `getEvents(groupId)` — devuelve eventos del grupo ordenados por fecha, `null` en error
-- [ ] `getEventById(groupId, eventId)` — devuelve el evento o `null`
-- [ ] `createEvent(groupId, data)` — crea el documento, devuelve el nuevo id, lanza error en fallo
-- [ ] `updateEvent(groupId, eventId, data)` — actualiza campos, lanza error en fallo
-- [ ] `deleteEvent(groupId, eventId)` — elimina el evento y todas sus asistencias (batch), lanza error en fallo
-- [ ] Usa `db` de `src/plugins/firebase.ts`, nunca instancia Firestore directamente
-- [ ] Todos los métodos tienen try/catch siguiendo el patrón del proyecto
+- [x] `getEvents(groupId)` — devuelve eventos del grupo ordenados por fecha, `null` en error
+- [x] `getEventById(groupId, eventId)` — devuelve el evento o `null`
+- [x] `createEvent(groupId, data)` — crea el documento, devuelve el nuevo id, lanza error en fallo
+- [x] `updateEvent(groupId, eventId, data)` — actualiza campos, lanza error en fallo
+- [x] `deleteEvent(groupId, eventId)` — elimina el evento y todas sus asistencias (batch), lanza error en fallo
+- [x] Usa `db` de `src/plugins/firebase.ts`
+- [x] Patrón try/catch del proyecto
 
 ---
 
@@ -53,35 +53,29 @@
 
 ## Semana 2 — 25 abril - 1 mayo · Lista, calendario y detalle de eventos
 
-### T05 · Lista de eventos
+### T05 · Lista de eventos ✅ completado
 
 **Archivos:**
-- Crear: `src/pages/events/events-list/EventsListPage.tsx`
-- Crear: `src/pages/events/events-list/EventsList.tsx`
-- Crear: `src/pages/events/events-list/events-list.scss`
-- Crear: `src/locales/es/events.json` y `src/locales/ca/events.json`
-- Modificar: `src/routes/appRoutes/AppRoutes.tsx`
+- `src/pages/events/events-list/EventsListPage.tsx`
+- `src/locales/es/events.json` y `src/locales/ca/events.json`
 
 **Criterios de aceptación:**
-- [ ] Es la pantalla principal de la app tras el login/onboarding (el redirect apunta a `/events`)
-- [ ] Lista todos los eventos del grupo ordenados por fecha
-- [ ] Cada evento muestra: nombre, fecha y estado
-- [ ] Estado vacío si no hay eventos
-- [ ] Estado de loading y de error
-- [ ] Botón "Crear evento" visible solo para admin y organizer
-- [ ] Al pulsar un evento navega al detalle
-- [ ] La ruta `/home` redirige a `/events` (limpieza de la ruta provisional)
-- [ ] Ruta: `/events`
+- [x] Pantalla principal tras login/onboarding
+- [x] Lista eventos del grupo ordenados por fecha
+- [x] Cada evento muestra: nombre, fecha, estado y respuesta del usuario
+- [x] Estado vacío, loading y error
+- [x] Botón "Crear evento" solo para admin y organizer
+- [x] Al pulsar un evento navega al detalle
+- [x] Filtro desplegable: Todos / Activos / Plazo cerrado / Finalizados / Próximos / Pendientes / Pasados
+- [x] Ruta: `/events`
 
 ---
 
-### T06 · Vista de calendario
+### T06 · Vista de calendario ✗ Pendiente
 
-**Archivos:**
-- Crear: `src/pages/events/events-calendar/EventsCalendarPage.tsx`
-- Crear: `src/pages/events/events-calendar/EventsCalendar.tsx`
-- Crear: `src/pages/events/events-calendar/events-calendar.scss`
-- Modificar: `src/routes/appRoutes/AppRoutes.tsx`
+**Archivos a crear:**
+- `src/pages/events/events-calendar/EventsCalendarPage.tsx`
+- `src/pages/events/events-calendar/events-calendar.scss`
 
 **Criterios de aceptación:**
 - [ ] Muestra un calendario mensual con navegación mes anterior / siguiente
@@ -94,34 +88,32 @@
 
 ---
 
-### T07 · Detalle de evento
+### T07 · Detalle de evento ✅ completado
 
 **Archivos:**
-- Crear: `src/pages/events/event-detail/EventDetailPage.tsx`
-- Crear: `src/pages/events/event-detail/EventDetail.tsx`
-- Crear: `src/pages/events/event-detail/event-detail.scss`
-- Modificar: `src/routes/appRoutes/AppRoutes.tsx`
+- `src/pages/events/event-detail/EventDetailPage.tsx`
+- `src/pages/events/event-detail/event-detail.scss`
 
 **Criterios de aceptación:**
-- [ ] Muestra todos los campos del evento: nombre, fecha, hora, deadline, lugar, descripción y estado
-- [ ] Estado de loading y estado de error si el evento no existe
-- [ ] Botón "Editar" visible solo para el creador del evento o el admin
-- [ ] Botón "Eliminar" visible solo para el creador del evento o el admin
-- [ ] Sección de asistencia visible (se implementará en T12)
-- [ ] Ruta: `/events/:id`
+- [x] Zona degradada (amarillo → verde) con nombre, estado, fecha/hora y lugar
+- [x] Estado de loading y error si el evento no existe
+- [x] Menú ⋮ (solo admin/creador): opciones "Editar evento" y "Eliminar evento"
+- [x] Confirmación de eliminación con Alert antes de borrar (T10 integrado aquí)
+- [x] Sección de asistentes para admin/organizer: lista con filtros y avatares por estado
+- [x] Cabecera de asistentes sticky al hacer scroll (top: 16px)
+- [x] Sección de confirmación para member: botones Sí/No (UI lista, Firestore pendiente T12)
+- [x] Ruta: `/events/:id`
 
 ---
 
 ## Semana 3 — 2-8 mayo · Crear, editar y eliminar eventos
 
-### T08 · Crear evento
+### T08 · Crear evento ✗ Pendiente
 
-**Archivos:**
-- Crear: `src/pages/events/create-event/CreateEventPage.tsx`
-- Crear: `src/pages/events/create-event/CreateEvent.tsx`
-- Crear: `src/pages/events/create-event/create-event.scss`
+**Archivos a crear:**
+- `src/pages/events/create-event/CreateEventPage.tsx`
+- `src/pages/events/create-event/create-event.scss`
 - Modificar: `src/routes/appRoutes/AppRoutes.tsx`
-- Modificar: `src/locales/es/events.json` y `src/locales/ca/events.json`
 
 **Criterios de aceptación:**
 - [ ] Solo admin y organizer pueden acceder (redirige si es member)
@@ -139,12 +131,11 @@
 
 ---
 
-### T09 · Editar evento
+### T09 · Editar evento ✗ Pendiente
 
-**Archivos:**
-- Crear: `src/pages/events/edit-event/EditEventPage.tsx`
-- Crear: `src/pages/events/edit-event/EditEvent.tsx`
-- Crear: `src/pages/events/edit-event/edit-event.scss`
+**Archivos a crear:**
+- `src/pages/events/edit-event/EditEventPage.tsx`
+- `src/pages/events/edit-event/edit-event.scss`
 - Modificar: `src/routes/appRoutes/AppRoutes.tsx`
 
 **Criterios de aceptación:**
@@ -158,72 +149,73 @@
 
 ---
 
-### T10 · Eliminar evento
-
-**Archivos:**
-- Modificar: `src/pages/events/event-detail/EventDetail.tsx`
+### T10 · Eliminar evento ✅ completado (integrado en T07)
 
 **Criterios de aceptación:**
-- [ ] Solo el creador o el admin ven el botón de eliminar
-- [ ] Se muestra modal de confirmación antes de eliminar
-- [ ] Cancelar el modal no elimina nada
-- [ ] Al confirmar se eliminan el evento y todas sus asistencias
-- [ ] Loading durante la eliminación
-- [ ] Al eliminar correctamente navega a la lista de eventos
+- [x] Solo el creador o el admin ven la opción en el menú ⋮
+- [x] Alert de confirmación ("¿Estás seguro?" + "Esta acción no se puede deshacer.")
+- [x] Cancelar no elimina nada
+- [x] Al confirmar se elimina el evento (deleteEvent borra también las asistencias en batch)
+- [x] Loading durante la eliminación
+- [x] Al eliminar correctamente navega a `/events`
 
 ---
 
 ## Semana 4 — 9-15 mayo · Asistencia
 
-### T11 · Modelo y servicio de asistencia
+### T11 · Modelo y servicio de asistencia ✗ Pendiente
 
-**Archivos:**
-- Crear: `src/models/attendance.model.ts`
-- Crear: `src/services/attendance.service.ts`
+**Archivos a crear:**
+- `src/models/attendance.model.ts`
+- `src/services/attendance.service.ts`
 
 **Criterios de aceptación — modelo:**
 - [ ] Interfaz `Attendance` con campos: `userId`, `eventId`, `response`, `confirmedAt`
-- [ ] Tipo `AttendanceResponse`: `'yes' | 'no'`
+- [ ] Tipo `AttendanceResponse`: `'going' | 'not-going'` (pendiente = sin documento)
 
 **Criterios de aceptación — servicio:**
-- [ ] `confirmAttendance(groupId, eventId, userId, response)` — crea o actualiza el documento, lanza error en fallo
+- [ ] `saveAttendance(groupId, eventId, userId, response)` — crea o actualiza el documento, lanza error en fallo
 - [ ] `getUserAttendance(groupId, eventId, userId)` — devuelve la respuesta actual o `null` si no ha respondido
 - [ ] `getAttendancesByEvent(groupId, eventId)` — devuelve todas las respuestas del evento, `null` en error
 - [ ] Patrón try/catch del proyecto
 
 ---
 
-### T12 · Confirmación de asistencia
+### T12 · Confirmación de asistencia ✓ UI lista, ✗ lógica Firestore pendiente
 
-**Archivos:**
-- Modificar: `src/pages/events/event-detail/EventDetail.tsx`
-- Modificar: `src/locales/es/events.json` y `src/locales/ca/events.json`
+**Archivos a modificar:**
+- `src/pages/events/event-detail/EventDetailPage.tsx`
+- `src/locales/es/events.json` y `src/locales/ca/events.json`
 
-**Criterios de aceptación:**
-- [ ] Todos los roles ven los botones "Voy" / "No voy"
-- [ ] El botón correspondiente a la respuesta actual aparece resaltado
-- [ ] Si no ha respondido, ningún botón aparece seleccionado
-- [ ] Al pulsar se guarda inmediatamente con loading
-- [ ] Si el deadline ha pasado los botones están desactivados con mensaje explicativo
-- [ ] Error si falla el guardado
-- [ ] Traducciones en `es` y `ca`
+**Diseño acordado:**
+- Vista member: sección "¿Te vienes?" con botones No / Sí (toggle)
+- Sin botón "Guardar" — guardado dinámico al tocar
+- Sin respuesta = estado pendiente (ningún botón resaltado)
+- Sección de vinculados debajo: botón "Añadir vinculados" si no tiene ninguno; lista con opción de votar si tiene
+
+**Criterios de aceptación pendientes:**
+- [ ] Conectar botones Sí/No con `saveAttendance` del servicio (T11)
+- [ ] Cargar la respuesta actual del usuario al entrar (`getUserAttendance`)
+- [ ] Loading durante el guardado; error si falla
+- [ ] Bloquear botones si el deadline ha pasado, con mensaje explicativo
+- [ ] Conectar lista de asistentes (admin/organizer) con `getAttendancesByEvent`
+- [ ] Activar filtros de asistentes con datos reales
+- [ ] Reemplazar array `allMembers` con datos reales del grupo + asistencias
 
 ---
 
-### T13 · Lista de asistentes
+### T13 · Lista de asistentes ✅ integrado en T07 (datos Firestore pendientes en T12)
 
-**Archivos:**
-- Crear: `src/pages/events/attendance-list/AttendanceListPage.tsx`
-- Crear: `src/pages/events/attendance-list/AttendanceList.tsx`
-- Crear: `src/pages/events/attendance-list/attendance-list.scss`
-- Modificar: `src/routes/appRoutes/AppRoutes.tsx`
+La lista de asistentes se muestra directamente en el detalle del evento para admin y organizer. No es una página separada.
 
-**Criterios de aceptación:**
-- [ ] Solo admin y organizer pueden acceder
-- [ ] Tres secciones: "Van" / "No van" / "Sin respuesta"
-- [ ] Cada sección muestra el número de personas y la lista de nombres
-- [ ] Loading y error
-- [ ] Ruta: `/events/:id/attendances`
+**Lo que ya está:**
+- [x] Solo visible para admin y organizer
+- [x] Filtro desplegable: Todos / Confirmados / Pendientes / No van
+- [x] Avatar con color según asistencia (azul/gris/rojo), nombre tachado si no va
+- [x] Contador X/Total junto al título
+
+**Pendiente (se activa en T12):**
+- [ ] Datos reales de Firestore en lugar del array vacío
 
 ---
 
