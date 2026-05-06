@@ -39,7 +39,7 @@ export const GroupContextProvider = ({
 
     if (user === null) {
       setGroup(null);
-      setIsLoading(true);
+      setIsLoading(false);
       return;
     }
 
