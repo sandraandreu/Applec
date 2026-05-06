@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
+import useRole from "../../hooks/useRole";
 import "./layout.scss";
 
 const ACTIVE = "#0068FF";
@@ -20,10 +21,12 @@ const TabBar = () => {
   const { profile } = useAuthContext();
   const { pathname } = useLocation();
 
+  const { isAdmin, isOrganizer } = useRole();
+
   if (!profile) return null;
 
   const active = getActiveTab(pathname);
-  const isAdminOrOrganizer = profile.role === "admin" || profile.role === "organizer";
+  const isAdminOrOrganizer = isAdmin || isOrganizer;
 
   return (
     <nav className="tab-bar" aria-label={t("nav.tabBar")}>

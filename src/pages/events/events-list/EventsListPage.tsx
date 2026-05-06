@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
+import useRole from "../../../hooks/useRole";
 import { getEvents } from "../../../services/event.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
@@ -12,6 +13,7 @@ import "./events-list.scss";
 
 const EventsListPage = () => {
   const { user, profile } = useAuthContext();
+  const { isAdmin, isOrganizer } = useRole();
   const { t } = useTranslation("events");
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
@@ -28,7 +30,7 @@ const EventsListPage = () => {
     });
   }, [profile?.groupId]);
 
-  const role = profile?.role ?? "member";
+  const role = isAdmin ? "admin" : isOrganizer ? "organizer" : "member";
 
   const filterOptions: FilterOption[] = useMemo(() => {
     const countEvents = (predicate: (event: FallesEvent) => boolean) => events.filter(predicate).length;

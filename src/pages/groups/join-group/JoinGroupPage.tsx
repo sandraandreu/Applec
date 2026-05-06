@@ -13,7 +13,8 @@ import {
   findGroupByInviteCode,
   addMemberToGroup,
 } from "../../../services/group.service";
-import { updateUserGroup } from "../../../services/user.service";
+import { updateUserGroup, updateUserRole } from "../../../services/user.service";
+import BackButton from "../../../ui-kit/icons/BackButton";
 
 interface JoinGroupFormData {
   code: string;
@@ -22,7 +23,7 @@ interface JoinGroupFormData {
 const JoinGroupPage = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
-  const { user, profile } = useAuthContext();
+  const { user, profile, refreshProfile } = useAuthContext();
   const { refreshGroup } = useGroupContext();
   const navigate = useNavigate();
 
@@ -81,8 +82,9 @@ const JoinGroupPage = () => {
           user!.email ?? "",
         ),
         updateUserGroup(user!.uid, groupFound!.id),
+        updateUserRole(user!.uid, "member"),
       ]);
-      await refreshGroup();
+      await Promise.all([refreshGroup(), refreshProfile()]);
       navigate("/events");
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
@@ -94,50 +96,66 @@ const JoinGroupPage = () => {
   };
 
   return (
-    <>
+    <div className="join-group-page">
       {isLoading && <Loading />}
 
-      <h1>{t("joinGroup.title")}</h1>
+      <BackButton />
 
-      {!groupFound ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="code"
-            label={t("joinGroup.code")}
-            placeholder={t("joinGroup.codePlaceholder")}
-            type="text"
-            registration={register("code", { required: true })}
-            error={
-              errors.code?.type === "required"
-                ? t("joinGroup.errors.codeRequired")
-                : errorCode
-                  ? errorCode
-                  : undefined
-            }
-          />
-
-          <Button
-            text={t("joinGroup.button")}
-            type="submit"
-            disabled={Object.keys(errors).length > 0}
-            isLoading={isLoading}
-          />
-
-          {errorConnection && <span className="join-group-page__error">{errorConnection}</span>}
-        </form>
-      ) : (
-        <div>
-          <h2>{t("joinGroup.groupFound")}</h2>
-          <p>{groupFound.name}</p>
-          <Button
-            text={t("joinGroup.joinButton")}
-            onClick={handleJoin}
-            isLoading={isLoading}
-          />
-          <Button text={tc("cancel")} onClick={() => setGroupFound(null)} />
+      <div className="join-group-page__content">
+        <div className="join-group-page__header">
+          <h1 className="join-group-page__title">{t("joinGroup.title")}</h1>
+          <p className="join-group-page__description">
+            {t("joinGroup.subtitle")}
+          </p>
         </div>
-      )}
-    </>
+
+        {!groupFound ? (
+          <form
+            className="join-group-page__form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Input
+              id="code"
+              label={t("joinGroup.code")}
+              placeholder={t("joinGroup.codePlaceholder")}
+              type="text"
+              registration={register("code", { required: true })}
+              error={
+                errors.code?.type === "required"
+                  ? t("joinGroup.errors.codeRequired")
+                  : errorCode
+                    ? errorCode
+                    : undefined
+              }
+            />
+
+            {errorConnection && (
+              <span className="join-group-page__error">{errorConnection}</span>
+            )}
+
+            <div className="create-group-page__button">
+              <Button
+                text={t("joinGroup.button")}
+                type="submit"
+                disabled={Object.keys(errors).length > 0}
+                isLoading={isLoading}
+              />
+            </div>
+          </form>
+        ) : (
+          <div>
+            <h2>{t("joinGroup.groupFound")}</h2>
+            <p>{groupFound.name}</p>
+            <Button
+              text={t("joinGroup.joinButton")}
+              onClick={handleJoin}
+              isLoading={isLoading}
+            />
+            <Button text={tc("cancel")} onClick={() => setGroupFound(null)} />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

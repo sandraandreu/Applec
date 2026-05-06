@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
+import useRole from "../../hooks/useRole";
 import "./layout.scss";
 
 const TopBar = () => {
@@ -9,9 +10,11 @@ const TopBar = () => {
   const { profile } = useAuthContext();
   const { group } = useGroupContext();
 
+  const { isAdmin, isOrganizer } = useRole();
+
   if (!profile || !group) return null;
 
-  const isAdminOrOrganizer = profile.role === "admin" || profile.role === "organizer";
+  const isAdminOrOrganizer = isAdmin || isOrganizer;
 
   return (
     <header className="top-bar">
