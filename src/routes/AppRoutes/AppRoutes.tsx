@@ -152,9 +152,7 @@ const AppRoutes = () => (
         path="/events/:id"
         element={
           <PrivateRoutes requiresGroup>
-            <MainLayout>
-              <EventDetailPage />
-            </MainLayout>
+            <EventDetailPage />
           </PrivateRoutes>
         }
       />

@@ -30,6 +30,7 @@
     "location": "Lloc",
     "description": "Descripció de l'event",
     "attendees": "Assistents",
+    "attendeesEmpty": "Ningú ha confirmat l'assistència encara",
     "viewAll": "Veure assistents",
     "edit": "Editar event",
     "delete": "Eliminar event",

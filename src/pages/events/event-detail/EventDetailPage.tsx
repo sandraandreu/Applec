@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
+import { useGroupContext, type GroupData } from "../../../context/group/GroupContext";
 import { getEventById } from "../../../services/event.service";
+import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/icons/BackButton";
+import MemberCard from "../../../components/members/MemberCard";
 import "./event-detail.scss";
 
 const EventDetailPage = () => {
@@ -14,6 +17,7 @@ const EventDetailPage = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
   const { profile, user } = useAuthContext();
+  const { group } = useGroupContext();
 
   const [event, setEvent] = useState<FallesEvent | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,10 +45,21 @@ const EventDetailPage = () => {
   const canEdit =
     role === "admin" || (role === "organizer" && event.createdBy === userId);
 
-  const formattedDate = event.date.toLocaleDateString(
+  const eventStatus = getEventStatus(event);
+
+  const totalMembers = group?.members.length ?? 0;
+  // TODO T12: derivar de la subcolección attendances filtrando response === 'yes' y cruzando con group.members
+  const goingMembers: GroupData["members"] = [
+    { uid: "fake-1", username: "inmana33", firstName: "Inma", lastName: "Núñez Albert", email: "", role: "member" },
+    { uid: "fake-2", username: "sandraaa53", firstName: "Sandra", lastName: "Andreu", email: "", role: "member" },
+    { uid: "fake-3", username: "paco_faller", firstName: "Paco", lastName: "García", email: "", role: "member" },
+  ];
+
+  const rawDate = event.date.toLocaleDateString(
     i18n.language === "ca" ? "ca-ES" : "es-ES",
     { weekday: "long", day: "numeric", month: "long" },
   );
+  const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
 
   return (
     <div className="event-detail-page">
@@ -53,6 +68,9 @@ const EventDetailPage = () => {
       <div className="event-detail-page__content">
         <div className="event-detail-page__principal-info">
           <h1 className="event-detail-page__name">{event.name}</h1>
+          <span className={`event-detail-page__status-badge event-detail-page__status-badge--${eventStatus}`}>
+            {t(`status.${eventStatus}`)}
+          </span>
 
           <div className="event-detail-page__field">
             <div className="event-detail-page__field-icon">
@@ -122,50 +140,52 @@ const EventDetailPage = () => {
               </svg>
             </div>
             <div className="event-detail-page__field-content">
-              <span className="event-detail-page__field-label">
-                {t("detail.dateTime")}
-              </span>
               <span className="event-detail-page__field-value">
                 {formattedDate} · {event.startTime}
+              </span>
+              <span className="event-detail-page__field-label">
+                {t("detail.dateTime")}
               </span>
             </div>
           </div>
 
-          <div className="event-detail-page__field">
-            <div className="event-detail-page__field-icon">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
-                fill="none"
-              >
-                <path
-                  d="M14 2.62231C9.65234 2.62231 6.125 5.97958 6.125 10.1145C6.125 14.8723 11.375 22.4121 13.3027 25.0163C13.3828 25.1262 13.4876 25.2157 13.6088 25.2774C13.73 25.339 13.864 25.3712 14 25.3712C14.136 25.3712 14.27 25.339 14.3912 25.2774C14.5124 25.2157 14.6172 25.1262 14.6973 25.0163C16.625 22.4132 21.875 14.8761 21.875 10.1145C21.875 5.97958 18.3477 2.62231 14 2.62231Z"
-                  stroke="#0068FF"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M14 13.1255C15.4497 13.1255 16.625 11.9502 16.625 10.5005C16.625 9.05074 15.4497 7.87549 14 7.87549C12.5503 7.87549 11.375 9.05074 11.375 10.5005C11.375 11.9502 12.5503 13.1255 14 13.1255Z"
-                  stroke="#0068FF"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+          {event.location && (
+            <div className="event-detail-page__field">
+              <div className="event-detail-page__field-icon">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                >
+                  <path
+                    d="M14 2.62231C9.65234 2.62231 6.125 5.97958 6.125 10.1145C6.125 14.8723 11.375 22.4121 13.3027 25.0163C13.3828 25.1262 13.4876 25.2157 13.6088 25.2774C13.73 25.339 13.864 25.3712 14 25.3712C14.136 25.3712 14.27 25.339 14.3912 25.2774C14.5124 25.2157 14.6172 25.1262 14.6973 25.0163C16.625 22.4132 21.875 14.8761 21.875 10.1145C21.875 5.97958 18.3477 2.62231 14 2.62231Z"
+                    stroke="#0068FF"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14 13.1255C15.4497 13.1255 16.625 11.9502 16.625 10.5005C16.625 9.05074 15.4497 7.87549 14 7.87549C12.5503 7.87549 11.375 9.05074 11.375 10.5005C11.375 11.9502 12.5503 13.1255 14 13.1255Z"
+                    stroke="#0068FF"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div className="event-detail-page__field-content">
+                <span className="event-detail-page__field-value">
+                  {event.location}
+                </span>
+                <span className="event-detail-page__field-label">
+                  {t("detail.location")}
+                </span>
+              </div>
             </div>
-            <div className="event-detail-page__field-content">
-              <span className="event-detail-page__field-label">
-                {t("detail.location")}
-              </span>
-              <span className="event-detail-page__field-value">
-                {event.location}
-              </span>
-            </div>
-          </div>
+          )}
 
           {event.description && (
             <div className="event-detail-page__description">
@@ -185,9 +205,27 @@ const EventDetailPage = () => {
               <span className="event-detail-page__attendees__label">
                 {t("detail.attendees")}
               </span>
-              <span>contador</span>
+              <span className="event-detail-page__attendees__count">
+                <span className="event-detail-page__attendees__count-going">{goingMembers.length}</span>
+                /{totalMembers}
+              </span>
             </div>
-            <span>Aquí ira la lista de asistentes</span>
+            {goingMembers.length === 0 ? (
+              <p className="event-detail-page__attendees__empty">
+                {t("detail.attendeesEmpty")}
+              </p>
+            ) : (
+              goingMembers.map((member) => (
+                <MemberCard
+                  key={member.uid}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
+                  email={member.email}
+                  role={member.role}
+                  showChevron={false}
+                />
+              ))
+            )}
           </div>
         )}
 

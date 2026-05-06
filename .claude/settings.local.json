@@ -32,7 +32,10 @@
       "Bash(git log *)",
       "Bash(npm run *)",
       "Bash(sort -t'x' -k1 -n)",
-      "Bash(sort -t: -k3)"
+      "Bash(sort -t: -k3)",
+      "Bash(git rm *)",
+      "Bash(npm install *)",
+      "Bash(dir *)"
     ]
   }
 }

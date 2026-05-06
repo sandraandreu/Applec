@@ -30,6 +30,7 @@
     "location": "Lugar",
     "description": "Descripción del evento",
     "attendees": "Asistentes",
+    "attendeesEmpty": "Nadie ha confirmado asistencia todavía",
     "viewAll": "Ver asistentes",
     "edit": "Editar evento",
     "delete": "Eliminar evento",
