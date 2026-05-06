@@ -26,6 +26,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setIsLoading(true);
       setUser(firebaseUser);
       setProfile(firebaseUser ? await getUserProfile(firebaseUser.uid) : null);
       setIsLoading(false);
