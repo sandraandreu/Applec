@@ -1,19 +1,80 @@
 .event-detail-page {
-  padding: var(--padding-page);
   display: flex;
   flex-direction: column;
-  gap: var(--gap-section);
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--yellow-100) 0%, var(--teal-200) 62%);
 
-  &__content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-section);
-  }
-
-  &__principal-info {
+  &__gradient-zone {
+    padding: var(--padding-page);
     display: flex;
     flex-direction: column;
     gap: var(--gap-content);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-compact);
+    position: relative;
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    flex: 1;
+  }
+
+  &__menu-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  &__menu-trigger {
+    background: none;
+    border: none;
+    padding: var(--size-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-brand);
+  }
+
+  &__menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + var(--size-8));
+    right: 0;
+    min-width: 180px;
+    background: white;
+    border-radius: var(--radius-card);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    z-index: 10;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__menu-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--size-10) var(--size-14);
+    background: none;
+    border: none;
+    appearance: none;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    text-align: left;
   }
 
   &__status-badge {
@@ -24,28 +85,9 @@
     padding: var(--padding-chip);
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
-
-    &--activo {
-      background: var(--teal-200);
-      color: var(--color-accent-teal);
-    }
-
-    &--plazo-cerrado {
-      background: var(--orange-100);
-      color: var(--color-accent-orange);
-    }
-
-    &--finalizado {
-      background: var(--neutral-200);
-      color: var(--color-text-muted);
-    }
-  }
-
-  &__name {
-    font-family: var(--font-display);
-    font-size: var(--font-size-h2);
-    font-weight: var(--font-weight-extrabold);
-    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--color-brand);
+    color: var(--color-brand);
   }
 
   &__field {
@@ -62,6 +104,7 @@
     background: var(--blue-200);
     border-radius: var(--size-8);
     flex-shrink: 0;
+    color: var(--color-brand);
   }
 
   &__field-content {
@@ -97,33 +140,58 @@
     margin: 0;
   }
 
+  &__content {
+    background: var(--white);
+    padding: var(--size-48) var(--size-32) var(--size-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    flex: 1;
+  }
+
   &__attendees {
     display: flex;
     flex-direction: column;
+    gap: var(--gap-section);
+  }
+
+  &__attendees-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: var(--padding-bar);
+    background: var(--white);
+  }
+
+  &__attendees-left {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__attendees-label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__attendees-right {
+    display: flex;
+    align-items: center;
     gap: var(--gap-compact);
   }
 
-  &__attendees__header {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__attendees__label {
+  &__attendees-count {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
   }
 
-  &__attendees__count {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
-  &__attendees__count-going {
+  &__attendees-count-going {
     color: var(--color-brand);
     font-weight: var(--font-weight-bold);
   }
 
-  &__attendees__empty {
+  &__attendees-empty {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
     text-align: center;
@@ -131,10 +199,11 @@
     padding-top: var(--gap-content);
   }
 
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-compact);
+  &__delete-error {
+    font-size: var(--font-size-body-s);
+    color: var(--color-danger);
+    text-align: center;
+    margin: 0;
   }
 
   &__going {
