@@ -14,6 +14,7 @@
   },
   "joinGroup": {
     "title": "Unir-se a una falla",
+    "subtitle": "Demana al teu president que et compartisca el codi o l’enllaç d’invitació.",
     "code": "Codi d'invitació",
     "codePlaceholder": "Introdueix el codi",
     "button": "Buscar falla",

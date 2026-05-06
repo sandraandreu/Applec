@@ -14,6 +14,7 @@
   },
   "joinGroup": {
     "title": "Unirse a una falla",
+    "subtitle": "Pide a tu presidente que te comparta el código o enlace de invitación.",
     "code": "Código de invitación",
     "codePlaceholder": "Introduce el código",
     "button": "Buscar falla",
