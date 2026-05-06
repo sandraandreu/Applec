@@ -28,4 +28,8 @@
   &--admin     { background: var(--red-500); }
   &--organizer { background: var(--teal-500); }
   &--member    { background: var(--color-brand); }
+
+  &--going     { background: var(--color-brand); }
+  &--pending   { background: var(--neutral-400); }
+  &--not-going { background: var(--color-not-going); }
 }

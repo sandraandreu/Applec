@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./events.scss";
 
-export type FilterKey = "all" | "active" | "deadline-closed" | "finished" | "upcoming" | "pending" | "past";
+export type FilterKey = string;
 
 export interface FilterOption {
   key: FilterKey;

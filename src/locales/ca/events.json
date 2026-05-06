@@ -30,8 +30,9 @@
     "location": "Lloc",
     "description": "Descripció de l'event",
     "attendees": "Assistents",
-    "attendeesEmpty": "Ningú ha confirmat l'assistència encara",
+    "attendeesEmpty": "Encara no hi ha cap membre a la teua falla",
     "viewAll": "Veure assistents",
+    "menuOptions": "Opcions de l'event",
     "edit": "Editar event",
     "delete": "Eliminar event",
     "error": "Error en carregar l'event",
@@ -41,11 +42,18 @@
       "no": "No",
       "save": "Guardar",
       "addLinked": "Votar pels meus vinculats"
+    },
+    "filter": {
+      "confirmed": "Confirmats",
+      "pending": "Pendents",
+      "notGoing": "No hi van"
     }
   },
   "delete": {
-    "confirm": "Eliminar aquest esdeveniment?",
+    "confirm": "Estàs segur?",
     "message": "Aquesta acció no es pot desfer.",
+    "cancel": "Cancel·lar",
+    "submit": "Eliminar",
     "success": "Esdeveniment eliminat",
     "error": "Error en eliminar l'esdeveniment"
   },

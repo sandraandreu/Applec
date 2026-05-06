@@ -30,8 +30,9 @@
     "location": "Lugar",
     "description": "Descripción del evento",
     "attendees": "Asistentes",
-    "attendeesEmpty": "Nadie ha confirmado asistencia todavía",
+    "attendeesEmpty": "Todavía no hay ningún miembro en tu falla",
     "viewAll": "Ver asistentes",
+    "menuOptions": "Opciones del evento",
     "edit": "Editar evento",
     "delete": "Eliminar evento",
     "error": "Error al cargar el evento",
@@ -41,11 +42,18 @@
       "no": "No",
       "save": "Guardar",
       "addLinked": "Votar por mis vinculados"
+    },
+    "filter": {
+      "confirmed": "Confirmados",
+      "pending": "Pendientes",
+      "notGoing": "No van"
     }
   },
   "delete": {
-    "confirm": "¿Eliminar este evento?",
+    "confirm": "¿Estás seguro?",
     "message": "Esta acción no se puede deshacer.",
+    "cancel": "Cancelar",
+    "submit": "Eliminar",
     "success": "Evento eliminado",
     "error": "Error al eliminar el evento"
   },
