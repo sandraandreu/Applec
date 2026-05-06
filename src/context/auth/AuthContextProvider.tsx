@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../plugins/firebase";
@@ -14,6 +14,8 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const initializedRef = useRef(false);
 
   const logout = async () => {
     await logoutUser();
@@ -30,12 +32,16 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       setUser(firebaseUser);
       setProfile(firebaseUser ? await getUserProfile(firebaseUser.uid) : null);
       setIsLoading(false);
+      if (!initializedRef.current) {
+        setIsInitialized(true);
+        initializedRef.current = true;
+      }
     });
 
     return unsubscribe;
   }, []);
 
-  const contextValue = { user, profile, isLoading, logout, refreshProfile };
+  const contextValue = { user, profile, isLoading, isInitialized, logout, refreshProfile };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

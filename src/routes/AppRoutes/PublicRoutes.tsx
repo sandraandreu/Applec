@@ -8,9 +8,9 @@ interface PublicRoutesProps {
 }
 
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
-  const { user, profile, isLoading } = useAuthContext();
+  const { user, profile, isInitialized } = useAuthContext();
 
-  if (isLoading) return <Loading />;
+  if (!isInitialized) return <Loading />;
 
   if (user && user.emailVerified) {
     return <Navigate to={profile?.groupId ? "/events" : "/onboarding/welcome"} replace />;
