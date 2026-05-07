@@ -23,11 +23,18 @@ const EventsListPage = () => {
 
   useEffect(() => {
     if (!profile?.groupId) return;
+
+    let isMounted = true;
+    setHasError(false);
+
     getEvents(profile.groupId).then(data => {
+      if (!isMounted) return;
       setIsLoading(false);
       if (data === null) { setHasError(true); return; }
       setEvents(data);
     });
+
+    return () => { isMounted = false; };
   }, [profile?.groupId]);
 
   const role = isAdmin ? "admin" : isOrganizer ? "organizer" : "member";

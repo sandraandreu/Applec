@@ -38,7 +38,10 @@ const EventDetailPage = () => {
       navigate("/events", { replace: true });
       return;
     }
+    let isMounted = true;
+
     getEventById(profile.groupId, id).then((data) => {
+      if (!isMounted) return;
       setIsLoading(false);
       if (!data) {
         navigate("/events", { replace: true });
@@ -46,6 +49,8 @@ const EventDetailPage = () => {
       }
       setEvent(data);
     });
+
+    return () => { isMounted = false; };
   }, [profile?.groupId, id, navigate]);
 
   if (isLoading) return <Loading />;
