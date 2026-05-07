@@ -2,7 +2,8 @@ import "./register.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useReducer } from "react";
+import { registerReducer, initialRegisterState } from "./register.reducer";
 import Alert from "../../../components/alert/Alert";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -38,15 +39,8 @@ const RegisterPage = () => {
   const { t } = useTranslation("auth");
   const { t: tc } = useTranslation("common");
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [registerState, setRegisterState] = useState<
-    "form" | "success" | "error"
-  >("form");
-  const [registeredUser, setRegisteredUser] = useState<
-    import("firebase/auth").User | null
-  >(null);
-  const [usernameError, setUsernameError] = useState<string>("");
-  const [errorConnection, setErrorConnection] = useState<string>("");
+  const [state, dispatch] = useReducer(registerReducer, initialRegisterState);
+  const { isLoading, registerState, registeredUser, usernameError, errorConnection } = state;
 
   const handleRegister = async (
     email: string,
@@ -56,7 +50,7 @@ const RegisterPage = () => {
     lastName: string,
   ) => {
     try {
-      setIsLoading(true);
+      dispatch({ type: "REGISTER_START" });
 
       const userCredential = await registerUser(email, password);
 
@@ -64,13 +58,11 @@ const RegisterPage = () => {
         const taken = await isUsernameTaken(username);
         if (taken) {
           await userCredential.user.delete();
-          setUsernameError(t("register.errors.usernameTaken"));
+          dispatch({ type: "USERNAME_TAKEN", message: t("register.errors.usernameTaken") });
           return;
         }
 
         await sendVerificationEmail(userCredential.user);
-        setRegisteredUser(userCredential.user);
-
         await createUserProfile(userCredential.user.uid, {
           username,
           firstName,
@@ -81,7 +73,7 @@ const RegisterPage = () => {
         });
 
         await logoutUser();
-        setRegisterState("success");
+        dispatch({ type: "REGISTER_SUCCESS", user: userCredential.user });
       } catch (innerError: unknown) {
         await userCredential.user.delete().catch((_) => _);
         throw innerError;
@@ -89,20 +81,15 @@ const RegisterPage = () => {
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/network-request-failed") {
-        setErrorConnection(tc("errors.noConnection"));
+        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
         return;
       }
       if (firebaseError.code === "auth/email-already-in-use") {
-        setRegisterState("error");
+        dispatch({ type: "ERROR_EMAIL_TAKEN" });
         return;
       }
-      console.error(
-        "Register error:",
-        firebaseError.code,
-        firebaseError.message,
-      );
-    } finally {
-      setIsLoading(false);
+      console.error("Register error:", firebaseError.code, firebaseError.message);
+      dispatch({ type: "REGISTER_ERROR" });
     }
   };
 
@@ -289,7 +276,7 @@ const RegisterPage = () => {
       <Alert
         isOpen={registerState === "error"}
         header={t("register.errors.emailTaken")}
-        onDismiss={() => setRegisterState("form")}
+        onDismiss={() => dispatch({ type: "DISMISS_ERROR" })}
         buttons={[
           {
             text: tc("buttons.close"),
