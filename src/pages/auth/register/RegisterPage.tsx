@@ -18,6 +18,7 @@ import {
   createUserProfile,
   isUsernameTaken,
 } from "../../../services/user.service";
+import type { FirebaseError } from "../../../models/error.model";
 
 interface RegisterFormData {
   firstName: string;
@@ -79,7 +80,7 @@ const RegisterPage = () => {
         throw innerError;
       }
     } catch (error: unknown) {
-      const firebaseError = error as { code?: string; message?: string };
+      const firebaseError = error as FirebaseError;
       if (firebaseError.code === "auth/network-request-failed") {
         dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
         return;

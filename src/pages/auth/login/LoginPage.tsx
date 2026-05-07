@@ -14,6 +14,7 @@ import {
 } from "../../../services/auth.service";
 import BackButton from "../../../ui-kit/icons/BackButton";
 import EyeToggleIcon from "../../../ui-kit/icons/EyeToggleIcon";
+import type { FirebaseError } from "../../../models/error.model";
 
 interface LoginFormData {
   email: string;
@@ -50,7 +51,7 @@ const LoginPage = () => {
       dispatch({ type: "LOGIN_SUCCESS" });
       navigate("/events");
     } catch (error: unknown) {
-      const firebaseError = error as { code?: string; message?: string };
+      const firebaseError = error as FirebaseError;
       if (firebaseError.code === "auth/invalid-credential") {
         dispatch({ type: "ERROR_CREDENTIALS", message: t("login.errors.invalidCredentials") });
         return;

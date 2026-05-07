@@ -15,6 +15,7 @@ import {
   updateGroupImage,
 } from "../../../services/group.service";
 import { updateUserGroup, updateUserRole } from "../../../services/user.service";
+import type { FirebaseError } from "../../../models/error.model";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -86,7 +87,7 @@ const CreateGroupPage = () => {
       await Promise.all([refreshGroup(), refreshProfile()]);
       navigate("/invite-group");
     } catch (error: unknown) {
-      const firebaseError = error as { code?: string; message?: string };
+      const firebaseError = error as FirebaseError;
       if (firebaseError.code === "auth/network-request-failed") {
         setErrorConnection(tc("errors.noConnection"));
         return;
