@@ -13,7 +13,7 @@ const Search = ({ placeholder, onChange }: SearchProps) => {
     <label className="search">
       <span className="visually-hidden">{placeholder ?? t("search.label")}</span>
       <svg
-        className="search__icon"
+        className="search__icon icon"
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

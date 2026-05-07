@@ -23,6 +23,9 @@
   }
 
   &__error {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
     color: var(--color-error);
   }
 

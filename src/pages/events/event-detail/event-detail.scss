@@ -200,9 +200,12 @@
   }
 
   &__delete-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-danger);
-    text-align: center;
     margin: 0;
   }
 

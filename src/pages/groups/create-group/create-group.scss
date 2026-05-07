@@ -77,11 +77,17 @@
   }
 
   &__image-error {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
   }
 
   &__error {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
     margin-top: var(--size-16);
     color: var(--color-error);
   }

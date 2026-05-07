@@ -2,6 +2,11 @@
   margin-bottom: 48px;
 }
 
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

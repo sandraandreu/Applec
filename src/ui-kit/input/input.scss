@@ -15,8 +15,16 @@
   width: 100%;
   background-color: var(--color-surface);
 
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
   &:focus {
     border-color: var(--color-brand);
+
+    &::placeholder {
+      color: transparent;
+    }
   }
 
   &--with-icon {

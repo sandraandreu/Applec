@@ -7,10 +7,6 @@
   border-radius: var(--radius-input);
   background-color: var(--color-surface);
 
-  &__icon {
-    flex-shrink: 0;
-  }
-
   &__input {
     flex: 1;
     border: none;
@@ -21,6 +17,10 @@
 
     &::placeholder {
       color: var(--color-text-muted);
+    }
+
+    &:focus::placeholder {
+      color: transparent;
     }
   }
 }
