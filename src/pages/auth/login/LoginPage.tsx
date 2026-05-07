@@ -1,8 +1,9 @@
 import "./login.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useReducer } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { loginReducer, initialLoginState } from "./login.reducer";
 import Alert from "../../../components/alert/Alert";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -24,14 +25,8 @@ const LoginPage = () => {
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [loginState, setLoginState] = useState<"form" | "unverified">("form");
-  const [unverifiedUser, setUnverifiedUser] = useState<
-    import("firebase/auth").User | null
-  >(null);
-  const [errorConnection, setErrorConnection] = useState<string>("");
-  const [errorCredentials, setErrorCredentials] = useState<string>("");
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [state, dispatch] = useReducer(loginReducer, initialLoginState);
+  const { isLoading, loginState, unverifiedUser, errorConnection, errorCredentials, showPassword } = state;
 
   const {
     register,
@@ -45,28 +40,23 @@ const LoginPage = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
-      setIsLoading(true);
+      dispatch({ type: "LOGIN_START" });
       const userCredential = await loginUser(email, password);
 
-      setUnverifiedUser(userCredential.user);
-
       if (!userCredential.user.emailVerified) {
-        setLoginState("unverified");
-        setIsLoading(false);
+        dispatch({ type: "LOGIN_UNVERIFIED", user: userCredential.user });
         return;
       }
-      setIsLoading(false);
+      dispatch({ type: "LOGIN_SUCCESS" });
       navigate("/events");
     } catch (error: unknown) {
       const firebaseError = error as { code?: string; message?: string };
       if (firebaseError.code === "auth/invalid-credential") {
-        setErrorCredentials(t("login.errors.invalidCredentials"));
-        setIsLoading(false);
+        dispatch({ type: "ERROR_CREDENTIALS", message: t("login.errors.invalidCredentials") });
         return;
       }
       if (firebaseError.code === "auth/network-request-failed") {
-        setErrorConnection(tc("errors.noConnection"));
-        setIsLoading(false);
+        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
         return;
       }
       console.error("Email sign up error:", firebaseError.message);
@@ -122,7 +112,7 @@ const LoginPage = () => {
             endIcon={
               <EyeToggleIcon
                 showPassword={showPassword}
-                onToggle={() => setShowPassword(!showPassword)}
+                onToggle={() => dispatch({ type: "TOGGLE_PASSWORD" })}
               />
             }
           />
@@ -151,7 +141,7 @@ const LoginPage = () => {
         isOpen={loginState === "unverified"}
         header={t("login.errors.emailNotVerifiedTitle")}
         message={t("login.errors.emailNotVerified")}
-        onDismiss={() => setLoginState("form")}
+        onDismiss={() => dispatch({ type: "DISMISS_UNVERIFIED" })}
         buttons={[
           {
             text: tc("buttons.resendEmail"),
