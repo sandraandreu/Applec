@@ -27,14 +27,27 @@ export const initialLoginState: LoginState = {
   showPassword: false,
 };
 
-export const loginReducer = (state: LoginState, action: LoginAction): LoginState => {
+export const loginReducer = (
+  state: LoginState,
+  action: LoginAction,
+): LoginState => {
   switch (action.type) {
     case "LOGIN_START":
-      return { ...state, isLoading: true, errorConnection: "", errorCredentials: "" };
+      return {
+        ...state,
+        isLoading: true,
+        errorConnection: "",
+        errorCredentials: "",
+      };
     case "LOGIN_SUCCESS":
       return { ...state, isLoading: false };
     case "LOGIN_UNVERIFIED":
-      return { ...state, isLoading: false, loginState: "unverified", unverifiedUser: action.user };
+      return {
+        ...state,
+        isLoading: false,
+        loginState: "unverified",
+        unverifiedUser: action.user,
+      };
     case "ERROR_CREDENTIALS":
       return { ...state, isLoading: false, errorCredentials: action.message };
     case "ERROR_CONNECTION":
