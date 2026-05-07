@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./members.scss";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import type { AvatarAttendance } from "../../ui-kit/avatar/Avatar";
@@ -31,4 +32,4 @@ const MemberCard = ({ firstName, lastName, email, role, showChevron = true, show
   );
 };
 
-export default MemberCard;
+export default memo(MemberCard);

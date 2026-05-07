@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
@@ -87,4 +88,4 @@ const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCard
   );
 };
 
-export default EventCard;
+export default memo(EventCard);
