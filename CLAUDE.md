@@ -39,7 +39,15 @@ Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighte
 - Lectura → devuelve `null` en error
 - Escritura → sin try/catch, el error sube solo al componente
 
-**AuthContext:** expone `{ user, profile, isLoading, logout }`. `profile` es `UserProfile | null`.
+**AuthContext:** expone `{ user, profile, isLoading, isInitialized, logout, refreshProfile }`. `profile` es `UserProfile | null`.
+
+**Context providers:** el `value` del provider siempre va envuelto en `useMemo`. Las funciones expuestas en el contexto siempre van envueltas en `useCallback`.
+
+**Reducers:** los formularios con 3+ estados relacionados usan `useReducer`. El reducer vive en un archivo `[nombre].reducer.ts` en la misma carpeta que el componente.
+
+**Componentes de lista:** los componentes que se renderizan en listas (tarjetas, filas) se exportan envueltos en `React.memo`.
+
+**Efectos async:** los `useEffect` con llamadas async (Firebase, fetch) usan un flag `isMounted` para evitar actualizaciones de estado sobre componentes desmontados. El cleanup resetea el flag: `return () => { isMounted = false; }`.
 
 **Co-ubicación:** componentes específicos de una página van dentro de su carpeta de página. Reutilizables → `src/components/`. Primitivas UI sin lógica de dominio → `src/ui-kit/`.
 

@@ -58,8 +58,8 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 ### Patrones clave
 - **Firebase:** `auth`, `db` y `storage` se exportan desde `src/plugins/firebase.ts`. Nunca instanciar localmente en otros archivos.
 - **Servicios:** todos los métodos tienen try/catch. Los métodos de lectura devuelven `null` en caso de error; los de escritura re-lanzan el error.
-- **AuthContext:** expone `{ user, profile, isLoading, logout }`. `profile` es `UserProfile | null`.
-- **Modelos:** `UserProfile` en `src/models/user.model.ts`. `UserProfileCreate = Omit<UserProfile, 'groupId'>`.
+- **AuthContext:** expone `{ user, profile, isLoading, isInitialized, logout, refreshProfile }`. `profile` es `UserProfile | null`.
+- **Modelos:** `UserProfile` en `src/models/user.model.ts`. `UserProfileCreate = Omit<UserProfile, 'groupId'>`. `FirebaseError` en `src/models/error.model.ts`.
 - **Campo nombre:** siempre `username` (nunca `userName`) — se refactorizó y debe mantenerse.
 
 ---
