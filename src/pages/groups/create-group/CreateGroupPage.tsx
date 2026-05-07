@@ -4,7 +4,7 @@ import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/icons/BackButton";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loading from "../../../components/loading/Loading";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -35,6 +35,11 @@ const CreateGroupPage = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageError, setImageError] = useState<string>("");
+
+  useEffect(() => {
+    if (!imagePreview) return;
+    return () => URL.revokeObjectURL(imagePreview);
+  }, [imagePreview]);
 
   const {
     register,
