@@ -1,12 +1,19 @@
 .members-page {
   display: flex;
   flex-direction: column;
-  gap: var(--gap-form);
-  padding: 24px 16px;
+  gap: var(--gap-content);
+  padding: var(--padding-page);
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
 
   &__title {
-    font-size: var(--size-22);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
     margin: 0;
   }
 
@@ -26,9 +33,9 @@
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 
     &--active {
-      background: #1f2937;
+      background: var(--color-brand);
       color: var(--color-text-inverse);
-      border-color: #1f2937;
+      border-color: var(--color-brand);
     }
   }
 }

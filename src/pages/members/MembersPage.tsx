@@ -23,9 +23,10 @@ const MembersPage = () => {
 
   return (
     <div className="members-page">
-        <h1 className="members-page__title">{t("members.title")}</h1>
+        <div className="members-page__top">
+          <h1 className="members-page__title">{t("members.title")}</h1>
 
-        <div className="members-page__filters">
+          <div className="members-page__filters">
           <button
             className={`members-page__filter-btn${activeFilter === "all" ? " members-page__filter-btn--active" : ""}`}
             onClick={() => setActiveFilter("all")}
@@ -50,6 +51,7 @@ const MembersPage = () => {
           >
             {t("members.roles.members")} {memberCount}
           </button>
+        </div>
         </div>
 
         <Search

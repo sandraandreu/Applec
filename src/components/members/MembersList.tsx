@@ -44,7 +44,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   }
 
   if (filteredMembers.length === 0) {
-    return <p>{searchValue ? t("members.emptySearch") : activeFilter !== "all" ? t("members.emptyFilter") : t("members.onlyMember")}</p>;
+    return <p className="members-list__empty">{searchValue ? t("members.emptySearch") : activeFilter !== "all" ? t("members.emptyFilter") : t("members.onlyMember")}</p>;
   }
 
   return (

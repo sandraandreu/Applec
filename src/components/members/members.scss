@@ -53,4 +53,11 @@
     flex-direction: column;
     gap: var(--gap-tight);
   }
+
+  &__empty {
+    padding: var(--padding-empty);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body-m);
+  }
 }
