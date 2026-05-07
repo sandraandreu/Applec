@@ -18,8 +18,14 @@
     "code": "Código de invitación",
     "codePlaceholder": "Introduce el código",
     "button": "Buscar falla",
-    "groupFound": "Falla encontrada",
-    "joinButton": "Unirme a esta falla",
+    "groupFound": "¡Hemos encontrado tu falla!",
+    "joinButton": "Solicitar unirme",
+    "requestSent": {
+      "title": "Pendiente de aprobación",
+      "subtitle": "El administrador recibirá una notificación y te avisaremos cuando acepte tu solicitud.",
+      "notice": "Te avisaremos con una notificación en cuanto el administrador acepte.",
+      "button": "Entendido"
+    },
     "errors": {
       "codeRequired": "El código de invitación es obligatorio",
       "codeNotFound": "El código no es válido o no existe",

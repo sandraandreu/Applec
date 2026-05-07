@@ -18,8 +18,14 @@
     "code": "Codi d'invitació",
     "codePlaceholder": "Introdueix el codi",
     "button": "Buscar falla",
-    "groupFound": "Falla trobada",
-    "joinButton": "Unir-me a aquesta falla",
+    "groupFound": "Hem trobat la teua falla!",
+    "joinButton": "Sol·licitar unir-me",
+    "requestSent": {
+      "title": "Pendent d'aprovació",
+      "subtitle": "L'administrador rebrà una notificació i t'avisarem quan accepte la teua sol·licitud.",
+      "notice": "T'avisarem amb una notificació quan l'administrador accepte.",
+      "button": "Entesos"
+    },
     "errors": {
       "codeRequired": "El codi d'invitació és obligatori",
       "codeNotFound": "El codi no és vàlid o no existeix",

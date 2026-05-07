@@ -86,7 +86,7 @@ export const createGroup = async ({
 
 export const findGroupByInviteCode = async (
   code: string,
-): Promise<{ id: string; name: string } | null> => {
+): Promise<{ id: string; name: string; imageUrl?: string } | null> => {
   try {
     const q = query(collection(db, "groups"), where("inviteCode", "==", code));
     const snap = await getDocs(q);
@@ -95,6 +95,7 @@ export const findGroupByInviteCode = async (
     return {
       id: groupDoc.id,
       name: groupDoc.data().name,
+      imageUrl: groupDoc.data().imageUrl,
     };
   } catch {
     return null;
