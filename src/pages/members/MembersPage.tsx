@@ -1,7 +1,7 @@
 import "./members.scss";
 import Search from "../../ui-kit/search/Search";
 import MembersList from "../../components/members/MembersList";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../context/group/GroupContext";
 
@@ -14,13 +14,12 @@ const MembersPage = () => {
     "all" | "admin" | "organizer" | "member"
   >("all");
 
-  const adminCount =
-    group?.members.filter((m) => m.role === "admin").length ?? 0;
-  const organizerCount =
-    group?.members.filter((m) => m.role === "organizer").length ?? 0;
-  const memberCount =
-    group?.members.filter((m) => m.role === "member").length ?? 0;
-  const totalCount = group?.members.length ?? 0;
+  const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({
+    adminCount: group?.members.filter((m) => m.role === "admin").length ?? 0,
+    organizerCount: group?.members.filter((m) => m.role === "organizer").length ?? 0,
+    memberCount: group?.members.filter((m) => m.role === "member").length ?? 0,
+    totalCount: group?.members.length ?? 0,
+  }), [group?.members]);
 
   return (
     <div className="members-page">

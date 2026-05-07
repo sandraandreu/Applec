@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
 import MemberCard from "./MemberCard";
@@ -16,23 +17,19 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const navigate = useNavigate();
   const { group, isLoading } = useGroupContext();
 
-  if (isLoading) return <Loading message={t("members.loading")} />;
-
-  const filteredMembers = group?.members.filter((member) => {
-    const matchesSearch = member.username
-      ?.toLowerCase()
-      .includes(searchValue.toLowerCase());
-    const matchesFilter =
-      activeFilter === "all" || member.role === activeFilter;
+  const filteredMembers = useMemo(() => group?.members.filter((member) => {
+    const matchesSearch = member.username?.toLowerCase().includes(searchValue.toLowerCase());
+    const matchesFilter = activeFilter === "all" || member.role === activeFilter;
     return matchesSearch && matchesFilter;
-  });
+  }) ?? [], [group?.members, searchValue, activeFilter]);
+
+  const admins = useMemo(() => filteredMembers.filter((m) => m.role === "admin"), [filteredMembers]);
+  const organizers = useMemo(() => filteredMembers.filter((m) => m.role === "organizer"), [filteredMembers]);
+  const members = useMemo(() => filteredMembers.filter((m) => m.role === "member"), [filteredMembers]);
 
   const isOnlyMember = group?.members.length === 1;
 
-  const admins = filteredMembers?.filter((m) => m.role === "admin") ?? [];
-  const organizers =
-    filteredMembers?.filter((m) => m.role === "organizer") ?? [];
-  const members = filteredMembers?.filter((m) => m.role === "member") ?? [];
+  if (isLoading) return <Loading message={t("members.loading")} />;
 
   if (isOnlyMember) {
     return (
@@ -46,7 +43,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
     );
   }
 
-  if (filteredMembers?.length === 0) {
+  if (filteredMembers.length === 0) {
     return <p>{searchValue ? t("members.emptySearch") : activeFilter !== "all" ? t("members.emptyFilter") : t("members.onlyMember")}</p>;
   }
 
