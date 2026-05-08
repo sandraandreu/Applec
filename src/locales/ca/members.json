@@ -15,6 +15,10 @@
       "organizer": "Organitzador",
       "organizers": "Organitzadors",
       "members": "Membres"
+    },
+    "chips": {
+      "admin": "Admin",
+      "organizer": "Org."
     }
   }
 }

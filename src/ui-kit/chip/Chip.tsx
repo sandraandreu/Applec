@@ -9,12 +9,6 @@ interface ChipProps {
   variant?: ChipVariant;
 }
 
-const SHORT_LABELS: Record<ChipRole, string | null> = {
-  admin: "Admin",
-  organizer: "Org.",
-  member: null,
-};
-
 const Chip = ({ role, variant = "short" }: ChipProps) => {
   const { t } = useTranslation("members");
 
@@ -22,7 +16,7 @@ const Chip = ({ role, variant = "short" }: ChipProps) => {
 
   const label =
     variant === "short"
-      ? SHORT_LABELS[role]
+      ? t(`members.chips.${role}`)
       : t(`members.roles.${role}`);
 
   return (
