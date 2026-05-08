@@ -36,3 +36,8 @@ yarn-error.log*
 # Firebase
 google-services.json
 GoogleService-Info.plist
+
+# Docs privados (specs, planes de trabajo)
+docs/specs/
+docs/plan-trabajo-junio.md
+docs/superpowers/
