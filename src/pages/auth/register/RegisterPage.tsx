@@ -68,7 +68,7 @@ const RegisterPage = () => {
           username,
           firstName,
           lastName,
-          email: userCredential.user.email,
+          email: userCredential.user.email ?? "",
           createdAt: new Date(),
           role: "member",
         });
