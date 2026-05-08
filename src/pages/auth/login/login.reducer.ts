@@ -56,5 +56,7 @@ export const loginReducer = (
       return { ...state, showPassword: !state.showPassword };
     case "DISMISS_UNVERIFIED":
       return { ...state, loginState: "form" };
+    default:
+      return state;
   }
 };

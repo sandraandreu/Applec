@@ -41,5 +41,7 @@ export const registerReducer = (state: RegisterState, action: RegisterAction): R
       return { ...state, isLoading: false };
     case "DISMISS_ERROR":
       return { ...state, registerState: "form" };
+    default:
+      return state;
   }
 };
