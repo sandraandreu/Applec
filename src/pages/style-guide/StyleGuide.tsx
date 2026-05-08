@@ -338,7 +338,7 @@ const StyleGuide = () => {
 
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">Search</h3>
-          <Search placeholder="Buscar miembro..." onChange={(_value) => undefined} />
+          <Search placeholder="Buscar miembro..." onChange={() => undefined} />
         </div>
 
         <div className="style-guide__component">
