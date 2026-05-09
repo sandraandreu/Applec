@@ -17,7 +17,7 @@ import {
   updateUserGroup,
   updateUserRole,
 } from "../../../services/user.service";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import requestPendingIllustration from "../../../assets/images/request-pending-illustration.png";
 
 interface JoinGroupFormData {

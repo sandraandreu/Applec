@@ -9,7 +9,7 @@ import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import { sendPasswordReset } from "../../../services/auth.service";
 import type { FirebaseError } from "../../../models/error.model";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 
 interface ForgotPasswordFormData {
   email: string;

@@ -13,7 +13,8 @@ import {
   logoutUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
+import EyeToggleIcon from "../../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
 import {
   createUserProfile,
   isUsernameTaken,
@@ -41,7 +42,7 @@ const RegisterPage = () => {
   const { t: tc } = useTranslation("common");
 
   const [state, dispatch] = useReducer(registerReducer, initialRegisterState);
-  const { isLoading, registerState, registeredUser, errorConnection } = state;
+  const { isLoading, registerState, registeredUser, errorConnection, showPassword, showConfirmPassword } = state;
 
   const handleRegister = async (
     email: string,
@@ -214,7 +215,7 @@ const RegisterPage = () => {
             id="register-password"
             label={tc("fields.password")}
             placeholder={t("register.passwordPlaceholder")}
-            type="password"
+            type={showPassword ? "text" : "password"}
             required
             registration={register("password", {
               required: true,
@@ -231,13 +232,19 @@ const RegisterPage = () => {
                   ? t("register.errors.passwordInvalid")
                   : undefined
             }
+            endIcon={
+              <EyeToggleIcon
+                showPassword={showPassword}
+                onToggle={() => dispatch({ type: "TOGGLE_PASSWORD" })}
+              />
+            }
           />
 
           <Input
             id="register-confirm-password"
             label={t("register.confirmPassword")}
             placeholder={t("register.confirmPasswordPlaceholder")}
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             required
             registration={register("confirmPassword", {
               required: true,
@@ -249,6 +256,12 @@ const RegisterPage = () => {
                 : errors.confirmPassword?.type === "validate"
                   ? t("register.errors.passwordMismatch")
                   : undefined
+            }
+            endIcon={
+              <EyeToggleIcon
+                showPassword={showConfirmPassword}
+                onToggle={() => dispatch({ type: "TOGGLE_CONFIRM_PASSWORD" })}
+              />
             }
           />
 

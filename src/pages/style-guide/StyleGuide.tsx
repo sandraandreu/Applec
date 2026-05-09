@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./style-guide.scss";
 import Avatar from "../../ui-kit/avatar/Avatar";
-import BackButton from "../../ui-kit/icons/BackButton";
+import BackButton from "../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import Button from "../../ui-kit/button/Button";
 import Chip from "../../ui-kit/chip/Chip";
-import EyeToggleIcon from "../../ui-kit/icons/EyeToggleIcon";
+import EyeToggleIcon from "../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
 import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
 import Stepper from "../../ui-kit/stepper/Stepper";

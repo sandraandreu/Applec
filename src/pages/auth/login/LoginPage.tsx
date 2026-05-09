@@ -12,8 +12,8 @@ import {
   loginUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
-import BackButton from "../../../ui-kit/icons/BackButton";
-import EyeToggleIcon from "../../../ui-kit/icons/EyeToggleIcon";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
+import EyeToggleIcon from "../../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
 import type { FirebaseError } from "../../../models/error.model";
 
 interface LoginFormData {

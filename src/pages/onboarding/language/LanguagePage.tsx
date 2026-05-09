@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import "./language.scss";
 import LanguageSelector from "../../../components/language-selector/LanguageSelector";
 import Button from "../../../ui-kit/button/Button";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 
 const LanguagePage = () => {

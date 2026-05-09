@@ -1,7 +1,7 @@
 import "./create-group.scss";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";

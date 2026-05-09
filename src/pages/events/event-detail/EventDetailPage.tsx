@@ -8,7 +8,7 @@ import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import MemberCard from "../../../components/members/MemberCard";
 import Alert from "../../../components/alert/Alert";
 import EventsFilter from "../../../components/events/EventsFilter";

@@ -5,6 +5,8 @@ export interface RegisterState {
   registerState: "form" | "success" | "email-verification-failed" | "error";
   registeredUser: User | null;
   errorConnection: string;
+  showPassword: boolean;
+  showConfirmPassword: boolean;
 }
 
 export type RegisterAction =
@@ -14,13 +16,17 @@ export type RegisterAction =
   | { type: "ERROR_CONNECTION"; message: string }
   | { type: "ERROR_EMAIL_TAKEN" }
   | { type: "REGISTER_ERROR" }
-  | { type: "DISMISS_ERROR" };
+  | { type: "DISMISS_ERROR" }
+  | { type: "TOGGLE_PASSWORD" }
+  | { type: "TOGGLE_CONFIRM_PASSWORD" };
 
 export const initialRegisterState: RegisterState = {
   isLoading: false,
   registerState: "form",
   registeredUser: null,
   errorConnection: "",
+  showPassword: false,
+  showConfirmPassword: false,
 };
 
 export const registerReducer = (state: RegisterState, action: RegisterAction): RegisterState => {
@@ -39,6 +45,10 @@ export const registerReducer = (state: RegisterState, action: RegisterAction): R
       return { ...state, isLoading: false };
     case "DISMISS_ERROR":
       return { ...state, registerState: "form" };
+    case "TOGGLE_PASSWORD":
+      return { ...state, showPassword: !state.showPassword };
+    case "TOGGLE_CONFIRM_PASSWORD":
+      return { ...state, showConfirmPassword: !state.showConfirmPassword };
     default:
       return state;
   }

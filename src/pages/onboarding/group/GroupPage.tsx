@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./group.scss";
 import Button from "../../../ui-kit/button/Button";
-import BackButton from "../../../ui-kit/icons/BackButton";
+import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import groupIllustration from "../../../assets/images/group-onboarding-illustration.png";
 
