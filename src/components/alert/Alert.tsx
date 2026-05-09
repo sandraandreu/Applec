@@ -47,8 +47,11 @@ const Alert = ({
       onClose={onDismiss}
     >
       <div className="alert__content">
-        {header && <h2 className="alert__header">{header}</h2>}
+        <div className="alert__text">
+{header && <h2 className="alert__header">{header}</h2>}
         {message && <p className="alert__message">{message}</p>}
+        </div>
+        
         <div className="alert__buttons">
           {buttons.map((button, index) => (
             <Button

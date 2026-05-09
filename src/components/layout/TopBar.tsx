@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
 import useRole from "../../hooks/useRole";
+import Icon from "../../ui-kit/icons/icon/Icon";
 import "./layout.scss";
 
 const TopBar = () => {
@@ -38,9 +39,7 @@ const TopBar = () => {
             className="top-bar__action"
             aria-label={t("nav.createEvent")}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-              <path d="M21.875 13.9989H6.125M14 6.1239V21.8739V6.1239Z" stroke="#4C4C4C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <Icon name="plus" size={32} />
           </Link>
         )}
 
@@ -48,9 +47,7 @@ const TopBar = () => {
           className="top-bar__action"
           aria-label={t("nav.notifications")}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-            <path d="M17.4998 20.9999V21.8749C17.4998 22.8031 17.131 23.6934 16.4747 24.3497C15.8183 25.0061 14.928 25.3749 13.9998 25.3749C13.0715 25.3749 12.1813 25.0061 11.5249 24.3497C10.8685 23.6934 10.4998 22.8031 10.4998 21.8749V20.9999M23.3885 19.2187C21.9842 17.4999 20.9927 16.6249 20.9927 11.8862C20.9927 7.54675 18.7767 6.00074 16.9529 5.24988C16.7106 5.15035 16.4826 4.92175 16.4088 4.67292C16.0888 3.5841 15.192 2.62488 13.9998 2.62488C12.8076 2.62488 11.9102 3.58464 11.5935 4.67402C11.5197 4.92558 11.2917 5.15035 11.0494 5.24988C9.22338 6.00183 7.00963 7.54238 7.00963 11.8862C7.00689 16.6249 6.01541 17.4999 4.61103 19.2187C4.02916 19.9307 4.53884 20.9999 5.55658 20.9999H22.4485C23.4607 20.9999 23.9671 19.9275 23.3885 19.2187Z" stroke="#4C4C4C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <Icon name="bell" size={32} />
         </button>
       </div>
     </header>

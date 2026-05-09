@@ -16,18 +16,20 @@
   }
 
   &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
     padding: var(--size-24);
   }
 
   &__header {
-    margin: 0 0 var(--size-8);
+    padding-bottom: var(--size-8);
     font-size: var(--font-size-body-l);
     font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
   }
 
   &__message {
-    margin: 0 0 var(--size-24);
     color: var(--color-text-secondary);
     font-size: var(--font-size-body-s);
     line-height: 1.6;

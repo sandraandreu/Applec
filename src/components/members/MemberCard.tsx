@@ -3,6 +3,7 @@ import "./members.scss";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import type { AvatarAttendance } from "../../ui-kit/avatar/Avatar";
 import Chip from "../../ui-kit/chip/Chip";
+import Icon from "../../ui-kit/icons/icon/Icon";
 
 interface MemberCardProps {
   firstName: string;
@@ -24,9 +25,7 @@ const MemberCard = ({ firstName, lastName, email, role, showChevron = true, show
       </div>
       {showRole && <Chip role={role} variant="short" />}
       {showChevron && (
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M7.1875 4.37451L12.8125 9.99951L7.1875 15.6245" stroke="#666666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        <Icon name="chevron-right" size={20} className="member-card__chevron" />
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Icon from "../../ui-kit/icons/icon/Icon";
 import "./events.scss";
 
 export type FilterKey = string;
@@ -39,17 +40,11 @@ const EventsFilter = ({ options, selected, onChange }: EventsFilterProps) => {
         <span className="events-filter__count">
           {selectedOption?.count}
         </span>
-        <svg
+        <Icon
+          name="chevron-down"
+          size={18}
           className={`events-filter__chevron${isOpen ? " events-filter__chevron--open" : ""}`}
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path d="M3.9375 6.46558L9 11.5281L14.0625 6.46558" stroke="#0068FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        />
       </button>
 
       {isOpen && (

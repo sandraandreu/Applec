@@ -31,7 +31,7 @@ const AppRoutes = () => (
         <Route
           path="/home"
           element={
-            <PrivateRoutes requiresGroup>
+            <PrivateRoutes>
               <MainLayout>
                 <Home />
               </MainLayout>
