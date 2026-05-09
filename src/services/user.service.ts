@@ -46,8 +46,12 @@ export const updateUserRole = async (
   await updateDoc(doc(db, "users", uid), { role });
 };
 
-export const isUsernameTaken = async (username: string): Promise<boolean> => {
-  const q = query(collection(db, "users"), where("username", "==", username));
-  const snap = await getDocs(q);
-  return !snap.empty;
+export const isUsernameTaken = async (username: string): Promise<boolean | null> => {
+  try {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const snap = await getDocs(q);
+    return !snap.empty;
+  } catch {
+    return null;
+  }
 };

@@ -2,16 +2,15 @@ import type { User } from "firebase/auth";
 
 export interface RegisterState {
   isLoading: boolean;
-  registerState: "form" | "success" | "error";
+  registerState: "form" | "success" | "email-verification-failed" | "error";
   registeredUser: User | null;
-  usernameError: string;
   errorConnection: string;
 }
 
 export type RegisterAction =
   | { type: "REGISTER_START" }
-  | { type: "USERNAME_TAKEN"; message: string }
   | { type: "REGISTER_SUCCESS"; user: User }
+  | { type: "REGISTER_EMAIL_VERIFICATION_FAILED"; user: User }
   | { type: "ERROR_CONNECTION"; message: string }
   | { type: "ERROR_EMAIL_TAKEN" }
   | { type: "REGISTER_ERROR" }
@@ -21,18 +20,17 @@ export const initialRegisterState: RegisterState = {
   isLoading: false,
   registerState: "form",
   registeredUser: null,
-  usernameError: "",
   errorConnection: "",
 };
 
 export const registerReducer = (state: RegisterState, action: RegisterAction): RegisterState => {
   switch (action.type) {
     case "REGISTER_START":
-      return { ...state, isLoading: true, usernameError: "", errorConnection: "" };
-    case "USERNAME_TAKEN":
-      return { ...state, isLoading: false, usernameError: action.message };
+      return { ...state, isLoading: true, errorConnection: "" };
     case "REGISTER_SUCCESS":
       return { ...state, isLoading: false, registerState: "success", registeredUser: action.user };
+    case "REGISTER_EMAIL_VERIFICATION_FAILED":
+      return { ...state, isLoading: false, registerState: "email-verification-failed", registeredUser: action.user };
     case "ERROR_CONNECTION":
       return { ...state, isLoading: false, errorConnection: action.message };
     case "ERROR_EMAIL_TAKEN":

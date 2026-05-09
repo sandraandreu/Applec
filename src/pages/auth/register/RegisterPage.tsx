@@ -41,7 +41,7 @@ const RegisterPage = () => {
   const { t: tc } = useTranslation("common");
 
   const [state, dispatch] = useReducer(registerReducer, initialRegisterState);
-  const { isLoading, registerState, registeredUser, usernameError, errorConnection } = state;
+  const { isLoading, registerState, registeredUser, errorConnection } = state;
 
   const handleRegister = async (
     email: string,
@@ -50,47 +50,57 @@ const RegisterPage = () => {
     firstName: string,
     lastName: string,
   ) => {
+    dispatch({ type: "REGISTER_START" });
+
+    let userCredential;
     try {
-      dispatch({ type: "REGISTER_START" });
-
-      const userCredential = await registerUser(email, password);
-
-      try {
-        const taken = await isUsernameTaken(username);
-        if (taken) {
-          await userCredential.user.delete();
-          dispatch({ type: "USERNAME_TAKEN", message: t("register.errors.usernameTaken") });
-          return;
-        }
-
-        await sendVerificationEmail(userCredential.user);
-        await createUserProfile(userCredential.user.uid, {
-          username,
-          firstName,
-          lastName,
-          email: userCredential.user.email ?? "",
-          createdAt: new Date(),
-          role: "member",
-        });
-
-        await logoutUser();
-        dispatch({ type: "REGISTER_SUCCESS", user: userCredential.user });
-      } catch (innerError: unknown) {
-        await userCredential.user.delete().catch((_) => _);
-        throw innerError;
-      }
+      userCredential = await registerUser(email, password);
     } catch (error: unknown) {
       const firebaseError = error as FirebaseError;
-      if (firebaseError.code === "auth/network-request-failed") {
-        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
-        return;
-      }
       if (firebaseError.code === "auth/email-already-in-use") {
         dispatch({ type: "ERROR_EMAIL_TAKEN" });
-        return;
+      } else if (firebaseError.code === "auth/network-request-failed") {
+        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
+      } else {
+        dispatch({ type: "REGISTER_ERROR" });
       }
-      console.error("Register error:", firebaseError.code, firebaseError.message);
+      return;
+    }
+
+    let verificationEmailSent = true;
+    try {
+      await sendVerificationEmail(userCredential.user);
+    } catch {
+      verificationEmailSent = false;
+    }
+
+    try {
+      await createUserProfile(userCredential.user.uid, {
+        username,
+        firstName,
+        lastName,
+        email: userCredential.user.email ?? "",
+        createdAt: new Date(),
+        role: "member",
+      });
+    } catch {
+      try { await userCredential.user.delete(); } catch { /* rollback best-effort */ }
       dispatch({ type: "REGISTER_ERROR" });
+      return;
+    }
+
+    let logoutSuccess = false;
+    for (let attempt = 0; attempt < 3 && !logoutSuccess; attempt++) {
+      try {
+        await logoutUser();
+        logoutSuccess = true;
+      } catch { /* retry */ }
+    }
+
+    if (verificationEmailSent) {
+      dispatch({ type: "REGISTER_SUCCESS", user: userCredential.user });
+    } else {
+      dispatch({ type: "REGISTER_EMAIL_VERIFICATION_FAILED", user: userCredential.user });
     }
   };
 
@@ -105,7 +115,7 @@ const RegisterPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<RegisterFormData>({ mode: "onBlur" });
 
   const password = watch("password", "");
 
@@ -166,13 +176,18 @@ const RegisterPage = () => {
             placeholder={t("register.usernamePlaceholder")}
             type="text"
             required
-            registration={register("username", { required: true })}
+            registration={register("username", {
+              required: true,
+              validate: async (value) => {
+                const taken = await isUsernameTaken(value);
+                if (taken) return t("register.errors.usernameTaken");
+                return true;
+              },
+            })}
             error={
               errors.username?.type === "required"
                 ? tc("errors.required")
-                : usernameError
-                  ? usernameError
-                  : undefined
+                : errors.username?.message
             }
           />
 
@@ -276,7 +291,8 @@ const RegisterPage = () => {
 
       <Alert
         isOpen={registerState === "error"}
-        header={t("register.errors.emailTaken")}
+        header={t("register.errors.emailTakenTitle")}
+        message={t("register.errors.emailTakenMessage")}
         onDismiss={() => dispatch({ type: "DISMISS_ERROR" })}
         buttons={[
           {
@@ -303,6 +319,19 @@ const RegisterPage = () => {
           {
             text: tc("buttons.close"),
             role: "cancel",
+          },
+        ]}
+      />
+
+      <Alert
+        isOpen={registerState === "email-verification-failed"}
+        header={t("register.emailVerificationFailedTitle")}
+        message={t("register.emailVerificationFailedMessage")}
+        onDismiss={() => navigate("/login")}
+        buttons={[
+          {
+            text: tc("buttons.resendEmail"),
+            handler: () => handleResendEmail(),
           },
         ]}
       />
