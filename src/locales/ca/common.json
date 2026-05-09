@@ -25,7 +25,8 @@
   "errors": {
     "required": "Aquest camp és obligatori",
     "emailInvalid": "Introdueix un correu electrònic vàlid",
-    "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
+    "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar",
+    "unknown": "Ha ocorregut un error inesperat. Torna-ho a intentar"
   },
   "nav": {
     "tabBar": "Navegació principal",

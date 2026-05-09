@@ -15,7 +15,7 @@ import {
 import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import EyeToggleIcon from "../../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import type { FirebaseError } from "../../../models/error.model";
+import { isFirebaseError, getErrorKey } from "../../../utils/firebase-errors";
 
 interface LoginFormData {
   email: string;
@@ -52,16 +52,15 @@ const LoginPage = () => {
       dispatch({ type: "LOGIN_SUCCESS" });
       navigate("/events");
     } catch (error: unknown) {
-      const firebaseError = error as FirebaseError;
-      if (firebaseError.code === "auth/invalid-credential") {
+      if (isFirebaseError(error) && error.code === "auth/invalid-credential") {
         dispatch({ type: "ERROR_CREDENTIALS", message: t("login.errors.invalidCredentials") });
         return;
       }
-      if (firebaseError.code === "auth/network-request-failed") {
+      if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
         dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
         return;
       }
-      console.error("Email sign up error:", firebaseError.message);
+      dispatch({ type: "ERROR_CREDENTIALS", message: t(getErrorKey(error)) });
     }
   };
 

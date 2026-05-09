@@ -19,7 +19,7 @@ import {
   createUserProfile,
   isUsernameTaken,
 } from "../../../services/user.service";
-import type { FirebaseError } from "../../../models/error.model";
+import { isFirebaseError } from "../../../utils/firebase-errors";
 
 interface RegisterFormData {
   firstName: string;
@@ -57,10 +57,9 @@ const RegisterPage = () => {
     try {
       userCredential = await registerUser(email, password);
     } catch (error: unknown) {
-      const firebaseError = error as FirebaseError;
-      if (firebaseError.code === "auth/email-already-in-use") {
+      if (isFirebaseError(error) && error.code === "auth/email-already-in-use") {
         dispatch({ type: "ERROR_EMAIL_TAKEN" });
-      } else if (firebaseError.code === "auth/network-request-failed") {
+      } else if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
         dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
       } else {
         dispatch({ type: "REGISTER_ERROR" });

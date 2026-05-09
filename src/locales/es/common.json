@@ -25,7 +25,8 @@
   "errors": {
     "required": "Este campo es obligatorio",
     "emailInvalid": "Introduce un correo electrónico válido",
-    "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
+    "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
+    "unknown": "Ha ocurrido un error inesperado. Inténtalo de nuevo"
   },
   "nav": {
     "tabBar": "Navegación principal",
