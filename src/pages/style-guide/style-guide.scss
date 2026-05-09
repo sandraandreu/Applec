@@ -143,6 +143,29 @@
     font-weight: 600;
   }
 
+  // ── Icons ─────────────────────────────────────────────
+
+  &__icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 16px;
+  }
+
+  &__icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__icon-name {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-muted);
+    text-align: center;
+    word-break: break-all;
+  }
+
   // ── Border Radius ─────────────────────────────────────
 
   &__radius-grid {

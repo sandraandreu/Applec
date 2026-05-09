@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./style-guide.scss";
+import Icon from "../../ui-kit/icons/icon/Icon";
+import type { IconName } from "../../ui-kit/icons/icon/Icon";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import BackButton from "../../ui-kit/buttons/icon-buttons/back-button/BackButton";
 import Button from "../../ui-kit/button/Button";
@@ -391,6 +393,18 @@ const StyleGuide = () => {
           <div className="style-guide__row style-guide__row--centered">
             <EyeToggleIcon showPassword={showPassword} onToggle={() => setShowPassword(!showPassword)} />
             <span>{showPassword ? "Visible" : "Oculto"}</span>
+          </div>
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">Icon</h3>
+          <div className="style-guide__icon-grid">
+            {(["arrow-left","eye-on","eye-off","search","error-circle","check","edit","camera","globe","share","calendar","plus","bell","location","users","profile","feed","ticket","chevron-right","chevron-down","menu-dots"] as IconName[]).map((name) => (
+              <div key={name} className="style-guide__icon-item">
+                <Icon name={name} size={28} />
+                <span className="style-guide__icon-name">{name}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
