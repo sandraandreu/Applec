@@ -34,7 +34,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   if (isOnlyMember) {
     return (
       <div>
-        <p>{t("members.onlyMember")}</p>
+        <p className="members-list__empty">{t("members.onlyMember")}</p>
         <Button
           text={t("members.invite")}
           onClick={() => navigate("/invite-group")}

@@ -1,7 +1,7 @@
 import "./create-group.scss";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
@@ -14,7 +14,10 @@ import {
   uploadGroupImage,
   updateGroupImage,
 } from "../../../services/group.service";
-import { updateUserGroup, updateUserRole } from "../../../services/user.service";
+import {
+  updateUserGroup,
+  updateUserRole,
+} from "../../../services/user.service";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import type { FirebaseError } from "../../../models/error.model";
 

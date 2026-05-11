@@ -8,7 +8,7 @@ import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
-import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import MemberCard from "../../../components/members/MemberCard";
 import Alert from "../../../components/alert/Alert";
 import EventsFilter from "../../../components/events/EventsFilter";
@@ -51,7 +51,9 @@ const EventDetailPage = () => {
       setEvent(data);
     });
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, [profile?.groupId, id, navigate]);
 
   if (isLoading) return <Loading />;
@@ -64,7 +66,14 @@ const EventDetailPage = () => {
 
   const eventStatus = getEventStatus(event);
   // TODO T12: reemplazar con datos reales de Firestore
-  const allMembers: { uid: string; firstName: string; lastName: string; email: string; role: "member" | "organizer" | "admin"; attendance: "going" | "pending" | "not-going" }[] = [];
+  const allMembers: {
+    uid: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: "member" | "organizer" | "admin";
+    attendance: "going" | "pending" | "not-going";
+  }[] = [];
   const totalMembers = allMembers.length;
   const goingCount = allMembers.filter((m) => m.attendance === "going").length;
 
