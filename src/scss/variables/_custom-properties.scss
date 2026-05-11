@@ -114,7 +114,7 @@
   // Gradient backgrounds
   --color-bg-gradient-blue:      linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));
   --color-bg-gradient-teal:      linear-gradient(to bottom, var(--teal-100),   var(--yellow-100));
-  --color-bg-gradient-pink:      linear-gradient(to bottom, var(--purple-100), var(--yellow-100));
+  --color-bg-gradient-pink:      linear-gradient(180deg, #FDE6FF 0%, var(--yellow-100) 46.15%);
   --color-bg-gradient-red:       linear-gradient(to bottom, var(--red-100),    var(--yellow-100));
   --color-bg-gradient-yellow:    linear-gradient(180deg, var(--yellow-100) 0%, var(--teal-200) 62%);
   --color-bg-gradient-orange:    linear-gradient(180deg, var(--orange-100) 0%, var(--yellow-100) 52.4%);
