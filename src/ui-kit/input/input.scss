@@ -32,6 +32,10 @@
   }
 }
 
+textarea.field__input {
+  resize: none;
+}
+
 .field__icon {
   position: absolute;
   right: var(--size-14);

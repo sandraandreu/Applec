@@ -25,8 +25,8 @@
   }
 
   &--especial {
-    background: linear-gradient(to right, var(--blue-500) 12%, var(--yellow-500) 95%);
-    color: var(--neutral-900);
+    background: var(--color-accent-yellow);
+    color: var(--color-text-primary);
   }
 
   &--danger {

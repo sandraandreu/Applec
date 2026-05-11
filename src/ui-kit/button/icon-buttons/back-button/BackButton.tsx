@@ -3,7 +3,11 @@ import { useTranslation } from "react-i18next";
 import IconButton from "../../../icons/icon-button/IconButton";
 import "./back-button.scss";
 
-const BackButton = () => {
+interface BackButtonProps {
+  onClick?: () => void;
+}
+
+const BackButton = ({ onClick }: BackButtonProps) => {
   const navigate = useNavigate();
   const { t } = useTranslation("common");
 
@@ -11,7 +15,7 @@ const BackButton = () => {
     <IconButton
       name="arrow-left"
       ariaLabel={t("buttons.back")}
-      onClick={() => navigate(-1)}
+      onClick={onClick ?? (() => navigate(-1))}
       size={32}
       className="back-button"
     />

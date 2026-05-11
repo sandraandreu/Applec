@@ -13,4 +13,8 @@
       background: var(--color-text-primary);
     }
   }
+
+  &__dot--active {
+    background-color: var(--color-stepper-active);
+  }
 }
