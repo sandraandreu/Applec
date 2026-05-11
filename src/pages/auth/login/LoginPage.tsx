@@ -12,8 +12,8 @@ import {
   loginUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
-import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
-import EyeToggleIcon from "../../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import EyeToggleIcon from "../../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import { isFirebaseError, getErrorKey } from "../../../utils/firebase-errors";
 
@@ -28,7 +28,14 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(loginReducer, initialLoginState);
-  const { isLoading, loginState, unverifiedUser, errorConnection, errorCredentials, showPassword } = state;
+  const {
+    isLoading,
+    loginState,
+    unverifiedUser,
+    errorConnection,
+    errorCredentials,
+    showPassword,
+  } = state;
 
   const {
     register,
@@ -51,13 +58,23 @@ const LoginPage = () => {
       }
       dispatch({ type: "LOGIN_SUCCESS" });
       navigate("/events");
+      console.log("login navega a events");
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "auth/invalid-credential") {
-        dispatch({ type: "ERROR_CREDENTIALS", message: t("login.errors.invalidCredentials") });
+        dispatch({
+          type: "ERROR_CREDENTIALS",
+          message: t("login.errors.invalidCredentials"),
+        });
         return;
       }
-      if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
-        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
+      if (
+        isFirebaseError(error) &&
+        error.code === "auth/network-request-failed"
+      ) {
+        dispatch({
+          type: "ERROR_CONNECTION",
+          message: tc("errors.noConnection"),
+        });
         return;
       }
       dispatch({ type: "ERROR_CREDENTIALS", message: t(getErrorKey(error)) });
@@ -77,7 +94,9 @@ const LoginPage = () => {
       <BackButton />
 
       <div className="login-page__content">
-        <h1 className="login-page__title margin-bottom-48px">{t("login.title")}</h1>
+        <h1 className="login-page__title margin-bottom-48px">
+          {t("login.title")}
+        </h1>
         <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="login-email"
@@ -118,7 +137,10 @@ const LoginPage = () => {
             }
           />
 
-          <Link className="login-page__forgot margin-bottom-48px" to="/forgot-password">
+          <Link
+            className="login-page__forgot margin-bottom-48px"
+            to="/forgot-password"
+          >
             {t("login.forgotPassword")}
           </Link>
 

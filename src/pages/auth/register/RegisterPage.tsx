@@ -13,8 +13,8 @@ import {
   logoutUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
-import BackButton from "../../../ui-kit/buttons/icon-buttons/back-button/BackButton";
-import EyeToggleIcon from "../../../ui-kit/buttons/icon-buttons/eye-toggle/EyeToggleIcon";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import EyeToggleIcon from "../../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
 import {
   createUserProfile,
   isUsernameTaken,
@@ -42,7 +42,14 @@ const RegisterPage = () => {
   const { t: tc } = useTranslation("common");
 
   const [state, dispatch] = useReducer(registerReducer, initialRegisterState);
-  const { isLoading, registerState, registeredUser, errorConnection, showPassword, showConfirmPassword } = state;
+  const {
+    isLoading,
+    registerState,
+    registeredUser,
+    errorConnection,
+    showPassword,
+    showConfirmPassword,
+  } = state;
 
   const handleRegister = async (
     email: string,
@@ -57,10 +64,19 @@ const RegisterPage = () => {
     try {
       userCredential = await registerUser(email, password);
     } catch (error: unknown) {
-      if (isFirebaseError(error) && error.code === "auth/email-already-in-use") {
+      if (
+        isFirebaseError(error) &&
+        error.code === "auth/email-already-in-use"
+      ) {
         dispatch({ type: "ERROR_EMAIL_TAKEN" });
-      } else if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
-        dispatch({ type: "ERROR_CONNECTION", message: tc("errors.noConnection") });
+      } else if (
+        isFirebaseError(error) &&
+        error.code === "auth/network-request-failed"
+      ) {
+        dispatch({
+          type: "ERROR_CONNECTION",
+          message: tc("errors.noConnection"),
+        });
       } else {
         dispatch({ type: "REGISTER_ERROR" });
       }
@@ -84,7 +100,11 @@ const RegisterPage = () => {
         role: "member",
       });
     } catch {
-      try { await userCredential.user.delete(); } catch { /* rollback best-effort */ }
+      try {
+        await userCredential.user.delete();
+      } catch {
+        /* rollback best-effort */
+      }
       dispatch({ type: "REGISTER_ERROR" });
       return;
     }
@@ -94,13 +114,18 @@ const RegisterPage = () => {
       try {
         await logoutUser();
         logoutSuccess = true;
-      } catch { /* retry */ }
+      } catch {
+        /* retry */
+      }
     }
 
     if (verificationEmailSent) {
       dispatch({ type: "REGISTER_SUCCESS", user: userCredential.user });
     } else {
-      dispatch({ type: "REGISTER_EMAIL_VERIFICATION_FAILED", user: userCredential.user });
+      dispatch({
+        type: "REGISTER_EMAIL_VERIFICATION_FAILED",
+        user: userCredential.user,
+      });
     }
   };
 
@@ -120,7 +145,13 @@ const RegisterPage = () => {
   const password = watch("password", "");
 
   const onSubmit = (data: RegisterFormData) => {
-    handleRegister(data.email, data.password, data.username, data.firstName, data.lastName);
+    handleRegister(
+      data.email,
+      data.password,
+      data.username,
+      data.firstName,
+      data.lastName,
+    );
   };
 
   return (
@@ -130,7 +161,9 @@ const RegisterPage = () => {
       <BackButton />
 
       <div className="register-page__content">
-        <h1 className="register-page__title margin-bottom-48px">{t("register.title")}</h1>
+        <h1 className="register-page__title margin-bottom-48px">
+          {t("register.title")}
+        </h1>
         <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
             id="register-firstname"
@@ -273,9 +306,23 @@ const RegisterPage = () => {
             />
             <label htmlFor="acceptsTerms">
               {t("register.termsStart")}
-              <a className="register-page__terms-link" href="https://applec.com/privacy" target="_blank" rel="noopener noreferrer">{t("register.termsPrivacy")}</a>
+              <a
+                className="register-page__terms-link"
+                href="https://applec.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("register.termsPrivacy")}
+              </a>
               {t("register.termsAnd")}
-              <a className="register-page__terms-link" href="https://applec.com/terms" target="_blank" rel="noopener noreferrer">{t("register.termsConditions")}</a>
+              <a
+                className="register-page__terms-link"
+                href="https://applec.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t("register.termsConditions")}
+              </a>
             </label>
           </div>
 
@@ -294,7 +341,6 @@ const RegisterPage = () => {
             isLoading={isLoading}
           />
         </form>
-
       </div>
 
       <Link className="register-page__login" to="/login">

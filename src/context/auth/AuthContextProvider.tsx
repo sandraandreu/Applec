@@ -1,4 +1,11 @@
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AuthContext } from "./AuthContext";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "../../plugins/firebase";
@@ -14,8 +21,6 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isInitialized, setIsInitialized] = useState<boolean>(false);
-  const initializedRef = useRef(false);
 
   const logout = useCallback(async () => {
     await logoutUser();
@@ -30,20 +35,23 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setIsLoading(true);
       setUser(firebaseUser);
-      setProfile(firebaseUser ? await getUserProfile(firebaseUser.uid) : null);
-      setIsLoading(false);
-      if (!initializedRef.current) {
-        setIsInitialized(true);
-        initializedRef.current = true;
+      
+      if (firebaseUser) {
+        const userProfile = await getUserProfile(firebaseUser.uid);
+        setProfile(userProfile);
+      } else {
+        setProfile(null);
       }
+
+      setIsLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
   const contextValue = useMemo(
-    () => ({ user, profile, isLoading, isInitialized, logout, refreshProfile }),
-    [user, profile, isLoading, isInitialized, logout, refreshProfile]
+    () => ({ user, profile, isLoading, logout, refreshProfile }),
+    [user, profile, isLoading, logout, refreshProfile],
   );
 
   return (
