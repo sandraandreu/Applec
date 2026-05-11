@@ -8,19 +8,42 @@ import Loading from "../../components/loading/Loading";
 
 const Home = lazy(() => import("../../pages/home/Home"));
 const LoginPage = lazy(() => import("../../pages/auth/login/LoginPage"));
-const RegisterPage = lazy(() => import("../../pages/auth/register/RegisterPage"));
-const ForgotPasswordPage = lazy(() => import("../../pages/auth/forgot-password/ForgotPasswordPage"));
-const CreateGroupPage = lazy(() => import("../../pages/groups/create-group/CreateGroupPage"));
-const WelcomePage = lazy(() => import("../../pages/onboarding/welcome/WelcomePage"));
+const RegisterPage = lazy(
+  () => import("../../pages/auth/register/RegisterPage"),
+);
+const ForgotPasswordPage = lazy(
+  () => import("../../pages/auth/forgot-password/ForgotPasswordPage"),
+);
+const CreateGroupPage = lazy(
+  () => import("../../pages/groups/create-group/CreateGroupPage"),
+);
+const WelcomePage = lazy(
+  () => import("../../pages/onboarding/welcome/WelcomePage"),
+);
 const GroupPage = lazy(() => import("../../pages/onboarding/group/GroupPage"));
-const LanguagePage = lazy(() => import("../../pages/onboarding/language/LanguagePage"));
-const JoinGroupPage = lazy(() => import("../../pages/groups/join-group/JoinGroupPage"));
-const InviteGroupPage = lazy(() => import("../../pages/groups/invite-group/InviteGroupPage"));
-const LandingPage = lazy(() => import("../../pages/onboarding/landing/LandingPage"));
+const LanguagePage = lazy(
+  () => import("../../pages/onboarding/language/LanguagePage"),
+);
+const JoinGroupPage = lazy(
+  () => import("../../pages/groups/join-group/JoinGroupPage"),
+);
+const InviteGroupPage = lazy(
+  () => import("../../pages/groups/invite-group/InviteGroupPage"),
+);
+const LandingPage = lazy(
+  () => import("../../pages/onboarding/landing/LandingPage"),
+);
 const MembersPage = lazy(() => import("../../pages/members/MembersPage"));
-const EventsListPage = lazy(() => import("../../pages/events/events-list/EventsListPage"));
-const EventDetailPage = lazy(() => import("../../pages/events/event-detail/EventDetailPage"));
+const EventsListPage = lazy(
+  () => import("../../pages/events/events-list/EventsListPage"),
+);
+const EventDetailPage = lazy(
+  () => import("../../pages/events/event-detail/EventDetailPage"),
+);
 const StyleGuide = lazy(() => import("../../pages/style-guide/StyleGuide"));
+const CreateEventPage = lazy(
+  () => import("../../pages/events/create-events/CreateEventPage"),
+);
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -136,6 +159,15 @@ const AppRoutes = () => (
               <MainLayout>
                 <MembersPage />
               </MainLayout>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/create-events"
+          element={
+            <PrivateRoutes requiresGroup>
+              <CreateEventPage />
             </PrivateRoutes>
           }
         />

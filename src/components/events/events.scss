@@ -48,6 +48,7 @@
   &__info {
     display: flex;
     flex-direction: column;
+    gap: (var(--gap--tight));
     flex: 1;
     min-width: 0;
     padding: var(--size-18) var(--size-14);

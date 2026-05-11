@@ -35,7 +35,8 @@
       "Bash(sort -t: -k3)",
       "Bash(git rm *)",
       "Bash(npm install *)",
-      "Bash(dir *)"
+      "Bash(dir *)",
+      "mcp__plugin_context7_context7__query-docs"
     ]
   }
 }

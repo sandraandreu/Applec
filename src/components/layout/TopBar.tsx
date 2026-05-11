@@ -35,7 +35,7 @@ const TopBar = () => {
       <div className="top-bar__actions">
         {isAdminOrOrganizer && (
           <Link
-            to="/events/create"
+            to="/create-events"
             className="top-bar__action"
             aria-label={t("nav.createEvent")}
           >

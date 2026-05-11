@@ -4,6 +4,10 @@
   min-height: 100vh;
   background: var(--color-bg-gradient-orange);
 
+  &--special {
+    background: var(--color-bg-gradient-pink);
+  }
+
   &__gradient-zone {
     padding: var(--padding-page);
     display: flex;
@@ -95,4 +99,5 @@
       min-height: 170px;
     }
   }
+
 }

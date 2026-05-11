@@ -4,13 +4,15 @@ import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
 import Loading from "../../components/loading/Loading";
 
-
 interface PrivateRoutesProps {
   children: ReactNode;
   requiresGroup?: boolean;
 }
 
-const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) => {
+const PrivateRoutes = ({
+  children,
+  requiresGroup = false,
+}: PrivateRoutesProps) => {
   const { user, profile, isLoading: authLoading } = useAuthContext();
   const { isLoading: groupLoading } = useGroupContext();
 
@@ -18,7 +20,8 @@ const PrivateRoutes = ({ children, requiresGroup = false }: PrivateRoutesProps) 
 
   if (!user || !user.emailVerified) return <Navigate to="/landing" replace />;
 
-  if (requiresGroup && !profile?.groupId) return <Navigate to="/onboarding/welcome" replace />;
+  if (requiresGroup && !profile?.groupId)
+    return <Navigate to="/onboarding/welcome" replace />;
 
   return <>{children}</>;
 };
