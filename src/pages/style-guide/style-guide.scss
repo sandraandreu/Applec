@@ -27,7 +27,7 @@
   &__item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--gap-items);
     margin-bottom: 32px;
   }
 
@@ -41,7 +41,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    gap: 16px;
+    gap: var(--gap-compact);
 
     &--centered {
       align-items: center;
@@ -51,7 +51,7 @@
   &__stack {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--gap-compact);
   }
 
   &__loading-preview {
@@ -69,7 +69,7 @@
   &__swatch-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
+    gap: var(--gap-compact);
   }
 
   &__swatch {
@@ -148,14 +148,14 @@
   &__icon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: 16px;
+    gap: var(--gap-compact);
   }
 
   &__icon-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: var(--gap-items);
   }
 
   &__icon-name {
@@ -171,7 +171,7 @@
   &__radius-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: var(--gap-content);
     align-items: flex-end;
   }
 
@@ -179,7 +179,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: var(--gap-items);
   }
 
   &__radius-box {

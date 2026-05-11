@@ -63,18 +63,18 @@ El Admin/Organizador ve la lista completa (nombre, rol, estado). El Admin puede 
 ---
 
 ### 7. Crear evento
-**Estado:** ✗ Pendiente (T08)
+**Estado:** ✓ Formulario implementado, ✗ lógica de confirmación y recordatorio pendiente
 
 Solo Admin y Organizadores pueden crear eventos.
 
-**Campos obligatorios:** nombre (máx. 80 caracteres), fecha, hora, fecha límite de confirmación.
-**Campos opcionales:** lugar, descripción (máx. 500 caracteres).
+Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción opcional; (2) fecha, hora de inicio, hora de fin opcional y lugar; (3) configuración de confirmación obligatoria, recordatorio y fecha límite de confirmación opcional.
+
+**Campos obligatorios:** nombre (máx. 80 caracteres), fecha, hora de inicio, lugar.
+**Campos opcionales:** descripción (máx. 500 caracteres), hora de fin, fecha límite de confirmación.
 
 La fecha límite de confirmación no puede ser posterior a la fecha del evento.
 
-Dos vías de creación: desde plantilla predefinida (cena, ofrenda, reunión, etc.) o desde cero.
-
-Al guardar: aparece en el calendario del grupo + notificación a todos los miembros.
+Al guardar: aparece en la lista de eventos del grupo. Los campos `requiresConfirmation` y `sendReminder` se guardan en Firestore pero aún no tienen efecto — la lógica de confirmación de asistencia y el envío de notificaciones/recordatorios están pendientes.
 
 ---
 

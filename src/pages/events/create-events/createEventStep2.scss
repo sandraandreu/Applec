@@ -166,7 +166,7 @@
   &__time-box {
     display: flex;
     align-items: center;
-    gap: var(--size-8);
+    gap: var(--gap-items);
     padding: var(--padding-input);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-input);

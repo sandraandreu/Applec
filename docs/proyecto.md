@@ -57,8 +57,8 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 
 ### Patrones clave
 - **Firebase:** `auth`, `db` y `storage` se exportan desde `src/plugins/firebase.ts`. Nunca instanciar localmente en otros archivos.
-- **Servicios:** todos los métodos tienen try/catch. Los métodos de lectura devuelven `null` en caso de error; los de escritura re-lanzan el error.
-- **AuthContext:** expone `{ user, profile, isLoading, isInitialized, logout, refreshProfile }`. `profile` es `UserProfile | null`.
+- **Servicios:** solo los métodos de lectura tienen try/catch y devuelven `null` en caso de error. Los métodos de escritura no tienen try/catch — el error sube al componente.
+- **AuthContext:** expone `{ user, profile, isLoading, logout, refreshProfile }`. `profile` es `UserProfile | null`.
 - **Modelos:** `UserProfile` en `src/models/user.model.ts`. `UserProfileCreate = Omit<UserProfile, 'groupId'>`. `FirebaseError` en `src/models/error.model.ts`.
 - **Campo nombre:** siempre `username` (nunca `userName`) — se refactorizó y debe mantenerse.
 
@@ -86,7 +86,7 @@ Array `members`: `{ uid, username, firstName, lastName, email, role }`
 ### Event — `groups/{groupId}/events/{eventId}`
 Campos obligatorios: `name`, `date`, `startTime`, `location`, `requiresConfirmation`, `sendReminder`, `createdBy`, `createdAt`, `groupId`
 Campos opcionales: `description`, `endTime`, `confirmationDeadline`, `isSpecial`
-El estado (`activo` | `plazo-cerrado` | `finalizado` | `cancelado`) se deriva con `getEventStatus()` — no se almacena en Firestore.
+El estado (`activo` | `plazo-cerrado` | `finalizado`) se deriva con `getEventStatus()` — no se almacena en Firestore.
 
 ### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}` *(pendiente)*
 Campos: `userId`, `eventId`, `response` (`yes` | `no`), `confirmedAt`

@@ -97,7 +97,7 @@
   &__field {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: var(--gap-compact);
   }
 
   &__field-icon {
@@ -196,7 +196,7 @@
     padding: 0 var(--gap-content) var(--gap-content);
     display: flex;
     flex-direction: column;
-    gap: var(--gap-form);
+    gap: var(--gap-compact);
   }
 
   &__calendar-card {
