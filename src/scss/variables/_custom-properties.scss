@@ -89,7 +89,8 @@
   --color-overlay-backdrop:   hsl(0 0% 0% / 0.4);
   --color-overlay-white:      hsl(0 0% 100% / 0.75);
   --color-overlay-white-soft: hsl(0 0% 100% / 0.6);
-  --color-stepper-inactive:   hsl(0 0% 10% / 0.25);
+  --color-stepper-inactive:   var(--neutral-400);
+  --color-stepper-active:   var(--blue-500);
 
   // Shadows
   --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.1);
@@ -111,10 +112,13 @@
   --color-bg-yellow: var(--yellow-100);
 
   // Gradient backgrounds
-  --color-bg-gradient-blue: linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));
-  --color-bg-gradient-teal: linear-gradient(to bottom, var(--teal-100),   var(--yellow-100));
-  --color-bg-gradient-pink: linear-gradient(to bottom, var(--purple-100), var(--yellow-100));
-  --color-bg-gradient-red:  linear-gradient(to bottom, var(--red-100),    var(--yellow-100));
+  --color-bg-gradient-blue:      linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));
+  --color-bg-gradient-teal:      linear-gradient(to bottom, var(--teal-100),   var(--yellow-100));
+  --color-bg-gradient-pink:      linear-gradient(to bottom, var(--purple-100), var(--yellow-100));
+  --color-bg-gradient-red:       linear-gradient(to bottom, var(--red-100),    var(--yellow-100));
+  --color-bg-gradient-yellow:    linear-gradient(180deg, var(--yellow-100) 0%, var(--teal-200) 62%);
+  --color-bg-gradient-orange:    linear-gradient(180deg, var(--orange-100) 0%, var(--yellow-100) 52.4%);
+  --color-bg-gradient-teal-dark: linear-gradient(180deg, var(--teal-200) 0%, var(--yellow-100) 49.5%);
 
 
   // ─── SEMÁNTICOS — RADIUS ──────────────────────────────
@@ -143,7 +147,7 @@
   --font-size-display:    var(--size-40);
   --font-size-h1:         var(--size-32);
   --font-size-h2:         var(--size-24);
-  --font-size-button:     var(--size-24);
+  --font-size-button:     var(--size-20);
   --font-size-date-title: var(--size-18);
   --font-size-date:       var(--size-16);
   --font-size-body-l:     var(--size-20);

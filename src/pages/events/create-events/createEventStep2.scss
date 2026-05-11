@@ -1,0 +1,195 @@
+.create-events-step2 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg-gradient-teal-dark);
+
+  &__gradient-zone {
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__topbar-spacer {
+    width: 24px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  &__description {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  &__content {
+    background: var(--white);
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+    flex: 1;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  // Calendar card 
+
+  &__calendar-card {
+    border: 1px solid var(--neutral-200);
+    border-radius: 24px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: var(--size-20);
+
+    &--error {
+      border-color: var(--color-error);
+    }
+
+    .rdp-root {
+      --rdp-accent-color: var(--color-brand);
+      --rdp-accent-background-color: var(--color-brand);
+      --rdp-day-width: 38px;
+      --rdp-day-height: 38px;
+      --rdp-weekday-font-size: var(--font-size-body-s);
+      --rdp-day-font: var(--font-body);
+      margin: 0;
+      width: 100%;
+    }
+
+    .rdp-months {
+      width: 100%;
+    }
+
+    .rdp-month {
+      width: 100%;
+    }
+
+    .rdp-month_grid {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .rdp-month_caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--size-20);
+    }
+
+    .rdp-caption_label {
+      font-family: var(--font-body);
+      font-size: var(--font-size-body-m);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .rdp-button_previous,
+    .rdp-button_next {
+      color: var(--color-brand);
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .rdp-weekday {
+      font-family: var(--font-body);
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+    }
+
+    .rdp-day_button {
+      font-family: var(--font-body);
+      font-size: var(--font-size-body-s);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      margin: 0 auto;
+    }
+
+    .rdp-day--sunday .rdp-day_button {
+      color: var(--red-500);
+    }
+
+    .rdp-selected .rdp-day_button {
+      background-color: var(--color-brand);
+      color: var(--white);
+    }
+
+    .rdp-today .rdp-day_button {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-brand);
+    }
+
+    .rdp-outside .rdp-day_button {
+      color: var(--color-text-muted);
+    }
+  }
+
+  // Time fields 
+
+  &__time-box {
+    display: flex;
+    align-items: center;
+    gap: var(--size-8);
+    padding: var(--padding-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    background-color: var(--color-surface);
+  }
+
+  &__time-icon {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  &__time-input {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
+}
