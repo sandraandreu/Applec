@@ -72,16 +72,17 @@ const CreateGroupPage = () => {
   };
 
   const handleCreateGroup = async (name: string) => {
+    if (!user) return;
     try {
       setIsLoading(true);
 
       const groupId = await createGroup({
         name,
-        adminUid: user!.uid,
+        adminUid: user.uid,
         adminUsername: profile?.username ?? "",
         adminFirstName: profile?.firstName ?? "",
         adminLastName: profile?.lastName ?? "",
-        adminEmail: user!.email ?? "",
+        adminEmail: user.email ?? "",
       });
 
       if (imageFile) {
@@ -90,8 +91,8 @@ const CreateGroupPage = () => {
       }
 
       await Promise.all([
-        updateUserGroup(user!.uid, groupId),
-        updateUserRole(user!.uid, "admin"),
+        updateUserGroup(user.uid, groupId),
+        updateUserRole(user.uid, "admin"),
       ]);
       await Promise.all([refreshGroup(), refreshProfile()]);
       navigate("/invite-group");
@@ -101,7 +102,6 @@ const CreateGroupPage = () => {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
-      console.error("Create group error:", firebaseError.message);
     } finally {
       setIsLoading(false);
     }

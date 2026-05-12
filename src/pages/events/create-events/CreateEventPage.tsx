@@ -63,7 +63,6 @@ const CreateEventPage = () => {
       });
       navigate("/events");
     } catch (error) {
-      console.error("Create event error:", error);
       setErrorKey(getErrorKey(error));
       setIsLoading(false);
     }

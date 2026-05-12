@@ -47,7 +47,6 @@ const ForgotPasswordPage = () => {
         setErrorConnection(tc("errors.noConnection"));
         return;
       }
-      console.error("Forgot password error:", firebaseError.message);
     } finally {
       setIsLoading(false);
     }

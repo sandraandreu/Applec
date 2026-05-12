@@ -81,20 +81,21 @@ const JoinGroupPage = () => {
 
   // TODO T14: replace with actual request logic (send join request, wait for admin approval)
   const handleConfirmJoin = async () => {
+    if (!user || !groupFound) return;
     try {
       setIsLoading(true);
 
       await Promise.all([
         addMemberToGroup(
-          groupFound!.id,
-          user!.uid,
+          groupFound.id,
+          user.uid,
           profile?.username ?? "",
           profile?.firstName ?? "",
           profile?.lastName ?? "",
-          user!.email ?? "",
+          user.email ?? "",
         ),
-        updateUserGroup(user!.uid, groupFound!.id),
-        updateUserRole(user!.uid, "member"),
+        updateUserGroup(user.uid, groupFound.id),
+        updateUserRole(user.uid, "member"),
       ]);
       await Promise.all([refreshGroup(), refreshProfile()]);
       navigate("/events");

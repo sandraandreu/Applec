@@ -58,7 +58,6 @@ const LoginPage = () => {
       }
       dispatch({ type: "LOGIN_SUCCESS" });
       navigate("/events");
-      console.log("login navega a events");
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "auth/invalid-credential") {
         dispatch({
