@@ -93,6 +93,7 @@
   "edit": {
     "title": "Editar evento",
     "submit": "Guardar cambios",
+    "cancel": "Cancelar",
     "error": "Error al actualizar el evento"
   },
   "attendance": {
