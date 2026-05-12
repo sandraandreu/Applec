@@ -1,9 +1,6 @@
-import "react-day-picker/style.css";
 import "./createEventStep2.scss";
-import { DayPicker, useDayPicker } from "react-day-picker";
-import type { MonthCaptionProps } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 import { es, ca } from "react-day-picker/locale";
-import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -12,37 +9,7 @@ import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-
-const DayPickerCaption = ({ calendarMonth }: MonthCaptionProps) => {
-  const { previousMonth, nextMonth, goToMonth } = useDayPicker();
-  const { i18n } = useTranslation();
-  const dateLocale = i18n.language === "ca" ? ca : es;
-  const label = format(calendarMonth.date, "LLLL y", { locale: dateLocale });
-  const capitalized = label.charAt(0).toUpperCase() + label.slice(1);
-  return (
-    <div className="rdp-month_caption">
-      <button
-        type="button"
-        className="rdp-button_previous"
-        disabled={!previousMonth}
-        onClick={() => previousMonth && goToMonth(previousMonth)}
-        aria-label="Mes anterior"
-      >
-        <Icon name="chevron-left-circle" size={24} />
-      </button>
-      <span className="rdp-caption_label">{capitalized}</span>
-      <button
-        type="button"
-        className="rdp-button_next"
-        disabled={!nextMonth}
-        onClick={() => nextMonth && goToMonth(nextMonth)}
-        aria-label="Mes siguiente"
-      >
-        <Icon name="chevron-right-circle" size={24} />
-      </button>
-    </div>
-  );
-};
+import DayPickerCaption from "../../../components/day-picker-caption/DayPickerCaption";
 
 export interface CreateEventStep2Data {
   date: Date;
