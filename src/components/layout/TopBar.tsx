@@ -2,20 +2,15 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
-import useRole from "../../hooks/useRole";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import "./layout.scss";
 
 const TopBar = () => {
   const { t } = useTranslation("common");
-  const { profile } = useAuthContext();
+  const { user, profile } = useAuthContext();
   const { group } = useGroupContext();
 
-  const { isAdmin, isOrganizer } = useRole();
-
   if (!profile || !group) return null;
-
-  const isAdminOrOrganizer = isAdmin || isOrganizer;
 
   return (
     <header className="top-bar">
@@ -33,7 +28,7 @@ const TopBar = () => {
       )}
 
       <div className="top-bar__actions">
-        {isAdminOrOrganizer && (
+        {user?.permissions.canCreateEvents && (
           <Link
             to="/create-events"
             className="top-bar__action"

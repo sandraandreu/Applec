@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
-import useRole from "../../hooks/useRole";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import "./layout.scss";
 
@@ -16,15 +15,12 @@ const getActiveTab = (pathname: string) => {
 
 const TabBar = () => {
   const { t } = useTranslation("common");
-  const { profile } = useAuthContext();
+  const { user, profile } = useAuthContext();
   const { pathname } = useLocation();
-
-  const { isAdmin, isOrganizer } = useRole();
 
   if (!profile) return null;
 
   const active = getActiveTab(pathname);
-  const isAdminOrOrganizer = isAdmin || isOrganizer;
 
   return (
     <nav className="tab-bar" aria-label={t("nav.tabBar")}>
@@ -57,7 +53,7 @@ const TabBar = () => {
           <Icon name="ticket" size={32} />
         </Link>
 
-        {isAdminOrOrganizer && (
+        {user?.permissions.canCreateEvents && (
           <Link
             to="/members"
             className="tab-bar__item"

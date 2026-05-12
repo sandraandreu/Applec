@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import useRole from "../../../hooks/useRole";
 import { getEventById, deleteEvent } from "../../../services/event.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
@@ -20,7 +19,6 @@ const EventDetailPage = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
   const { profile, user } = useAuthContext();
-  const { isAdmin, isOrganizer } = useRole();
   // TODO T12: const { group } = useGroupContext();
   const [event, setEvent] = useState<FallesEvent | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,10 +57,9 @@ const EventDetailPage = () => {
   if (isLoading) return <Loading />;
   if (!event) return null;
 
-  const role = isAdmin ? "admin" : isOrganizer ? "organizer" : "member";
-  const userId = user?.uid ?? "";
   const canEdit =
-    role === "admin" || (role === "organizer" && event.createdBy === userId);
+    user?.permissions.canEditAllEvents ||
+    (user?.permissions.canEditOwnEvents && event.createdBy === user.uid);
 
   const eventStatus = getEventStatus(event);
   // TODO T12: reemplazar con datos reales de Firestore
@@ -206,7 +203,7 @@ const EventDetailPage = () => {
             </p>
           </div>
         )}
-        {role !== "member" && (
+        {user?.permissions.canSeeAttendees && (
           <div className="event-detail-page__attendees">
             <div className="event-detail-page__attendees-header">
               <div className="event-detail-page__attendees-left">
@@ -249,7 +246,7 @@ const EventDetailPage = () => {
           </div>
         )}
 
-        {role === "member" && (
+        {!user?.permissions.canSeeAttendees && (
           <>
             <div className="event-detail-page__going">
               <h2 className="event-detail-page__going-title">

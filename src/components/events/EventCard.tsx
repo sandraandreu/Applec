@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import { getEventStatus } from "../../models/event.model";
+import type { UserPermissions } from "../../models/user.model";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import "./events.scss";
 
@@ -10,19 +11,19 @@ type AttendanceResponse = "yes" | "no" | null;
 
 interface EventCardProps {
   event: FallesEvent;
-  role: "admin" | "organizer" | "member";
+  permissions: UserPermissions;
   userId: string;
   attendanceResponse?: AttendanceResponse;
 }
 
-const EventCard = ({ event, role, userId, attendanceResponse = null }: EventCardProps) => {
+const EventCard = ({ event, permissions, userId, attendanceResponse = null }: EventCardProps) => {
   const { t, i18n } = useTranslation("events");
 
   const status = getEventStatus(event);
   const isFinished = status === "finalizado";
 
-  const isEditable = role === "admin" || (role === "organizer" && event.createdBy === userId);
-  const showIndicator = role === "member" && event.requiresConfirmation;
+  const isEditable = permissions.canEditAllEvents || (permissions.canEditOwnEvents && event.createdBy === userId);
+  const showIndicator = !permissions.canCreateEvents && event.requiresConfirmation;
   const isNotGoing = showIndicator && attendanceResponse === "no";
   const isGoing = showIndicator && attendanceResponse === "yes";
   const isPending = showIndicator && attendanceResponse === null;

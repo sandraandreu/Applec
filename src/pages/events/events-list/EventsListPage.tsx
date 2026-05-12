@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import useRole from "../../../hooks/useRole";
 import { getEvents } from "../../../services/event.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
@@ -14,7 +13,6 @@ import "./events-list.scss";
 
 const EventsListPage = () => {
   const { user, profile } = useAuthContext();
-  const { isAdmin, isOrganizer } = useRole();
   const { t } = useTranslation("events");
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
@@ -38,12 +36,10 @@ const EventsListPage = () => {
     return () => { isMounted = false; };
   }, [profile?.groupId]);
 
-  const role = isAdmin ? "admin" : isOrganizer ? "organizer" : "member";
-
   const filterOptions: FilterOption[] = useMemo(() => {
     const countEvents = (predicate: (event: FallesEvent) => boolean) => events.filter(predicate).length;
 
-    if (role === "member") {
+    if (!user?.permissions.canSeeDetailedFilters) {
       return [
         { key: "all",      label: t("events.filters.all"),      count: events.length },
         { key: "upcoming", label: t("events.filters.upcoming"), count: countEvents(event => getEventStatus(event) !== "finalizado") },
@@ -56,7 +52,7 @@ const EventsListPage = () => {
       { key: "deadline-closed", label: t("events.filters.deadline-closed"), count: countEvents(event => getEventStatus(event) === "plazo-cerrado") },
       { key: "finished",        label: t("events.filters.finished"),        count: countEvents(event => getEventStatus(event) === "finalizado") },
     ];
-  }, [events, role, t]);
+  }, [events, user?.permissions.canSeeDetailedFilters, t]);
 
   const filteredEvents = useMemo(() => {
     switch (filter) {
@@ -87,8 +83,8 @@ const EventsListPage = () => {
         </p>
       )}
 
-      {!isLoading && !hasError && (
-        <EventList events={filteredEvents} role={role} userId={user?.uid ?? ""} />
+      {!isLoading && !hasError && user && (
+        <EventList events={filteredEvents} permissions={user.permissions} userId={user.uid} />
       )}
     </div>
   );

@@ -22,6 +22,7 @@ import type {
   FilterKey,
 } from "../../components/events/EventsFilter";
 import type { FallesEvent } from "../../models/event.model";
+import { computePermissions } from "../../models/user.model";
 
 const mockEventBase: FallesEvent = {
   id: "evt-1",
@@ -763,14 +764,14 @@ const StyleGuide = () => {
           <h3 className="style-guide__component-name">EventCard</h3>
           <div className="style-guide__stack">
             <span className="style-guide__label">Admin — botón editar</span>
-            <EventCard event={mockEventBase} role="admin" userId="user-admin" />
+            <EventCard event={mockEventBase} permissions={computePermissions("admin")} userId="user-admin" />
 
             <span className="style-guide__label">
               Organizador — evento de otro (sin editar)
             </span>
             <EventCard
               event={mockEventBase}
-              role="organizer"
+              permissions={computePermissions("organizer")}
               userId="user-other"
             />
 
@@ -779,7 +780,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              role="member"
+              permissions={computePermissions("member")}
               userId="user-1"
               attendanceResponse={null}
             />
@@ -789,7 +790,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              role="member"
+              permissions={computePermissions("member")}
               userId="user-1"
               attendanceResponse="yes"
             />
@@ -799,7 +800,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              role="member"
+              permissions={computePermissions("member")}
               userId="user-1"
               attendanceResponse="no"
             />
@@ -809,7 +810,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventSpecial}
-              role="member"
+              permissions={computePermissions("member")}
               userId="user-1"
               attendanceResponse="yes"
             />
@@ -819,14 +820,14 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventNoConfirmation}
-              role="member"
+              permissions={computePermissions("member")}
               userId="user-1"
             />
 
             <span className="style-guide__label">Nombre largo (truncado)</span>
             <EventCard
               event={mockEventLongName}
-              role="admin"
+              permissions={computePermissions("admin")}
               userId="user-admin"
             />
 
@@ -835,7 +836,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventFinished}
-              role="admin"
+              permissions={computePermissions("admin")}
               userId="user-admin"
             />
           </div>

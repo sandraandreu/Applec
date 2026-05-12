@@ -1,15 +1,16 @@
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
+import type { UserPermissions } from "../../models/user.model";
 import EventCard from "./EventCard";
 import "./events.scss";
 
 interface EventListProps {
   events: FallesEvent[];
-  role: "admin" | "organizer" | "member";
+  permissions: UserPermissions;
   userId: string;
 }
 
-const EventList = ({ events, role, userId }: EventListProps) => {
+const EventList = ({ events, permissions, userId }: EventListProps) => {
   const { t } = useTranslation("events");
 
   if (events.length === 0) {
@@ -20,7 +21,7 @@ const EventList = ({ events, role, userId }: EventListProps) => {
     <ul className="events-list">
       {events.map(event => (
         <li key={event.id}>
-          <EventCard event={event} role={role} userId={userId} />
+          <EventCard event={event} permissions={permissions} userId={userId} />
         </li>
       ))}
     </ul>
