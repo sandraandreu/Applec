@@ -1,0 +1,234 @@
+.edit-event {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg-gradient-orange);
+
+  &--special {
+    background: var(--color-bg-gradient-pink);
+  }
+
+  &__gradient-zone {
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__topbar {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__topbar-spacer {
+    width: 24px;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  &__types {
+    display: flex;
+    gap: var(--gap-items);
+  }
+
+  &__type-btn {
+    padding: var(--size-8) var(--size-14);
+    border: 1px solid var(--color-brand);
+    border-radius: var(--radius-pill);
+    background-color: var(--blue-100);
+    color: var(--color-brand);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+
+    &--active {
+      background-color: var(--color-brand);
+      color: var(--white);
+    }
+  }
+
+  &__content {
+    background-color: var(--color-surface);
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    flex: 1;
+  }
+
+  &__handle {
+    width: 40px;
+    height: 4px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-border);
+    align-self: center;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__section-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+
+    textarea.field__input {
+      min-height: 120px;
+    }
+  }
+
+  // Calendar card
+
+  &__calendar-card {
+    border: 1px solid var(--neutral-200);
+    border-radius: 24px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: var(--size-20);
+
+    &--error {
+      border-color: var(--color-error);
+    }
+  }
+
+  // Time fields
+
+  &__time-box {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    padding: var(--padding-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    background-color: var(--color-surface);
+  }
+
+  &__time-icon {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  &__time-input {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
+
+  // Settings rows
+
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+
+    > * + * {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  &__setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px var(--gap-content);
+    gap: var(--gap-items);
+
+    &--button {
+      background: none;
+      border: none;
+      border-radius: 0;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  &__setting-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tight);
+  }
+
+  &__setting-label {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  &__setting-hint {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: var(--color-icon);
+    transition: transform 0.2s ease;
+
+    &--open {
+      transform: rotate(90deg);
+    }
+  }
+
+  // Deadline expandable panel
+
+  &__deadline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__deadline-panel {
+    padding: 0 var(--gap-content) var(--gap-content);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  // Error message
+
+  &__error {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-s);
+    color: var(--color-error);
+    text-align: center;
+  }
+
+  //Acrions
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+}
