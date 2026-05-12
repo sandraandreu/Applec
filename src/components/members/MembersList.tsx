@@ -66,13 +66,12 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   return (
     <div className="members-list">
       {ROLE_ORDER.map(role => {
-        const roleMembers = membersByRole[role];
-        if (roleMembers.length === 0) return null;
+        if (membersByRole[role].length === 0) return null;
         return (
           <div key={role}>
             <h2 className="members-list__section-title">{roleLabels[role]}</h2>
             <div className="members-list__cards">
-              {roleMembers.map((member) => (
+              {membersByRole[role].map((member) => (
                 <MemberCard
                   key={member.uid}
                   firstName={member.firstName}
