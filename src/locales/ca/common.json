@@ -28,6 +28,10 @@
     "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar",
     "unknown": "Ha ocorregut un error inesperat. Torna-ho a intentar"
   },
+  "calendar": {
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes següent"
+  },
   "nav": {
     "tabBar": "Navegació principal",
     "feed": "Feed",

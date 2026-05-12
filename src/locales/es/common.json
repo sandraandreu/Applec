@@ -28,6 +28,10 @@
     "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
     "unknown": "Ha ocurrido un error inesperado. Inténtalo de nuevo"
   },
+  "calendar": {
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente"
+  },
   "nav": {
     "tabBar": "Navegación principal",
     "feed": "Feed",

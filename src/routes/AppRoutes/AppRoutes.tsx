@@ -44,6 +44,9 @@ const StyleGuide = lazy(() => import("../../pages/style-guide/StyleGuide"));
 const CreateEventPage = lazy(
   () => import("../../pages/events/create-events/CreateEventPage"),
 );
+const EditEventPage = lazy(
+  () => import("../../pages/events/edit-event/EditEventPage"),
+);
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -188,6 +191,15 @@ const AppRoutes = () => (
           element={
             <PrivateRoutes requiresGroup>
               <EventDetailPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/events/:id/edit"
+          element={
+            <PrivateRoutes requiresGroup>
+              <EditEventPage />
             </PrivateRoutes>
           }
         />

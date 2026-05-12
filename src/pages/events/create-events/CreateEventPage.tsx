@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import CreateEventStep1Page from "./CreateEventStep1Page";
 import CreateEventStep2Page from "./CreateEventStep2Page";
@@ -9,90 +9,83 @@ import type { CreateEventStep3Data, CreateEventStep3Draft } from "./CreateEventS
 import { createEvent } from "../../../services/event.service";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getErrorKey } from "../../../utils/firebase-errors";
+import { createEventReducer, initialState } from "./create-event.reducer";
 
 const CreateEventPage = () => {
-  const [step, setStep] = useState(1);
-  const [step1Data, setStep1Data] = useState<CreateEventStep1Data | undefined>();
-  const [step2Data, setStep2Data] = useState<CreateEventStep2Data | undefined>();
-  const [step2Draft, setStep2Draft] = useState<CreateEventStep2Draft | undefined>();
-  const [step3Draft, setStep3Draft] = useState<CreateEventStep3Draft | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorKey, setErrorKey] = useState<string | undefined>();
+  const [state, dispatch] = useReducer(createEventReducer, initialState);
   const { user, profile } = useAuthContext();
   const navigate = useNavigate();
 
   const handleStep1Complete = (data: CreateEventStep1Data) => {
-    setStep1Data(data);
-    setStep(2);
+    dispatch({ type: "COMPLETE_STEP1", payload: data });
   };
 
   const handleStep2Complete = (data: CreateEventStep2Data) => {
-    setStep2Data(data);
-    setStep2Draft({ ...data, endTime: data.endTime ?? "" });
-    setStep(3);
+    dispatch({ type: "COMPLETE_STEP2", payload: data });
   };
 
   const handleStep2Back = (draft: CreateEventStep2Draft) => {
-    setStep2Draft(draft);
-    setStep(1);
+    dispatch({ type: "BACK_TO_STEP1", payload: draft });
   };
 
   const handleStep3Back = (draft: CreateEventStep3Draft) => {
-    setStep3Draft(draft);
-    setStep(2);
+    dispatch({ type: "BACK_TO_STEP2", payload: draft });
   };
 
   const handleStep3Complete = async (data: CreateEventStep3Data) => {
-    if (!profile?.groupId || !user || !step1Data || !step2Data) return;
-    setIsLoading(true);
-    setErrorKey(undefined);
+    if (!profile?.groupId || !user || !state.step1Data || !state.step2Data) return;
+    dispatch({ type: "SET_SUBMITTING" });
     try {
       await createEvent(profile.groupId, {
         groupId: profile.groupId,
         createdBy: user.uid,
-        name: step1Data.eventName,
-        date: step2Data.date,
-        location: step2Data.location,
-        startTime: step2Data.startTime,
+        name: state.step1Data.eventName,
+        date: state.step2Data.date,
+        location: state.step2Data.location,
+        startTime: state.step2Data.startTime,
         requiresConfirmation: data.requiresConfirmation,
         sendReminder: data.sendReminder,
-        isSpecial: step1Data.eventType === "special",
-        ...(step1Data.description && { description: step1Data.description }),
-        ...(step2Data.endTime && { endTime: step2Data.endTime }),
+        isSpecial: state.step1Data.eventType === "special",
+        ...(state.step1Data.description && { description: state.step1Data.description }),
+        ...(state.step2Data.endTime && { endTime: state.step2Data.endTime }),
         ...(data.confirmationDeadline && { confirmationDeadline: data.confirmationDeadline }),
       });
       navigate("/events");
     } catch (error) {
-      setErrorKey(getErrorKey(error));
-      setIsLoading(false);
+      dispatch({ type: "SET_ERROR", payload: getErrorKey(error) });
     }
   };
 
-  if (step === 1) {
-    return <CreateEventStep1Page onComplete={handleStep1Complete} initialData={step1Data} />;
-  }
-
-  if (step === 2 && step1Data) {
+  if (state.step === 1) {
     return (
-      <CreateEventStep2Page
-        onComplete={handleStep2Complete}
-        onBack={handleStep2Back}
-        initialData={step2Draft}
-        eventType={step1Data.eventType}
+      <CreateEventStep1Page
+        onComplete={handleStep1Complete}
+        initialData={state.step1Data}
       />
     );
   }
 
-  if (step === 3 && step1Data && step2Data) {
+  if (state.step === 2 && state.step1Data) {
+    return (
+      <CreateEventStep2Page
+        onComplete={handleStep2Complete}
+        onBack={handleStep2Back}
+        initialData={state.step2Draft}
+        eventType={state.step1Data.eventType}
+      />
+    );
+  }
+
+  if (state.step === 3 && state.step1Data && state.step2Data) {
     return (
       <CreateEventStep3Page
-        step1Data={step1Data}
-        step2Data={step2Data}
+        step1Data={state.step1Data}
+        step2Data={state.step2Data}
         onComplete={handleStep3Complete}
         onBack={handleStep3Back}
-        initialData={step3Draft}
-        isLoading={isLoading}
-        errorKey={errorKey}
+        initialData={state.step3Draft}
+        isLoading={state.isLoading}
+        errorKey={state.errorKey}
       />
     );
   }
