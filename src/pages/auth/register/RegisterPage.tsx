@@ -10,7 +10,6 @@ import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import {
   registerUser,
-  logoutUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
@@ -45,7 +44,6 @@ const RegisterPage = () => {
   const {
     isLoading,
     registerState,
-    registeredUser,
     errorConnection,
     showPassword,
     showConfirmPassword,
@@ -109,30 +107,7 @@ const RegisterPage = () => {
       return;
     }
 
-    let logoutSuccess = false;
-    for (let attempt = 0; attempt < 3 && !logoutSuccess; attempt++) {
-      try {
-        await logoutUser();
-        logoutSuccess = true;
-      } catch {
-        /* retry */
-      }
-    }
-
-    if (verificationEmailSent) {
-      dispatch({ type: "REGISTER_SUCCESS", user: userCredential.user });
-    } else {
-      dispatch({
-        type: "REGISTER_EMAIL_VERIFICATION_FAILED",
-        user: userCredential.user,
-      });
-    }
-  };
-
-  const handleResendEmail = async () => {
-    if (registeredUser) {
-      await sendVerificationEmail(registeredUser);
-    }
+    navigate("/verify-email", { state: { emailSent: verificationEmailSent } });
   };
 
   const {
@@ -360,36 +335,6 @@ const RegisterPage = () => {
           {
             text: t("register.errors.emailTakenButton"),
             handler: () => navigate("/login"),
-          },
-        ]}
-      />
-
-      <Alert
-        isOpen={registerState === "success"}
-        header={t("register.verifyTitle")}
-        message={t("register.verifyMessage")}
-        onDismiss={() => navigate("/login")}
-        buttons={[
-          {
-            text: tc("buttons.resendEmail"),
-            handler: () => handleResendEmail(),
-          },
-          {
-            text: tc("buttons.close"),
-            role: "cancel",
-          },
-        ]}
-      />
-
-      <Alert
-        isOpen={registerState === "email-verification-failed"}
-        header={t("register.emailVerificationFailedTitle")}
-        message={t("register.emailVerificationFailedMessage")}
-        onDismiss={() => navigate("/login")}
-        buttons={[
-          {
-            text: tc("buttons.resendEmail"),
-            handler: () => handleResendEmail(),
           },
         ]}
       />

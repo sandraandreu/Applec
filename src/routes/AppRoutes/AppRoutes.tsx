@@ -47,6 +47,9 @@ const CreateEventPage = lazy(
 const EditEventPage = lazy(
   () => import("../../pages/events/edit-event/EditEventPage"),
 );
+const VerifyEmailPage = lazy(
+  () => import("../../pages/auth/verify-email/VerifyEmailPage"),
+);
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -97,6 +100,15 @@ const AppRoutes = () => (
           element={
             <PublicRoutes>
               <ForgotPasswordPage />
+            </PublicRoutes>
+          }
+        />
+
+        <Route
+          path="/verify-email"
+          element={
+            <PublicRoutes>
+              <VerifyEmailPage />
             </PublicRoutes>
           }
         />
