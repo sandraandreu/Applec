@@ -12,6 +12,9 @@ interface MembersListProps {
   activeFilter: "all" | "admin" | "organizer" | "member";
 }
 
+const ROLE_ORDER = ["admin", "organizer", "member"] as const;
+type MemberRole = typeof ROLE_ORDER[number];
+
 const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const { t } = useTranslation("members");
   const navigate = useNavigate();
@@ -23,9 +26,22 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
     return matchesSearch && matchesFilter;
   }) ?? [], [group?.members, searchValue, activeFilter]);
 
-  const admins = useMemo(() => filteredMembers.filter((m) => m.role === "admin"), [filteredMembers]);
-  const organizers = useMemo(() => filteredMembers.filter((m) => m.role === "organizer"), [filteredMembers]);
-  const members = useMemo(() => filteredMembers.filter((m) => m.role === "member"), [filteredMembers]);
+  const membersByRole = useMemo(() =>
+    filteredMembers.reduce<Record<MemberRole, typeof filteredMembers>>(
+      (acc, member) => {
+        acc[member.role].push(member);
+        return acc;
+      },
+      { admin: [], organizer: [], member: [] }
+    ),
+    [filteredMembers]
+  );
+
+  const roleLabels: Record<MemberRole, string> = {
+    admin: t("members.roles.admin"),
+    organizer: t("members.roles.organizers"),
+    member: t("members.roles.members"),
+  };
 
   const isOnlyMember = group?.members.length === 1;
 
@@ -49,62 +65,26 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
 
   return (
     <div className="members-list">
-      {admins.length > 0 && (
-        <div>
-          <h2 className="members-list__section-title">
-            {t("members.roles.admin")}
-          </h2>
-          <div className="members-list__cards">
-            {admins.map((member) => (
-              <MemberCard
-                key={member.uid}
-                firstName={member.firstName}
-                lastName={member.lastName}
-                email={member.email}
-                role={member.role}
-              />
-            ))}
+      {ROLE_ORDER.map(role => {
+        const roleMembers = membersByRole[role];
+        if (roleMembers.length === 0) return null;
+        return (
+          <div key={role}>
+            <h2 className="members-list__section-title">{roleLabels[role]}</h2>
+            <div className="members-list__cards">
+              {roleMembers.map((member) => (
+                <MemberCard
+                  key={member.uid}
+                  firstName={member.firstName}
+                  lastName={member.lastName}
+                  email={member.email}
+                  role={member.role}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-
-      {organizers.length > 0 && (
-        <div>
-          <h2 className="members-list__section-title">
-            {t("members.roles.organizers")}
-          </h2>
-          <div className="members-list__cards">
-            {organizers.map((member) => (
-              <MemberCard
-                key={member.uid}
-                firstName={member.firstName}
-                lastName={member.lastName}
-                email={member.email}
-                role={member.role}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {members.length > 0 && (
-        <div>
-          <h2 className="members-list__section-title">
-            {t("members.roles.members")}
-          </h2>
-          <div className="members-list__cards">
-            {members.map((member) => (
-              <MemberCard
-                key={member.uid}
-                firstName={member.firstName}
-                lastName={member.lastName}
-                email={member.email}
-                role={member.role}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+        );
+      })}
     </div>
   );
 };
