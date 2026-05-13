@@ -12,10 +12,7 @@ import {
   findGroupByInviteCode,
   addMemberToGroup,
 } from "../../../services/group.service";
-import {
-  updateUserGroup,
-  updateUserRole,
-} from "../../../services/user.service";
+import { updateUserFields } from "../../../services/user.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import requestPendingIllustration from "../../../assets/images/request-pending-illustration.png";
@@ -92,8 +89,7 @@ const JoinGroupPage = () => {
           profile?.lastName ?? "",
           user.email ?? "",
         ),
-        updateUserGroup(user.uid, groupFound.id),
-        updateUserRole(user.uid, "member"),
+        updateUserFields(user.uid, { groupId: groupFound.id, role: "member" }),
       ]);
       await refreshProfile();
       navigate("/events");

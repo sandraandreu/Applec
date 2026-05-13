@@ -32,18 +32,11 @@ export const createUserProfile = async (
   await setDoc(doc(db, "users", uid), data);
 };
 
-export const updateUserGroup = async (
+export const updateUserFields = async (
   uid: string,
-  groupId: string,
+  fields: Partial<UserProfile>,
 ): Promise<void> => {
-  await updateDoc(doc(db, "users", uid), { groupId });
-};
-
-export const updateUserRole = async (
-  uid: string,
-  role: "admin" | "organizer" | "member",
-): Promise<void> => {
-  await updateDoc(doc(db, "users", uid), { role });
+  await updateDoc(doc(db, "users", uid), { ...fields });
 };
 
 export const isUsernameTaken = async (username: string): Promise<boolean | null> => {

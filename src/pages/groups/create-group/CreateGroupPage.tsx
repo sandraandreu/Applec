@@ -13,10 +13,7 @@ import {
   uploadGroupImage,
   updateGroupImage,
 } from "../../../services/group.service";
-import {
-  updateUserGroup,
-  updateUserRole,
-} from "../../../services/user.service";
+import { updateUserFields } from "../../../services/user.service";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import type { FirebaseError } from "../../../models/error.model";
 
@@ -88,10 +85,7 @@ const CreateGroupPage = () => {
         await updateGroupImage(groupId, imageUrl);
       }
 
-      await Promise.all([
-        updateUserGroup(user.uid, groupId),
-        updateUserRole(user.uid, "admin"),
-      ]);
+      await updateUserFields(user.uid, { groupId, role: "admin" });
       await refreshProfile();
       navigate("/invite-group");
     } catch (error: unknown) {
