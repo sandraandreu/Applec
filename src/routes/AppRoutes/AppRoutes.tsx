@@ -134,7 +134,7 @@ const AppRoutes = () => (
         <Route
           path="/onboarding/group"
           element={
-            <PrivateRoutes>
+            <PrivateRoutes requiresNoGroup>
               <GroupPage />
             </PrivateRoutes>
           }
@@ -143,7 +143,7 @@ const AppRoutes = () => (
         <Route
           path="/create-group"
           element={
-            <PrivateRoutes>
+            <PrivateRoutes requiresNoGroup>
               <CreateGroupPage />
             </PrivateRoutes>
           }
@@ -161,7 +161,7 @@ const AppRoutes = () => (
         <Route
           path="/join-group"
           element={
-            <PrivateRoutes>
+            <PrivateRoutes requiresNoGroup>
               <JoinGroupPage />
             </PrivateRoutes>
           }

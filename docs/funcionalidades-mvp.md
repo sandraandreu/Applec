@@ -43,7 +43,7 @@ Tres vías de entrada, todas pasan por aprobación del Admin o Organizador:
 
 Las solicitudes pendientes se almacenan en `groups/{groupId}/joinRequests/{uid}`. Al aprobar: se añade al array `members` y se borra el documento. Al rechazar: se borra el documento.
 
-Un usuario no puede pertenecer al mismo grupo dos veces. Sí puede pertenecer a varios grupos distintos.
+Un usuario solo puede pertenecer a un grupo. Si ya tiene grupo, las rutas `/create-group`, `/join-group` y `/onboarding/group` redirigen a `/events`.
 
 ---
 

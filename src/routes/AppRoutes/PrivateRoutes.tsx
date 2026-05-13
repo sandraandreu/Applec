@@ -7,11 +7,13 @@ import Loading from "../../components/loading/Loading";
 interface PrivateRoutesProps {
   children: ReactNode;
   requiresGroup?: boolean;
+  requiresNoGroup?: boolean;
 }
 
 const PrivateRoutes = ({
   children,
   requiresGroup = false,
+  requiresNoGroup = false,
 }: PrivateRoutesProps) => {
   const { user, profile, isLoading: authLoading } = useAuthContext();
   const { isLoading: groupLoading } = useGroupContext();
@@ -22,6 +24,9 @@ const PrivateRoutes = ({
 
   if (requiresGroup && !profile?.groupId)
     return <Navigate to="/onboarding/welcome" replace />;
+
+  if (requiresNoGroup && profile?.groupId)
+    return <Navigate to="/events" replace />;
 
   return <>{children}</>;
 };
