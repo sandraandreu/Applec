@@ -50,6 +50,7 @@ const EditEventPage = lazy(
 const VerifyEmailPage = lazy(
   () => import("../../pages/auth/verify-email/VerifyEmailPage"),
 );
+const SeedPage = lazy(() => import("../../pages/seed/SeedPage"));
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -217,6 +218,15 @@ const AppRoutes = () => (
         />
 
         <Route path="/style-guide" element={<StyleGuide />} />
+
+        <Route
+          path="/seed"
+          element={
+            <PrivateRoutes requiresGroup>
+              <SeedPage />
+            </PrivateRoutes>
+          }
+        />
       </Routes>
     </Suspense>
   </BrowserRouter>
