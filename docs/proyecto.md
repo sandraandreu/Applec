@@ -73,9 +73,17 @@ interface UserProfile {
   firstName: string;
   lastName: string;
   email: string | null;
+  photoUrl?: string;           // URL de Firebase Storage o externa
   createdAt: Date;
   role: "admin" | "organizer" | "member";
   groupId?: string;
+  linkedMembers?: LinkedMember[];
+}
+
+interface LinkedMember {
+  id: string;       // ID local generado, no uid de Firebase Auth
+  firstName: string;
+  lastName: string;
 }
 ```
 
@@ -83,13 +91,35 @@ interface UserProfile {
 Campos: `name`, `imageUrl?` (URL de Firebase Storage), `createdAt`, `adminId`, `inviteCode` (6 caracteres alfanuméricos, único y verificado)
 Array `members`: `{ uid, username, firstName, lastName, email, role }`
 
+### JoinRequest — `groups/{groupId}/joinRequests/{uid}`
+```ts
+interface JoinRequest {
+  uid: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  requestedAt: Date;
+}
+```
+Existencia del documento = solicitud pendiente. Al aprobar: se añade al array `members` y se borra el documento. Al rechazar: se borra el documento.
+
 ### Event — `groups/{groupId}/events/{eventId}`
 Campos obligatorios: `name`, `date`, `startTime`, `location`, `requiresConfirmation`, `sendReminder`, `createdBy`, `createdAt`, `groupId`
 Campos opcionales: `description`, `endTime`, `confirmationDeadline`, `isSpecial`
 El estado (`activo` | `plazo-cerrado` | `finalizado`) se deriva con `getEventStatus()` — no se almacena en Firestore.
 
-### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}` *(pendiente)*
-Campos: `userId`, `eventId`, `response` (`yes` | `no`), `confirmedAt`
+### Attendance — `groups/{groupId}/events/{eventId}/attendances/{uid}`
+```ts
+interface Attendance {
+  userId: string;
+  eventId: string;
+  response: "yes" | "no";
+  confirmedAt: Date;
+  linkedResponses?: { [linkedMemberId: string]: "yes" | "no" };
+}
+```
+Ausencia de documento = miembro pendiente (sin respuesta). Ausencia de clave en `linkedResponses` = vinculado pendiente.
 
 ---
 

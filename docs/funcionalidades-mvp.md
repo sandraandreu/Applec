@@ -34,12 +34,14 @@ Un usuario registrado crea un grupo privado. Se convierte automáticamente en Ad
 ---
 
 ### 4. Unirse a un grupo existente
-**Estado:** ✓ Parcialmente implementado (enlace y código de invitación)
+**Estado:** ✓ Parcialmente implementado (código de invitación — unión directa provisional), ✗ flujo de solicitud + aprobación pendiente
 
-Tres vías de entrada:
-- **Enlace de invitación:** el usuario lo abre, la app muestra el grupo y confirma unión.
+Tres vías de entrada, todas pasan por aprobación del Admin o Organizador:
+- **Código de invitación:** el usuario introduce el código, se envía una solicitud al grupo. El Admin/Organizador la aprueba o rechaza. *(Actualmente la implementación une directamente sin solicitud — esto cambiará)*
 - **Búsqueda por nombre:** el usuario busca la falla y envía solicitud (pendiente aprobación).
-- **Invitación directa:** el Admin/Organizador busca al usuario por nombre o email y lo añade directamente.
+- **Invitación directa:** el Admin/Organizador busca al usuario por nombre o email y lo añade directamente sin solicitud previa.
+
+Las solicitudes pendientes se almacenan en `groups/{groupId}/joinRequests/{uid}`. Al aprobar: se añade al array `members` y se borra el documento. Al rechazar: se borra el documento.
 
 Un usuario no puede pertenecer al mismo grupo dos veces. Sí puede pertenecer a varios grupos distintos.
 
