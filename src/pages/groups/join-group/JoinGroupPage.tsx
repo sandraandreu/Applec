@@ -7,7 +7,6 @@ import Input from "../../../ui-kit/input/Input";
 import Button from "../../../ui-kit/button/Button";
 import { FirebaseError } from "firebase/app";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import { useGroupContext } from "../../../context/group/GroupContext";
 import { useNavigate } from "react-router-dom";
 import {
   findGroupByInviteCode,
@@ -29,7 +28,6 @@ const JoinGroupPage = () => {
   const { t } = useTranslation("groups");
   const { t: tc } = useTranslation("common");
   const { user, profile, refreshProfile } = useAuthContext();
-  const { refreshGroup } = useGroupContext();
   const navigate = useNavigate();
 
   const [groupFound, setGroupFound] = useState<{
@@ -97,7 +95,7 @@ const JoinGroupPage = () => {
         updateUserGroup(user.uid, groupFound.id),
         updateUserRole(user.uid, "member"),
       ]);
-      await Promise.all([refreshGroup(), refreshProfile()]);
+      await refreshProfile();
       navigate("/events");
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
@@ -186,7 +184,7 @@ const JoinGroupPage = () => {
                 </span>
               )}
 
-              <div className="create-group-page__button">
+              <div className="join-group-page__button">
                 <Button
                   text={t("joinGroup.button")}
                   type="submit"
