@@ -1,5 +1,4 @@
 import "./createEventStep3.scss";
-import { DayPicker } from "react-day-picker";
 import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
@@ -11,7 +10,7 @@ import Icon from "../../../ui-kit/icons/icon/Icon";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import type { CreateEventStep1Data } from "./CreateEventStep1Page";
 import type { CreateEventStep2Data } from "./CreateEventStep2Page";
-import DayPickerCaption from "../../../components/day-picker-caption/DayPickerCaption";
+import EventCalendar from "../../../components/event-calendar/EventCalendar";
 
 export interface CreateEventStep3Data {
   requiresConfirmation: boolean;
@@ -183,9 +182,7 @@ const CreateEventStep3Page = ({
             {deadlineOpen && (
               <div className="create-events-step3__deadline-panel">
                 <div className="create-events-step3__calendar-card">
-                  <DayPicker
-                    mode="single"
-                    locale={dateLocale}
+                  <EventCalendar
                     selected={deadlineDate}
                     month={deadlineMonth}
                     onMonthChange={setDeadlineMonth}
@@ -194,11 +191,6 @@ const CreateEventStep3Page = ({
                       if (date) setDeadlineMonth(date);
                     }}
                     disabled={{ before: today }}
-                    showOutsideDays
-                    hideNavigation
-                    modifiers={{ sunday: (date: Date) => date.getDay() === 0 }}
-                    modifiersClassNames={{ sunday: "rdp-day--sunday" }}
-                    components={{ MonthCaption: DayPickerCaption }}
                   />
                 </div>
 

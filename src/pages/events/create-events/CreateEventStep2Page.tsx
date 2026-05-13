@@ -1,6 +1,4 @@
 import "./createEventStep2.scss";
-import { DayPicker } from "react-day-picker";
-import { es, ca } from "react-day-picker/locale";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -9,7 +7,7 @@ import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import DayPickerCaption from "../../../components/day-picker-caption/DayPickerCaption";
+import EventCalendar from "../../../components/event-calendar/EventCalendar";
 
 export interface CreateEventStep2Data {
   date: Date;
@@ -39,8 +37,7 @@ interface Props {
 }
 
 const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Props) => {
-  const { t, i18n } = useTranslation("events");
-  const locale = i18n.language === "ca" ? ca : es;
+  const { t } = useTranslation("events");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialData?.date);
   const [currentMonth, setCurrentMonth] = useState<Date>(initialData?.date ?? new Date());
   const today = new Date();
@@ -101,9 +98,7 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
               {t("create.date")}<span className="field__required"> *</span>
             </label>
             <div className={`create-events-step2__calendar-card${dateError ? " create-events-step2__calendar-card--error" : ""}`}>
-              <DayPicker
-                mode="single"
-                locale={locale}
+              <EventCalendar
                 selected={selectedDate}
                 month={currentMonth}
                 onMonthChange={setCurrentMonth}
@@ -115,11 +110,6 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
                   }
                 }}
                 disabled={{ before: today }}
-                showOutsideDays
-                hideNavigation
-                modifiers={{ sunday: (date: Date) => date.getDay() === 0 }}
-                modifiersClassNames={{ sunday: "rdp-day--sunday" }}
-                components={{ MonthCaption: DayPickerCaption }}
               />
             </div>
             {dateError && <span className="field__error">{t("validation.dateRequired")}</span>}

@@ -1,13 +1,13 @@
 import "react-day-picker/style.css";
-import "./day-picker-caption.scss";
-import { useDayPicker } from "react-day-picker";
+import "./event-calendar.scss";
+import { DayPicker, useDayPicker } from "react-day-picker";
 import type { MonthCaptionProps } from "react-day-picker";
 import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import Icon from "../../ui-kit/icons/icon/Icon";
 
-const DayPickerCaption = ({ calendarMonth }: MonthCaptionProps) => {
+const Caption = ({ calendarMonth }: MonthCaptionProps) => {
   const { previousMonth, nextMonth, goToMonth } = useDayPicker();
   const { i18n, t } = useTranslation("common");
   const dateLocale = i18n.language === "ca" ? ca : es;
@@ -39,4 +39,34 @@ const DayPickerCaption = ({ calendarMonth }: MonthCaptionProps) => {
   );
 };
 
-export default DayPickerCaption;
+interface Props {
+  selected: Date | undefined;
+  month: Date;
+  onMonthChange: (month: Date) => void;
+  onSelect: (date: Date | undefined) => void;
+  disabled?: { before: Date };
+}
+
+const EventCalendar = ({ selected, month, onMonthChange, onSelect, disabled }: Props) => {
+  const { i18n } = useTranslation();
+  const locale = i18n.language === "ca" ? ca : es;
+
+  return (
+    <DayPicker
+      mode="single"
+      locale={locale}
+      selected={selected}
+      month={month}
+      onMonthChange={onMonthChange}
+      onSelect={onSelect}
+      disabled={disabled}
+      showOutsideDays
+      hideNavigation
+      modifiers={{ sunday: (date: Date) => date.getDay() === 0 }}
+      modifiersClassNames={{ sunday: "rdp-day--sunday" }}
+      components={{ MonthCaption: Caption }}
+    />
+  );
+};
+
+export default EventCalendar;
