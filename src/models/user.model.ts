@@ -1,13 +1,21 @@
 import { type User as FirebaseUser } from "firebase/auth";
 
+export interface LinkedMember {
+  id: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface UserProfile {
   username: string;
   firstName: string;
   lastName: string;
   email: string | null;
+  photoUrl?: string;
   createdAt: Date;
   role: "admin" | "organizer" | "member";
   groupId?: string;
+  linkedMembers?: LinkedMember[];
 }
 
 export type UserProfileCreate = Omit<UserProfile, "groupId">;
