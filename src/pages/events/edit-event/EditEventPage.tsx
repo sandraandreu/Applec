@@ -3,8 +3,6 @@ import { useEffect, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { DayPicker } from "react-day-picker";
-import { es, ca } from "react-day-picker/locale";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEventById, updateEvent } from "../../../services/event.service";
 import { getErrorKey } from "../../../utils/firebase-errors";
@@ -14,7 +12,7 @@ import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import DayPickerCaption from "../../../components/day-picker-caption/DayPickerCaption";
+import EventCalendar from "../../../components/event-calendar/EventCalendar";
 import { editEventReducer, initialState } from "./edit-event.reducer";
 
 interface FormFields {
@@ -30,7 +28,6 @@ const EditEventPage = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
   const { profile } = useAuthContext();
-  const locale = i18n.language === "ca" ? ca : es;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -174,18 +171,11 @@ const EditEventPage = () => {
               <div
                 className={`edit-event__calendar-card${state.dateError ? " edit-event__calendar-card--error" : ""}`}
               >
-                <DayPicker
-                  mode="single"
-                  locale={locale}
+                <EventCalendar
                   selected={state.selectedDate}
                   month={state.currentMonth}
                   onMonthChange={(month) => dispatch({ type: "SET_CURRENT_MONTH", payload: month })}
                   onSelect={(date) => dispatch({ type: "SET_DATE", payload: date })}
-                  showOutsideDays
-                  hideNavigation
-                  modifiers={{ sunday: (date: Date) => date.getDay() === 0 }}
-                  modifiersClassNames={{ sunday: "rdp-day--sunday" }}
-                  components={{ MonthCaption: DayPickerCaption }}
                 />
               </div>
               {state.dateError && (
@@ -291,19 +281,12 @@ const EditEventPage = () => {
             {state.deadlineOpen && (
               <div className="edit-event__deadline-panel">
                 <div className="edit-event__calendar-card">
-                  <DayPicker
-                    mode="single"
-                    locale={locale}
+                  <EventCalendar
                     selected={state.deadlineDate}
                     month={state.deadlineMonth}
                     onMonthChange={(month) => dispatch({ type: "SET_DEADLINE_MONTH", payload: month })}
                     onSelect={(date) => dispatch({ type: "SET_DEADLINE_DATE", payload: date })}
                     disabled={{ before: today }}
-                    showOutsideDays
-                    hideNavigation
-                    modifiers={{ sunday: (date: Date) => date.getDay() === 0 }}
-                    modifiersClassNames={{ sunday: "rdp-day--sunday" }}
-                    components={{ MonthCaption: DayPickerCaption }}
                   />
                 </div>
                 <div className="edit-event__time-box">
