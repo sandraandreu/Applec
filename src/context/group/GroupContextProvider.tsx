@@ -1,4 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+
 import { GroupContext } from "./GroupContext";
 import type { GroupData } from "./GroupContext";
 import { useAuthContext } from "../auth/AuthContext";
@@ -17,6 +18,7 @@ export const GroupContextProvider = ({
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const loadGroup = useCallback(async () => {
+    setIsLoading(true);
     if (!user || !profile) return;
 
     if (profile.groupId) {
@@ -25,11 +27,6 @@ export const GroupContextProvider = ({
     }
     setIsLoading(false);
   }, [user, profile]);
-
-  const refreshGroup = useCallback(async () => {
-    setIsLoading(true);
-    await loadGroup();
-  }, [loadGroup]);
 
   useEffect(() => {
     if (authLoading) return;
@@ -40,13 +37,12 @@ export const GroupContextProvider = ({
       return;
     }
 
-    setIsLoading(true);
     loadGroup();
   }, [user, authLoading, loadGroup]);
 
   const contextValue = useMemo(
-    () => ({ group, isLoading, refreshGroup }),
-    [group, isLoading, refreshGroup]
+    () => ({ group, isLoading }),
+    [group, isLoading]
   );
 
   return (

@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 import Loading from "../../../components/loading/Loading";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useGroupContext } from "../../../context/group/GroupContext";
 import {
   createGroup,
   uploadGroupImage,
@@ -32,7 +31,6 @@ const CreateGroupPage = () => {
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
   const { user, profile, refreshProfile } = useAuthContext();
-  const { refreshGroup } = useGroupContext();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorConnection, setErrorConnection] = useState<string>("");
@@ -94,7 +92,7 @@ const CreateGroupPage = () => {
         updateUserGroup(user.uid, groupId),
         updateUserRole(user.uid, "admin"),
       ]);
-      await Promise.all([refreshGroup(), refreshProfile()]);
+      await refreshProfile();
       navigate("/invite-group");
     } catch (error: unknown) {
       const firebaseError = error as FirebaseError;
