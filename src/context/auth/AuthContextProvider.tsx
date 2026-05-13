@@ -21,6 +21,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const user = useMemo<User | null>(() => {
     if (!firebaseUser) return null;
@@ -49,14 +50,15 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
       }
 
       setIsLoading(false);
+      setIsInitialized(true);
     });
 
     return unsubscribe;
   }, []);
 
   const contextValue = useMemo(
-    () => ({ user, profile, isLoading, logout, refreshProfile }),
-    [user, profile, isLoading, logout, refreshProfile],
+    () => ({ user, profile, isLoading, isInitialized, logout, refreshProfile }),
+    [user, profile, isLoading, isInitialized, logout, refreshProfile],
   );
 
   return (

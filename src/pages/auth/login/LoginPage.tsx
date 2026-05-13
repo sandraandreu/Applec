@@ -10,6 +10,7 @@ import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import {
   loginUser,
+  logoutUser,
   sendVerificationEmail,
 } from "../../../services/auth.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
@@ -53,7 +54,9 @@ const LoginPage = () => {
       const userCredential = await loginUser(email, password);
 
       if (!userCredential.user.emailVerified) {
-        dispatch({ type: "LOGIN_UNVERIFIED", user: userCredential.user });
+        const unverifiedUser = userCredential.user;
+        await logoutUser();
+        dispatch({ type: "LOGIN_UNVERIFIED", user: unverifiedUser });
         return;
       }
       dispatch({ type: "LOGIN_SUCCESS" });

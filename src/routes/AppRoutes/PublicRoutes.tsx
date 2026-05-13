@@ -8,9 +8,9 @@ interface PublicRoutesProps {
 }
 
 const PublicRoutes = ({ children }: PublicRoutesProps) => {
-  const { user, profile, isLoading } = useAuthContext();
+  const { user, profile, isInitialized } = useAuthContext();
 
-  if (isLoading) {
+  if (!isInitialized) {
     return <Loading />;
   }
 
