@@ -56,14 +56,19 @@ Tres roles:
 ---
 
 ### 6. Gestión de miembros
-**Estado:** ✓ Listado implementado, ✗ acciones de gestión pendientes
+**Estado:** ✓ Listado implementado (lista, filtros, búsqueda), ✗ modal de acciones pendiente (HTML/SCSS primero, luego lógica)
 
-El Admin/Organizador ve la lista completa (nombre, rol, estado). El Admin puede aceptar/rechazar solicitudes y expulsar miembros. Solo el Admin cambia roles.
+El Admin/Organizador ve la lista completa (nombre, rol, estado). Al pulsar un miembro se abre un modal con acciones:
+- Ver perfil del miembro
+- Cambiar rol (Hacer Organizador / Hacer Miembro)
+- Eliminar miembro del grupo
+
+Solo el Admin puede cambiar roles y expulsar miembros.
 
 ---
 
 ### 7. Crear evento
-**Estado:** ✓ Formulario implementado, ✗ lógica de confirmación y recordatorio pendiente
+**Estado:** ✓ Completado (creación, edición y eliminación implementadas)
 
 Solo Admin y Organizadores pueden crear eventos.
 
@@ -74,14 +79,16 @@ Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción
 
 La fecha límite de confirmación no puede ser posterior a la fecha del evento.
 
-Al guardar: aparece en la lista de eventos del grupo. Los campos `requiresConfirmation` y `sendReminder` se guardan en Firestore pero aún no tienen efecto — la lógica de confirmación de asistencia y el envío de notificaciones/recordatorios están pendientes.
+Edición disponible (reutiliza el formulario de creación). Eliminación con modal de confirmación. Al eliminar se navega de vuelta a la lista de eventos.
 
 ---
 
 ### 8. Calendario común
-**Estado:** ✗ Pendiente (T06)
+**Estado:** ✗ Pendiente — spec definida en `docs/specs/events-calendar.md`
 
-Visible para todos los miembros. Eventos ordenados por fecha, navegación por mes/semana. Al seleccionar un evento: detalle completo (nombre, fecha, hora, lugar, descripción, fecha límite).
+Visible para todos los miembros. Vista mensual con navegación por mes. Días con eventos marcados con punto azul. Al seleccionar un día se muestra la lista de eventos de ese día usando `EventCard`.
+
+**Librería:** FullCalendar (`@fullcalendar/react`, `@fullcalendar/daygrid`, `@fullcalendar/interaction`).
 
 **Estados de un evento:**
 - `activo` — publicado, fecha no pasada, plazo abierto
@@ -92,7 +99,7 @@ Visible para todos los miembros. Eventos ordenados por fecha, navegación por me
 ---
 
 ### 9. Confirmación de asistencia
-**Estado:** ✓ UI implementada, ✗ lógica Firestore pendiente (T11 + T12)
+**Estado:** ✓ UI base implementada (botones Sí/No), ✗ lógica Firestore pendiente · ✗ diseño de vinculados a implementar
 
 Cada miembro confirma: **sí** o **no**. No confirmar = "sin respuesta" (pendiente).
 
@@ -103,15 +110,29 @@ Los miembros solo ven su propia confirmación. El listado completo es solo para 
 **Diseño acordado:**
 - Sin botón "Guardar" — guardado dinámico al tocar Sí/No
 - Sin voto = estado pendiente (ningún botón resaltado)
-- Botones actuales: No (outline) / Sí (relleno con check) — se resalta el seleccionado
-- Sección de vinculados debajo: si no tiene ninguno → botón "añadir vinculados"; si tiene → lista con opción de votar por cada uno
+- Botones: No (outline) / Sí (relleno con check) — se resalta el seleccionado
+- Vinculados: se muestran directamente debajo de los botones propios (no hay botón "añadir vinculados"); si el usuario tiene vinculados registrados, aparecen listados y se puede votar por cada uno individualmente
 
 ---
 
 ### 10. Listado de asistentes
-**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes (T12)
+**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes
 
 Integrado directamente en la página de detalle del evento (no es una página separada). Visible solo para Admin y Organizadores. Lista con filtros: Todos / Confirmados / Pendientes / No van. Avatar en color según asistencia: azul (confirmado), gris (pendiente), rojo (no va) con nombre tachado.
+
+---
+
+### 11. Perfil de usuario
+**Estado:** ✗ Pendiente (pantalla no creada — HTML/SCSS primero)
+
+Pantalla accesible desde la barra de navegación inferior.
+
+**Contenido:**
+- Avatar circular + nombre completo + badge de rol
+- Sección **Mi cuenta:** Editar perfil · Mis vinculados · Notificaciones · Idioma
+- Sección **Mi falla:** Compartir acceso · Configuración del grupo · Cerrar sesión
+
+Idioma se puede cambiar desde el perfil (ya funciona globalmente). Cerrar sesión llama a `logout` del `AuthContext`.
 
 ---
 
@@ -121,8 +142,9 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 
 | # | Funcionalidad | Plan |
 |---|---|---|
-| 11 | Miembros vinculados (familia sin cuenta propia) | Versión futura |
-| 12 | Inicio de sesión con Google | Versión futura |
-| 13 | Gráfico circular de asistencia | Versión futura |
-| 14 | Feed interno del grupo (publicaciones + comentarios) | Premium |
-| 15 | Planes de pago (gratuito / premium) | Monetización |
+| 12 | Miembros vinculados (familia sin cuenta propia) | Versión futura — la UI de votación los mostrará con datos de demo |
+| 13 | Inicio de sesión con Google | Versión futura |
+| 14 | Gráfico circular de asistencia | Versión futura |
+| 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
+| 16 | Notificaciones | Pantalla con datos hardcodeados para la presentación |
+| 17 | Planes de pago (gratuito / premium) | Monetización |

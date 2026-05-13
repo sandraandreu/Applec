@@ -128,21 +128,46 @@ La barra inferior varía según el rol: admin/organizador tienen acceso completo
 
 El menú de miembros tiene menos ítems que el de admin/organizadores (las páginas de gestión no aplican).
 
-### Pantallas identificadas en el diseño
+### Pantallas de la app
 
-**Eventos** (`/home` o `/events`)
-- Lista de eventos con fecha, nombre, lugar y hora
-- Filtros: Todos · Confirmados · Pendientes
+**Lista de eventos** (`/events`) ✓ Implementado
+- Lista de eventos del grupo con fecha, nombre, lugar y hora
+- Filtros diferenciados por rol: admin/org ven Activos · Plazo cerrado · Finalizados; miembro ve Próximos · Pendientes de confirmar · Pasados
+- Tarjeta con fondo degradado azul si `isSpecial === true`
+- Icono de editar en tarjetas (admin: todas; organizer: solo las propias)
 
-**Miembros** (`/members`)
-- Búsqueda + filtros por rol (Todos · Administradores · Organizadores · Miembros... [ajustado por rol del usuario])
-- Lista agrupada por rol con avatar, nombre y username
-- Al pulsar un miembro → modal de acciones: Ver perfil / Hacer Organizador / Eliminar miembro + botones Guardar cambios / Cerrar
+**Detalle de evento** (`/events/:id`) ✓ Implementado
+- Zona superior con fondo degradado, nombre, badge de estado, fecha, lugar, descripción
+- Menú ⋮ con opciones Editar y Eliminar (solo si `canEdit`)
+- Admin y organizador: sección de asistentes con contador y filtros
+- Miembro: botones Sí/No de confirmación + vinculados debajo
 
-**Perfil** (`/profile`)
-- Avatar, nombre completo, badge de rol
+**Crear/editar evento** (`/events/create`, `/events/:id/edit`) ✓ Implementado
+- Flujo de 3 pasos: tipo + nombre + descripción / fecha + hora + lugar / confirmación + recordatorio
+
+**Miembros** (`/members`) ✓ Lista implementada · ✗ Modal de acciones pendiente
+- Búsqueda + filtros por rol (Todos · Admin · Organizadores · Miembros)
+- Lista con avatar, nombre y username
+- Al pulsar un miembro → modal de acciones: Ver perfil / Cambiar rol / Eliminar miembro *(pendiente)*
+
+**Calendario** (`/calendar`) ✗ Pendiente — spec en `docs/specs/events-calendar.md`
+- Vista mensual con FullCalendar
+- Días con eventos marcados con punto azul
+- Al seleccionar un día: lista de eventos del día con `EventCard`
+- Navegación por meses; semana empieza en lunes
+
+**Perfil** (`/profile`) ✗ Pendiente
+- Avatar circular + nombre completo + badge de rol
 - Sección "Mi cuenta": Editar perfil · Mis vinculados · Notificaciones · Idioma
 - Sección "Mi falla": Compartir acceso · Configuración del grupo · Cerrar sesión
+
+**Feed** (`/feed`) ✗ Pendiente — pantalla con datos hardcodeados para la presentación
+- Publicaciones del grupo con avatar, nombre, fecha y texto
+- Sin backend real; datos de demo
+
+**Notificaciones** (`/notifications`) ✗ Pendiente — pantalla con datos hardcodeados para la presentación
+- Lista de notificaciones del grupo (eventos nuevos, confirmaciones, cambios de rol)
+- Sin backend real; datos de demo
 
 La conexión con Figma se hace via Figma Console MCP (CDP mode): lanzar Figma con `--remote-debugging-port=9222`.
 
