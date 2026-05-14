@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import useLayoutBackground from "../../../hooks/useLayoutBackground";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEvents } from "../../../services/event.service";
@@ -21,6 +22,8 @@ const EventsListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState<FilterKey>("all");
+
+  useLayoutBackground(profile?.role);
 
   useEffect(() => {
     if (!profile?.groupId || !user) return;

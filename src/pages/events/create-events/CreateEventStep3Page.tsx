@@ -1,4 +1,4 @@
-import "./createEventStep3.scss";
+import "./create-event.scss";
 import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";

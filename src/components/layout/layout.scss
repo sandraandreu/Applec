@@ -3,6 +3,18 @@
   flex-direction: column;
   height: 100vh;
 
+  &--bg-blue {
+    background: var(--color-bg-gradient-blue);
+  }
+
+  &--bg-red {
+    background: var(--color-bg-gradient-red);
+  }
+
+  &--bg-teal {
+    background: var(--color-bg-gradient-teal);
+  }
+
   &__content {
     flex: 1;
     overflow-y: auto;
@@ -14,8 +26,6 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--padding-bar);
-  background-color: var(--color-surface);
-
   &__logo {
     width: 42px;
     height: 42px;
@@ -61,5 +71,12 @@
     &[aria-current="page"] {
       color: var(--color-icon-active);
     }
+  }
+
+  &__profile-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
   }
 }

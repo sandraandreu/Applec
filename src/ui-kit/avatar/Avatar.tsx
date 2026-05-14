@@ -10,15 +10,20 @@ interface AvatarProps {
   role?: AvatarRole;
   size?: AvatarSize;
   attendance?: AvatarAttendance;
+  photoUrl?: string;
 }
 
-const Avatar = ({ firstName, lastName, role = "member", size = "md", attendance }: AvatarProps) => {
+const Avatar = ({ firstName, lastName, role = "member", size = "md", attendance, photoUrl }: AvatarProps) => {
   const initials = `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
   const colorClass = attendance ? `avatar--${attendance}` : `avatar--${role}`;
 
   return (
     <div className={`avatar ${colorClass} avatar--${size}`}>
-      {initials}
+      {photoUrl ? (
+        <img src={photoUrl} alt={`${firstName} ${lastName}`} className="avatar__photo" />
+      ) : (
+        initials
+      )}
     </div>
   );
 };
