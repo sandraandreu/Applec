@@ -7,3 +7,8 @@ export interface Attendance {
 }
 
 export type AttendanceResponse = Attendance["response"];
+
+export interface EventAttendanceData {
+  memberResponses: Record<string, "yes" | "no">;
+  linkedResponses: Record<string, Record<string, "yes" | "no">>;
+}

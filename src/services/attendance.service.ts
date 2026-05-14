@@ -1,6 +1,28 @@
-import { collectionGroup, query, where, getDocs } from "firebase/firestore";
+import { collection, collectionGroup, query, where, getDocs } from "firebase/firestore";
 import { db } from "../plugins/firebase";
-import type { AttendanceResponse } from "../models/attendance.model";
+import type { AttendanceResponse, EventAttendanceData } from "../models/attendance.model";
+
+export const getEventAttendances = async (
+  groupId: string,
+  eventId: string,
+): Promise<EventAttendanceData | null> => {
+  try {
+    const ref = collection(db, "groups", groupId, "events", eventId, "attendances");
+    const snap = await getDocs(ref);
+    const memberResponses: Record<string, AttendanceResponse> = {};
+    const linkedResponses: Record<string, Record<string, AttendanceResponse>> = {};
+    snap.docs.forEach(d => {
+      const data = d.data();
+      memberResponses[d.id] = data.response;
+      if (data.linkedResponses) {
+        linkedResponses[d.id] = data.linkedResponses;
+      }
+    });
+    return { memberResponses, linkedResponses };
+  } catch {
+    return null;
+  }
+};
 
 export const getMyAttendances = async (
   userId: string,

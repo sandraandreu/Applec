@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import type { LinkedMemberData } from "../../services/linked-member.service";
 
 export interface GroupData {
   groupId: string;
@@ -7,6 +8,7 @@ export interface GroupData {
   inviteCode: string;
   adminId: string;
   members: { uid: string; role: "admin" | "organizer" | "member"; username: string; firstName: string; lastName: string; email: string }[];
+  linkedMembers: LinkedMemberData[];
 }
 
 export interface GroupContextType {

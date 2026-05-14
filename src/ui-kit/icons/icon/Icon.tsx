@@ -25,7 +25,8 @@ export type IconName =
   | "clock"
   | "chevron-left"
   | "chevron-left-circle"
-  | "chevron-right-circle";
+  | "chevron-right-circle"
+  | "chevron-up";
 
 interface IconData {
   viewBox: string;
@@ -110,9 +111,15 @@ const icons: Record<IconName, IconData> = {
     ),
   },
   "chevron-down": {
-    viewBox: "0 0 18 18",
+    viewBox: "0 0 24 24",
     content: (
-      <path d="M3.9375 6.46558L9 11.5281L14.0625 6.46558" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M5.25024 8.62061L12.0002 15.3706L18.7502 8.62061" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round"/>
+    ),
+  },
+  "chevron-up": {
+    viewBox: "0 0 24 24",
+    content: (
+      <path d="M5.25 15.3755L12 8.62549L18.75 15.3755" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round"/>
     ),
   },
   "edit": {

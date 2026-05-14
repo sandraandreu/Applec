@@ -8,24 +8,51 @@ import Icon from "../../ui-kit/icons/icon/Icon";
 interface MemberCardProps {
   firstName: string;
   lastName: string;
-  email: string;
+  email?: string;
+  relationship?: string;
   role: "admin" | "organizer" | "member";
   showChevron?: boolean;
   showRole?: boolean;
   attendance?: AvatarAttendance;
+  isLinked?: boolean;
+  isExpandable?: boolean;
+  isExpanded?: boolean;
+  onToggle?: () => void;
 }
 
-const MemberCard = ({ firstName, lastName, email, role, showChevron = true, showRole = true, attendance }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle }: MemberCardProps) => {
+  const classes = [
+    "member-card",
+    attendance === "not-going" ? "member-card--not-going" : "",
+    isLinked ? "member-card--linked" : "",
+  ].filter(Boolean).join(" ");
+
   return (
-    <div className={`member-card${attendance === "not-going" ? " member-card--not-going" : ""}`}>
-      <Avatar firstName={firstName} lastName={lastName} role={role} size="md" attendance={attendance} />
+    <div className={classes} onClick={isExpandable ? onToggle : undefined} role={isExpandable ? "button" : undefined}>
+      <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
-        <span className="member-card__email">{email}</span>
+        {isLinked && relationship && <span className="member-card__relationship">{relationship}</span>}
+        {!isLinked && email && <span className="member-card__email">{email}</span>}
       </div>
       {showRole && <Chip role={role} variant="short" />}
       {showChevron && (
         <Icon name="chevron-right" size={20} className="member-card__chevron" />
+      )}
+      {attendance === "going" && (
+        <div className="member-card__indicator member-card__indicator--going">
+          <Icon name="check" size={10} />
+        </div>
+      )}
+      {attendance === "pending" && (
+        <div className="member-card__indicator member-card__indicator--pending" />
+      )}
+      {isExpandable && (
+        <Icon
+          name={isExpanded ? "chevron-up" : "chevron-down"}
+          size={24}
+          className="member-card__expand-icon"
+        />
       )}
     </div>
   );
