@@ -1,4 +1,4 @@
-import "./createEventStep2.scss";
+import "./create-event.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";

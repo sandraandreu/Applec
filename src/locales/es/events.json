@@ -65,6 +65,7 @@
       "special": "Especial",
       "normal": "Normal"
     },
+    "typeSection": "Tipo de evento",
     "infoSection": "Información del evento",
     "name": "Nombre del evento",
     "namePlaceholder": "Escribe el nombre del evento",

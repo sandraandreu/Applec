@@ -4,6 +4,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   overflow: hidden;
+  background-color: var(--color-surface);
 
   &__content {
     display: flex;
@@ -149,7 +150,7 @@
     padding: var(--size-8) var(--size-14);
     border-radius: var(--radius-button);
     border: 1px solid var(--color-brand);
-    background: var(--color-bg-blue);
+    background: var(--color-surface);
     appearance: none;
   }
 
@@ -175,7 +176,7 @@
     top: calc(100% + var(--size-8));
     right: 0;
     min-width: 180px;
-    background: var(--color-bg-blue);
+    background: var(--color-surface);
     border: 1px solid var(--color-brand);
     border-radius: var(--radius-card);
     overflow: hidden;

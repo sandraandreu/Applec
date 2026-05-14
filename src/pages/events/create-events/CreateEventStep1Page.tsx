@@ -1,4 +1,4 @@
-import "./createEventStep1.scss";
+import "./create-event.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import Button from "../../../ui-kit/button/Button";
@@ -53,6 +53,16 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
         <div className="create-events-page__header">
           <h1 className="create-events-page__title">{t("create.step1Title")}</h1>
           <p className="create-events-page__description">{t("create.step1Description")}</p>
+        </div>
+      </div>
+
+      <form className="create-events-page__content" onSubmit={handleSubmit(onSubmit)}>
+        <div className="create-events-page__handle" aria-hidden="true" />
+
+        <div className="create-events-page__form-section">
+          <p className="create-events-page__section-title">
+            {t("create.typeSection")}
+          </p>
           <div className="create-events-page__types">
             <button
               type="button"
@@ -70,10 +80,6 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
             </button>
           </div>
         </div>
-      </div>
-
-      <form className="create-events-page__content" onSubmit={handleSubmit(onSubmit)}>
-        <div className="create-events-page__handle" aria-hidden="true" />
 
         <div className="create-events-page__form-section">
           <p className="create-events-page__section-title">

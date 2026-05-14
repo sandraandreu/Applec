@@ -150,10 +150,8 @@ const EventDetailPage = () => {
   return (
     <div className="event-detail-page">
       <div className="event-detail-page__gradient-zone">
-        <BackButton />
-
-        <div className="event-detail-page__header">
-          <h1 className="event-detail-page__name">{event.name}</h1>
+        <div className="event-detail-page__top-bar">
+          <BackButton />
           {canEdit && (
             <div className="event-detail-page__menu-wrapper">
               <button
@@ -197,6 +195,8 @@ const EventDetailPage = () => {
             </div>
           )}
         </div>
+
+        <h1 className="event-detail-page__name">{event.name}</h1>
 
         <span
           className={`event-detail-page__status-badge event-detail-page__status-badge--${eventStatus}`}

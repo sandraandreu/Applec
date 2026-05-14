@@ -70,7 +70,11 @@ const TabBar = () => {
           aria-current={active === "profile" ? "page" : undefined}
           aria-label={t("nav.profile")}
         >
-          <Icon name="profile" size={32} />
+          {profile.photoUrl ? (
+            <img src={profile.photoUrl} alt="" aria-hidden="true" className="tab-bar__profile-photo" />
+          ) : (
+            <Icon name="profile" size={32} />
+          )}
         </Link>
 
       </div>
