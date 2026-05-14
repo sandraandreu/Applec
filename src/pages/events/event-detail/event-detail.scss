@@ -152,7 +152,7 @@
   &__attendees {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-section);
+    gap: var(--gap-compact);
   }
 
   &__attendees-header {
@@ -189,6 +189,12 @@
   &__attendees-count-going {
     color: var(--color-brand);
     font-weight: var(--font-weight-bold);
+  }
+
+  &__attendee-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
   }
 
   &__attendees-empty {

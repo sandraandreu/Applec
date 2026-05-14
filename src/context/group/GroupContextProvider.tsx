@@ -4,6 +4,7 @@ import { GroupContext } from "./GroupContext";
 import type { GroupData } from "./GroupContext";
 import { useAuthContext } from "../auth/AuthContext";
 import { getGroupById } from "../../services/group.service";
+import { getGroupLinkedMembers } from "../../services/linked-member.service";
 
 export interface GroupContextProviderProps {
   children: ReactNode;
@@ -22,8 +23,13 @@ export const GroupContextProvider = ({
     if (!user || !profile) return;
 
     if (profile.groupId) {
-      const groupData = await getGroupById(profile.groupId);
-      setGroup(groupData);
+      const [groupData, linkedMembers] = await Promise.all([
+        getGroupById(profile.groupId),
+        getGroupLinkedMembers(profile.groupId),
+      ]);
+      if (groupData) {
+        setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
+      }
     }
     setIsLoading(false);
   }, [user, profile]);

@@ -27,6 +27,7 @@ export const getGroupById = async (
       inviteCode: data.inviteCode,
       adminId: data.adminId,
       members: data.members,
+      linkedMembers: [],
     };
   } catch {
     return null;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, updateDoc, addDoc, setDoc, getDocs, deleteDoc, collection, deleteField, query, where } from "firebase/firestore";
+import { doc, updateDoc, addDoc, setDoc, getDocs, deleteDoc, collection, deleteField } from "firebase/firestore";
 import { db } from "../../plugins/firebase";
 import { useAuthContext } from "../../context/auth/AuthContext";
 
@@ -19,6 +19,11 @@ const SeedPage = () => {
     try {
       // Limpieza previa
       await updateDoc(doc(db, "users", adminUid), { linkedMembers: deleteField() });
+
+      const linkedMembersSnap = await getDocs(collection(db, "groups", groupId, "linkedMembers"));
+      for (const linkedDoc of linkedMembersSnap.docs) {
+        await deleteDoc(linkedDoc.ref);
+      }
 
       const eventsSnap = await getDocs(collection(db, "groups", groupId, "events"));
       for (const eventDoc of eventsSnap.docs) {
@@ -80,7 +85,7 @@ const SeedPage = () => {
         description: "La nit de la cremà. El moment més emotiu de les falles.",
       });
 
-      await addDoc(collection(db, "groups", groupId, "events"), {
+      const reunioRef = await addDoc(collection(db, "groups", groupId, "events"), {
         groupId, createdBy: adminUid, createdAt: new Date(),
         name: "Reunió de Junta",
         date: new Date(2026, 5, 25),
@@ -103,7 +108,7 @@ const SeedPage = () => {
         description: "Missa en honor a la nostra fallera major.",
       });
 
-      await addDoc(collection(db, "groups", groupId, "events"), {
+      const soparRef = await addDoc(collection(db, "groups", groupId, "events"), {
         groupId, createdBy: adminUid, createdAt: new Date(),
         name: "Sopar de Germandat",
         date: new Date(2026, 5, 28),
@@ -116,7 +121,7 @@ const SeedPage = () => {
         description: "Sopar anual de germandat de la falla. Places limitades!",
       });
 
-      await addDoc(collection(db, "groups", groupId, "events"), {
+      const assembleaRef = await addDoc(collection(db, "groups", groupId, "events"), {
         groupId, createdBy: adminUid, createdAt: new Date(),
         name: "Assemblea General",
         date: new Date(2026, 6, 5),
@@ -172,7 +177,7 @@ const SeedPage = () => {
         description: "Taller per aprendre els secrets de la pirotècnia valenciana.",
       });
 
-      await addDoc(collection(db, "groups", groupId, "events"), {
+      const visitaRef = await addDoc(collection(db, "groups", groupId, "events"), {
         groupId, createdBy: adminUid, createdAt: new Date(),
         name: "Visita al Museu Faller",
         date: new Date(2026, 7, 3),
@@ -184,7 +189,7 @@ const SeedPage = () => {
         description: "Visita guiada al Museu Faller de València.",
       });
 
-      await addDoc(collection(db, "groups", groupId, "events"), {
+      const berenarRef = await addDoc(collection(db, "groups", groupId, "events"), {
         groupId, createdBy: adminUid, createdAt: new Date(),
         name: "Berenar de Xiquets",
         date: new Date(2026, 7, 30),
@@ -197,26 +202,88 @@ const SeedPage = () => {
         description: "Berenar per als xiquets i xiquetes de la falla.",
       });
 
-      const missaId = missaRef.id;
-      const attendancesCol = collection(db, "groups", groupId, "events", missaId, "attendances");
+      // ── Vinculados de 4 miembros ────────────────────────────────────
+      const linkedCol = collection(db, "groups", groupId, "linkedMembers");
+      // Laia
+      await setDoc(doc(linkedCol, "linked-laia-pau"),       { ownerUid: "fake-uid-laia",     firstName: "Pau",    lastName: "Calatayud", relationship: "Fill" });
+      await setDoc(doc(linkedCol, "linked-laia-neus"),      { ownerUid: "fake-uid-laia",     firstName: "Neus",   lastName: "Calatayud", relationship: "Filla" });
+      // Dolors
+      await setDoc(doc(linkedCol, "linked-dolors-toni"),    { ownerUid: "fake-uid-dolors",   firstName: "Toni",   lastName: "Pons",      relationship: "Marit" });
+      // Vicent (organitzador)
+      await setDoc(doc(linkedCol, "linked-vicent-carme"),   { ownerUid: "fake-uid-vicent",   firstName: "Carme",  lastName: "Ferrer",    relationship: "Mare" });
+      await setDoc(doc(linkedCol, "linked-vicent-esteve"),  { ownerUid: "fake-uid-vicent",   firstName: "Esteve", lastName: "Ferrer",    relationship: "Fill" });
+      // Consuelo
+      await setDoc(doc(linkedCol, "linked-consuelo-pep"),   { ownerUid: "fake-uid-consuelo", firstName: "Pep",    lastName: "Martí",     relationship: "Marit" });
 
-      // Solo miembros votan — admin y organizadores no
-      await setDoc(doc(attendancesCol, "fake-uid-laia"), {
-        userId: "fake-uid-laia", eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 3),
-      });
-      await setDoc(doc(attendancesCol, "fake-uid-consuelo"), {
-        userId: "fake-uid-consuelo", eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 7),
-      });
-      await setDoc(doc(attendancesCol, "fake-uid-dolors"), {
-        userId: "fake-uid-dolors", eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 5),
-      });
-      await setDoc(doc(attendancesCol, "fake-uid-josepantoni"), {
-        userId: "fake-uid-josepantoni", eventId: missaId, response: "no", confirmedAt: new Date(2026, 5, 4),
-      });
-      await setDoc(doc(attendancesCol, "fake-uid-raul"), {
-        userId: "fake-uid-raul", eventId: missaId, response: "no", confirmedAt: new Date(2026, 5, 6),
-      });
-      // Ferran y Miquel Àngel: sin documento = pendiente
+      const atCol = (eventId: string) => collection(db, "groups", groupId, "events", eventId, "attendances");
+
+      // ── Reunió de Junta ─────────────────────────────────────────────
+      const reunioId = reunioRef.id;
+      await setDoc(doc(atCol(reunioId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: reunioId, response: "yes", confirmedAt: new Date(2026, 5, 10), linkedResponses: { "linked-vicent-carme": "no", "linked-vicent-esteve": "yes" } });
+      await setDoc(doc(atCol(reunioId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: reunioId, response: "yes", confirmedAt: new Date(2026, 5, 11) });
+      await setDoc(doc(atCol(reunioId), "fake-uid-josepantoni"), { userId: "fake-uid-josepantoni", eventId: reunioId, response: "no",  confirmedAt: new Date(2026, 5, 12) });
+      await setDoc(doc(atCol(reunioId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: reunioId, response: "yes", confirmedAt: new Date(2026, 5, 9),  linkedResponses: { "linked-laia-pau": "yes", "linked-laia-neus": "yes" } });
+      await setDoc(doc(atCol(reunioId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: reunioId, response: "yes", confirmedAt: new Date(2026, 5, 13), linkedResponses: { "linked-consuelo-pep": "yes" } });
+      await setDoc(doc(atCol(reunioId), "fake-uid-ferran"),      { userId: "fake-uid-ferran",      eventId: reunioId, response: "no",  confirmedAt: new Date(2026, 5, 14) });
+      await setDoc(doc(atCol(reunioId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: reunioId, response: "yes", confirmedAt: new Date(2026, 5, 10), linkedResponses: { "linked-dolors-toni": "no" } });
+      // Raül y Miquel: pendientes
+
+      // ── Missa Fallera ───────────────────────────────────────────────
+      const missaId = missaRef.id;
+      await setDoc(doc(atCol(missaId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 20), linkedResponses: { "linked-vicent-carme": "yes", "linked-vicent-esteve": "yes" } });
+      await setDoc(doc(atCol(missaId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: missaId, response: "no",  confirmedAt: new Date(2026, 5, 22) });
+      await setDoc(doc(atCol(missaId), "fake-uid-josepantoni"), { userId: "fake-uid-josepantoni", eventId: missaId, response: "no",  confirmedAt: new Date(2026, 5, 4) });
+      await setDoc(doc(atCol(missaId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 3),  linkedResponses: { "linked-laia-pau": "yes", "linked-laia-neus": "no" } });
+      await setDoc(doc(atCol(missaId), "fake-uid-raul"),        { userId: "fake-uid-raul",        eventId: missaId, response: "no",  confirmedAt: new Date(2026, 5, 6) });
+      await setDoc(doc(atCol(missaId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 7),  linkedResponses: { "linked-consuelo-pep": "yes" } });
+      await setDoc(doc(atCol(missaId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 5),  linkedResponses: { "linked-dolors-toni": "yes" } });
+      // Ferran y Miquel: pendientes
+
+      // ── Sopar de Germandat (cena adultos, sin vinculados) ───────────
+      const soparId = soparRef.id;
+      await setDoc(doc(atCol(soparId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
+      await setDoc(doc(atCol(soparId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
+      await setDoc(doc(atCol(soparId), "fake-uid-josepantoni"), { userId: "fake-uid-josepantoni", eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 16) });
+      await setDoc(doc(atCol(soparId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 14) });
+      await setDoc(doc(atCol(soparId), "fake-uid-raul"),        { userId: "fake-uid-raul",        eventId: soparId, response: "no",  confirmedAt: new Date(2026, 5, 17) });
+      await setDoc(doc(atCol(soparId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
+      await setDoc(doc(atCol(soparId), "fake-uid-ferran"),      { userId: "fake-uid-ferran",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 16) });
+      await setDoc(doc(atCol(soparId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
+      // Miquel: pendiente
+
+      // ── Assemblea General ───────────────────────────────────────────
+      const assembleaId = assembleaRef.id;
+      await setDoc(doc(atCol(assembleaId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 1) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 1) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-josepantoni"), { userId: "fake-uid-josepantoni", eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 2) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 1) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: assembleaId, response: "no",  confirmedAt: new Date(2026, 6, 3) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-ferran"),      { userId: "fake-uid-ferran",      eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 2) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-miquel"),      { userId: "fake-uid-miquel",      eventId: assembleaId, response: "yes", confirmedAt: new Date(2026, 6, 1) });
+      await setDoc(doc(atCol(assembleaId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: assembleaId, response: "no",  confirmedAt: new Date(2026, 6, 3) });
+      // Raül: pendiente
+
+      // ── Visita al Museu Faller ──────────────────────────────────────
+      const visitaId = visitaRef.id;
+      await setDoc(doc(atCol(visitaId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 20), linkedResponses: { "linked-vicent-carme": "yes", "linked-vicent-esteve": "yes" } });
+      await setDoc(doc(atCol(visitaId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: visitaId, response: "no",  confirmedAt: new Date(2026, 6, 22) });
+      await setDoc(doc(atCol(visitaId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 19), linkedResponses: { "linked-laia-pau": "yes", "linked-laia-neus": "yes" } });
+      await setDoc(doc(atCol(visitaId), "fake-uid-raul"),        { userId: "fake-uid-raul",        eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 21) });
+      await setDoc(doc(atCol(visitaId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 20), linkedResponses: { "linked-consuelo-pep": "yes" } });
+      await setDoc(doc(atCol(visitaId), "fake-uid-miquel"),      { userId: "fake-uid-miquel",      eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 20) });
+      await setDoc(doc(atCol(visitaId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: visitaId, response: "yes", confirmedAt: new Date(2026, 6, 21), linkedResponses: { "linked-dolors-toni": "yes" } });
+      // Josep Antoni y Ferran: pendientes
+
+      // ── Berenar de Xiquets ──────────────────────────────────────────
+      const berenarId = berenarRef.id;
+      await setDoc(doc(atCol(berenarId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: berenarId, response: "yes", confirmedAt: new Date(2026, 7, 20), linkedResponses: { "linked-vicent-carme": "yes", "linked-vicent-esteve": "yes" } });
+      await setDoc(doc(atCol(berenarId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: berenarId, response: "no",  confirmedAt: new Date(2026, 7, 22) });
+      await setDoc(doc(atCol(berenarId), "fake-uid-josepantoni"), { userId: "fake-uid-josepantoni", eventId: berenarId, response: "no",  confirmedAt: new Date(2026, 7, 21) });
+      await setDoc(doc(atCol(berenarId), "fake-uid-laia"),        { userId: "fake-uid-laia",        eventId: berenarId, response: "yes", confirmedAt: new Date(2026, 7, 19), linkedResponses: { "linked-laia-pau": "yes", "linked-laia-neus": "yes" } });
+      await setDoc(doc(atCol(berenarId), "fake-uid-consuelo"),    { userId: "fake-uid-consuelo",    eventId: berenarId, response: "yes", confirmedAt: new Date(2026, 7, 20), linkedResponses: { "linked-consuelo-pep": "yes" } });
+      await setDoc(doc(atCol(berenarId), "fake-uid-miquel"),      { userId: "fake-uid-miquel",      eventId: berenarId, response: "yes", confirmedAt: new Date(2026, 7, 20) });
+      await setDoc(doc(atCol(berenarId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: berenarId, response: "yes", confirmedAt: new Date(2026, 7, 21), linkedResponses: { "linked-dolors-toni": "yes" } });
+      // Raül y Ferran: pendientes
 
       await setDoc(doc(db, "groups", groupId, "joinRequests", "fake-uid-request-pere"), {
         uid: "fake-uid-request-pere",
@@ -243,13 +310,10 @@ const SeedPage = () => {
     setMemberStatus("loading");
 
     try {
-      // Vinculados de Carmen
-      await updateDoc(doc(db, "users", memberUid), {
-        linkedMembers: [
-          { id: "linked-marc",  firstName: "Marc",  lastName: "Soriano" },
-          { id: "linked-julia", firstName: "Júlia", lastName: "Soriano" },
-        ],
-      });
+      // Vinculados de Carmen — en la subcollección del grupo
+      const linkedMembersCol = collection(db, "groups", groupId, "linkedMembers");
+      await setDoc(doc(linkedMembersCol, "linked-marc"),  { ownerUid: memberUid, firstName: "Marc",  lastName: "Soriano", relationship: "Fill" });
+      await setDoc(doc(linkedMembersCol, "linked-julia"), { ownerUid: memberUid, firstName: "Júlia", lastName: "Soriano", relationship: "Filla" });
 
       // Buscar eventos por nombre para añadir asistencias
       const eventsSnap = await getDocs(collection(db, "groups", groupId, "events"));

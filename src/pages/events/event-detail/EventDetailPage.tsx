@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
+import { useGroupContext } from "../../../context/group/GroupContext";
 import { getEventById, deleteEvent } from "../../../services/event.service";
+import { getEventAttendances } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
@@ -19,14 +21,26 @@ const EventDetailPage = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
   const { profile, user } = useAuthContext();
-  // TODO T12: const { group } = useGroupContext();
+  const { group } = useGroupContext();
   const [event, setEvent] = useState<FallesEvent | null>(null);
+  const [memberResponses, setMemberResponses] = useState<Record<string, "yes" | "no">>({});
+  const [linkedResponses, setLinkedResponses] = useState<Record<string, Record<string, "yes" | "no">>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [attendeeFilter, setAttendeeFilter] = useState("all");
+  const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
+
+  const toggleMember = (uid: string) => {
+    setExpandedMembers(prev => {
+      const next = new Set(prev);
+      if (next.has(uid)) next.delete(uid);
+      else next.add(uid);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (!profile?.groupId) {
@@ -39,14 +53,19 @@ const EventDetailPage = () => {
     }
     let isMounted = true;
 
-    getEventById(profile.groupId, id).then((data) => {
+    Promise.all([
+      getEventById(profile.groupId, id),
+      getEventAttendances(profile.groupId, id),
+    ]).then(([eventData, attendancesData]) => {
       if (!isMounted) return;
       setIsLoading(false);
-      if (!data) {
+      if (!eventData) {
         navigate("/events", { replace: true });
         return;
       }
-      setEvent(data);
+      setEvent(eventData);
+      setMemberResponses(attendancesData?.memberResponses ?? {});
+      setLinkedResponses(attendancesData?.linkedResponses ?? {});
     });
 
     return () => {
@@ -62,17 +81,23 @@ const EventDetailPage = () => {
     (user?.permissions.canEditOwnEvents && event.createdBy === user.uid);
 
   const eventStatus = getEventStatus(event);
-  // TODO T12: reemplazar con datos reales de Firestore
-  const allMembers: {
-    uid: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    role: "member" | "organizer" | "admin";
-    attendance: "going" | "pending" | "not-going";
-  }[] = [];
-  const totalMembers = allMembers.length;
-  const goingCount = allMembers.filter((m) => m.attendance === "going").length;
+  const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
+    response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
+
+  const allMembers = (group?.members ?? []).map((member) => {
+    const attendance = toAttendance(memberResponses[member.uid]);
+    const memberLinked = (group?.linkedMembers ?? [])
+      .filter(lm => lm.ownerUid === member.uid)
+      .map(lm => ({
+        ...lm,
+        attendance: toAttendance(linkedResponses[member.uid]?.[lm.id]),
+      }));
+    return { ...member, attendance, linkedMembers: memberLinked };
+  });
+
+  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(lm => ({ ...lm, uid: lm.id, email: "", role: "member" as const, isLinked: true }))]);
+  const totalMembers = allRows.length;
+  const goingCount = allRows.filter(r => r.attendance === "going").length;
 
   const rawDate = event.date.toLocaleDateString(
     i18n.language === "ca" ? "ca-ES" : "es-ES",
@@ -80,15 +105,33 @@ const EventDetailPage = () => {
   );
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
 
+  const pendingCount = allRows.filter(r => r.attendance === "pending").length;
+  const notGoingCount = allRows.filter(r => r.attendance === "not-going").length;
+
+  const filterToAttendance = (filterKey: string): "going" | "not-going" | "pending" | null => {
+    if (filterKey === "confirmed") return "going";
+    if (filterKey === "pending") return "pending";
+    if (filterKey === "not-going") return "not-going";
+    return null;
+  };
+
+  const targetAttendance = filterToAttendance(attendeeFilter);
+
+  const filteredMembers = allMembers
+    .filter(member => {
+      if (!targetAttendance) return true;
+      return member.attendance === targetAttendance || member.linkedMembers.some(lm => lm.attendance === targetAttendance);
+    })
+    .map(member => {
+      if (!targetAttendance) return member;
+      return { ...member, linkedMembers: member.linkedMembers.filter(lm => lm.attendance === targetAttendance) };
+    });
+
   const attendeeFilterOptions = [
     { key: "all", label: t("events.filters.all"), count: totalMembers },
-    {
-      key: "confirmed",
-      label: t("detail.filter.confirmed"),
-      count: goingCount,
-    },
-    { key: "pending", label: t("detail.filter.pending"), count: 0 },
-    { key: "not-going", label: t("detail.filter.notGoing"), count: 0 },
+    { key: "confirmed", label: t("detail.filter.confirmed"), count: goingCount },
+    { key: "pending", label: t("detail.filter.pending"), count: pendingCount },
+    { key: "not-going", label: t("detail.filter.notGoing"), count: notGoingCount },
   ];
 
   const handleDelete = async () => {
@@ -225,23 +268,44 @@ const EventDetailPage = () => {
                 />
               </div>
             </div>
-            {allMembers.length === 0 ? (
+            {filteredMembers.length === 0 ? (
               <p className="event-detail-page__attendees-empty">
                 {t("detail.attendeesEmpty")}
               </p>
             ) : (
-              allMembers.map((member) => (
-                <MemberCard
-                  key={member.uid}
-                  firstName={member.firstName}
-                  lastName={member.lastName}
-                  email={member.email}
-                  role={member.role}
-                  showChevron={false}
-                  showRole={false}
-                  attendance={member.attendance}
-                />
-              ))
+              filteredMembers.map((member) => {
+                const hasLinked = member.linkedMembers.length > 0;
+                const isExpanded = expandedMembers.has(member.uid);
+                return (
+                  <div key={member.uid} className="event-detail-page__attendee-group">
+                    <MemberCard
+                      firstName={member.firstName}
+                      lastName={member.lastName}
+                      email={member.email}
+                      role={member.role}
+                      showChevron={false}
+                      showRole={false}
+                      attendance={member.attendance}
+                      isExpandable={hasLinked}
+                      isExpanded={isExpanded}
+                      onToggle={() => toggleMember(member.uid)}
+                    />
+                    {isExpanded && member.linkedMembers.map((linked) => (
+                      <MemberCard
+                        key={linked.id}
+                        firstName={linked.firstName}
+                        lastName={linked.lastName}
+                        relationship={linked.relationship}
+                        role="member"
+                        showChevron={false}
+                        showRole={false}
+                        attendance={linked.attendance}
+                        isLinked
+                      />
+                    ))}
+                  </div>
+                );
+              })
             )}
           </div>
         )}
