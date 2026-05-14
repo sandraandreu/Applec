@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEvents } from "../../../services/event.service";
+import { getMyAttendances } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import EventList from "../../../components/events/EventList";
@@ -16,25 +17,32 @@ const EventsListPage = () => {
   const { t } = useTranslation("events");
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
+  const [attendances, setAttendances] = useState<Record<string, "yes" | "no">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState<FilterKey>("all");
 
   useEffect(() => {
-    if (!profile?.groupId) return;
+    if (!profile?.groupId || !user) return;
 
     let isMounted = true;
     setHasError(false);
 
-    getEvents(profile.groupId).then(data => {
+    const isMember = !user.permissions.canCreateEvents;
+
+    Promise.all([
+      getEvents(profile.groupId),
+      isMember ? getMyAttendances(user.uid) : Promise.resolve({}),
+    ]).then(([eventsData, attendancesData]) => {
       if (!isMounted) return;
       setIsLoading(false);
-      if (data === null) { setHasError(true); return; }
-      setEvents(data);
+      if (eventsData === null) { setHasError(true); return; }
+      setEvents(eventsData);
+      setAttendances(attendancesData ?? {});
     });
 
     return () => { isMounted = false; };
-  }, [profile?.groupId]);
+  }, [profile?.groupId, user]);
 
   const filterOptions: FilterOption[] = useMemo(() => {
     const countEvents = (predicate: (event: FallesEvent) => boolean) => events.filter(predicate).length;
@@ -84,7 +92,7 @@ const EventsListPage = () => {
       )}
 
       {!isLoading && !hasError && user && (
-        <EventList events={filteredEvents} permissions={user.permissions} userId={user.uid} />
+        <EventList events={filteredEvents} permissions={user.permissions} userId={user.uid} attendances={attendances} />
       )}
     </div>
   );

@@ -8,9 +8,10 @@ interface EventListProps {
   events: FallesEvent[];
   permissions: UserPermissions;
   userId: string;
+  attendances?: Record<string, "yes" | "no">;
 }
 
-const EventList = ({ events, permissions, userId }: EventListProps) => {
+const EventList = ({ events, permissions, userId, attendances }: EventListProps) => {
   const { t } = useTranslation("events");
 
   if (events.length === 0) {
@@ -21,7 +22,12 @@ const EventList = ({ events, permissions, userId }: EventListProps) => {
     <ul className="events-list">
       {events.map(event => (
         <li key={event.id}>
-          <EventCard event={event} permissions={permissions} userId={userId} />
+          <EventCard
+            event={event}
+            permissions={permissions}
+            userId={userId}
+            attendanceResponse={attendances?.[event.id] ?? null}
+          />
         </li>
       ))}
     </ul>
