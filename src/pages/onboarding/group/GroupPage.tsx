@@ -26,6 +26,7 @@ const GroupPage = () => {
 
         <div className="group-page__actions">
           <Button
+            variant="secondary"
             text={t("group.createGroup")}
             onClick={() => navigate("/create-group")}
           />

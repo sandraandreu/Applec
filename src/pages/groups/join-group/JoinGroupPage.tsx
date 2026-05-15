@@ -214,6 +214,7 @@ const JoinGroupPage = () => {
                 onClick={handleSendRequest}
               />
               <Button
+                variant="secondary"
                 text={tc("buttons.cancel")}
                 onClick={() => setGroupFound(null)}
               />
