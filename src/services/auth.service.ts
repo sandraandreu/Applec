@@ -31,6 +31,8 @@ export const sendPasswordReset = async (email: string): Promise<void> => {
   await sendPasswordResetEmail(auth, email);
 };
 
-export const sendVerificationEmail = async (user: User): Promise<void> => {
-  await sendEmailVerification(user);
+export const sendVerificationEmail = async (user?: User): Promise<void> => {
+  const target = user ?? auth.currentUser;
+  if (!target) throw new Error("No authenticated user");
+  await sendEmailVerification(target);
 };

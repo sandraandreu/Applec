@@ -25,10 +25,14 @@ const InviteGroupPage = () => {
   const handleShare = async () => {
     if (!inviteCode) return;
     if (navigator.share) {
-      await navigator.share({
-        title: t("invite.shareTitle"),
-        text: t("invite.shareText", { inviteCode }),
-      });
+      try {
+        await navigator.share({
+          title: t("invite.shareTitle"),
+          text: t("invite.shareText", { inviteCode }),
+        });
+      } catch {
+        // user cancelled or share not allowed
+      }
     } else {
       handleCopy();
     }

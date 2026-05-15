@@ -15,7 +15,7 @@ const VerifyEmailPage = () => {
   const { t: tc } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logout } = useAuthContext();
+  const { logout } = useAuthContext();
 
   const emailSent =
     (location.state as VerifyEmailLocationState)?.emailSent ?? true;
@@ -24,10 +24,9 @@ const VerifyEmailPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleResend = async () => {
-    if (!user) return;
     setIsLoading(true);
     try {
-      await sendVerificationEmail(user);
+      await sendVerificationEmail();
       setResendSuccess(true);
     } finally {
       setIsLoading(false);

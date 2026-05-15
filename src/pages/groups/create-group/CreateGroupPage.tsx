@@ -85,8 +85,8 @@ const CreateGroupPage = () => {
       }
 
       await updateUserFields(user.uid, { groupId, role: "admin" });
+      navigate("/invite-group", { state: { fromCreate: true } });
       await refreshProfile();
-      navigate("/invite-group");
     } catch (error: unknown) {
       const firebaseError = error as FirebaseError;
       if (firebaseError.code === "auth/network-request-failed") {
