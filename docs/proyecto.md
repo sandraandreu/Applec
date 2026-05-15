@@ -175,10 +175,10 @@ El menú de miembros tiene menos ítems que el de admin/organizadores (las pági
 **Crear/editar evento** (`/events/create`, `/events/:id/edit`) ✓ Implementado
 - Flujo de 3 pasos: tipo + nombre + descripción / fecha + hora + lugar / confirmación + recordatorio
 
-**Miembros** (`/members`) ✓ Lista implementada · ✗ Modal de acciones pendiente
+**Miembros** (`/members`, `/members/:uid`) ✓ Implementado
 - Búsqueda + filtros por rol (Todos · Admin · Organizadores · Miembros)
 - Lista con avatar, nombre y username
-- Al pulsar un miembro → modal de acciones: Ver perfil / Cambiar rol / Eliminar miembro *(pendiente)*
+- Al pulsar un miembro → página de detalle (`/members/:uid`): zona de perfil con degradado por rol, miembros vinculados, cambio de rol y eliminación del miembro
 
 **Calendario** (`/calendar`) ✗ Pendiente — spec en `docs/specs/events-calendar.md`
 - Vista mensual con FullCalendar

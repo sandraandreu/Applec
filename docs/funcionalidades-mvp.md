@@ -58,14 +58,13 @@ Tres roles:
 ---
 
 ### 6. Gestión de miembros
-**Estado:** ✓ Listado implementado (lista, filtros, búsqueda), ✗ modal de acciones pendiente (HTML/SCSS primero, luego lógica)
+**Estado:** ✓ Implementado (listado con búsqueda y filtros, página de detalle con cambio de rol y eliminación)
 
-El Admin/Organizador ve la lista completa (nombre, rol, estado). Al pulsar un miembro se abre un modal con acciones:
-- Ver perfil del miembro
+El Admin/Organizador ve la lista completa (nombre, rol, estado). Al pulsar un miembro se navega a `/members/:uid` con acciones:
 - Cambiar rol (Hacer Organizador / Hacer Miembro)
 - Eliminar miembro del grupo
 
-Solo el Admin puede cambiar roles y expulsar miembros.
+Solo el Admin puede cambiar roles y expulsar miembros. Los permisos se derivan de `user.permissions.canManageMembers`.
 
 ---
 
