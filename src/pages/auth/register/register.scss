@@ -1,7 +1,7 @@
 .register-page {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: var(--gap-section);
   background: var(--color-bg-gradient-blue);
   min-height: 100vh;
   padding: var(--padding-page);
@@ -13,18 +13,25 @@
   &__form {
     display: flex;
     flex-direction: column;
+    gap: var(--gap-section);
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
     gap: var(--gap-form);
   }
 
-  &__password-requirements {
+  &__actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-items);
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
 
-    &__item {
-      display: flex;
-      gap: var(--gap-tight);
-    }
+  &__terms-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
   }
 
   &__terms {
@@ -39,6 +46,16 @@
 
   &__login {
     text-align: center;
-    margin-top: var(--gap-compact);
+  }
+
+  &__password-requirements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-items);
+
+    &__item {
+      display: flex;
+      gap: var(--gap-tight);
+    }
   }
 }

@@ -27,6 +27,7 @@ const EditEventPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
+  const { t: tc } = useTranslation("common");
   const { profile } = useAuthContext();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -154,6 +155,7 @@ const EditEventPage = () => {
               id="event-description"
               label={t("create.descriptionLabel")}
               placeholder={t("create.descriptionPlaceholder")}
+              optional
               multiline
               registration={register("description")}
             />
@@ -166,7 +168,6 @@ const EditEventPage = () => {
             <div className="field">
               <label className="field__label">
                 {t("create.date")}
-                <span className="field__required"> *</span>
               </label>
               <div
                 className={`edit-event__calendar-card${state.dateError ? " edit-event__calendar-card--error" : ""}`}
@@ -186,7 +187,6 @@ const EditEventPage = () => {
             <div className="field">
               <label className="field__label" htmlFor="start-time">
                 {t("create.startTime")}
-                <span className="field__required"> *</span>
               </label>
               <div className="edit-event__time-box">
                 <Icon name="clock" size={24} className="edit-event__time-icon" />
@@ -204,7 +204,7 @@ const EditEventPage = () => {
 
             <div className="field">
               <label className="field__label" htmlFor="end-time">
-                {t("create.endTime")}
+                {t("create.endTime")}<span className="field__optional"> ({tc("fields.optional")})</span>
               </label>
               <div className="edit-event__time-box">
                 <Icon name="clock" size={24} className="edit-event__time-icon" />

@@ -20,7 +20,8 @@
   },
   "fields": {
     "email": "Correu electrònic",
-    "password": "Contrasenya"
+    "password": "Contrasenya",
+    "optional": "opcional"
   },
   "errors": {
     "required": "Aquest camp és obligatori",

@@ -1,6 +1,7 @@
 import "./input.scss";
 import React, { ReactNode } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 interface InputProps {
   label: string;
@@ -12,6 +13,7 @@ interface InputProps {
   maxLength?: number;
   currentLength?: number;
   required?: boolean;
+  optional?: boolean;
   endIcon?: ReactNode;
   multiline?: boolean;
 }
@@ -25,14 +27,16 @@ const Input = ({
   registration,
   maxLength,
   currentLength,
-  required,
+  optional,
   endIcon,
   multiline = false,
 }: InputProps) => {
+  const { t } = useTranslation("common");
+
   return (
     <div className="field">
       <label className="field__label" htmlFor={id}>
-        {label}{required && <span className="field__required"> *</span>}
+        {label}{optional && <span className="field__optional"> ({t("fields.optional")})</span>}
       </label>
       <div className="field__input-wrapper">
         {multiline ? (

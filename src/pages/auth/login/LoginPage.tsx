@@ -42,7 +42,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>();
+  } = useForm<LoginFormData>({ mode: "onSubmit" });
 
   const onSubmit = (data: LoginFormData) => {
     handleLogin(data.email, data.password);
@@ -95,82 +95,80 @@ const LoginPage = () => {
 
       <BackButton />
 
-      <div className="login-page__content">
-        <h1 className="login-page__title margin-bottom-48px">
-          {t("login.title")}
-        </h1>
+      <div className="login-page__center">
+        <h1 className="login-page__title">{t("login.title")}</h1>
+
         <form className="login-page__form" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            id="login-email"
-            label={tc("fields.email")}
-            placeholder={t("login.emailPlaceholder")}
-            type="text"
-            required
-            registration={register("email", {
-              required: true,
-              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            })}
-            error={
-              errors.email?.type === "required"
-                ? tc("errors.required")
-                : errors.email?.type === "pattern"
-                  ? tc("errors.emailInvalid")
+          <div className="login-page__fields">
+            <Input
+              id="login-email"
+              label={tc("fields.email")}
+              placeholder={t("login.emailPlaceholder")}
+              type="text"
+              required
+              registration={register("email", {
+                required: true,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              })}
+              error={
+                errors.email?.type === "required"
+                  ? tc("errors.required")
+                  : errors.email?.type === "pattern"
+                    ? tc("errors.emailInvalid")
+                    : undefined
+              }
+            />
+
+            <Input
+              id="login-password"
+              label={tc("fields.password")}
+              placeholder={t("login.passwordPlaceholder")}
+              type={showPassword ? "text" : "password"}
+              required
+              registration={register("password", { required: true })}
+              error={
+                errors.password?.type === "required"
+                  ? tc("errors.required")
                   : undefined
-            }
-          />
+              }
+              endIcon={
+                <EyeToggleIcon
+                  showPassword={showPassword}
+                  onToggle={() => dispatch({ type: "TOGGLE_PASSWORD" })}
+                />
+              }
+            />
 
-          <Input
-            id="login-password"
-            label={tc("fields.password")}
-            placeholder={t("login.passwordPlaceholder")}
-            type={showPassword ? "text" : "password"}
-            required
-            registration={register("password", { required: true })}
-            error={
-              errors.password?.type === "required"
-                ? tc("errors.required")
-                : undefined
-            }
-            endIcon={
-              <EyeToggleIcon
-                showPassword={showPassword}
-                onToggle={() => dispatch({ type: "TOGGLE_PASSWORD" })}
-              />
-            }
-          />
+            <Link className="login-page__forgot" to="/forgot-password">
+              {t("login.forgotPassword")}
+            </Link>
+          </div>
 
-          <Link
-            className="login-page__forgot margin-bottom-48px"
-            to="/forgot-password"
-          >
-            {t("login.forgotPassword")}
-          </Link>
-
-          {errorConnection && (
-            <span className="login-page__error">
-              <Icon name="error-circle" size={24} className="icon" />
-              {errorConnection}
-            </span>
-          )}
-          {errorCredentials && (
-            <span className="login-page__error">
-              <Icon name="error-circle" size={24} className="icon" />
-              {errorCredentials}
-            </span>
-          )}
-
-          <Button
-            text={t("login.button")}
-            type="submit"
-            disabled={Object.keys(errors).length > 0}
-            isLoading={isLoading}
-          />
+          <div className="login-page__actions">
+            {errorConnection && (
+              <span className="login-page__error">
+                <Icon name="error-circle" size={24} className="icon" />
+                {errorConnection}
+              </span>
+            )}
+            {errorCredentials && (
+              <span className="login-page__error">
+                <Icon name="error-circle" size={24} className="icon" />
+                {errorCredentials}
+              </span>
+            )}
+            <Button
+              text={t("login.button")}
+              type="submit"
+              disabled={Object.keys(errors).length > 0}
+              isLoading={isLoading}
+            />
+            <Link className="login-page__register" to="/register">
+              {t("login.registerLink")}
+            </Link>
+          </div>
         </form>
       </div>
-
-      <Link className="login-page__register" to="/register">
-        {t("login.registerLink")}
-      </Link>
 
       <Alert
         isOpen={loginState === "unverified"}

@@ -58,12 +58,12 @@ const ForgotPasswordPage = () => {
 
       <BackButton />
 
-      <div className="forgot-password-page__content">
+      <div className="forgot-password-page__center">
         <div className="forgot-password-page__header">
           <h1 className="forgot-password-page__title">
             {t("forgotPassword.title")}
           </h1>
-          <p className="forgot-password-page__description margin-bottom-48px">
+          <p className="forgot-password-page__description">
             {t("forgotPassword.description")}
           </p>
         </div>
@@ -72,7 +72,7 @@ const ForgotPasswordPage = () => {
           className="forgot-password-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="margin-bottom-48px">
+          <div className="forgot-password-page__fields">
             <Input
               id="forgot_password-email"
               label={tc("fields.email")}
@@ -113,18 +113,19 @@ const ForgotPasswordPage = () => {
             )}
           </div>
 
-          <Button
-            text={t("forgotPassword.button")}
-            type="submit"
-            disabled={Object.keys(errors).length > 0}
-            isLoading={isLoading}
-          />
+          <div className="forgot-password-page__actions">
+            <Button
+              text={t("forgotPassword.button")}
+              type="submit"
+              disabled={Object.keys(errors).length > 0}
+              isLoading={isLoading}
+            />
+            <Link className="forgot-password-page__login" to="/login">
+              {t("forgotPassword.back")}
+            </Link>
+          </div>
         </form>
       </div>
-
-      <Link className="forgot-password-page__login" to="/login">
-        {t("forgotPassword.back")}
-      </Link>
 
       <Alert
         isOpen={forgotPasswordState === "success"}
@@ -133,7 +134,7 @@ const ForgotPasswordPage = () => {
         onDismiss={() => setForgotPasswordState("form")}
         buttons={[
           {
-            text: t("forgotPassword.back"),
+            text: t("forgotPassword.loginButton"),
             handler: () => navigate("/login"),
           },
         ]}

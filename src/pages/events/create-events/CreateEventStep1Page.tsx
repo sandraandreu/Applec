@@ -98,6 +98,7 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
               id="event-description"
               label={t("create.descriptionLabel")}
               placeholder={t("create.descriptionPlaceholder")}
+              optional
               multiline
               registration={register("description")}
             />

@@ -38,6 +38,7 @@ interface Props {
 
 const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Props) => {
   const { t } = useTranslation("events");
+  const { t: tc } = useTranslation("common");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialData?.date);
   const [currentMonth, setCurrentMonth] = useState<Date>(initialData?.date ?? new Date());
   const today = new Date();
@@ -95,7 +96,7 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
         <div className="create-events-step2__form">
           <div className="field">
             <label className="field__label">
-              {t("create.date")}<span className="field__required"> *</span>
+              {t("create.date")}
             </label>
             <div className={`create-events-step2__calendar-card${dateError ? " create-events-step2__calendar-card--error" : ""}`}>
               <EventCalendar
@@ -117,7 +118,7 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
 
           <div className="field">
             <label className="field__label" htmlFor="start-time">
-              {t("create.startTime")}<span className="field__required"> *</span>
+              {t("create.startTime")}
             </label>
             <div className="create-events-step2__time-box">
               <Icon name="clock" size={24} className="create-events-step2__time-icon" />
@@ -133,7 +134,7 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
 
           <div className="field">
             <label className="field__label" htmlFor="end-time">
-              {t("create.endTime")}
+              {t("create.endTime")}<span className="field__optional"> ({tc("fields.optional")})</span>
             </label>
             <div className="create-events-step2__time-box">
               <Icon name="clock" size={24} className="create-events-step2__time-icon" />

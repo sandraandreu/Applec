@@ -109,7 +109,7 @@ const RegisterPage = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<RegisterFormData>({ mode: "onBlur" });
+  } = useForm<RegisterFormData>({ mode: "onSubmit" });
 
   const password = watch("password", "");
 
@@ -128,11 +128,10 @@ const RegisterPage = () => {
 
       <BackButton />
 
-      <div className="register-page__content">
-        <h1 className="register-page__title margin-bottom-48px">
-          {t("register.title")}
-        </h1>
-        <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="register-page__title">{t("register.title")}</h1>
+
+      <form className="register-page__form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="register-page__fields">
           <Input
             id="register-firstname"
             label={t("register.firstName")}
@@ -244,55 +243,58 @@ const RegisterPage = () => {
             }
           />
 
-          <div className="register-page__terms margin-bottom-48px">
-            <input
-              id="acceptsTerms"
-              type="checkbox"
-              className="register-page__terms-checkbox"
-              {...register("acceptsTerms", { required: true })}
-            />
-            <label htmlFor="acceptsTerms">
-              {t("register.termsStart")}
-              <a
-                className="register-page__terms-link"
-                href="https://applec.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t("register.termsPrivacy")}
-              </a>
-              {t("register.termsAnd")}
-              <a
-                className="register-page__terms-link"
-                href="https://applec.com/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t("register.termsConditions")}
-              </a>
-            </label>
+          <div className="register-page__terms-block">
+            <div className="register-page__terms">
+              <input
+                id="acceptsTerms"
+                type="checkbox"
+                className="register-page__terms-checkbox"
+                {...register("acceptsTerms", { required: true })}
+              />
+              <label htmlFor="acceptsTerms">
+                {t("register.termsStart")}
+                <a
+                  className="register-page__terms-link"
+                  href="https://applec.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("register.termsPrivacy")}
+                </a>
+                {t("register.termsAnd")}
+                <a
+                  className="register-page__terms-link"
+                  href="https://applec.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("register.termsConditions")}
+                </a>
+              </label>
+            </div>
+
+            {errors.acceptsTerms?.type === "required" && (
+              <span className="field__error">
+                {t("register.errors.termsRequired")}
+              </span>
+            )}
           </div>
 
-          {errors.acceptsTerms?.type === "required" && (
-            <span className="field__error">
-              {t("register.errors.termsRequired")}
-            </span>
-          )}
-
           {errorConnection && <span>{errorConnection}</span>}
+        </div>
 
+        <div className="register-page__actions">
           <Button
             text={t("register.button")}
             type="submit"
             disabled={Object.keys(errors).length > 0}
             isLoading={isLoading}
           />
-        </form>
-      </div>
-
-      <Link className="register-page__login" to="/login">
-        {t("register.loginLink")}
-      </Link>
+          <Link className="register-page__login" to="/login">
+            {t("register.loginLink")}
+          </Link>
+        </div>
+      </form>
 
       <Alert
         isOpen={registerState === "error"}
