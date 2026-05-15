@@ -35,15 +35,15 @@ const SeedPage = () => {
       }
 
       const fakeMembers = [
-        { uid: "fake-uid-vicent",      role: "organizer", username: "vicentferrer",    firstName: "Vicent",       lastName: "Ferrer Navarro",  email: "vicent.ferrer@demo.com" },
-        { uid: "fake-uid-amparo",      role: "organizer", username: "amparotortosa",   firstName: "Amparo",       lastName: "Tortosa Gil",     email: "amparo.tortosa@demo.com" },
-        { uid: "fake-uid-josepantoni", role: "member",    username: "josepantoni",     firstName: "Josep Antoni", lastName: "Blasco Pérez",    email: "josepantoni.blasco@demo.com" },
-        { uid: "fake-uid-laia",        role: "member",    username: "laiacalatayud",   firstName: "Laia",         lastName: "Calatayud Martí", email: "laia.calatayud@demo.com" },
-        { uid: "fake-uid-raul",        role: "member",    username: "raulmonzo",       firstName: "Raül",         lastName: "Monzó Pérez",     email: "raul.monzo@demo.com" },
-        { uid: "fake-uid-consuelo",    role: "member",    username: "consuelomartí",   firstName: "Consuelo",     lastName: "Martí Soler",     email: "consuelo.marti@demo.com" },
-        { uid: "fake-uid-ferran",      role: "member",    username: "ferrancatala",    firstName: "Ferran",       lastName: "Català Romeu",    email: "ferran.catala@demo.com" },
-        { uid: "fake-uid-miquel",      role: "member",    username: "miquelvercher",   firstName: "Miquel Àngel", lastName: "Vercher Llopis",  email: "miquel.vercher@demo.com" },
-        { uid: "fake-uid-dolors",      role: "member",    username: "dolorspons",      firstName: "Dolors",       lastName: "Pons Aparici",    email: "dolors.pons@demo.com" },
+        { uid: "fake-uid-vicent",      role: "organizer", firstName: "Vicent",       lastName: "Ferrer Navarro",  email: "vicent.ferrer@demo.com" },
+        { uid: "fake-uid-amparo",      role: "organizer", firstName: "Amparo",       lastName: "Tortosa Gil",     email: "amparo.tortosa@demo.com" },
+        { uid: "fake-uid-josepantoni", role: "member",    firstName: "Josep Antoni", lastName: "Blasco Pérez",    email: "josepantoni.blasco@demo.com" },
+        { uid: "fake-uid-laia",        role: "member",    firstName: "Laia",         lastName: "Calatayud Martí", email: "laia.calatayud@demo.com" },
+        { uid: "fake-uid-raul",        role: "member",    firstName: "Raül",         lastName: "Monzó Pérez",     email: "raul.monzo@demo.com" },
+        { uid: "fake-uid-consuelo",    role: "member",    firstName: "Consuelo",     lastName: "Martí Soler",     email: "consuelo.marti@demo.com" },
+        { uid: "fake-uid-ferran",      role: "member",    firstName: "Ferran",       lastName: "Català Romeu",    email: "ferran.catala@demo.com" },
+        { uid: "fake-uid-miquel",      role: "member",    firstName: "Miquel Àngel", lastName: "Vercher Llopis",  email: "miquel.vercher@demo.com" },
+        { uid: "fake-uid-dolors",      role: "member",    firstName: "Dolors",       lastName: "Pons Aparici",    email: "dolors.pons@demo.com" },
       ];
 
       const groupSnap = await getDoc(doc(db, "groups", groupId));
@@ -57,7 +57,6 @@ const SeedPage = () => {
           {
             uid: adminUid,
             role: "admin",
-            username: profile.username,
             firstName: profile.firstName,
             lastName: profile.lastName,
             email: profile.email ?? "",
@@ -294,7 +293,6 @@ const SeedPage = () => {
 
       await setDoc(doc(db, "groups", groupId, "joinRequests", "fake-uid-request-pere"), {
         uid: "fake-uid-request-pere",
-        username: "peremas",
         firstName: "Pere",
         lastName: "Mas Carbonell",
         email: "pere.mas@demo.com",
@@ -329,7 +327,6 @@ const SeedPage = () => {
             {
               uid: memberUid,
               role: "member",
-              username: profile.username,
               firstName: profile.firstName,
               lastName: profile.lastName,
               email: profile.email ?? "",

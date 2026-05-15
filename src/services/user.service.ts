@@ -3,10 +3,6 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  collection,
-  query,
-  where,
-  getDocs,
 } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { UserProfile, UserProfileCreate } from "../models/user.model";
@@ -39,12 +35,3 @@ export const updateUserFields = async (
   await updateDoc(doc(db, "users", uid), { ...fields });
 };
 
-export const isUsernameTaken = async (username: string): Promise<boolean | null> => {
-  try {
-    const q = query(collection(db, "users"), where("username", "==", username));
-    const snap = await getDocs(q);
-    return !snap.empty;
-  } catch {
-    return null;
-  }
-};

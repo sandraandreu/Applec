@@ -21,7 +21,8 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const { group, isLoading } = useGroupContext();
 
   const filteredMembers = useMemo(() => group?.members.filter((member) => {
-    const matchesSearch = member.username?.toLowerCase().includes(searchValue.toLowerCase());
+    const fullName = `${member.firstName} ${member.lastName}`.toLowerCase();
+    const matchesSearch = fullName.includes(searchValue.toLowerCase()) || member.firstName.toLowerCase().includes(searchValue.toLowerCase());
     const matchesFilter = activeFilter === "all" || member.role === activeFilter;
     return matchesSearch && matchesFilter;
   }) ?? [], [group?.members, searchValue, activeFilter]);

@@ -84,7 +84,6 @@ const JoinGroupPage = () => {
         addMemberToGroup(
           groupFound.id,
           user.uid,
-          profile?.username ?? "",
           profile?.firstName ?? "",
           profile?.lastName ?? "",
           user.email ?? "",

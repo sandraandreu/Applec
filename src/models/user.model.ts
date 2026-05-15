@@ -7,7 +7,6 @@ export interface LinkedMember {
 }
 
 export interface UserProfile {
-  username: string;
   firstName: string;
   lastName: string;
   email: string | null;

@@ -14,16 +14,12 @@ import {
 } from "../../../services/auth.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import EyeToggleIcon from "../../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
-import {
-  createUserProfile,
-  isUsernameTaken,
-} from "../../../services/user.service";
+import { createUserProfile } from "../../../services/user.service";
 import { isFirebaseError } from "../../../utils/firebase-errors";
 
 interface RegisterFormData {
   firstName: string;
   lastName: string;
-  username: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -52,7 +48,6 @@ const RegisterPage = () => {
   const handleRegister = async (
     email: string,
     password: string,
-    username: string,
     firstName: string,
     lastName: string,
   ) => {
@@ -90,7 +85,6 @@ const RegisterPage = () => {
 
     try {
       await createUserProfile(userCredential.user.uid, {
-        username,
         firstName,
         lastName,
         email: userCredential.user.email ?? "",
@@ -123,7 +117,6 @@ const RegisterPage = () => {
     handleRegister(
       data.email,
       data.password,
-      data.username,
       data.firstName,
       data.lastName,
     );
@@ -175,27 +168,6 @@ const RegisterPage = () => {
                 : errors.lastName?.type === "pattern"
                   ? t("register.errors.nameInvalid")
                   : undefined
-            }
-          />
-
-          <Input
-            id="register-username"
-            label={t("register.username")}
-            placeholder={t("register.usernamePlaceholder")}
-            type="text"
-            required
-            registration={register("username", {
-              required: true,
-              validate: async (value) => {
-                const taken = await isUsernameTaken(value);
-                if (taken) return t("register.errors.usernameTaken");
-                return true;
-              },
-            })}
-            error={
-              errors.username?.type === "required"
-                ? tc("errors.required")
-                : errors.username?.message
             }
           />
 

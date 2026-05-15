@@ -74,7 +74,6 @@ const CreateGroupPage = () => {
       const groupId = await createGroup({
         name,
         adminUid: user.uid,
-        adminUsername: profile?.username ?? "",
         adminFirstName: profile?.firstName ?? "",
         adminLastName: profile?.lastName ?? "",
         adminEmail: user.email ?? "",
