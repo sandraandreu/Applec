@@ -5,6 +5,7 @@ import type { GroupData } from "./GroupContext";
 import { useAuthContext } from "../auth/AuthContext";
 import { getGroupById } from "../../services/group.service";
 import { getGroupLinkedMembers } from "../../services/linked-member.service";
+import { updateUserFields } from "../../services/user.service";
 
 export interface GroupContextProviderProps {
   children: ReactNode;
@@ -20,7 +21,10 @@ export const GroupContextProvider = ({
 
   const loadGroup = useCallback(async () => {
     setIsLoading(true);
-    if (!user || !profile) return;
+    if (!user || !profile) {
+      setIsLoading(false);
+      return;
+    }
 
     if (profile.groupId) {
       const [groupData, linkedMembers] = await Promise.all([
@@ -29,6 +33,10 @@ export const GroupContextProvider = ({
       ]);
       if (groupData) {
         setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
+        const memberInGroup = groupData.members.find(m => m.uid === user.uid);
+        if (memberInGroup && memberInGroup.role !== profile.role) {
+          void updateUserFields(user.uid, { role: memberInGroup.role });
+        }
       }
     }
     setIsLoading(false);
@@ -47,8 +55,8 @@ export const GroupContextProvider = ({
   }, [user, authLoading, loadGroup]);
 
   const contextValue = useMemo(
-    () => ({ group, isLoading }),
-    [group, isLoading]
+    () => ({ group, isLoading, refreshGroup: loadGroup }),
+    [group, isLoading, loadGroup]
   );
 
   return (

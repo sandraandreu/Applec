@@ -103,6 +103,29 @@ export const findGroupByInviteCode = async (
   }
 };
 
+export const updateMemberRole = async (
+  groupId: string,
+  uid: string,
+  newRole: "organizer" | "member",
+): Promise<void> => {
+  const groupRef = doc(db, "groups", groupId);
+  const snap = await getDoc(groupRef);
+  const members = (snap.data()?.members ?? []) as GroupData["members"];
+  const updated = members.map(m => m.uid === uid ? { ...m, role: newRole } : m);
+  await updateDoc(groupRef, { members: updated });
+};
+
+export const removeMemberFromGroup = async (
+  groupId: string,
+  uid: string,
+): Promise<void> => {
+  const groupRef = doc(db, "groups", groupId);
+  const snap = await getDoc(groupRef);
+  const members = (snap.data()?.members ?? []) as GroupData["members"];
+  const updated = members.filter(m => m.uid !== uid);
+  await updateDoc(groupRef, { members: updated });
+};
+
 export const addMemberToGroup = async (
   groupId: string,
   uid: string,

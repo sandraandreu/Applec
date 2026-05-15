@@ -12,7 +12,7 @@ interface ChipProps {
 const Chip = ({ role, variant = "short" }: ChipProps) => {
   const { t } = useTranslation("members");
 
-  if (role === "member") return null;
+  if (role === "member" && variant === "short") return null;
 
   const label =
     variant === "short"

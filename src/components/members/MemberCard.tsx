@@ -18,9 +18,10 @@ interface MemberCardProps {
   isExpandable?: boolean;
   isExpanded?: boolean;
   onToggle?: () => void;
+  onClick?: () => void;
 }
 
-const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick }: MemberCardProps) => {
   const classes = [
     "member-card",
     attendance === "not-going" ? "member-card--not-going" : "",
@@ -28,11 +29,11 @@ const MemberCard = ({ firstName, lastName, email, relationship, role, showChevro
   ].filter(Boolean).join(" ");
 
   return (
-    <div className={classes} onClick={isExpandable ? onToggle : undefined} role={isExpandable ? "button" : undefined}>
+    <div className={classes} onClick={isExpandable ? onToggle : onClick} role={isExpandable || onClick ? "button" : undefined}>
       <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
-        {isLinked && relationship && <span className="member-card__relationship">{relationship}</span>}
+        {relationship && <span className="member-card__relationship">{relationship}</span>}
         {!isLinked && email && <span className="member-card__email">{email}</span>}
       </div>
       {showRole && <Chip role={role} variant="short" />}

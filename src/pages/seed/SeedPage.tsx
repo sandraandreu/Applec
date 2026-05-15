@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { doc, updateDoc, addDoc, setDoc, getDocs, deleteDoc, collection, deleteField } from "firebase/firestore";
+import { doc, updateDoc, addDoc, setDoc, getDocs, getDoc, deleteDoc, collection, deleteField } from "firebase/firestore";
 import { db } from "../../plugins/firebase";
 import { useAuthContext } from "../../context/auth/AuthContext";
 
@@ -46,6 +46,12 @@ const SeedPage = () => {
         { uid: "fake-uid-dolors",      role: "member",    username: "dolorspons",      firstName: "Dolors",       lastName: "Pons Aparici",    email: "dolors.pons@demo.com" },
       ];
 
+      const groupSnap = await getDoc(doc(db, "groups", groupId));
+      const currentMembers = (groupSnap.data()?.members ?? []) as { uid: string }[];
+      const realMembers = currentMembers.filter(
+        m => m.uid !== adminUid && !m.uid.startsWith("fake-uid-")
+      );
+
       await updateDoc(doc(db, "groups", groupId), {
         members: [
           {
@@ -57,6 +63,7 @@ const SeedPage = () => {
             email: profile.email ?? "",
           },
           ...fakeMembers,
+          ...realMembers,
         ],
       });
 
@@ -310,6 +317,28 @@ const SeedPage = () => {
     setMemberStatus("loading");
 
     try {
+      // Reincorporar a Carmen al array members del grupo, borrando cualquier entrada stale
+      const groupSnap = await getDoc(doc(db, "groups", groupId));
+      const currentMembers = (groupSnap.data()?.members ?? []) as { uid: string }[];
+      const membersWithoutCarmen = currentMembers.filter(m => m.uid !== memberUid);
+
+      await Promise.all([
+        updateDoc(doc(db, "groups", groupId), {
+          members: [
+            ...membersWithoutCarmen,
+            {
+              uid: memberUid,
+              role: "member",
+              username: profile.username,
+              firstName: profile.firstName,
+              lastName: profile.lastName,
+              email: profile.email ?? "",
+            },
+          ],
+        }),
+        updateDoc(doc(db, "users", memberUid), { role: "member" }),
+      ]);
+
       // Vinculados de Carmen — en la subcollección del grupo
       const linkedMembersCol = collection(db, "groups", groupId, "linkedMembers");
       await setDoc(doc(linkedMembersCol, "linked-marc"),  { ownerUid: memberUid, firstName: "Marc",  lastName: "Soriano", relationship: "Fill" });

@@ -14,11 +14,28 @@
       "admin": "Administrador",
       "organizer": "Organizador",
       "organizers": "Organizadores",
+      "member": "Miembro",
       "members": "Miembros"
     },
     "chips": {
       "admin": "Admin",
       "organizer": "Org."
     }
+  },
+  "detail": {
+    "linked": "Vinculados",
+    "makeRole": {
+      "organizer": "Hacer Organizador",
+      "member": "Hacer Miembro"
+    },
+    "removeMember": "Eliminar miembro",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar",
+    "deleteConfirm": "Eliminar miembro",
+    "deleteMessage": "¿Estás seguro de que quieres eliminar a este miembro del grupo?",
+    "deleteCancel": "Cancelar",
+    "deleteSubmit": "Eliminar",
+    "saveError": "No se han podido guardar los cambios.",
+    "deleteError": "No se ha podido eliminar al miembro."
   }
 }

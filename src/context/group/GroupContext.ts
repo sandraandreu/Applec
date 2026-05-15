@@ -14,6 +14,7 @@ export interface GroupData {
 export interface GroupContextType {
   group: GroupData | null;
   isLoading: boolean;
+  refreshGroup: () => Promise<void>;
 }
 
 export const GroupContext = createContext<GroupContextType | null>(null);

@@ -34,6 +34,7 @@ const LandingPage = lazy(
   () => import("../../pages/onboarding/landing/LandingPage"),
 );
 const MembersPage = lazy(() => import("../../pages/members/MembersPage"));
+const MemberDetailPage = lazy(() => import("../../pages/members/member-detail/MemberDetailPage"));
 const EventsListPage = lazy(
   () => import("../../pages/events/events-list/EventsListPage"),
 );
@@ -175,6 +176,15 @@ const AppRoutes = () => (
               <MainLayout>
                 <MembersPage />
               </MainLayout>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/members/:uid"
+          element={
+            <PrivateRoutes requiresGroup>
+              <MemberDetailPage />
             </PrivateRoutes>
           }
         />

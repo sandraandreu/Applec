@@ -78,6 +78,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
                   lastName={member.lastName}
                   email={member.email}
                   role={member.role}
+                  onClick={() => navigate(`/members/${member.uid}`)}
                 />
               ))}
             </div>
