@@ -500,7 +500,7 @@ const StyleGuide = () => {
             <div className="style-guide__item">
               <span className="style-guide__label">linked · disabled</span>
               <Button
-                text="Votar por mis vinculados"
+                text="Votar por mis acompañantes"
                 variant="linked"
                 disabled
                 icon={

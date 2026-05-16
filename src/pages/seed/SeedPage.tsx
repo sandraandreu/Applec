@@ -245,7 +245,7 @@ const SeedPage = () => {
       await setDoc(doc(atCol(missaId), "fake-uid-dolors"),      { userId: "fake-uid-dolors",      eventId: missaId, response: "yes", confirmedAt: new Date(2026, 5, 5),  linkedResponses: { "linked-dolors-toni": "yes" } });
       // Ferran y Miquel: pendientes
 
-      // ── Sopar de Germandat (cena adultos, sin vinculados) ───────────
+      // ── Sopar de Germandat (cena adultos, sin acompañantes) ───────────
       const soparId = soparRef.id;
       await setDoc(doc(atCol(soparId), "fake-uid-vicent"),      { userId: "fake-uid-vicent",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
       await setDoc(doc(atCol(soparId), "fake-uid-amparo"),      { userId: "fake-uid-amparo",      eventId: soparId, response: "yes", confirmedAt: new Date(2026, 5, 15) });
@@ -350,7 +350,7 @@ const SeedPage = () => {
       const reunio  = events.find(e => e.name === "Reunió de Junta");
       const visita  = events.find(e => e.name === "Visita al Museu Faller");
 
-      // Missa Fallera — sí, con vinculados
+      // Missa Fallera — sí, con acompañantes
       if (missa) {
         await setDoc(doc(db, "groups", groupId, "events", missa.id, "attendances", memberUid), {
           userId: memberUid, eventId: missa.id, response: "yes",
@@ -359,7 +359,7 @@ const SeedPage = () => {
         });
       }
 
-      // Sopar de Germandat — sí (sin vinculados, cena de adultos)
+      // Sopar de Germandat — sí (sin acompañantes, cena de adultos)
       if (sopar) {
         await setDoc(doc(db, "groups", groupId, "events", sopar.id, "attendances", memberUid), {
           userId: memberUid, eventId: sopar.id, response: "yes",
@@ -417,7 +417,7 @@ const SeedPage = () => {
 
       <div>
         <h2 style={{ fontSize: "18px", marginBottom: "8px" }}>Miembro — Carmen Soriano</h2>
-        <p style={{ marginBottom: "12px", color: "#555", fontSize: "14px" }}>Añade vinculados y respuestas de asistencia. Ejecútalo con la cuenta de Carmen.</p>
+        <p style={{ marginBottom: "12px", color: "#555", fontSize: "14px" }}>Añade acompañantes y respuestas de asistencia. Ejecútalo con la cuenta de Carmen.</p>
         {memberStatus === "idle"    && <button onClick={handleMemberSeed} style={btnStyle("#3772FF")}>Añadir datos de miembro</button>}
         {memberStatus === "loading" && <p>Añadiendo datos...</p>}
         {memberStatus === "done"    && <p style={{ color: "green", fontWeight: "bold" }}>✅ Datos de miembro añadidos.</p>}
