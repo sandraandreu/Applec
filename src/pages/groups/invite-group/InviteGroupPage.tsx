@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import illustration from "../../../assets/images/invite-group-illustration.png";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 
 const InviteGroupPage = () => {
   const { t } = useTranslation("groups");
@@ -41,6 +42,11 @@ const InviteGroupPage = () => {
 
   return (
     <div className="invite-group-page">
+      {!fromCreate && (
+        <div className="invite-group-page__back">
+          <BackButton />
+        </div>
+      )}
       <div className="invite-group-page__header">
         <h1 className="invite-group-page__title">
           {fromCreate ? t("invite.titleCreate") : t("invite.titleInvite")}
@@ -81,8 +87,8 @@ const InviteGroupPage = () => {
       </div>
 
       {fromCreate
-        ? <Link to="/events" className="invite-group__skip">{t("invite.skip")}</Link>
-        : <button type="button" className="invite-group__skip" onClick={() => navigate(-1)}>{t("invite.skip")}</button>
+        ? <Link to="/events" className="invite-group-page__skip">{t("invite.skip")}</Link>
+        : <button type="button" className="invite-group-page__skip" onClick={() => navigate(-1)}>{t("invite.skip")}</button>
       }
     </div>
   );
