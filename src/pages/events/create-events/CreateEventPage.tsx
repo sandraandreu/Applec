@@ -1,20 +1,37 @@
-import { useReducer } from "react";
+import { useReducer, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import CreateEventStep1Page from "./CreateEventStep1Page";
 import CreateEventStep2Page from "./CreateEventStep2Page";
 import CreateEventStep3Page from "./CreateEventStep3Page";
 import type { CreateEventStep1Data } from "./CreateEventStep1Page";
+import type { StepHandle } from "./CreateEventStep1Page";
 import type { CreateEventStep2Data, CreateEventStep2Draft } from "./CreateEventStep2Page";
 import type { CreateEventStep3Data, CreateEventStep3Draft } from "./CreateEventStep3Page";
 import { createEvent } from "../../../services/event.service";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getErrorKey } from "../../../utils/firebase-errors";
 import { createEventReducer, initialState } from "./create-event.reducer";
+import SlideTransition from "../../../ui-kit/slide-transition/SlideTransition";
 
 const CreateEventPage = () => {
   const [state, dispatch] = useReducer(createEventReducer, initialState);
   const { user, profile } = useAuthContext();
   const navigate = useNavigate();
+  const stepRef = useRef<StepHandle>(null);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => stepRef.current?.submit(),
+    onSwipedRight: () => stepRef.current?.back(),
+    onSwiping: ({ event, dir }) => {
+      if (dir === "Left" || dir === "Right") event.preventDefault();
+    },
+    trackTouch: true,
+    trackMouse: false,
+    swipeDuration: 500,
+    preventScrollOnSwipe: false,
+    touchEventOptions: { passive: false },
+  });
 
   const handleStep1Complete = (data: CreateEventStep1Data) => {
     dispatch({ type: "COMPLETE_STEP1", payload: data });
@@ -56,41 +73,40 @@ const CreateEventPage = () => {
     }
   };
 
-  if (state.step === 1) {
-    return (
-      <CreateEventStep1Page
-        onComplete={handleStep1Complete}
-        initialData={state.step1Data}
-      />
-    );
-  }
-
-  if (state.step === 2 && state.step1Data) {
-    return (
-      <CreateEventStep2Page
-        onComplete={handleStep2Complete}
-        onBack={handleStep2Back}
-        initialData={state.step2Draft}
-        eventType={state.step1Data.eventType}
-      />
-    );
-  }
-
-  if (state.step === 3 && state.step1Data && state.step2Data) {
-    return (
-      <CreateEventStep3Page
-        step1Data={state.step1Data}
-        step2Data={state.step2Data}
-        onComplete={handleStep3Complete}
-        onBack={handleStep3Back}
-        initialData={state.step3Draft}
-        isLoading={state.isLoading}
-        errorKey={state.errorKey}
-      />
-    );
-  }
-
-  return null;
+  return (
+    <div {...swipeHandlers} style={{ height: "100%", overflow: "hidden" }}>
+      <SlideTransition key={state.step} direction={state.direction}>
+        {state.step === 1 && (
+          <CreateEventStep1Page
+            ref={stepRef}
+            onComplete={handleStep1Complete}
+            initialData={state.step1Data}
+          />
+        )}
+        {state.step === 2 && state.step1Data && (
+          <CreateEventStep2Page
+            ref={stepRef}
+            onComplete={handleStep2Complete}
+            onBack={handleStep2Back}
+            initialData={state.step2Draft}
+            eventType={state.step1Data.eventType}
+          />
+        )}
+        {state.step === 3 && state.step1Data && state.step2Data && (
+          <CreateEventStep3Page
+            ref={stepRef}
+            step1Data={state.step1Data}
+            step2Data={state.step2Data}
+            onComplete={handleStep3Complete}
+            onBack={handleStep3Back}
+            initialData={state.step3Draft}
+            isLoading={state.isLoading}
+            errorKey={state.errorKey}
+          />
+        )}
+      </SlideTransition>
+    </div>
+  );
 };
 
 export default CreateEventPage;

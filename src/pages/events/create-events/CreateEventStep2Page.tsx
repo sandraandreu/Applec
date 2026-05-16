@@ -173,4 +173,6 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
   );
 });
 
+CreateEventStep2Page.displayName = "CreateEventStep2Page";
+
 export default CreateEventStep2Page;

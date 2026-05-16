@@ -4,6 +4,7 @@ import type { CreateEventStep3Draft } from "./CreateEventStep3Page";
 
 export type CreateEventState = {
   step: 1 | 2 | 3;
+  direction: "forward" | "backward";
   step1Data: CreateEventStep1Data | undefined;
   step2Data: CreateEventStep2Data | undefined;
   step2Draft: CreateEventStep2Draft | undefined;
@@ -22,6 +23,7 @@ export type CreateEventAction =
 
 export const initialState: CreateEventState = {
   step: 1,
+  direction: "forward",
   step1Data: undefined,
   step2Data: undefined,
   step2Draft: undefined,
@@ -36,18 +38,19 @@ export const createEventReducer = (
 ): CreateEventState => {
   switch (action.type) {
     case "COMPLETE_STEP1":
-      return { ...state, step: 2, step1Data: action.payload };
+      return { ...state, step: 2, direction: "forward", step1Data: action.payload };
     case "COMPLETE_STEP2":
       return {
         ...state,
         step: 3,
+        direction: "forward",
         step2Data: action.payload,
         step2Draft: { ...action.payload, endTime: action.payload.endTime ?? "" },
       };
     case "BACK_TO_STEP1":
-      return { ...state, step: 1, step2Draft: action.payload };
+      return { ...state, step: 1, direction: "backward", step2Draft: action.payload };
     case "BACK_TO_STEP2":
-      return { ...state, step: 2, step3Draft: action.payload };
+      return { ...state, step: 2, direction: "backward", step3Draft: action.payload };
     case "SET_SUBMITTING":
       return { ...state, isLoading: true, errorKey: undefined };
     case "SET_ERROR":

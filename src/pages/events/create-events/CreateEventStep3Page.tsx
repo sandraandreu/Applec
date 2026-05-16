@@ -1,14 +1,15 @@
 import "./create-event.scss";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import type { CreateEventStep1Data } from "./CreateEventStep1Page";
+import type { StepHandle } from "./CreateEventStep1Page";
 import type { CreateEventStep2Data } from "./CreateEventStep2Page";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
 
@@ -36,7 +37,7 @@ interface Props {
   errorKey?: string;
 }
 
-const CreateEventStep3Page = ({
+const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
   step1Data,
   step2Data,
   onComplete,
@@ -44,7 +45,7 @@ const CreateEventStep3Page = ({
   initialData,
   isLoading,
   errorKey,
-}: Props) => {
+}, ref) => {
   const { t, i18n } = useTranslation(["events", "common"]);
   const dateLocale = i18n.language === "ca" ? ca : es;
 
@@ -63,13 +64,7 @@ const CreateEventStep3Page = ({
     ? `${step2Data.startTime} - ${step2Data.endTime}`
     : step2Data.startTime;
 
-  const handleBack = () => {
-    onBack({ requiresConfirmation, sendReminder, deadlineOpen, deadlineDate, deadlineTime });
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-
+  const buildAndSubmit = () => {
     let confirmationDeadline: Date | undefined;
     if (deadlineDate) {
       const combined = new Date(deadlineDate);
@@ -79,9 +74,22 @@ const CreateEventStep3Page = ({
       }
       confirmationDeadline = combined;
     }
-
     onComplete({ requiresConfirmation, sendReminder, confirmationDeadline });
   };
+
+  const handleBack = () => {
+    onBack({ requiresConfirmation, sendReminder, deadlineOpen, deadlineDate, deadlineTime });
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    buildAndSubmit();
+  };
+
+  useImperativeHandle(ref, () => ({
+    submit: () => buildAndSubmit(),
+    back: () => handleBack(),
+  }));
 
   return (
     <div className={`create-events-step3${step1Data.eventType === "special" ? " create-events-step3--special" : ""}`}>
@@ -223,6 +231,8 @@ const CreateEventStep3Page = ({
       </form>
     </div>
   );
-};
+});
+
+CreateEventStep3Page.displayName = "CreateEventStep3Page";
 
 export default CreateEventStep3Page;

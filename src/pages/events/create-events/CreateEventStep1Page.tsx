@@ -72,7 +72,6 @@ const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initia
       </div>
 
       <form className="create-events-page__content" onSubmit={handleSubmit(onSubmit)}>
-        <div className="create-events-page__handle" aria-hidden="true" />
 
         <div className="create-events-page__form-section">
           <p className="create-events-page__section-title">
@@ -129,5 +128,7 @@ const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initia
     </div>
   );
 });
+
+CreateEventStep1Page.displayName = "CreateEventStep1Page";
 
 export default CreateEventStep1Page;
