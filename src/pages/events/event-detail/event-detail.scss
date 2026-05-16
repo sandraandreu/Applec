@@ -210,25 +210,102 @@
     margin: 0;
   }
 
-  &__going {
+  &__vote {
     display: flex;
     flex-direction: column;
     gap: var(--gap-content);
   }
 
-  &__going-title {
-    font-family: var(--font-display);
-    font-size: var(--font-size-h2);
-    font-weight: var(--font-weight-extrabold);
+  &__vote-banner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tight);
+    padding: var(--size-16) var(--size-18);
+    background: var(--blue-100);
+    border-radius: var(--radius-card);
+    border: none;
+    text-align: left;
+    width: 100%;
+  }
+
+  &__vote-banner-title {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-primary);
   }
 
-  &__going-buttons {
-    display: flex;
-    gap: var(--gap-compact);
+  &__vote-banner-deadline {
+    font-size: var(--font-size-body-s);
+    color: var(--color-brand);
+    padding-left: var(--size-24);
   }
 
-  &__going-btn {
+  &__vote-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--size-16);
+  }
+
+  &__vote-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__vote-summary-title {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+  }
+
+  &__vote-summary-row {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__vote-summary-name {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-primary);
     flex: 1;
+  }
+
+  &__vote-summary-status {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+
+    &--going {
+      color: var(--color-accent-teal);
+    }
+
+    &--not-going {
+      color: var(--color-not-going);
+    }
+  }
+
+  &__vote-cta {
+    margin-top: var(--gap-section);
+  }
+
+  &__vote-closed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+    padding: var(--size-16) var(--size-18);
+    background: var(--neutral-50);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+  }
+
+  &__vote-closed-text {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+    margin: 0;
   }
 }

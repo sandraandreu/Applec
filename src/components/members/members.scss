@@ -84,6 +84,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &__actions {
+    display: flex;
+    gap: var(--gap-compact);
+    flex-shrink: 0;
+  }
+
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: var(--color-brand);
+  }
 }
 
 .members-list {

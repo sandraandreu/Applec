@@ -1,0 +1,213 @@
+.vote-sheet {
+  border: none;
+  padding: 0;
+  background: transparent;
+  max-width: 100%;
+  width: 100%;
+  max-height: 100%;
+  height: 100%;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+
+  &::backdrop {
+    background: hsl(0 0% 0% / 0.4);
+  }
+
+  &__panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 92vh;
+  }
+
+  &__handle {
+    width: 40px;
+    height: 4px;
+    background: #d5d5d5;
+    border-radius: 2px;
+    margin: 12px auto 0;
+    flex-shrink: 0;
+  }
+
+  &__scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overscroll-behavior: contain;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__user-name {
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  &__question {
+    background: #e5f0ff;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__question-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  &__question-deadline {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  &__own-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  &__own-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 100px;
+    border: 2px solid #d5d5d5;
+    background: transparent;
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+
+    &--yes {
+      border-color: #00c8c5;
+      color: #00c8c5;
+
+      &.vote-sheet__own-btn--active {
+        background: #00c8c5;
+        color: #ffffff;
+      }
+    }
+
+    &--no {
+      border-color: #ff1c4e;
+      color: #ff1c4e;
+
+      &.vote-sheet__own-btn--active {
+        background: #ff1c4e;
+        border-color: #ff1c4e;
+        color: #ffffff;
+      }
+    }
+  }
+
+  &__linked-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__linked-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: #ffffff;
+  }
+
+  &__linked-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__linked-name {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__linked-relationship {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__linked-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  &__vote-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid;
+    background: transparent;
+    font-size: 18px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+
+    &--yes {
+      border-color: #00c8c5;
+      color: #00c8c5;
+
+      &.vote-sheet__vote-btn--active {
+        background: #00c8c5;
+        color: #ffffff;
+      }
+    }
+
+    &--no {
+      border-color: #ff1c4e;
+      color: #ff1c4e;
+
+      &.vote-sheet__vote-btn--active {
+        background: #ff1c4e;
+        color: #ffffff;
+      }
+    }
+  }
+
+  &__footer {
+    padding: 16px 32px 32px;
+    background: #ffffff;
+    border-top: 1px solid #e0e0e0;
+  }
+}

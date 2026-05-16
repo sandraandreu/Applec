@@ -1,9 +1,9 @@
-import "./members.scss";
-import Search from "../../ui-kit/search/Search";
-import MembersList from "../../components/members/MembersList";
+import "./members-list.scss";
+import Search from "../../../ui-kit/search/Search";
+import MembersList from "../../../components/members/MembersList";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useGroupContext } from "../../context/group/GroupContext";
+import { useGroupContext } from "../../../context/group/GroupContext";
 import { useNavigate } from "react-router-dom";
 
 const MembersPage = () => {

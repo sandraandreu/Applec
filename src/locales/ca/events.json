@@ -99,6 +99,38 @@
     "cancel": "Cancel·lar",
     "error": "Error en actualitzar l'esdeveniment"
   },
+  "vote": {
+    "pending": "Confirma la teua assistència",
+    "deadline": "Fins al {{date}}",
+    "title": "Et vens?",
+    "yes": "Sí",
+    "no": "No",
+    "save": "Confirmar",
+    "cta": "Votar",
+    "modify": "Canviar la meua resposta",
+    "closed": "El termini ja està tancat",
+    "myVote": "La teua assistència",
+    "going": "Hi vas",
+    "notGoing": "No hi vas",
+    "addLinked": "Afegir acompanyant",
+    "linkedLabel": "Acompanyants"
+  },
+  "linked": {
+    "title": "Afegir acompanyant",
+    "description": "Persones que vénen amb tu als actes però no tenen compte a l'app.",
+    "myTitle": "Els meus acompanyants",
+    "myDescription": "Les persones que afegisques ací apareixeran als esdeveniments perquè pugues confirmar la seua assistència.",
+    "empty": "Encara no tens cap acompanyant afegit.",
+    "addButton": "Afegir acompanyant",
+    "firstName": "Nom",
+    "firstNamePlaceholder": "Maria",
+    "lastName": "Cognoms",
+    "lastNamePlaceholder": "García",
+    "relationship": "Parentiu",
+    "relationshipPlaceholder": "Filla, Marit...",
+    "save": "Afegir",
+    "cancel": "Cancel·lar"
+  },
   "attendance": {
     "going": "Hi vaig",
     "notGoing": "No hi vaig",

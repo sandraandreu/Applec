@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import "./members.scss";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import type { AvatarAttendance } from "../../ui-kit/avatar/Avatar";
@@ -19,9 +20,11 @@ interface MemberCardProps {
   isExpanded?: boolean;
   onToggle?: () => void;
   onClick?: () => void;
+  onEdit?: () => void;
 }
 
-const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit }: MemberCardProps) => {
+  const { t } = useTranslation("common");
   const classes = [
     "member-card",
     attendance === "not-going" ? "member-card--not-going" : "",
@@ -54,6 +57,18 @@ const MemberCard = ({ firstName, lastName, email, relationship, role, showChevro
           size={24}
           className="member-card__expand-icon"
         />
+      )}
+      {onEdit && (
+        <div className="member-card__actions">
+          <button
+            type="button"
+            className="member-card__action-btn"
+            aria-label={`${t("buttons.edit")} ${firstName} ${lastName}`}
+            onClick={(e) => { e.stopPropagation(); onEdit(); }}
+          >
+            <Icon name="edit" size={24} aria-hidden="true" />
+          </button>
+        </div>
       )}
     </div>
   );

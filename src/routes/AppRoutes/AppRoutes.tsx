@@ -33,8 +33,10 @@ const InviteGroupPage = lazy(
 const LandingPage = lazy(
   () => import("../../pages/onboarding/landing/LandingPage"),
 );
-const MembersPage = lazy(() => import("../../pages/members/MembersPage"));
+const MembersPage = lazy(() => import("../../pages/members/members-list/MembersPage"));
 const MemberDetailPage = lazy(() => import("../../pages/members/member-detail/MemberDetailPage"));
+const LinkedMembersPage = lazy(() => import("../../pages/members/linked-members/LinkedMembersPage"));
+const AddLinkedMemberPage = lazy(() => import("../../pages/members/add-linked-member/AddLinkedMemberPage"));
 const EventsListPage = lazy(
   () => import("../../pages/events/events-list/EventsListPage"),
 );
@@ -176,6 +178,24 @@ const AppRoutes = () => (
               <MainLayout>
                 <MembersPage />
               </MainLayout>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/members/linked"
+          element={
+            <PrivateRoutes requiresGroup>
+              <LinkedMembersPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/members/linked/new"
+          element={
+            <PrivateRoutes requiresGroup>
+              <AddLinkedMemberPage />
             </PrivateRoutes>
           }
         />

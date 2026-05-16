@@ -13,7 +13,9 @@
     "resendEmail": "Reenviar correo",
     "showPassword": "Mostrar contraseña",
     "hidePassword": "Ocultar contraseña",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "edit": "Editar",
+    "delete": "Eliminar"
   },
   "search": {
     "label": "Buscar"

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -7,6 +7,7 @@ import { useGroupContext } from "../../../context/group/GroupContext";
 import { getEventById, deleteEvent } from "../../../services/event.service";
 import { getEventAttendances } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
+import VoteSheet from "./vote-sheet/VoteSheet";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -21,6 +22,10 @@ import "./event-detail.scss";
 const EventDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const openVoteSheetOnLoad = useRef(
+    !!(location.state as { openVoteSheet?: boolean } | null)?.openVoteSheet
+  );
   const { t, i18n } = useTranslation("events");
   const { profile, user } = useAuthContext();
   const { group } = useGroupContext();
@@ -34,6 +39,7 @@ const EventDetailPage = () => {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [attendeeFilter, setAttendeeFilter] = useState("all");
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
+  const [showVoteSheet, setShowVoteSheet] = useState(false);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -75,6 +81,10 @@ const EventDetailPage = () => {
       setEvent(eventData);
       setMemberResponses(attendancesData?.memberResponses ?? {});
       setLinkedResponses(attendancesData?.linkedResponses ?? {});
+      if (openVoteSheetOnLoad.current) {
+        openVoteSheetOnLoad.current = false;
+        setShowVoteSheet(true);
+      }
     });
 
     return () => {
@@ -318,35 +328,83 @@ const EventDetailPage = () => {
           </div>
         )}
 
-        {!user?.permissions.canSeeAttendees && (
-          <>
-            <div className="event-detail-page__going">
-              <h2 className="event-detail-page__going-title">
-                {t("detail.going.title")}
-              </h2>
-              <div className="event-detail-page__going-buttons">
+        {!user?.permissions.canSeeAttendees && eventStatus !== "finalizado" && (
+          <div className="event-detail-page__vote">
+            {eventStatus === "activo" && (
+              <button
+                type="button"
+                className="event-detail-page__vote-banner"
+                onClick={() => setShowVoteSheet(true)}
+              >
+                <span className="event-detail-page__vote-banner-title">
+                  <Icon name="clock" size={22} aria-hidden="true" />
+                  {t("vote.pending")}
+                </span>
+                {event.confirmationDeadline && (
+                  <span className="event-detail-page__vote-banner-deadline">
+                    {t("vote.deadline", {
+                      date: event.confirmationDeadline.toLocaleDateString(
+                        i18n.language === "ca" ? "ca-ES" : "es-ES",
+                        { day: "numeric", month: "long" },
+                      ),
+                    })}
+                  </span>
+                )}
+              </button>
+            )}
+
+            {eventStatus === "plazo-cerrado" && (
+              <div className="event-detail-page__vote-closed">
+                <p className="event-detail-page__vote-closed-text">
+                  {t("vote.closed")}
+                </p>
+                <Badge variant="plazo-cerrado" label={t("status.plazo-cerrado")} />
+              </div>
+            )}
+
+            {eventStatus === "activo" && (
+              <div className="event-detail-page__vote-cta">
                 <Button
-                  variant="going-no-active"
-                  className="event-detail-page__going-btn"
-                  text={t("detail.going.no")}
-                />
-                <Button
-                  variant="going-yes"
-                  className="event-detail-page__going-btn"
-                  icon={<Icon name="check" size={20} />}
-                  text={t("detail.going.yes")}
+                  variant="especial"
+                  text={t("vote.cta")}
+                  onClick={() => setShowVoteSheet(true)}
                 />
               </div>
-              <Button
-                variant="linked"
-                disabled
-                icon={<Icon name="plus" size={32} />}
-                text={t("detail.going.addLinked")}
-              />
-            </div>
-            <Button variant="especial" text={t("detail.going.save")} />
-          </>
+            )}
+          </div>
         )}
+
+        <VoteSheet
+          isOpen={showVoteSheet}
+          onDismiss={() => setShowVoteSheet(false)}
+          userFirstName={profile?.firstName ?? ""}
+          userLastName={profile?.lastName ?? ""}
+          userRole={profile?.role ?? "member"}
+          deadline={
+            event.confirmationDeadline
+              ? event.confirmationDeadline.toLocaleDateString(
+                  i18n.language === "ca" ? "ca-ES" : "es-ES",
+                  { day: "numeric", month: "long" },
+                )
+              : undefined
+          }
+          linkedMembers={
+            (group?.linkedMembers ?? [])
+              .filter((lm) => lm.ownerUid === user?.uid)
+              .map((lm) => ({
+                id: lm.id,
+                firstName: lm.firstName,
+                lastName: lm.lastName,
+                relationship: lm.relationship ?? "",
+              }))
+          }
+          onAddLinked={() => {
+            setShowVoteSheet(false);
+            navigate("/members/linked/new", {
+              state: { returnTo: `/events/${id}`, openVoteSheet: true },
+            });
+          }}
+        />
 
         {deleteError && (
           <p className="event-detail-page__delete-error">
