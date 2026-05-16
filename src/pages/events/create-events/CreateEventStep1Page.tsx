@@ -1,11 +1,17 @@
 import "./create-event.scss";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
-import { useState } from "react";
+
+export interface StepHandle {
+  submit: () => void;
+  back: () => void;
+}
 
 export interface CreateEventStep1Data {
   eventType: "normal" | "special";
@@ -23,15 +29,19 @@ interface Props {
   initialData?: CreateEventStep1Data;
 }
 
-const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
+const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initialData }, ref) => {
   const { t } = useTranslation("events");
+  const navigate = useNavigate();
   const [eventType, setEventType] = useState<"normal" | "special">(initialData?.eventType ?? "normal");
-  const { register, handleSubmit, formState: { errors } } = useForm<FormFields>({
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<FormFields>({
     defaultValues: {
       eventName: initialData?.eventName ?? "",
       description: initialData?.description ?? "",
     },
   });
+
+  const eventNameLength = watch("eventName")?.length ?? 0;
+  const descriptionLength = watch("description")?.length ?? 0;
 
   const onSubmit = (fields: FormFields) => {
     onComplete({
@@ -40,6 +50,11 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
       description: fields.description,
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    submit: () => handleSubmit(onSubmit)(),
+    back: () => navigate(-1),
+  }));
 
   return (
     <div className={`create-events-page${eventType === "special" ? " create-events-page--special" : ""}`}>
@@ -91,7 +106,9 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
               label={t("create.name")}
               placeholder={t("create.namePlaceholder")}
               required
-              registration={register("eventName", { required: true })}
+              maxLength={50}
+              currentLength={eventNameLength}
+              registration={register("eventName", { required: true, maxLength: 50 })}
               error={errors.eventName ? t("validation.nameRequired") : undefined}
             />
             <Input
@@ -100,7 +117,9 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
               placeholder={t("create.descriptionPlaceholder")}
               optional
               multiline
-              registration={register("description")}
+              maxLength={300}
+              currentLength={descriptionLength}
+              registration={register("description", { maxLength: 300 })}
             />
           </div>
         </div>
@@ -109,6 +128,6 @@ const CreateEventStep1Page = ({ onComplete, initialData }: Props) => {
       </form>
     </div>
   );
-};
+});
 
 export default CreateEventStep1Page;

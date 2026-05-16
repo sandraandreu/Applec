@@ -56,8 +56,13 @@ textarea.field__input {
 }
 
 .field__counter {
+  font-size: var(--font-size-body-s);
   color: var(--color-text-muted);
   text-align: right;
+
+  &--warning {
+    color: var(--color-error);
+  }
 }
 
 .field__optional {

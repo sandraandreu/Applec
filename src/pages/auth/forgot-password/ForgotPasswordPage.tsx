@@ -79,8 +79,10 @@ const ForgotPasswordPage = () => {
               placeholder={t("forgotPassword.emailPlaceholder")}
               type="text"
               required
+              maxLength={254}
               registration={register("email", {
                 required: true,
+                maxLength: 254,
                 pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               })}
               error={

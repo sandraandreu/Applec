@@ -138,8 +138,10 @@ const RegisterPage = () => {
             placeholder={t("register.firstNamePlaceholder")}
             type="text"
             required
+            maxLength={50}
             registration={register("firstName", {
               required: true,
+              maxLength: 50,
               pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
             })}
             error={
@@ -157,8 +159,10 @@ const RegisterPage = () => {
             placeholder={t("register.lastNamePlaceholder")}
             type="text"
             required
+            maxLength={50}
             registration={register("lastName", {
               required: true,
+              maxLength: 50,
               pattern: /^[a-zA-ZÀ-ÿ\s]+$/,
             })}
             error={
@@ -176,8 +180,10 @@ const RegisterPage = () => {
             placeholder={t("register.emailPlaceholder")}
             type="text"
             required
+            maxLength={254}
             registration={register("email", {
               required: true,
+              maxLength: 254,
               pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             })}
             error={
@@ -195,8 +201,10 @@ const RegisterPage = () => {
             placeholder={t("register.passwordPlaceholder")}
             type={showPassword ? "text" : "password"}
             required
+            maxLength={128}
             registration={register("password", {
               required: true,
+              maxLength: 128,
               validate: (value) =>
                 hasMinLength(value) &&
                 hasUpperCase(value) &&
@@ -224,8 +232,10 @@ const RegisterPage = () => {
             placeholder={t("register.confirmPasswordPlaceholder")}
             type={showConfirmPassword ? "text" : "password"}
             required
+            maxLength={128}
             registration={register("confirmPassword", {
               required: true,
+              maxLength: 128,
               validate: (value) => value === password,
             })}
             error={

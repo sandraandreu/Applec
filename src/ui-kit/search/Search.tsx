@@ -18,6 +18,7 @@ const Search = ({ placeholder, onChange }: SearchProps) => {
         className="search__input"
         type="search"
         placeholder={placeholder}
+        maxLength={100}
         onChange={(event) => onChange(event.target.value)}
       />
     </label>

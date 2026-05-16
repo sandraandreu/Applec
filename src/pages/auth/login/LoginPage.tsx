@@ -106,8 +106,10 @@ const LoginPage = () => {
               placeholder={t("login.emailPlaceholder")}
               type="text"
               required
+              maxLength={254}
               registration={register("email", {
                 required: true,
+                maxLength: 254,
                 pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               })}
               error={
@@ -125,7 +127,8 @@ const LoginPage = () => {
               placeholder={t("login.passwordPlaceholder")}
               type={showPassword ? "text" : "password"}
               required
-              registration={register("password", { required: true })}
+              maxLength={128}
+              registration={register("password", { required: true, maxLength: 128 })}
               error={
                 errors.password?.type === "required"
                   ? tc("errors.required")

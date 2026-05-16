@@ -38,8 +38,12 @@ const EditEventPage = () => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FormFields>();
+  const eventNameLength = watch("eventName")?.length ?? 0;
+  const descriptionLength = watch("description")?.length ?? 0;
+  const locationLength = watch("location")?.length ?? 0;
 
   useEffect(() => {
     if (!profile?.groupId || !id) {
@@ -148,7 +152,9 @@ const EditEventPage = () => {
               label={t("create.name")}
               placeholder={t("create.namePlaceholder")}
               required
-              registration={register("eventName", { required: true })}
+              maxLength={50}
+              currentLength={eventNameLength}
+              registration={register("eventName", { required: true, maxLength: 50 })}
               error={errors.eventName ? t("validation.nameRequired") : undefined}
             />
             <Input
@@ -157,7 +163,9 @@ const EditEventPage = () => {
               placeholder={t("create.descriptionPlaceholder")}
               optional
               multiline
-              registration={register("description")}
+              maxLength={300}
+              currentLength={descriptionLength}
+              registration={register("description", { maxLength: 300 })}
             />
           </div>
         </div>
@@ -222,7 +230,9 @@ const EditEventPage = () => {
               label={t("create.location")}
               placeholder={t("create.locationPlaceholder")}
               required
-              registration={register("location", { required: true })}
+              maxLength={100}
+              currentLength={locationLength}
+              registration={register("location", { required: true, maxLength: 100 })}
               error={errors.location ? t("validation.locationRequired") : undefined}
             />
           </div>

@@ -43,8 +43,10 @@ const CreateGroupPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<CreateGroupFormData>();
+  const nameLength = watch("name")?.length ?? 0;
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -160,6 +162,8 @@ const CreateGroupPage = () => {
             placeholder={t("createGroup.namePlaceholder")}
             type="text"
             required
+            maxLength={50}
+            currentLength={nameLength}
             registration={register("name", {
               required: true,
               maxLength: 50,

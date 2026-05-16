@@ -44,6 +44,7 @@ const Input = ({
             id={id}
             placeholder={placeholder}
             className="field__input"
+            maxLength={maxLength}
             {...(registration as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
           />
         ) : (
@@ -52,13 +53,14 @@ const Input = ({
             type={type}
             placeholder={placeholder}
             className={`field__input${endIcon ? " field__input--with-icon" : ""}`}
+            maxLength={maxLength}
             {...registration}
           />
         )}
         {!multiline && endIcon && <span className="field__icon">{endIcon}</span>}
       </div>
-      {maxLength && (
-        <span className="field__counter">
+      {maxLength && currentLength !== undefined && currentLength >= Math.floor(maxLength * 0.8) && (
+        <span className={`field__counter${currentLength >= maxLength ? " field__counter--warning" : ""}`}>
           {currentLength}/{maxLength}
         </span>
       )}

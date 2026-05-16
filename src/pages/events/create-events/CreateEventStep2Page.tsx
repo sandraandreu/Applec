@@ -1,13 +1,14 @@
 import "./create-event.scss";
+import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
+import type { StepHandle } from "./CreateEventStep1Page";
 
 export interface CreateEventStep2Data {
   date: Date;
@@ -36,7 +37,7 @@ interface Props {
   eventType: "normal" | "special";
 }
 
-const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Props) => {
+const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack, initialData, eventType }, ref) => {
   const { t } = useTranslation("events");
   const { t: tc } = useTranslation("common");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialData?.date);
@@ -45,13 +46,15 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
   today.setHours(0, 0, 0, 0);
   const [dateError, setDateError] = useState(false);
 
-  const { register, handleSubmit, getValues, formState: { errors } } = useForm<FormFields>({
+  const { register, handleSubmit, getValues, watch, formState: { errors } } = useForm<FormFields>({
     defaultValues: {
       startTime: initialData?.startTime ?? "16:00",
       endTime: initialData?.endTime ?? "",
       location: initialData?.location ?? "",
     },
   });
+
+  const locationLength = watch("location")?.length ?? 0;
 
   const handleBack = () => {
     const fields = getValues();
@@ -75,6 +78,11 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
       location: fields.location,
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    submit: () => handleSubmit(onSubmit, () => { if (!selectedDate) setDateError(true); })(),
+    back: () => handleBack(),
+  }));
 
   return (
     <div className={`create-events-step2${eventType === "special" ? " create-events-step2--special" : ""}`}>
@@ -152,7 +160,9 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
             label={t("create.location")}
             placeholder={t("create.locationPlaceholder")}
             required
-            registration={register("location", { required: true })}
+            maxLength={100}
+            currentLength={locationLength}
+            registration={register("location", { required: true, maxLength: 100 })}
             error={errors.location ? t("validation.locationRequired") : undefined}
           />
         </div>
@@ -161,6 +171,6 @@ const CreateEventStep2Page = ({ onComplete, onBack, initialData, eventType }: Pr
       </form>
     </div>
   );
-};
+});
 
 export default CreateEventStep2Page;
