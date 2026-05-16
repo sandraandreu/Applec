@@ -41,6 +41,7 @@ La presentación es ante empresas, por lo que el nivel de calidad y profesionali
 | i18n | react-i18next — Castellano `es` (por defecto) + Valenciano `ca` |
 | Backend | Firebase Auth + Firestore + Storage |
 | Mobile | Capacitor (iOS + Android — se convierte tras el build web) |
+| Gestos táctiles | react-swipeable — swipe-to-dismiss en Modal, swipe-back en páginas de detalle, navegación en onboarding y creación de eventos |
 | Estado | React Context API |
 
 ---
@@ -171,6 +172,7 @@ El menú de miembros tiene menos ítems que el de admin/organizadores (las pági
 - Menú ⋮ con opciones Editar y Eliminar (solo si `canEdit`)
 - Admin y organizador: sección de asistentes con contador y filtros
 - Miembro: botones Sí/No de confirmación + vinculados debajo
+- Swipe derecho → volver a la lista
 
 **Crear/editar evento** (`/events/create`, `/events/:id/edit`) ✓ Implementado
 - Flujo de 3 pasos: tipo + nombre + descripción / fecha + hora + lugar / confirmación + recordatorio
@@ -179,6 +181,7 @@ El menú de miembros tiene menos ítems que el de admin/organizadores (las pági
 - Búsqueda + filtros por rol (Todos · Admin · Organizadores · Miembros)
 - Lista con avatar, nombre y username
 - Al pulsar un miembro → página de detalle (`/members/:uid`): zona de perfil con degradado por rol, miembros vinculados, cambio de rol y eliminación del miembro
+- Swipe derecho en detalle → volver a la lista
 
 **Calendario** (`/calendar`) ✗ Pendiente — spec en `docs/specs/events-calendar.md`
 - Vista mensual con FullCalendar

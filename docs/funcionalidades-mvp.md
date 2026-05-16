@@ -69,7 +69,7 @@ Solo el Admin puede cambiar roles y expulsar miembros. Los permisos se derivan d
 ---
 
 ### 7. Crear evento
-**Estado:** ✓ Completado (creación, edición y eliminación implementadas)
+**Estado:** ✓ Completado (creación, edición y eliminación implementadas; modal de confirmación de borrado como bottom sheet)
 
 Solo Admin y Organizadores pueden crear eventos.
 
@@ -149,3 +149,4 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 | 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
 | 16 | Notificaciones | Pantalla con datos hardcodeados para la presentación |
 | 17 | Planes de pago (gratuito / premium) | Monetización |
+| 18 | Swipe en tarjetas de lista | Swipe izquierdo en `EventCard` / `MemberCard` para revelar acciones rápidas (editar, eliminar). Requiere rediseño de las cards con action buttons ocultos |
