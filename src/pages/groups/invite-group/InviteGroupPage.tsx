@@ -2,7 +2,7 @@ import "./invite-group.scss";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import illustration from "../../../assets/images/invite-group-illustration.png";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 
@@ -11,6 +11,7 @@ const InviteGroupPage = () => {
   const { group } = useGroupContext();
   const inviteCode = group?.inviteCode ?? null;
   const location = useLocation();
+  const navigate = useNavigate();
   const fromCreate = location.state?.fromCreate === true;
 
   const [copied, setCopied] = useState<boolean>(false);
@@ -79,7 +80,10 @@ const InviteGroupPage = () => {
         </button>
       </div>
 
-      <Link to="/events" className="invite-group__skip">{t("invite.skip")}</Link>
+      {fromCreate
+        ? <Link to="/events" className="invite-group__skip">{t("invite.skip")}</Link>
+        : <button type="button" className="invite-group__skip" onClick={() => navigate(-1)}>{t("invite.skip")}</button>
+      }
     </div>
   );
 };

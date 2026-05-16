@@ -65,4 +65,14 @@
     font-weight: var(--font-weight-bold);
   }
 
+  &__skip {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body-s);
+    font-family: var(--font-body);
+    text-align: center;
+    text-decoration: underline;
+  }
 }
