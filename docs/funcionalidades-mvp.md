@@ -34,7 +34,7 @@ Un usuario registrado crea un grupo privado. Se convierte automáticamente en Ad
 ---
 
 ### 4. Unirse a un grupo existente
-**Estado:** ✓ Parcialmente implementado (código de invitación — unión directa provisional), ✗ flujo de solicitud + aprobación pendiente
+**Estado:** ✓ Parcialmente implementado (código de invitación — unión directa provisional), ✗ flujo de solicitud + aprobación pendiente (T31)
 
 Tres vías de entrada, todas pasan por aprobación del Admin o Organizador:
 - **Código de invitación:** el usuario introduce el código, se envía una solicitud al grupo. El Admin/Organizador la aprueba o rechaza. *(Actualmente la implementación une directamente sin solicitud — esto cambiará)*
@@ -43,17 +43,21 @@ Tres vías de entrada, todas pasan por aprobación del Admin o Organizador:
 
 Las solicitudes pendientes se almacenan en `groups/{groupId}/joinRequests/{uid}`. Al aprobar: se añade al array `members` y se borra el documento. Al rechazar: se borra el documento.
 
+Admin y Organizadores ven las solicitudes pendientes y pueden aprobarlas o rechazarlas desde una pantalla de gestión.
+
 Un usuario solo puede pertenecer a un grupo. Si ya tiene grupo, las rutas `/create-group`, `/join-group` y `/onboarding/group` redirigen a `/events`.
 
 ---
 
 ### 5. Sistema de roles
-**Estado:** ✓ Implementado en datos, ✗ lógica de permisos en UI pendiente
+**Estado:** ✓ Implementado en datos, ✗ lógica de permisos en UI pendiente · ✗ múltiples admins pendiente (T32) · ✗ texto informativo de roles pendiente (T33)
 
 Tres roles:
-- **Administrador:** control total del grupo. Solo 1 por grupo. No puede abandonar sin transferir el rol.
+- **Administrador:** control total del grupo. Máximo 3 por grupo. No puede abandonar sin transferir el rol.
 - **Organizador:** crea y gestiona sus propios eventos, aprueba solicitudes, añade miembros.
 - **Miembro:** ve el calendario, confirma asistencia, ve solo su propia confirmación.
+
+Al cambiar el rol de un miembro, el Admin ve una descripción de las diferencias entre roles antes de confirmar el cambio.
 
 ---
 
@@ -100,7 +104,7 @@ Visible para todos los miembros. Vista mensual con navegación por mes. Días co
 ---
 
 ### 9. Confirmación de asistencia
-**Estado:** ✓ UI base implementada (botones Sí/No), ✗ lógica Firestore pendiente · ✗ diseño de vinculados a implementar
+**Estado:** ✓ UI completa implementada (VoteSheet, AddLinkedMemberPage, LinkedMembersPage), ✗ lógica Firestore pendiente
 
 Cada miembro confirma: **sí** o **no**. No confirmar = "sin respuesta" (pendiente).
 
@@ -108,11 +112,13 @@ Se puede cambiar la respuesta mientras el plazo esté abierto. Al cerrar el plaz
 
 Los miembros solo ven su propia confirmación. El listado completo es solo para Admin y Organizadores.
 
-**Diseño acordado:**
-- Sin botón "Guardar" — guardado dinámico al tocar Sí/No
+**Diseño implementado:**
+- Bottom sheet (`VoteSheet`) con swipe para cerrar
 - Sin voto = estado pendiente (ningún botón resaltado)
-- Botones: No (outline) / Sí (relleno con check) — se resalta el seleccionado
-- Vinculados: se muestran directamente debajo de los botones propios (no hay botón "añadir vinculados"); si el usuario tiene vinculados registrados, aparecen listados y se puede votar por cada uno individualmente
+- Botones propios: No (rojo outline) / Sí (teal outline) — se rellena el seleccionado
+- Botón "Confirmar" en el footer del sheet
+- Acompañantes: botones circulares Sí/No por cada uno; botón "Añadir acompañante" navega a `/members/linked/new`
+- Tras volver de añadir acompañante, el sheet se reabre automáticamente
 
 ---
 
@@ -143,7 +149,7 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 
 | # | Funcionalidad | Plan |
 |---|---|---|
-| 12 | Miembros vinculados (familia sin cuenta propia) | Versión futura — la UI de votación los mostrará con datos de demo |
+| 12 | Miembros vinculados (familia sin cuenta propia) | UI implementada (LinkedMembersPage + AddLinkedMemberPage), ✗ Firebase pendiente (crear, editar, eliminar) |
 | 13 | Inicio de sesión con Google | Versión futura |
 | 14 | Gráfico circular de asistencia | Versión futura |
 | 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
