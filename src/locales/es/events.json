@@ -63,7 +63,9 @@
     "step1Description": "Define el tipo de evento, asígnale un nombre y añade toda la información necesaria.",
     "type": {
       "special": "Especial",
-      "normal": "Normal"
+      "normal": "Normal",
+      "normalDesc": "Reunión, actividad o acto del día a día",
+      "specialDesc": "Fiesta, acto destacado o evento señalado"
     },
     "typeSection": "Tipo de evento",
     "infoSection": "Información del evento",

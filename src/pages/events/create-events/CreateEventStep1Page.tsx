@@ -77,21 +77,26 @@ const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initia
           <p className="create-events-page__section-title">
             {t("create.typeSection")}
           </p>
-          <div className="create-events-page__types">
-            <button
-              type="button"
-              className={`create-events-page__type-btn${eventType === "special" ? " create-events-page__type-btn--active" : ""}`}
-              onClick={() => setEventType("special")}
-            >
-              {t("create.type.special")}
-            </button>
-            <button
-              type="button"
-              className={`create-events-page__type-btn${eventType === "normal" ? " create-events-page__type-btn--active" : ""}`}
-              onClick={() => setEventType("normal")}
-            >
-              {t("create.type.normal")}
-            </button>
+          <div className="create-events-page__type-block">
+            <div className="create-events-page__types">
+              <button
+                type="button"
+                className={`create-events-page__type-btn${eventType === "special" ? " create-events-page__type-btn--active" : ""}`}
+                onClick={() => setEventType("special")}
+              >
+                {t("create.type.special")}
+              </button>
+              <button
+                type="button"
+                className={`create-events-page__type-btn${eventType === "normal" ? " create-events-page__type-btn--active" : ""}`}
+                onClick={() => setEventType("normal")}
+              >
+                {t("create.type.normal")}
+              </button>
+            </div>
+            <p className="create-events-page__type-desc">
+              {t(`create.type.${eventType}Desc`)}
+            </p>
           </div>
         </div>
 

@@ -63,7 +63,9 @@
     "step1Description": "Defineix el tipus d'event, assigna-li un nom i afegeix tota la informació necessària.",
     "type": {
       "special": "Especial",
-      "normal": "Normal"
+      "normal": "Normal",
+      "normalDesc": "Reunió, activitat o acte del dia a dia",
+      "specialDesc": "Festa, acte destacat o esdeveniment assenyalat"
     },
     "typeSection": "Tipus d'event",
     "infoSection": "Informació de l'event",

@@ -1,7 +1,7 @@
 import "react-day-picker/style.css";
 import "./event-calendar.scss";
 import { DayPicker, useDayPicker } from "react-day-picker";
-import type { MonthCaptionProps } from "react-day-picker";
+import type { MonthCaptionProps, Matcher } from "react-day-picker";
 import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
@@ -44,7 +44,7 @@ interface Props {
   month: Date;
   onMonthChange: (month: Date) => void;
   onSelect: (date: Date | undefined) => void;
-  disabled?: { before: Date };
+  disabled?: Matcher | Matcher[];
 }
 
 const EventCalendar = ({ selected, month, onMonthChange, onSelect, disabled }: Props) => {

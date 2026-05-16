@@ -57,6 +57,9 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
   const [deadlineMonth, setDeadlineMonth] = useState(initialData?.deadlineDate ?? new Date());
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const deadlineMax = new Date(step2Data.date);
+  deadlineMax.setDate(deadlineMax.getDate() - 1);
+  deadlineMax.setHours(23, 59, 59, 999);
 
   const rawDate = format(step2Data.date, "EEEE d MMMM", { locale: dateLocale });
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
@@ -198,7 +201,7 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
                       setDeadlineDate(date);
                       if (date) setDeadlineMonth(date);
                     }}
-                    disabled={{ before: today }}
+                    disabled={[{ before: today }, { after: deadlineMax }]}
                   />
                 </div>
 

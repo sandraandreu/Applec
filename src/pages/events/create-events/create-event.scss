@@ -137,6 +137,18 @@
     }
   }
 
+  &__type-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tight);
+  }
+
+  &__type-desc {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
   &__form-section {
     display: flex;
     flex-direction: column;
