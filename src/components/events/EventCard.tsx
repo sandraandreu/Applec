@@ -5,6 +5,7 @@ import type { FallesEvent } from "../../models/event.model";
 import { getEventStatus } from "../../models/event.model";
 import type { UserPermissions } from "../../models/user.model";
 import Icon from "../../ui-kit/icons/icon/Icon";
+import Badge from "../../ui-kit/badge/Badge";
 import "./events.scss";
 
 type AttendanceResponse = "yes" | "no" | null;
@@ -60,8 +61,11 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
         </div>
       </Link>
 
-      {!isFinished && <div className="event-card__action">
-        {isEditable && (
+      <div className="event-card__action">
+        {isFinished && (
+          <Badge variant="finalizado" label={t("status.finalizado")} />
+        )}
+        {!isFinished && isEditable && (
           <Link
             to={`/events/${event.id}/edit`}
             className="event-card__edit"
@@ -70,17 +74,15 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
             <Icon name="edit" size={24} />
           </Link>
         )}
-
-        {isGoing && (
+        {!isFinished && isGoing && (
           <div className="event-card__indicator event-card__indicator--going" aria-label={t("card.going")}>
             <Icon name="check" size={10} />
           </div>
         )}
-
-        {isPending && (
+        {!isFinished && isPending && (
           <div className="event-card__indicator event-card__indicator--pending" aria-label={t("card.pending")} />
         )}
-      </div>}
+      </div>
     </div>
   );
 };

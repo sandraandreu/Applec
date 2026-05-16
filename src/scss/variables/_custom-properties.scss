@@ -106,10 +106,11 @@
   --color-accent-yellow: var(--yellow-500);
 
   // Pastel backgrounds
-  --color-bg-blue:   var(--blue-100);
-  --color-bg-teal:   var(--teal-100);
-  --color-bg-pink:   var(--purple-100);
-  --color-bg-yellow: var(--yellow-100);
+  --color-bg-blue:    var(--blue-100);
+  --color-bg-teal:    var(--teal-100);
+  --color-bg-pink:    var(--purple-100);
+  --color-bg-yellow:  var(--yellow-100);
+  --color-bg-neutral: var(--neutral-300);
 
   // Gradient backgrounds
   --color-bg-gradient-blue:      linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));

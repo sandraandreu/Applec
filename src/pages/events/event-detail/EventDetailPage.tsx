@@ -15,6 +15,7 @@ import MemberCard from "../../../components/members/MemberCard";
 import Modal from "../../../components/modal/Modal";
 import EventsFilter from "../../../components/events/EventsFilter";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import Badge from "../../../ui-kit/badge/Badge";
 import "./event-detail.scss";
 
 const EventDetailPage = () => {
@@ -89,6 +90,7 @@ const EventDetailPage = () => {
     (user?.permissions.canEditOwnEvents && event.createdBy === user.uid);
 
   const eventStatus = getEventStatus(event);
+  const isPast = eventStatus === "finalizado";
   const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
     response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
 
@@ -156,7 +158,7 @@ const EventDetailPage = () => {
   };
 
   return (
-    <div className="event-detail-page" {...swipeHandlers}>
+    <div className={`event-detail-page${isPast ? " event-detail-page--past" : ""}`} {...swipeHandlers}>
       <div className="event-detail-page__gradient-zone">
         <div className="event-detail-page__top-bar">
           <BackButton />
@@ -176,15 +178,17 @@ const EventDetailPage = () => {
                     onClick={() => setShowMenu(false)}
                   />
                   <ul className="event-detail-page__menu">
-                    <li>
-                      <button
-                        type="button"
-                        className="event-detail-page__menu-item"
-                        onClick={() => navigate(`/events/${event.id}/edit`)}
-                      >
-                        {t("detail.edit")}
-                      </button>
-                    </li>
+                    {!isPast && (
+                      <li>
+                        <button
+                          type="button"
+                          className="event-detail-page__menu-item"
+                          onClick={() => navigate(`/events/${event.id}/edit`)}
+                        >
+                          {t("detail.edit")}
+                        </button>
+                      </li>
+                    )}
                     <li>
                       <button
                         type="button"
@@ -206,11 +210,7 @@ const EventDetailPage = () => {
 
         <h1 className="event-detail-page__name">{event.name}</h1>
 
-        <span
-          className={`event-detail-page__status-badge event-detail-page__status-badge--${eventStatus}`}
-        >
-          {t(`status.${eventStatus}`)}
-        </span>
+        <Badge variant={eventStatus} label={t(`status.${eventStatus}`)} />
 
         <div className="event-detail-page__field">
           <div className="event-detail-page__field-icon">
