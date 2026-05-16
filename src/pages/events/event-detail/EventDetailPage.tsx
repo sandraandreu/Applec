@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
@@ -11,7 +12,7 @@ import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import MemberCard from "../../../components/members/MemberCard";
-import Alert from "../../../components/alert/Alert";
+import Modal from "../../../components/modal/Modal";
 import EventsFilter from "../../../components/events/EventsFilter";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import "./event-detail.scss";
@@ -32,6 +33,13 @@ const EventDetailPage = () => {
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [attendeeFilter, setAttendeeFilter] = useState("all");
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
+
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: () => navigate(-1),
+    trackMouse: false,
+    preventScrollOnSwipe: true,
+    delta: 60,
+  });
 
   const toggleMember = (uid: string) => {
     setExpandedMembers(prev => {
@@ -148,7 +156,7 @@ const EventDetailPage = () => {
   };
 
   return (
-    <div className="event-detail-page">
+    <div className="event-detail-page" {...swipeHandlers}>
       <div className="event-detail-page__gradient-zone">
         <div className="event-detail-page__top-bar">
           <BackButton />
@@ -348,7 +356,7 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      <Alert
+      <Modal
         isOpen={showDeleteAlert}
         header={t("delete.confirm")}
         message={t("delete.message")}

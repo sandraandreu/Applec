@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
@@ -10,7 +11,7 @@ import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButt
 import Button from "../../../ui-kit/button/Button";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import MemberCard from "../../../components/members/MemberCard";
-import Alert from "../../../components/alert/Alert";
+import Modal from "../../../components/modal/Modal";
 import Loading from "../../../components/loading/Loading";
 import "./member-detail.scss";
 
@@ -29,6 +30,13 @@ const MemberDetailPage = () => {
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const member = group?.members.find(m => m.uid === uid) ?? null;
+
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: () => navigate(-1),
+    trackMouse: false,
+    preventScrollOnSwipe: true,
+    delta: 60,
+  });
 
   useEffect(() => {
     if (!isLoading && !member) {
@@ -71,7 +79,7 @@ const MemberDetailPage = () => {
   };
 
   return (
-    <div className="member-detail-page">
+    <div className="member-detail-page" {...swipeHandlers}>
       <div className={`member-detail-page__gradient-zone member-detail-page__gradient-zone--${member.role}`}>
         <div className="member-detail-page__top-bar">
           <BackButton />
@@ -171,7 +179,7 @@ const MemberDetailPage = () => {
         )}
       </div>
 
-      <Alert
+      <Modal
         isOpen={showDeleteAlert}
         header={t("detail.deleteConfirm")}
         message={t("detail.deleteMessage")}
