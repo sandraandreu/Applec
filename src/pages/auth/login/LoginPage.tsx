@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useReducer } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginReducer, initialLoginState } from "./login.reducer";
-import Alert from "../../../components/alert/Alert";
+import Modal from "../../../components/modal/Modal";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
@@ -173,7 +173,7 @@ const LoginPage = () => {
         </form>
       </div>
 
-      <Alert
+      <Modal
         isOpen={loginState === "unverified"}
         header={t("login.errors.emailNotVerifiedTitle")}
         message={t("login.errors.emailNotVerified")}

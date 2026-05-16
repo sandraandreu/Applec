@@ -11,7 +11,7 @@ import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
 import Stepper from "../../ui-kit/stepper/Stepper";
 import Toggle from "../../ui-kit/toggle/Toggle";
-import Alert from "../../components/alert/Alert";
+import Modal from "../../components/modal/Modal";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
 import MemberCard from "../../components/members/MemberCard";
@@ -147,7 +147,7 @@ const RadiusSwatch = ({
 );
 
 const StyleGuide = () => {
-  const [alertOpen, setAlertOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
   const [adminFilter, setAdminFilter] = useState<FilterKey>("all");
@@ -879,13 +879,13 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
-          <h3 className="style-guide__component-name">Alert</h3>
-          <Button text="Abrir alert" onClick={() => setAlertOpen(true)} />
-          <Alert
-            isOpen={alertOpen}
+          <h3 className="style-guide__component-name">Modal</h3>
+          <Button text="Abrir modal" onClick={() => setModalOpen(true)} />
+          <Modal
+            isOpen={modalOpen}
             header="¿Eliminar miembro?"
             message="Esta acción no se puede deshacer."
-            onDismiss={() => setAlertOpen(false)}
+            onDismiss={() => setModalOpen(false)}
             buttons={[
               { text: "Cancelar", role: "cancel" },
               { text: "Eliminar" },

@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useReducer } from "react";
 import { registerReducer, initialRegisterState } from "./register.reducer";
-import Alert from "../../../components/alert/Alert";
+import Modal from "../../../components/modal/Modal";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
@@ -306,7 +306,7 @@ const RegisterPage = () => {
         </div>
       </form>
 
-      <Alert
+      <Modal
         isOpen={registerState === "error"}
         header={t("register.errors.emailTakenTitle")}
         message={t("register.errors.emailTakenMessage")}

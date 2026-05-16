@@ -1,0 +1,71 @@
+.modal {
+  border: none;
+  padding: 0;
+  background: transparent;
+  position: fixed;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+
+  &::backdrop {
+    background-color: var(--color-overlay-backdrop);
+  }
+
+  &[open] {
+    animation: modal-slide-up 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &__sheet {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+    padding: var(--size-12) var(--size-24) var(--size-32);
+    background: var(--color-surface);
+    border-radius: 20px 20px 0 0;
+  }
+
+  &__handle {
+    width: 36px;
+    height: 4px;
+    background: var(--color-border-light);
+    border-radius: var(--radius-pill);
+    margin: 0 auto;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
+
+  &__header {
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  &__message {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+}
+
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

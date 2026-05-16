@@ -2,7 +2,7 @@ import "./forgot-password.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import Alert from "../../../components/alert/Alert";
+import Modal from "../../../components/modal/Modal";
 import { useNavigate, Link } from "react-router-dom";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -129,7 +129,7 @@ const ForgotPasswordPage = () => {
         </form>
       </div>
 
-      <Alert
+      <Modal
         isOpen={forgotPasswordState === "success"}
         header={t("forgotPassword.successTitle")}
         message={t("forgotPassword.successMessage")}
