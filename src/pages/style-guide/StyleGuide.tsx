@@ -5,7 +5,9 @@ import type { IconName } from "../../ui-kit/icons/icon/Icon";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Button from "../../ui-kit/button/Button";
+import Badge from "../../ui-kit/badge/Badge";
 import Chip from "../../ui-kit/chip/Chip";
+import IconButton from "../../ui-kit/icons/icon-button/IconButton";
 import EyeToggleIcon from "../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
 import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
@@ -83,10 +85,9 @@ const adminFilterOptions: FilterOption[] = [
 ];
 
 const memberFilterOptions: FilterOption[] = [
-  { key: "all", label: "Todos", count: 8 },
+  { key: "all",      label: "Todos",    count: 8 },
   { key: "upcoming", label: "Próximos", count: 4 },
-  { key: "pending", label: "Sin respuesta", count: 2 },
-  { key: "past", label: "Pasados", count: 4 },
+  { key: "past",     label: "Pasados",  count: 4 },
 ];
 
 const ColorSwatch = ({
@@ -194,6 +195,7 @@ const StyleGuide = () => {
           <ColorSwatch variable="--color-bg-teal" hex="#B2EEEE" />
           <ColorSwatch variable="--color-bg-pink" hex="#FCE6FF" />
           <ColorSwatch variable="--color-bg-yellow" hex="#FEFFE7" />
+          <ColorSwatch variable="--color-bg-neutral" hex="#E0E0E0" />
         </div>
       </section>
 
@@ -533,17 +535,34 @@ const StyleGuide = () => {
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">Input</h3>
           <div className="style-guide__stack">
-            <Input
-              label="Nombre"
-              placeholder="Escribe tu nombre"
-              id="sg-name"
-            />
-            <Input
-              label="Email"
-              placeholder="email@ejemplo.com"
-              id="sg-email"
-              error="Este campo es obligatorio"
-            />
+            <div className="style-guide__item">
+              <span className="style-guide__label">default</span>
+              <Input label="Nombre" placeholder="Escribe tu nombre" id="sg-name" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">error</span>
+              <Input label="Email" placeholder="email@ejemplo.com" id="sg-email" error="Este campo es obligatorio" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">optional</span>
+              <Input label="Ubicación" placeholder="Carrer Major, 1" id="sg-location" optional />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">endIcon</span>
+              <Input label="Fecha" placeholder="DD/MM/AAAA" id="sg-date" endIcon={<Icon name="calendar" size={20} />} />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">counter (cerca del límite)</span>
+              <Input label="Descripción" placeholder="Escribe una descripción" id="sg-counter" maxLength={100} currentLength={85} />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">counter (límite alcanzado)</span>
+              <Input label="Descripción" placeholder="Escribe una descripción" id="sg-counter-max" maxLength={100} currentLength={100} />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">multiline</span>
+              <Input label="Notas" placeholder="Escribe una nota..." id="sg-textarea" multiline />
+            </div>
           </div>
         </div>
 
@@ -622,12 +641,39 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
+          <h3 className="style-guide__component-name">Badge</h3>
+          <div className="style-guide__stack">
+            <div className="style-guide__item">
+              <span className="style-guide__label">activo</span>
+              <Badge variant="activo" label="Activo" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">plazo-cerrado</span>
+              <Badge variant="plazo-cerrado" label="Plazo cerrado" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">finalizado</span>
+              <Badge variant="finalizado" label="Finalizado" />
+            </div>
+          </div>
+        </div>
+
+        <div className="style-guide__component">
           <h3 className="style-guide__component-name">Chip</h3>
           <div className="style-guide__row">
             <Chip role="admin" variant="short" />
             <Chip role="admin" variant="full" />
             <Chip role="organizer" variant="short" />
             <Chip role="organizer" variant="full" />
+          </div>
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">IconButton</h3>
+          <div className="style-guide__row style-guide__row--centered">
+            <IconButton name="menu-dots" ariaLabel="Opciones" onClick={() => undefined} size={32} />
+            <IconButton name="edit" ariaLabel="Editar" onClick={() => undefined} size={24} />
+            <IconButton name="bell" ariaLabel="Notificaciones" onClick={() => undefined} size={24} />
           </div>
         </div>
 
@@ -832,7 +878,7 @@ const StyleGuide = () => {
             />
 
             <span className="style-guide__label">
-              Evento finalizado (texto gris, sin acciones)
+              Evento finalizado (badge finalizado)
             </span>
             <EventCard
               event={mockEventFinished}
@@ -845,19 +891,26 @@ const StyleGuide = () => {
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">EventsFilter</h3>
           <div className="style-guide__stack">
-            <span className="style-guide__label">Admin / Organizador</span>
-            <EventsFilter
-              options={adminFilterOptions}
-              selected={adminFilter}
-              onChange={setAdminFilter}
-            />
-
-            <span className="style-guide__label">Miembro</span>
-            <EventsFilter
-              options={memberFilterOptions}
-              selected={memberFilter}
-              onChange={setMemberFilter}
-            />
+            <div className="style-guide__item">
+              <span className="style-guide__label">Admin / Organizador</span>
+              <div className="style-guide__filter-row">
+                <EventsFilter
+                  options={adminFilterOptions}
+                  selected={adminFilter}
+                  onChange={setAdminFilter}
+                />
+              </div>
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">Miembro</span>
+              <div className="style-guide__filter-row">
+                <EventsFilter
+                  options={memberFilterOptions}
+                  selected={memberFilter}
+                  onChange={setMemberFilter}
+                />
+              </div>
+            </div>
           </div>
         </div>
 

@@ -54,6 +54,11 @@
     gap: var(--gap-compact);
   }
 
+  &__filter-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__loading-preview {
     position: relative;
     width: 200px;

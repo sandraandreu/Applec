@@ -99,7 +99,7 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #0068FF;
+    color: var(--color-brand);
   }
 
   &__indicator {
@@ -165,7 +165,7 @@
   &__chevron {
     display: flex;
     align-items: center;
-    color: #0068FF;
+    color: var(--color-brand);
 
     &--open {
       transform: rotate(180deg);
