@@ -92,7 +92,7 @@ const EventDetailPage = () => {
   const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
     response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
 
-  const allMembers = (group?.members ?? []).map((member) => {
+  const allMembers = (group?.members ?? []).filter(member => member.role === "member").map((member) => {
     const attendance = toAttendance(memberResponses[member.uid]);
     const memberLinked = (group?.linkedMembers ?? [])
       .filter(lm => lm.ownerUid === member.uid)
