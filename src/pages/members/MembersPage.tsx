@@ -4,10 +4,12 @@ import MembersList from "../../components/members/MembersList";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../context/group/GroupContext";
+import { useNavigate } from "react-router-dom";
 
 const MembersPage = () => {
   const { t } = useTranslation("members");
   const { group } = useGroupContext();
+  const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<
@@ -58,6 +60,14 @@ const MembersPage = () => {
           placeholder={t("members.search")}
           onChange={(value) => setSearchValue(value)}
         />
+
+        <button
+          type="button"
+          className="members-page__invite-btn"
+          onClick={() => navigate("/invite-group")}
+        >
+          {t("members.invite")}
+        </button>
 
         <MembersList searchValue={searchValue} activeFilter={activeFilter} />
     </div>

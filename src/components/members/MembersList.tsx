@@ -3,7 +3,6 @@ import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
 import MemberCard from "./MemberCard";
 import { useTranslation } from "react-i18next";
-import Button from "../../ui-kit/button/Button";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading/Loading";
 
@@ -44,48 +43,36 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
     member: t("members.roles.members"),
   };
 
-  const isOnlyMember = group?.members.length === 1;
-
   if (isLoading) return <Loading message={t("members.loading")} />;
-
-  if (isOnlyMember) {
-    return (
-      <div>
-        <p className="members-list__empty">{t("members.onlyMember")}</p>
-        <Button
-          text={t("members.invite")}
-          onClick={() => navigate("/invite-group")}
-        />
-      </div>
-    );
-  }
-
-  if (filteredMembers.length === 0) {
-    return <p className="members-list__empty">{searchValue ? t("members.emptySearch") : activeFilter !== "all" ? t("members.emptyFilter") : t("members.onlyMember")}</p>;
-  }
 
   return (
     <div className="members-list">
-      {ROLE_ORDER.map(role => {
-        if (membersByRole[role].length === 0) return null;
-        return (
-          <div key={role}>
-            <h2 className="members-list__section-title">{roleLabels[role]}</h2>
-            <div className="members-list__cards">
-              {membersByRole[role].map((member) => (
-                <MemberCard
-                  key={member.uid}
-                  firstName={member.firstName}
-                  lastName={member.lastName}
-                  email={member.email}
-                  role={member.role}
-                  onClick={() => navigate(`/members/${member.uid}`)}
-                />
-              ))}
+      {filteredMembers.length === 0 ? (
+        <p className="members-list__empty">
+          {searchValue ? t("members.emptySearch") : t("members.emptyFilter")}
+        </p>
+      ) : (
+        ROLE_ORDER.map(role => {
+          if (membersByRole[role].length === 0) return null;
+          return (
+            <div key={role}>
+              <h2 className="members-list__section-title">{roleLabels[role]}</h2>
+              <div className="members-list__cards">
+                {membersByRole[role].map((member) => (
+                  <MemberCard
+                    key={member.uid}
+                    firstName={member.firstName}
+                    lastName={member.lastName}
+                    email={member.email}
+                    role={member.role}
+                    onClick={() => navigate(`/members/${member.uid}`)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </div>
   );
 };

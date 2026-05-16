@@ -10,6 +10,17 @@
     gap: var(--gap-compact);
   }
 
+  &__invite-btn {
+    align-self: flex-start;
+    padding: var(--size-6) var(--size-14);
+    border-radius: var(--radius-pill);
+    border: none;
+    background-color: var(--color-accent-yellow);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+  }
+
   &__title {
     font-size: var(--font-size-h1);
     font-weight: var(--font-weight-extrabold);
