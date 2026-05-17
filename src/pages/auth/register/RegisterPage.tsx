@@ -14,6 +14,7 @@ import {
 } from "../../../services/auth.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import EyeToggleIcon from "../../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
+import Icon from "../../../ui-kit/icons/icon/Icon";
 import { createUserProfile } from "../../../services/user.service";
 import { isFirebaseError } from "../../../utils/firebase-errors";
 
@@ -225,6 +226,28 @@ const RegisterPage = () => {
               />
             }
           />
+
+          {password.length > 0 && (
+            <ul className="register-page__password-requirements">
+              {[
+                { met: hasMinLength(password), label: t("register.passwordMinLength") },
+                { met: hasUpperCase(password), label: t("register.passwordUppercase") },
+                { met: hasLowerCase(password), label: t("register.passwordLowercase") },
+                { met: hasNumber(password),    label: t("register.passwordNumber") },
+              ].map(({ met, label }) => (
+                <li
+                  key={label}
+                  className={`register-page__password-requirements__item${met ? " register-page__password-requirements__item--met" : ""}`}
+                >
+                  {met
+                    ? <Icon name="check-bold" size={16} aria-hidden="true" />
+                    : <span className="register-page__password-requirements__dot" aria-hidden="true" />
+                  }
+                  <span>{label}</span>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <Input
             id="register-confirm-password"
