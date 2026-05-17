@@ -4,6 +4,18 @@
   gap: var(--gap-content);
   padding: var(--padding-page);
 
+  &__success-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    padding: var(--size-12) var(--size-16);
+    background: #e6f7f4;
+    color: var(--color-accent-teal);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-card);
+  }
+
   &__top {
     display: flex;
     flex-direction: column;

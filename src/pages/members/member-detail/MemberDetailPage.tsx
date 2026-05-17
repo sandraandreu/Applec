@@ -62,7 +62,7 @@ const MemberDetailPage = () => {
     try {
       await updateMemberRole(profile.groupId, member.uid, pendingRole);
       await refreshGroup();
-      navigate("/members");
+      navigate("/members", { state: { roleUpdated: true } });
     } catch {
       setIsSaving(false);
       setSaveError(t("detail.saveError"));

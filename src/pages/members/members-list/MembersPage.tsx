@@ -1,20 +1,31 @@
 import "./members-list.scss";
 import Search from "../../../ui-kit/search/Search";
 import MembersList from "../../../components/members/MembersList";
-import { useMemo, useState } from "react";
+import Icon from "../../../ui-kit/icons/icon/Icon";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const MembersPage = () => {
   const { t } = useTranslation("members");
   const { group } = useGroupContext();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [activeFilter, setActiveFilter] = useState<
     "all" | "admin" | "organizer" | "member"
   >("all");
+  const [showRoleUpdated, setShowRoleUpdated] = useState(
+    !!(location.state as { roleUpdated?: boolean } | null)?.roleUpdated
+  );
+
+  useEffect(() => {
+    if (!showRoleUpdated) return;
+    const timer = setTimeout(() => setShowRoleUpdated(false), 2500);
+    return () => clearTimeout(timer);
+  }, [showRoleUpdated]);
 
   const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({
     adminCount: group?.members.filter((m) => m.role === "admin").length ?? 0,
@@ -25,6 +36,12 @@ const MembersPage = () => {
 
   return (
     <div className="members-page">
+        {showRoleUpdated && (
+          <div className="members-page__success-banner" role="status">
+            <Icon name="check-bold" size={18} />
+            {t("detail.roleUpdated")}
+          </div>
+        )}
         <div className="members-page__top">
           <h1 className="members-page__title">{t("members.title")}</h1>
 

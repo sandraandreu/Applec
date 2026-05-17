@@ -49,6 +49,7 @@
     "deleteCancel": "Cancel·lar",
     "deleteSubmit": "Eliminar",
     "saveError": "No s'han pogut guardar els canvis.",
-    "deleteError": "No s'ha pogut eliminar el membre."
+    "deleteError": "No s'ha pogut eliminar el membre.",
+    "roleUpdated": "Rol actualitzat correctament"
   }
 }
