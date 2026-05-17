@@ -15,16 +15,6 @@
     gap: var(--gap-content);
   }
 
-  &__topbar {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-  }
-
-  &__topbar-spacer {
-    width: 24px;
-  }
-
   &__title {
     font-family: var(--font-display);
     font-size: var(--font-size-h2);
@@ -59,14 +49,6 @@
     flex-direction: column;
     gap: var(--gap-section);
     flex: 1;
-  }
-
-  &__handle {
-    width: 40px;
-    height: 4px;
-    border-radius: var(--radius-pill);
-    background-color: var(--color-border);
-    align-self: center;
   }
 
   &__section {
