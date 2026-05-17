@@ -15,7 +15,7 @@ const IconButton = ({ name, ariaLabel, onClick, size, className, ariaPressed }: 
     aria-label={ariaLabel}
     aria-pressed={ariaPressed}
     onClick={onClick}
-    className={className}
+    className={["icon-button", className].filter(Boolean).join(" ")}
   >
     <Icon name={name} size={size} />
   </button>

@@ -43,6 +43,8 @@
       "save": "Guardar",
       "addLinked": "Votar pels meus vinculats"
     },
+    "showAll": "Veure tots ({{count}})",
+    "showLess": "Veure menys",
     "filter": {
       "confirmed": "Confirmats",
       "pending": "Pendents",

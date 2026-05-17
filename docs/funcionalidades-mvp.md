@@ -50,14 +50,14 @@ Un usuario solo puede pertenecer a un grupo. Si ya tiene grupo, las rutas `/crea
 ---
 
 ### 5. Sistema de roles
-**Estado:** ✓ Implementado en datos, ✗ lógica de permisos en UI pendiente · ✗ múltiples admins pendiente (T32) · ✗ texto informativo de roles pendiente (T33)
+**Estado:** ✓ Implementado
 
 Tres roles:
 - **Administrador:** control total del grupo. Máximo 3 por grupo. No puede abandonar sin transferir el rol.
 - **Organizador:** crea y gestiona sus propios eventos, aprueba solicitudes, añade miembros.
 - **Miembro:** ve el calendario, confirma asistencia, ve solo su propia confirmación.
 
-Al cambiar el rol de un miembro, el Admin ve una descripción de las diferencias entre roles antes de confirmar el cambio.
+Al cambiar el rol de un miembro, el Admin selecciona entre los roles disponibles con descripciones de cada uno (visibles con icono de info). Promover a Admin requiere confirmación explícita mediante modal. Si ya hay 3 Admins, la opción queda bloqueada.
 
 ---
 
@@ -104,15 +104,16 @@ Visible para todos los miembros. Vista mensual con navegación por mes. Días co
 ---
 
 ### 9. Confirmación de asistencia
-**Estado:** ✓ UI completa implementada (VoteSheet, AddLinkedMemberPage, LinkedMembersPage), ✗ lógica Firestore pendiente
+**Estado:** ✓ UI completa implementada (VoteSheet, AddLinkedMemberPage, LinkedMembersPage), ✗ lógica Firestore pendiente (servicio `saveAttendance`, estado en VoteSheet, refresco tras guardar)
 
-Cada miembro confirma: **sí** o **no**. No confirmar = "sin respuesta" (pendiente).
+Todos los roles (Admin, Organizador, Miembro) pueden confirmar asistencia. No confirmar = "sin respuesta" (pendiente).
 
 Se puede cambiar la respuesta mientras el plazo esté abierto. Al cerrar el plazo queda bloqueada.
 
 Los miembros solo ven su propia confirmación. El listado completo es solo para Admin y Organizadores.
 
 **Diseño implementado:**
+- Botón CTA fijo en la parte inferior de la pantalla de detalle (visible para todos los roles mientras el evento esté activo)
 - Bottom sheet (`VoteSheet`) con swipe para cerrar
 - Sin voto = estado pendiente (ningún botón resaltado)
 - Botones propios: No (rojo outline) / Sí (teal outline) — se rellena el seleccionado
@@ -123,9 +124,9 @@ Los miembros solo ven su propia confirmación. El listado completo es solo para 
 ---
 
 ### 10. Listado de asistentes
-**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes
+**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes (vinculados al punto 9)
 
-Integrado directamente en la página de detalle del evento (no es una página separada). Visible solo para Admin y Organizadores. Lista con filtros: Todos / Confirmados / Pendientes / No van. Avatar en color según asistencia: azul (confirmado), gris (pendiente), rojo (no va) con nombre tachado.
+Integrado directamente en la página de detalle del evento (no es una página separada). Visible solo para Admin y Organizadores. Lista con filtros: Todos / Confirmados / Pendientes / No van. Muestra todos los miembros del grupo (todos los roles) y sus acompañantes. Por defecto se muestran 4 entradas con botón para expandir el listado completo.
 
 ---
 

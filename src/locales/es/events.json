@@ -47,7 +47,9 @@
       "confirmed": "Confirmados",
       "pending": "Pendientes",
       "notGoing": "No van"
-    }
+    },
+    "showAll": "Ver todos ({{count}})",
+    "showLess": "Ver menos"
   },
   "delete": {
     "confirm": "¿Estás seguro?",

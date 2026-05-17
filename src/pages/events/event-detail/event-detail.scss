@@ -144,6 +144,10 @@
     flex-direction: column;
     gap: var(--gap-section);
     flex: 1;
+
+    &--with-sticky {
+      padding-bottom: var(--size-100);
+    }
   }
 
   &__attendees {
@@ -192,12 +196,33 @@
     gap: var(--gap-items);
   }
 
+  &__attendees-toggle {
+    background: none;
+    border: none;
+    padding: var(--size-8) 0;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-brand);
+    text-align: left;
+  }
+
   &__attendees-empty {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
     text-align: center;
     margin: 0;
     padding-top: var(--gap-content);
+  }
+
+  &__vote-sticky {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--color-border);
+    padding: var(--size-16) var(--size-32);
+    z-index: 5;
   }
 
   &__delete-error {

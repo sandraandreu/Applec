@@ -38,6 +38,7 @@ const EventDetailPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [attendeeFilter, setAttendeeFilter] = useState("all");
+  const [showAllAttendees, setShowAllAttendees] = useState(false);
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
   const [showVoteSheet, setShowVoteSheet] = useState(false);
 
@@ -104,7 +105,7 @@ const EventDetailPage = () => {
   const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
     response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
 
-  const allMembers = (group?.members ?? []).filter(member => member.role === "member").map((member) => {
+  const allMembers = (group?.members ?? []).map((member) => {
     const attendance = toAttendance(memberResponses[member.uid]);
     const memberLinked = (group?.linkedMembers ?? [])
       .filter(lm => lm.ownerUid === member.uid)
@@ -127,6 +128,13 @@ const EventDetailPage = () => {
 
   const pendingCount = allRows.filter(r => r.attendance === "pending").length;
   const notGoingCount = allRows.filter(r => r.attendance === "not-going").length;
+
+  const ATTENDEES_PREVIEW = 4;
+
+  const handleFilterChange = (filter: string) => {
+    setAttendeeFilter(filter);
+    setShowAllAttendees(false);
+  };
 
   const filterToAttendance = (filterKey: string): "going" | "not-going" | "pending" | null => {
     if (filterKey === "confirmed") return "going";
@@ -253,7 +261,7 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      <div className="event-detail-page__content">
+      <div className={`event-detail-page__content${eventStatus === "activo" ? " event-detail-page__content--with-sticky" : ""}`}>
         {event.description && (
           <div className="event-detail-page__description">
             <span className="event-detail-page__description-label">
@@ -282,7 +290,7 @@ const EventDetailPage = () => {
                 <EventsFilter
                   options={attendeeFilterOptions}
                   selected={attendeeFilter}
-                  onChange={setAttendeeFilter}
+                  onChange={handleFilterChange}
                 />
               </div>
             </div>
@@ -291,85 +299,52 @@ const EventDetailPage = () => {
                 {t("detail.attendeesEmpty")}
               </p>
             ) : (
-              filteredMembers.map((member) => {
-                const hasLinked = member.linkedMembers.length > 0;
-                const isExpanded = expandedMembers.has(member.uid);
-                return (
-                  <div key={member.uid} className="event-detail-page__attendee-group">
-                    <MemberCard
-                      firstName={member.firstName}
-                      lastName={member.lastName}
-                      email={member.email}
-                      role={member.role}
-                      showChevron={false}
-                      showRole={false}
-                      attendance={member.attendance}
-                      isExpandable={hasLinked}
-                      isExpanded={isExpanded}
-                      onToggle={() => toggleMember(member.uid)}
-                    />
-                    {isExpanded && member.linkedMembers.map((linked) => (
+              <>
+                {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map((member) => {
+                  const hasLinked = member.linkedMembers.length > 0;
+                  const isExpanded = expandedMembers.has(member.uid);
+                  return (
+                    <div key={member.uid} className="event-detail-page__attendee-group">
                       <MemberCard
-                        key={linked.id}
-                        firstName={linked.firstName}
-                        lastName={linked.lastName}
-                        relationship={linked.relationship}
-                        role="member"
+                        firstName={member.firstName}
+                        lastName={member.lastName}
+                        email={member.email}
+                        role={member.role}
                         showChevron={false}
                         showRole={false}
-                        attendance={linked.attendance}
-                        isLinked
+                        attendance={member.attendance}
+                        isExpandable={hasLinked}
+                        isExpanded={isExpanded}
+                        onToggle={() => toggleMember(member.uid)}
                       />
-                    ))}
-                  </div>
-                );
-              })
-            )}
-          </div>
-        )}
-
-        {!user?.permissions.canSeeAttendees && eventStatus !== "finalizado" && (
-          <div className="event-detail-page__vote">
-            {eventStatus === "activo" && (
-              <button
-                type="button"
-                className="event-detail-page__vote-banner"
-                onClick={() => setShowVoteSheet(true)}
-              >
-                <span className="event-detail-page__vote-banner-title">
-                  <Icon name="clock" size={22} aria-hidden="true" />
-                  {t("vote.pending")}
-                </span>
-                {event.confirmationDeadline && (
-                  <span className="event-detail-page__vote-banner-deadline">
-                    {t("vote.deadline", {
-                      date: event.confirmationDeadline.toLocaleDateString(
-                        i18n.language === "ca" ? "ca-ES" : "es-ES",
-                        { day: "numeric", month: "long" },
-                      ),
-                    })}
-                  </span>
+                      {isExpanded && member.linkedMembers.map((linked) => (
+                        <MemberCard
+                          key={linked.id}
+                          firstName={linked.firstName}
+                          lastName={linked.lastName}
+                          relationship={linked.relationship}
+                          role="member"
+                          showChevron={false}
+                          showRole={false}
+                          attendance={linked.attendance}
+                          isLinked
+                        />
+                      ))}
+                    </div>
+                  );
+                })}
+                {filteredMembers.length > ATTENDEES_PREVIEW && (
+                  <button
+                    className="event-detail-page__attendees-toggle"
+                    onClick={() => setShowAllAttendees(prev => !prev)}
+                    type="button"
+                  >
+                    {showAllAttendees
+                      ? t("detail.showLess")
+                      : t("detail.showAll", { count: filteredMembers.length })}
+                  </button>
                 )}
-              </button>
-            )}
-
-            {eventStatus === "plazo-cerrado" && (
-              <div className="event-detail-page__vote-closed">
-                <p className="event-detail-page__vote-closed-text">
-                  {t("vote.closed")}
-                </p>
-                <Badge variant="plazo-cerrado" label={t("status.plazo-cerrado")} />
-              </div>
-            )}
-
-            {eventStatus === "activo" && (
-              <div className="event-detail-page__vote-cta">
-                <Button
-                  variant="especial"
-                  text={t("vote.cta")}
-                  onClick={() => setShowVoteSheet(true)}
-                />
-              </div>
+              </>
             )}
           </div>
         )}
@@ -413,6 +388,16 @@ const EventDetailPage = () => {
           </p>
         )}
       </div>
+
+      {eventStatus === "activo" && (
+        <div className="event-detail-page__vote-sticky">
+          <Button
+            variant="especial"
+            text={t("vote.cta")}
+            onClick={() => setShowVoteSheet(true)}
+          />
+        </div>
+      )}
 
       <Modal
         isOpen={showDeleteAlert}

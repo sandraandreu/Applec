@@ -7,11 +7,11 @@ Reglas generales que afectan al sistema en su conjunto, independientemente de la
 ## 1. Roles y permisos
 
 ### Administrador
-- Solo puede existir **1 Administrador por grupo** (el creador).
-- Tiene acceso completo a todas las funcionalidades.
-- Es el único que puede eliminar el grupo.
-- Es el único que puede modificar la configuración del grupo (nombre, descripción).
-- Puede asignar y revocar el rol de Organizador a cualquier miembro.
+- Pueden existir hasta **3 Administradores por grupo**.
+- Tienen acceso completo a todas las funcionalidades.
+- Solo el Admin puede eliminar el grupo.
+- Solo el Admin puede modificar la configuración del grupo (nombre, descripción).
+- Puede asignar y revocar cualquier rol (Admin, Organizador, Miembro) a cualquier miembro.
 - Puede expulsar a cualquier miembro, incluidos Organizadores.
 - Puede crear, editar y eliminar **cualquier** evento, independientemente de quién lo creó.
 - Puede aceptar o rechazar solicitudes de entrada.
@@ -36,7 +36,9 @@ Reglas generales que afectan al sistema en su conjunto, independientemente de la
 - **No puede** gestionar solicitudes ni añadir miembros.
 
 ### Cambios de rol
-- Solo el Admin puede asignar o revocar el rol de Organizador.
+- Solo el Admin puede cambiar roles (promover a Admin, Organizador o Miembro).
+- Promover a alguien a Admin requiere confirmación explícita (modal).
+- No puede haber más de 3 Admins en el mismo grupo; si ya hay 3, la opción queda bloqueada.
 - El Admin no puede ser degradado mientras sea titular del grupo.
 - Si el Admin quiere abandonar el grupo, **debe transferir el rol primero**. El sistema no permite grupos sin Admin.
 - Si el Admin es el único miembro y quiere salir, el sistema ofrece eliminar el grupo directamente.

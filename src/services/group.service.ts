@@ -104,7 +104,7 @@ export const findGroupByInviteCode = async (
 export const updateMemberRole = async (
   groupId: string,
   uid: string,
-  newRole: "organizer" | "member",
+  newRole: "admin" | "organizer" | "member",
 ): Promise<void> => {
   const groupRef = doc(db, "groups", groupId);
   const snap = await getDoc(groupRef);

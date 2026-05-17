@@ -24,10 +24,23 @@
   },
   "detail": {
     "linked": "Vinculados",
+    "changeRoleTitle": "Cambiar rol",
     "makeRole": {
+      "admin": "Hacer Administrador",
       "organizer": "Hacer Organizador",
       "member": "Hacer Miembro"
     },
+    "roleDescription": {
+      "admin": "Control total del grupo. Puede crear y gestionar eventos, añadir y eliminar miembros, cambiar roles y ver la asistencia completa. Máximo 3 por grupo.",
+      "organizer": "Puede crear y gestionar sus propios eventos, aprobar solicitudes de entrada y añadir miembros. No puede cambiar roles ni eliminar miembros.",
+      "member": "Puede ver el calendario de eventos y confirmar su propia asistencia. No tiene acceso a la gestión del grupo."
+    },
+    "adminLimitReached": "Ya hay 3 administradores en el grupo. Elimina uno antes de asignar este rol.",
+    "roleInfoLabel": "Ver descripción del rol",
+    "adminConfirmHeader": "¿Hacer Administrador?",
+    "adminConfirmMessage": "Este miembro tendrá control total del grupo. Podrás cambiar su rol más adelante si es necesario.",
+    "adminConfirmCancel": "Cancelar",
+    "adminConfirmSubmit": "Sí, hacer Administrador",
     "removeMember": "Eliminar miembro",
     "save": "Guardar cambios",
     "cancel": "Cancelar",
