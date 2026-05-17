@@ -49,7 +49,7 @@
   &__info {
     display: flex;
     flex-direction: column;
-    gap: (var(--gap--tight));
+    gap: var(--gap-tight);
     flex: 1;
     min-width: 0;
     padding: var(--size-18) var(--size-14);
@@ -133,6 +133,10 @@
   margin: 0;
 
   &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-content);
     font-size: var(--font-size-body-m);
     color: var(--color-text-muted);
     text-align: center;
