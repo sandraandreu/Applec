@@ -3,6 +3,7 @@ import Search from "../../../ui-kit/search/Search";
 import MembersList from "../../../components/members/MembersList";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Button from "../../../ui-kit/button/Button";
+import Icon from "../../../ui-kit/icons/icon/Icon";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
@@ -45,7 +46,8 @@ const MembersPage = () => {
             {user?.permissions.canInviteMembers && (
               <Button
                 variant="secondary"
-                className="button--compact"
+                className="button--compact members-page__invite-btn"
+                icon={<Icon name="plus" size={20} />}
                 text={t("members.invite")}
                 onClick={() => navigate("/invite-group")}
               />
