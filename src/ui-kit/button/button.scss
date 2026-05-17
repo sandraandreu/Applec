@@ -59,6 +59,12 @@
     padding: 20px 24px;
   }
 
+  &--compact {
+    width: auto;
+    padding: var(--size-8) var(--size-18);
+    font-size: var(--font-size-body-s);
+  }
+
   &--language {
     width: 280px;
     height: 80px;

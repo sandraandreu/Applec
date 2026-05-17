@@ -2,6 +2,8 @@
   "events": {
     "title": "Eventos",
     "empty": "Todavía no hay eventos",
+    "emptyFilter": "No hay eventos con este filtro",
+    "emptyGroupCta": "Crear evento",
     "error": "Error al cargar los eventos",
     "filters": {
       "all": "Todos",

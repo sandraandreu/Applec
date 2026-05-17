@@ -45,6 +45,8 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
     member: t("members.roles.members"),
   };
 
+  const isOnlyMember = (group?.members.length ?? 0) === 1 && activeFilter === "all" && searchValue === "";
+
   if (isLoading) return <Loading message={t("members.loading")} />;
 
   return (
@@ -74,6 +76,9 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
             </div>
           );
         })
+      )}
+      {isOnlyMember && (
+        <p className="members-list__only-member">{t("members.onlyMember")}</p>
       )}
     </div>
   );

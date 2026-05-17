@@ -104,7 +104,7 @@ const EventsListPage = () => {
       )}
 
       {!isLoading && !hasError && user && (
-        <EventList events={filteredEvents} permissions={user.permissions} userId={user.uid} attendances={attendances} />
+        <EventList events={filteredEvents} permissions={user.permissions} userId={user.uid} attendances={attendances} hasAnyEvents={events.length > 0} />
       )}
     </div>
   );

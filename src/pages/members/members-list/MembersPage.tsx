@@ -2,6 +2,7 @@ import "./members-list.scss";
 import Search from "../../../ui-kit/search/Search";
 import MembersList from "../../../components/members/MembersList";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
+import Button from "../../../ui-kit/button/Button";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
@@ -39,7 +40,17 @@ const MembersPage = () => {
           <SuccessBanner message={t("detail.memberDeleted")} onDismiss={() => setShowMemberDeleted(false)} />
         )}
         <div className="members-page__top">
-          <h1 className="members-page__title">{t("members.title")}</h1>
+          <div className="members-page__title-row">
+            <h1 className="members-page__title">{t("members.title")}</h1>
+            {user?.permissions.canInviteMembers && (
+              <Button
+                variant="secondary"
+                className="button--compact"
+                text={t("members.invite")}
+                onClick={() => navigate("/invite-group")}
+              />
+            )}
+          </div>
 
           <div className="members-page__filters">
           <button
@@ -73,16 +84,6 @@ const MembersPage = () => {
           placeholder={t("members.search")}
           onChange={(value) => setSearchValue(value)}
         />
-
-        {user?.permissions.canInviteMembers && (
-          <button
-            type="button"
-            className="members-page__invite-btn"
-            onClick={() => navigate("/invite-group")}
-          >
-            {t("members.invite")}
-          </button>
-        )}
 
         <MembersList searchValue={searchValue} activeFilter={activeFilter} />
     </div>

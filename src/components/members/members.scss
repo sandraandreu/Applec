@@ -125,4 +125,11 @@
     font-size: var(--font-size-body-m);
   }
 
+  &__only-member {
+    padding: var(--padding-empty);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body-m);
+  }
+
 }

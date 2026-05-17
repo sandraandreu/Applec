@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import type { UserPermissions } from "../../models/user.model";
 import EventCard from "./EventCard";
+import Button from "../../ui-kit/button/Button";
 import "./events.scss";
 
 interface EventListProps {
@@ -9,13 +11,29 @@ interface EventListProps {
   permissions: UserPermissions;
   userId: string;
   attendances?: Record<string, "yes" | "no">;
+  hasAnyEvents: boolean;
 }
 
-const EventList = ({ events, permissions, userId, attendances }: EventListProps) => {
+const EventList = ({ events, permissions, userId, attendances, hasAnyEvents }: EventListProps) => {
   const { t } = useTranslation("events");
+  const navigate = useNavigate();
 
   if (events.length === 0) {
-    return <p className="events-list__empty">{t("events.empty")}</p>;
+    if (!hasAnyEvents) {
+      return (
+        <div className="events-list__empty">
+          <p>{t("events.empty")}</p>
+          {permissions.canCreateEvents && (
+            <Button
+              variant="primary"
+              text={t("events.emptyGroupCta")}
+              onClick={() => navigate("/events/create")}
+            />
+          )}
+        </div>
+      );
+    }
+    return <p className="events-list__empty">{t("events.emptyFilter")}</p>;
   }
 
   return (

@@ -17,16 +17,7 @@ const AddLinkedMemberPage = () => {
   const location = useLocation();
   const locationState = (location.state ?? {}) as LocationState;
 
-  const swipeHandlers = useSwipeable({
-    onSwipedRight: () => navigate(-1),
-    trackMouse: false,
-    preventScrollOnSwipe: true,
-    delta: 60,
-  });
-
-  const handleCancel = () => navigate(-1);
-
-  const handleSubmit = () => {
+  const handleBack = () => {
     if (locationState.returnTo) {
       navigate(locationState.returnTo, {
         state: locationState.openVoteSheet ? { openVoteSheet: true } : null,
@@ -36,11 +27,18 @@ const AddLinkedMemberPage = () => {
     }
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: handleBack,
+    trackMouse: false,
+    preventScrollOnSwipe: true,
+    delta: 60,
+  });
+
   return (
     <div className="add-linked-member-page" {...swipeHandlers}>
       <div className="add-linked-member-page__gradient-zone">
         <div className="add-linked-member-page__top-bar">
-          <BackButton />
+          <BackButton onClick={handleBack} />
         </div>
         <div className="add-linked-member-page__header">
           <h1 className="add-linked-member-page__title">{t("linked.title")}</h1>
@@ -67,8 +65,8 @@ const AddLinkedMemberPage = () => {
           />
         </div>
         <div className="add-linked-member-page__actions">
-          <Button variant="secondary" text={t("linked.cancel")} onClick={handleCancel} />
-          <Button variant="primary" text={t("linked.save")} onClick={handleSubmit} />
+          <Button variant="secondary" text={t("linked.cancel")} onClick={handleBack} />
+          <Button variant="primary" text={t("linked.save")} onClick={handleBack} />
         </div>
       </div>
     </div>
