@@ -1,8 +1,8 @@
 import "./members-list.scss";
 import Search from "../../../ui-kit/search/Search";
 import MembersList from "../../../components/members/MembersList";
-import Icon from "../../../ui-kit/icons/icon/Icon";
-import { useMemo, useState, useEffect } from "react";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -17,15 +17,9 @@ const MembersPage = () => {
   const [activeFilter, setActiveFilter] = useState<
     "all" | "admin" | "organizer" | "member"
   >("all");
-  const [showRoleUpdated, setShowRoleUpdated] = useState(
-    !!(location.state as { roleUpdated?: boolean } | null)?.roleUpdated
-  );
-
-  useEffect(() => {
-    if (!showRoleUpdated) return;
-    const timer = setTimeout(() => setShowRoleUpdated(false), 2500);
-    return () => clearTimeout(timer);
-  }, [showRoleUpdated]);
+  const locationState = (location.state ?? {}) as { roleUpdated?: boolean; memberDeleted?: boolean };
+  const [showRoleUpdated, setShowRoleUpdated] = useState(!!locationState.roleUpdated);
+  const [showMemberDeleted, setShowMemberDeleted] = useState(!!locationState.memberDeleted);
 
   const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({
     adminCount: group?.members.filter((m) => m.role === "admin").length ?? 0,
@@ -37,10 +31,10 @@ const MembersPage = () => {
   return (
     <div className="members-page">
         {showRoleUpdated && (
-          <div className="members-page__success-banner" role="status">
-            <Icon name="check-bold" size={18} />
-            {t("detail.roleUpdated")}
-          </div>
+          <SuccessBanner message={t("detail.roleUpdated")} onDismiss={() => setShowRoleUpdated(false)} />
+        )}
+        {showMemberDeleted && (
+          <SuccessBanner message={t("detail.memberDeleted")} onDismiss={() => setShowMemberDeleted(false)} />
         )}
         <div className="members-page__top">
           <h1 className="members-page__title">{t("members.title")}</h1>

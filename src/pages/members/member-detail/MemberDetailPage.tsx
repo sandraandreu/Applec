@@ -85,7 +85,7 @@ const MemberDetailPage = () => {
     try {
       await removeMemberFromGroup(profile.groupId, member.uid);
       await refreshGroup();
-      navigate("/members");
+      navigate("/members", { state: { memberDeleted: true } });
     } catch {
       setIsDeleting(false);
       setDeleteError(t("detail.deleteError"));

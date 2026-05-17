@@ -99,7 +99,8 @@
     "title": "Editar esdeveniment",
     "submit": "Desar canvis",
     "cancel": "Cancel·lar",
-    "error": "Error en actualitzar l'esdeveniment"
+    "error": "Error en actualitzar l'esdeveniment",
+    "success": "Esdeveniment actualitzat correctament"
   },
   "vote": {
     "pending": "Confirma la teua assistència",

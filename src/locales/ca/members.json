@@ -50,6 +50,7 @@
     "deleteSubmit": "Eliminar",
     "saveError": "No s'han pogut guardar els canvis.",
     "deleteError": "No s'ha pogut eliminar el membre.",
-    "roleUpdated": "Rol actualitzat correctament"
+    "roleUpdated": "Rol actualitzat correctament",
+    "memberDeleted": "Membre eliminat correctament"
   }
 }

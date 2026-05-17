@@ -10,18 +10,24 @@ import EventList from "../../../components/events/EventList";
 import EventsFilter from "../../../components/events/EventsFilter";
 import type { FilterKey, FilterOption } from "../../../components/events/EventsFilter";
 import Loading from "../../../components/loading/Loading";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import { useLocation } from "react-router-dom";
 import "./events-list.scss";
 
 const EventsListPage = () => {
   const { user, profile } = useAuthContext();
   const { t } = useTranslation("events");
+  const location = useLocation();
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
   const [attendances, setAttendances] = useState<Record<string, "yes" | "no">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState<FilterKey>("all");
+  const [showEventUpdated, setShowEventUpdated] = useState(
+    !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
+  );
 
   useLayoutBackground(profile?.role);
 
@@ -78,6 +84,9 @@ const EventsListPage = () => {
 
   return (
     <div className="events-list-page">
+      {showEventUpdated && (
+        <SuccessBanner message={t("edit.success")} onDismiss={() => setShowEventUpdated(false)} />
+      )}
       <div className="events-list-page__header">
         <h1 className="events-list-page__title">{t("events.title")}</h1>
         {!isLoading && !hasError && (

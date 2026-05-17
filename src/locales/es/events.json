@@ -99,7 +99,8 @@
     "title": "Editar evento",
     "submit": "Guardar cambios",
     "cancel": "Cancelar",
-    "error": "Error al actualizar el evento"
+    "error": "Error al actualizar el evento",
+    "success": "Evento actualizado correctamente"
   },
   "vote": {
     "pending": "Confirma tu asistencia",
