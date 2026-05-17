@@ -261,7 +261,7 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      <div className={`event-detail-page__content${eventStatus === "activo" ? " event-detail-page__content--with-sticky" : ""}`}>
+      <div className={`event-detail-page__content${(eventStatus === "activo" || eventStatus === "plazo-cerrado") ? " event-detail-page__content--with-sticky" : ""}`}>
         {event.description && (
           <div className="event-detail-page__description">
             <span className="event-detail-page__description-label">
@@ -389,13 +389,33 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      {eventStatus === "activo" && (
+      {(eventStatus === "activo" || (!user?.permissions.canSeeAttendees && eventStatus === "plazo-cerrado")) && (
         <div className="event-detail-page__vote-sticky">
-          <Button
-            variant="especial"
-            text={t("vote.cta")}
-            onClick={() => setShowVoteSheet(true)}
-          />
+          {eventStatus === "activo" && (
+            <>
+              {event.confirmationDeadline && (
+                <p className="event-detail-page__vote-deadline">
+                  <Icon name="clock" size={20} aria-hidden="true" />
+                  {t("vote.deadline", {
+                    date: event.confirmationDeadline.toLocaleDateString(
+                      i18n.language === "ca" ? "ca-ES" : "es-ES",
+                      { day: "numeric", month: "long" },
+                    ),
+                  })}
+                </p>
+              )}
+              <Button
+                variant="especial"
+                text={t("vote.cta")}
+                onClick={() => setShowVoteSheet(true)}
+              />
+            </>
+          )}
+          {!user?.permissions.canSeeAttendees && eventStatus === "plazo-cerrado" && (
+            <p className="event-detail-page__vote-closed-info">
+              {t("vote.closed")}
+            </p>
+          )}
         </div>
       )}
 
@@ -407,10 +427,11 @@ const EventDetailPage = () => {
         buttons={[
           {
             text: t("delete.cancel"),
+            role: "cancel",
           },
           {
             text: t("delete.submit"),
-            role: "cancel",
+            role: "danger",
             handler: handleDelete,
           },
         ]}

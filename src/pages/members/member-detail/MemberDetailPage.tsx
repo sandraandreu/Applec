@@ -236,10 +236,9 @@ const MemberDetailPage = () => {
         message={t("detail.adminConfirmMessage")}
         onDismiss={() => setShowAdminConfirm(false)}
         buttons={[
-          { text: t("detail.adminConfirmCancel") },
+          { text: t("detail.adminConfirmCancel"), role: "cancel" },
           {
             text: t("detail.adminConfirmSubmit"),
-            role: "cancel",
             handler: executeSave,
           },
         ]}
@@ -251,10 +250,10 @@ const MemberDetailPage = () => {
         message={t("detail.deleteMessage")}
         onDismiss={() => setShowDeleteAlert(false)}
         buttons={[
-          { text: t("detail.deleteCancel") },
+          { text: t("detail.deleteCancel"), role: "cancel" },
           {
             text: t("detail.deleteSubmit"),
-            role: "cancel",
+            role: "danger",
             handler: handleDelete,
           },
         ]}

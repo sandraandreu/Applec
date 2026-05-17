@@ -95,7 +95,7 @@ const Modal = ({
             <Button
               key={index}
               text={button.text}
-              variant={button.role === "cancel" ? "secondary" : "primary"}
+              variant={button.role === "cancel" ? "secondary" : button.role === "danger" ? "danger" : "primary"}
               onClick={() => handleButtonClick(button)}
             />
           ))}
