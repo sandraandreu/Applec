@@ -132,16 +132,6 @@
   padding: 0;
   margin: 0;
 
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--gap-content);
-    font-size: var(--font-size-body-m);
-    color: var(--color-text-muted);
-    text-align: center;
-    padding: var(--padding-empty);
-  }
 }
 
 .events-filter {

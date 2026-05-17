@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import type { UserPermissions } from "../../models/user.model";
 import EventCard from "./EventCard";
-import Button from "../../ui-kit/button/Button";
+import EmptyState from "../../ui-kit/empty-state/EmptyState";
 import "./events.scss";
 
 interface EventListProps {
@@ -21,19 +21,15 @@ const EventList = ({ events, permissions, userId, attendances, hasAnyEvents }: E
   if (events.length === 0) {
     if (!hasAnyEvents) {
       return (
-        <div className="events-list__empty">
-          <p>{t("events.empty")}</p>
-          {permissions.canCreateEvents && (
-            <Button
-              variant="primary"
-              text={t("events.emptyGroupCta")}
-              onClick={() => navigate("/events/create")}
-            />
-          )}
-        </div>
+        <EmptyState
+          title={t("events.empty")}
+          subtitle={permissions.canCreateEvents ? t("events.emptySubtitleAdmin") : t("events.emptySubtitleMember")}
+          cta={permissions.canCreateEvents ? { text: t("events.emptyGroupCta"), onClick: () => navigate("/events/create") } : undefined}
+          expand
+        />
       );
     }
-    return <p className="events-list__empty">{t("events.emptyFilter")}</p>;
+    return <EmptyState title={t("events.emptyFilter")} variant="light" expand />;
   }
 
   return (

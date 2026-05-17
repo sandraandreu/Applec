@@ -2,6 +2,8 @@
   "events": {
     "title": "Esdeveniments",
     "empty": "Encara no hi ha esdeveniments",
+    "emptySubtitleAdmin": "Crea el primer i comença a organitzar el grup",
+    "emptySubtitleMember": "Quan l'equip organitzi alguna cosa, ho veuràs aquí",
     "emptyFilter": "No hi ha esdeveniments amb aquest filtre",
     "emptyGroupCta": "Crear esdeveniment",
     "error": "Error en carregar els esdeveniments",

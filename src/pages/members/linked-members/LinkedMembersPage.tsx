@@ -8,6 +8,7 @@ import Button from "../../../ui-kit/button/Button";
 import MemberCard from "../../../components/members/MemberCard";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import Loading from "../../../components/loading/Loading";
+import EmptyState from "../../../ui-kit/empty-state/EmptyState";
 import "./linked-members.scss";
 
 const LinkedMembersPage = () => {
@@ -43,7 +44,7 @@ const LinkedMembersPage = () => {
 
       <div className="linked-members-page__content">
         {myLinked.length === 0 ? (
-          <p className="linked-members-page__empty">{t("linked.empty")}</p>
+          <EmptyState title={t("linked.empty")} variant="light" expand />
         ) : (
           <div className="linked-members-page__list">
             {myLinked.map((lm) => (

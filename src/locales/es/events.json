@@ -2,6 +2,8 @@
   "events": {
     "title": "Eventos",
     "empty": "Todavía no hay eventos",
+    "emptySubtitleAdmin": "Crea el primero y empieza a organizar el grupo",
+    "emptySubtitleMember": "Cuando el equipo organice algo, lo verás aquí",
     "emptyFilter": "No hay eventos con este filtro",
     "emptyGroupCta": "Crear evento",
     "error": "Error al cargar los eventos",

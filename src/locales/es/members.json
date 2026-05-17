@@ -2,7 +2,8 @@
   "members": {
     "title": "Miembros",
     "search": "Buscar miembro...",
-    "onlyMember": "Eres el único miembro de tu falla. ¡Invita a más personas para empezar!",
+    "onlyMember": "Eres el único miembro",
+    "onlyMemberSubtitle": "Invita a más personas para empezar",
     "invite": "Invitar",
     "emptySearch": "No se encontraron miembros con ese nombre.",
     "emptyFilter": "No hay miembros con este rol.",

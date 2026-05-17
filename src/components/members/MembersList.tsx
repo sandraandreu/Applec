@@ -6,6 +6,7 @@ import MemberCard from "./MemberCard";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading/Loading";
+import EmptyState from "../../ui-kit/empty-state/EmptyState";
 
 interface MembersListProps {
   searchValue: string;
@@ -52,9 +53,11 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   return (
     <div className="members-list">
       {filteredMembers.length === 0 ? (
-        <p className="members-list__empty">
-          {searchValue ? t("members.emptySearch") : t("members.emptyFilter")}
-        </p>
+        <EmptyState
+          title={searchValue ? t("members.emptySearch") : t("members.emptyFilter")}
+          variant="light"
+          expand
+        />
       ) : (
         ROLE_ORDER.map(role => {
           if (membersByRole[role].length === 0) return null;
@@ -78,7 +81,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
         })
       )}
       {isOnlyMember && (
-        <p className="members-list__only-member">{t("members.onlyMember")}</p>
+        <EmptyState title={t("members.onlyMember")} subtitle={t("members.onlyMemberSubtitle")} variant="light" />
       )}
     </div>
   );

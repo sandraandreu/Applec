@@ -1,4 +1,7 @@
 .events-list-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   padding: var(--padding-page);
 
   &__header {

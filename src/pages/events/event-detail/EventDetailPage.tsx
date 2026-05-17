@@ -16,6 +16,7 @@ import MemberCard from "../../../components/members/MemberCard";
 import Modal from "../../../components/modal/Modal";
 import EventsFilter from "../../../components/events/EventsFilter";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import EmptyState from "../../../ui-kit/empty-state/EmptyState";
 import Badge from "../../../ui-kit/badge/Badge";
 import "./event-detail.scss";
 
@@ -295,9 +296,7 @@ const EventDetailPage = () => {
               </div>
             </div>
             {filteredMembers.length === 0 ? (
-              <p className="event-detail-page__attendees-empty">
-                {t("detail.attendeesEmpty")}
-              </p>
+              <EmptyState title={t("detail.attendeesEmpty")} variant="light" />
             ) : (
               <>
                 {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map((member) => {

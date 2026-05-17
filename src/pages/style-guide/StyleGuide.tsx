@@ -16,6 +16,8 @@ import Toggle from "../../ui-kit/toggle/Toggle";
 import Modal from "../../components/modal/Modal";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
+import EmptyState from "../../ui-kit/empty-state/EmptyState";
+import SuccessBanner from "../../ui-kit/success-banner/SuccessBanner";
 import MemberCard from "../../components/members/MemberCard";
 import EventCard from "../../components/events/EventCard";
 import EventsFilter from "../../components/events/EventsFilter";
@@ -774,6 +776,38 @@ const StyleGuide = () => {
                 <span className="style-guide__icon-name">{name}</span>
               </div>
             ))}
+          </div>
+        </div>
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">SuccessBanner</h3>
+          <SuccessBanner message="Evento actualizado correctamente" onDismiss={() => undefined} />
+        </div>
+
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">EmptyState</h3>
+          <div className="style-guide__stack">
+            <div className="style-guide__item">
+              <span className="style-guide__label">default — con subtítulo y CTA</span>
+              <EmptyState
+                title="Todavía no hay eventos"
+                subtitle="Crea el primero y empieza a organizar el grupo"
+                cta={{ text: "Crear evento", onClick: () => undefined }}
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">default — solo texto</span>
+              <EmptyState
+                title="Todavía no hay eventos"
+                subtitle="Cuando el equipo organice algo, lo verás aquí"
+              />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">light — búsqueda o filtro sin resultados</span>
+              <EmptyState
+                title="No se encontraron miembros con ese nombre"
+                variant="light"
+              />
+            </div>
           </div>
         </div>
       </section>
