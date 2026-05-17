@@ -53,16 +53,14 @@ const TabBar = () => {
           <Icon name="ticket" size={32} />
         </Link>
 
-        {user?.permissions.canCreateEvents && (
-          <Link
-            to="/members"
-            className="tab-bar__item"
-            aria-current={active === "members" ? "page" : undefined}
-            aria-label={t("nav.members")}
-          >
-            <Icon name="users" size={32} />
-          </Link>
-        )}
+        <Link
+          to="/members"
+          className="tab-bar__item"
+          aria-current={active === "members" ? "page" : undefined}
+          aria-label={t("nav.members")}
+        >
+          <Icon name="users" size={32} />
+        </Link>
 
         <Link
           to="/profile"

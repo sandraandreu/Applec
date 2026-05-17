@@ -5,11 +5,13 @@ import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
+import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const MembersPage = () => {
   const { t } = useTranslation("members");
   const { group } = useGroupContext();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -72,13 +74,15 @@ const MembersPage = () => {
           onChange={(value) => setSearchValue(value)}
         />
 
-        <button
-          type="button"
-          className="members-page__invite-btn"
-          onClick={() => navigate("/invite-group")}
-        >
-          {t("members.invite")}
-        </button>
+        {user?.permissions.canInviteMembers && (
+          <button
+            type="button"
+            className="members-page__invite-btn"
+            onClick={() => navigate("/invite-group")}
+          >
+            {t("members.invite")}
+          </button>
+        )}
 
         <MembersList searchValue={searchValue} activeFilter={activeFilter} />
     </div>

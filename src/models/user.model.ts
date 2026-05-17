@@ -27,6 +27,8 @@ export interface UserPermissions {
   canManageMembers: boolean;
   canSeeAttendees: boolean;
   canSeeDetailedFilters: boolean;
+  canViewMemberEmail: boolean;
+  canInviteMembers: boolean;
 }
 
 export interface User extends FirebaseUser {
@@ -44,5 +46,7 @@ export function computePermissions(role: UserProfile["role"] | undefined): UserP
     canManageMembers: isAdmin,
     canSeeAttendees: isAdmin || isOrganizer,
     canSeeDetailedFilters: isAdmin || isOrganizer,
+    canViewMemberEmail: isAdmin || isOrganizer,
+    canInviteMembers: isAdmin || isOrganizer,
   };
 }

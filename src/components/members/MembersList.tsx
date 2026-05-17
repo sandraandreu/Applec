@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
+import { useAuthContext } from "../../context/auth/AuthContext";
 import MemberCard from "./MemberCard";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   const { t } = useTranslation("members");
   const navigate = useNavigate();
   const { group, isLoading } = useGroupContext();
+  const { user } = useAuthContext();
 
   const filteredMembers = useMemo(() => group?.members.filter((member) => {
     const fullName = `${member.firstName} ${member.lastName}`.toLowerCase();
@@ -63,7 +65,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
                     key={member.uid}
                     firstName={member.firstName}
                     lastName={member.lastName}
-                    email={member.email}
+                    email={user?.permissions.canViewMemberEmail ? member.email : undefined}
                     role={member.role}
                     onClick={() => navigate(`/members/${member.uid}`)}
                   />
