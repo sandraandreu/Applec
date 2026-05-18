@@ -18,6 +18,7 @@ import LanguageSelector from "../../components/language-selector/LanguageSelecto
 import Loading from "../../components/loading/Loading";
 import EmptyState from "../../ui-kit/empty-state/EmptyState";
 import SuccessBanner from "../../ui-kit/success-banner/SuccessBanner";
+import ErrorBoundary from "../../ui-kit/error-boundary/error-boundary";
 import MemberCard from "../../components/members/MemberCard";
 import EventCard from "../../components/events/EventCard";
 import EventsFilter from "../../components/events/EventsFilter";
@@ -149,12 +150,16 @@ const RadiusSwatch = ({
   </div>
 );
 
+const Bomb = () => { throw new Error("Error simulado"); };
+
 const StyleGuide = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
   const [adminFilter, setAdminFilter] = useState<FilterKey>("all");
   const [memberFilter, setMemberFilter] = useState<FilterKey>("all");
+  const [bombKey, setBombKey] = useState(0);
+  const [showBomb, setShowBomb] = useState(false);
 
   return (
     <div className="style-guide">
@@ -778,6 +783,36 @@ const StyleGuide = () => {
             ))}
           </div>
         </div>
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">ErrorBoundary</h3>
+          <div className="style-guide__stack">
+            <div className="style-guide__item">
+              <span className="style-guide__label">pantalla de error (simulada)</span>
+              <div className="style-guide__error-preview">
+                <ErrorBoundary key={bombKey}>
+                  {showBomb
+                    ? <Bomb />
+                    : (
+                      <Button
+                        text="Simular error"
+                        variant="danger"
+                        onClick={() => setShowBomb(true)}
+                      />
+                    )
+                  }
+                </ErrorBoundary>
+              </div>
+              {showBomb && (
+                <Button
+                  text="Resetear"
+                  variant="secondary"
+                  onClick={() => { setBombKey(k => k + 1); setShowBomb(false); }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">SuccessBanner</h3>
           <SuccessBanner message="Evento actualizado correctamente" onDismiss={() => undefined} />

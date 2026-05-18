@@ -1,0 +1,27 @@
+.error-boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--padding-page);
+  text-align: center;
+}
+
+.error-boundary__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-content);
+}
+
+.error-boundary__title {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand);
+  line-height: 1.2;
+}
+
+.error-boundary__subtitle {
+  font-size: var(--font-size-body-s);
+  color: var(--color-text-muted);
+}

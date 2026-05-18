@@ -35,6 +35,11 @@
     "previousMonth": "Mes anterior",
     "nextMonth": "Mes següent"
   },
+  "errorBoundary": {
+    "title": "Alguna cosa ha anat malament",
+    "subtitle": "Ha ocorregut un error inesperat. Recarrega la pàgina per continuar.",
+    "reload": "Recarregar"
+  },
   "nav": {
     "tabBar": "Navegació principal",
     "feed": "Feed",

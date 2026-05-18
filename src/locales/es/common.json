@@ -35,6 +35,11 @@
     "previousMonth": "Mes anterior",
     "nextMonth": "Mes siguiente"
   },
+  "errorBoundary": {
+    "title": "Algo ha ido mal",
+    "subtitle": "Ha ocurrido un error inesperado. Recarga la página para continuar.",
+    "reload": "Recargar"
+  },
   "nav": {
     "tabBar": "Navegación principal",
     "feed": "Feed",

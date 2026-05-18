@@ -171,6 +171,18 @@
     word-break: break-all;
   }
 
+  // ── ErrorBoundary preview ─────────────────────────────
+
+  &__error-preview {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-card);
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
   // ── Border Radius ─────────────────────────────────────
 
   &__radius-grid {
