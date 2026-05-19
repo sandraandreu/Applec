@@ -78,7 +78,6 @@ const CreateGroupPage = () => {
         adminUid: user.uid,
         adminFirstName: profile?.firstName ?? "",
         adminLastName: profile?.lastName ?? "",
-        adminEmail: user.email ?? "",
       });
 
       if (imageFile) {

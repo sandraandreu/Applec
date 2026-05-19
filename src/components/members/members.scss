@@ -42,11 +42,6 @@
     color: var(--color-not-going);
   }
 
-  &--not-going &__email {
-    text-decoration: line-through;
-    color: var(--color-not-going);
-  }
-
   &__indicator {
     display: flex;
     align-items: center;
@@ -69,13 +64,7 @@
     }
   }
 
-  &__email {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+
 
   &__relationship {
     font-size: var(--font-size-body-s);

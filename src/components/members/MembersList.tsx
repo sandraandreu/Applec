@@ -70,7 +70,6 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
                     key={member.uid}
                     firstName={member.firstName}
                     lastName={member.lastName}
-                    email={user?.permissions.canViewMemberEmail ? member.email : undefined}
                     role={member.role}
                     onClick={() => navigate(`/members/${member.uid}`)}
                   />

@@ -102,9 +102,6 @@ const MemberDetailPage = () => {
           <Avatar firstName={member.firstName} lastName={member.lastName} role={member.role} size="lg" />
           <div className="member-detail-page__profile-info">
             <h1 className="member-detail-page__name">{member.firstName} {member.lastName}</h1>
-            {user?.permissions.canViewMemberEmail && (
-              <span className="member-detail-page__email">{member.email}</span>
-            )}
           </div>
           <Chip role={member.role} variant="full" />
         </div>

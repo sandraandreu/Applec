@@ -9,7 +9,6 @@ import Icon from "../../ui-kit/icons/icon/Icon";
 interface MemberCardProps {
   firstName: string;
   lastName: string;
-  email?: string;
   relationship?: string;
   role: "admin" | "organizer" | "member";
   showChevron?: boolean;
@@ -23,7 +22,7 @@ interface MemberCardProps {
   onEdit?: () => void;
 }
 
-const MemberCard = ({ firstName, lastName, email, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit }: MemberCardProps) => {
   const { t } = useTranslation("common");
   const classes = [
     "member-card",
@@ -37,7 +36,6 @@ const MemberCard = ({ firstName, lastName, email, relationship, role, showChevro
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
         {relationship && <span className="member-card__relationship">{relationship}</span>}
-        {!isLinked && email && <span className="member-card__email">{email}</span>}
       </div>
       {showRole && <Chip role={role} variant="short" />}
       {showChevron && (

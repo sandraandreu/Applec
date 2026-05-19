@@ -86,7 +86,6 @@ const JoinGroupPage = () => {
           user.uid,
           profile?.firstName ?? "",
           profile?.lastName ?? "",
-          user.email ?? "",
         ),
         updateUserFields(user.uid, { groupId: groupFound.id, role: "member" }),
       ]);

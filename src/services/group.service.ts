@@ -40,7 +40,6 @@ interface CreateGroupData {
   adminUid: string;
   adminFirstName: string;
   adminLastName: string;
-  adminEmail: string;
 }
 
 export const uploadGroupImage = async (file: File, groupId: string): Promise<string> => {
@@ -59,7 +58,6 @@ export const createGroup = async ({
   adminUid,
   adminFirstName,
   adminLastName,
-  adminEmail,
 }: CreateGroupData): Promise<string> => {
   const generateCode = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -77,7 +75,7 @@ export const createGroup = async ({
     ...(imageUrl && { imageUrl }),
     inviteCode,
     adminId: adminUid,
-    members: [{ uid: adminUid, role: "admin", firstName: adminFirstName, lastName: adminLastName, email: adminEmail }],
+    members: [{ uid: adminUid, role: "admin", firstName: adminFirstName, lastName: adminLastName }],
     createdAt: new Date(),
   });
   return ref.id;
@@ -129,9 +127,8 @@ export const addMemberToGroup = async (
   uid: string,
   firstName: string,
   lastName: string,
-  email: string,
 ): Promise<void> => {
   await updateDoc(doc(db, "groups", groupId), {
-    members: arrayUnion({ uid, role: "member", firstName, lastName, email }),
+    members: arrayUnion({ uid, role: "member", firstName, lastName }),
   });
 };

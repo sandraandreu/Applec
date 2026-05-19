@@ -116,7 +116,7 @@ const EventDetailPage = () => {
     return { ...member, attendance, linkedMembers: memberLinked };
   });
 
-  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(lm => ({ ...lm, uid: lm.id, email: "", role: "member" as const, isLinked: true }))]);
+  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(lm => ({ ...lm, uid: lm.id, role: "member" as const, isLinked: true }))]);
   const totalMembers = allRows.length;
   const goingCount = allRows.filter(r => r.attendance === "going").length;
 
@@ -271,80 +271,77 @@ const EventDetailPage = () => {
             </p>
           </div>
         )}
-        {user?.permissions.canSeeAttendees && (
-          <div className="event-detail-page__attendees">
-            <div className="event-detail-page__attendees-header">
-              <div className="event-detail-page__attendees-left">
-                <span className="event-detail-page__attendees-label">
-                  {t("detail.attendees")}
+        <div className="event-detail-page__attendees">
+          <div className="event-detail-page__attendees-header">
+            <div className="event-detail-page__attendees-left">
+              <span className="event-detail-page__attendees-label">
+                {t("detail.attendees")}
+              </span>
+              <span className="event-detail-page__attendees-count">
+                <span className="event-detail-page__attendees-count-going">
+                  {goingCount}
                 </span>
-                <span className="event-detail-page__attendees-count">
-                  <span className="event-detail-page__attendees-count-going">
-                    {goingCount}
-                  </span>
-                  /{totalMembers}
-                </span>
-              </div>
-              <div className="event-detail-page__attendees-right">
-                <EventsFilter
-                  options={attendeeFilterOptions}
-                  selected={attendeeFilter}
-                  onChange={handleFilterChange}
-                />
-              </div>
+                /{totalMembers}
+              </span>
             </div>
-            {filteredMembers.length === 0 ? (
-              <EmptyState title={t("detail.attendeesEmpty")} variant="light" />
-            ) : (
-              <>
-                {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map((member) => {
-                  const hasLinked = member.linkedMembers.length > 0;
-                  const isExpanded = expandedMembers.has(member.uid);
-                  return (
-                    <div key={member.uid} className="event-detail-page__attendee-group">
+            <div className="event-detail-page__attendees-right">
+              <EventsFilter
+                options={attendeeFilterOptions}
+                selected={attendeeFilter}
+                onChange={handleFilterChange}
+              />
+            </div>
+          </div>
+          {filteredMembers.length === 0 ? (
+            <EmptyState title={t("detail.attendeesEmpty")} variant="light" />
+          ) : (
+            <>
+              {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map((member) => {
+                const hasLinked = member.linkedMembers.length > 0;
+                const isExpanded = expandedMembers.has(member.uid);
+                return (
+                  <div key={member.uid} className="event-detail-page__attendee-group">
+                    <MemberCard
+                      firstName={member.firstName}
+                      lastName={member.lastName}
+                      role={member.role}
+                      showChevron={false}
+                      showRole={false}
+                      attendance={member.attendance}
+                      isExpandable={hasLinked}
+                      isExpanded={isExpanded}
+                      onToggle={() => toggleMember(member.uid)}
+                    />
+                    {isExpanded && member.linkedMembers.map((linked) => (
                       <MemberCard
-                        firstName={member.firstName}
-                        lastName={member.lastName}
-                        email={member.email}
-                        role={member.role}
+                        key={linked.id}
+                        firstName={linked.firstName}
+                        lastName={linked.lastName}
+                        relationship={linked.relationship}
+                        role="member"
                         showChevron={false}
                         showRole={false}
-                        attendance={member.attendance}
-                        isExpandable={hasLinked}
-                        isExpanded={isExpanded}
-                        onToggle={() => toggleMember(member.uid)}
+                        attendance={linked.attendance}
+                        isLinked
                       />
-                      {isExpanded && member.linkedMembers.map((linked) => (
-                        <MemberCard
-                          key={linked.id}
-                          firstName={linked.firstName}
-                          lastName={linked.lastName}
-                          relationship={linked.relationship}
-                          role="member"
-                          showChevron={false}
-                          showRole={false}
-                          attendance={linked.attendance}
-                          isLinked
-                        />
-                      ))}
-                    </div>
-                  );
-                })}
-                {filteredMembers.length > ATTENDEES_PREVIEW && (
-                  <button
-                    className="event-detail-page__attendees-toggle"
-                    onClick={() => setShowAllAttendees(prev => !prev)}
-                    type="button"
-                  >
-                    {showAllAttendees
-                      ? t("detail.showLess")
-                      : t("detail.showAll", { count: filteredMembers.length })}
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        )}
+                    ))}
+                  </div>
+                );
+              })}
+              {filteredMembers.length > ATTENDEES_PREVIEW && (
+                <button
+                  className="event-detail-page__attendees-toggle"
+                  onClick={() => setShowAllAttendees(prev => !prev)}
+                  type="button"
+                >
+                  {showAllAttendees
+                    ? t("detail.showLess")
+                    : t("detail.showAll", { count: filteredMembers.length })}
+                </button>
+              )}
+            </>
+          )}
+        </div>
 
         <VoteSheet
           isOpen={showVoteSheet}
@@ -386,7 +383,7 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      {(eventStatus === "activo" || (!user?.permissions.canSeeAttendees && eventStatus === "plazo-cerrado")) && (
+      {(eventStatus === "activo" || (!user?.permissions.canCreateEvents && eventStatus === "plazo-cerrado")) && (
         <div className="event-detail-page__vote-sticky">
           {eventStatus === "activo" && (
             <>
@@ -408,7 +405,7 @@ const EventDetailPage = () => {
               />
             </>
           )}
-          {!user?.permissions.canSeeAttendees && eventStatus === "plazo-cerrado" && (
+          {!user?.permissions.canCreateEvents && eventStatus === "plazo-cerrado" && (
             <p className="event-detail-page__vote-closed-info">
               {t("vote.closed")}
             </p>
