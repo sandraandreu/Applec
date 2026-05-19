@@ -214,6 +214,7 @@ El usuario ve el mismo estado si hay 0 eventos (lista vacía real) que si Fireba
 | # | Acción | Archivo |
 |---|--------|---------|
 | ✅ | Firebase Security Rules con comprobación de membresía y rol | `firestore.rules` |
+| ✅ | Desplegar `firestore.rules` en Firebase via CLI | Firebase |
 | ✅ | `<ErrorBoundary>` en App.tsx | `src/App.tsx` |
 | ✅ | `aria-label` en EventCard → `<span role="img">` | `src/components/events/EventCard.tsx` |
 | ✅ | Fire-and-forget en GroupContextProvider | `src/context/group/GroupContextProvider.tsx` |
@@ -222,27 +223,17 @@ El usuario ve el mismo estado si hay 0 eventos (lista vacía real) que si Fireba
 | ✅ | `aria-labelledby` en Modal y VoteSheet | `Modal.tsx`, `VoteSheet.tsx` |
 | ✅ | 27 tests en 6 archivos | `src/models/`, `src/services/`, `src/routes/`, `src/utils/` |
 | ✅ | Inline style → SCSS en CreateEventPage | `src/pages/events/create-events/` |
+| ✅ | `isDeleting + deleteError` agrupados en `deleteState` | `src/pages/events/event-detail/EventDetailPage.tsx` |
+| ✅ | Regla `useReducer` actualizada — criterio: máquina de estados, no número de useState | `CLAUDE.md`, `component-patterns.md` |
+| ✅ | `React.memo` en EventList y MembersList | `EventList.tsx`, `MembersList.tsx` |
+| ✅ | Cleanup de setTimeout en InviteGroupPage | `src/pages/groups/invite-group/InviteGroupPage.tsx` |
+| ✅ | `div` overlay → `button` con `aria-label` en EventDetailPage | `src/pages/events/event-detail/EventDetailPage.tsx` |
+| ✅ | Limpiar `eventUpdated` de location.state en EventsListPage | `src/pages/events/events-list/EventsListPage.tsx` |
+| ✅ | `onEdit={() => undefined}` eliminado en LinkedMembersPage | `src/pages/members/linked-members/LinkedMembersPage.tsx` |
 
-### 🔴 Alta — pendientes
+### ⏳ Pendiente (vinculado a trabajo futuro)
 | # | Acción | Archivo |
 |---|--------|---------|
-| 1 | Desplegar `firestore.rules` en Firebase | Firebase Console / CLI |
-| 2 | `useReducer` en EventDetailPage (10 useState) | `src/pages/events/event-detail/EventDetailPage.tsx` |
+| 5 | `aria-pressed` en VoteSheet refleje estado real — pendiente de T10 | `vote-sheet/VoteSheet.tsx` |
 
-### 🟡 Media — pendientes
-| # | Acción | Archivo |
-|---|--------|---------|
-| 3 | `useReducer` en MemberDetailPage (8 useState) | `src/pages/members/member-detail/MemberDetailPage.tsx` |
-| 4 | `useReducer` en ForgotPasswordPage (3 useState) | `src/pages/auth/forgot-password/ForgotPasswordPage.tsx` |
-| 5 | `useReducer` en JoinGroupPage (5 useState) | `src/pages/groups/join-group/JoinGroupPage.tsx` |
-| 6 | `React.memo` en EventList y MembersList | `EventList.tsx`, `MembersList.tsx` |
-| 7 | `useCallback` en handlers de EventDetailPage | `src/pages/events/event-detail/EventDetailPage.tsx` |
-| 8 | Cleanup de setTimeout en InviteGroupPage | `src/pages/groups/invite-group/InviteGroupPage.tsx` |
-| 9 | `div role="button"` → `aria-label` en EventDetailPage | `src/pages/events/event-detail/EventDetailPage.tsx` |
-| 10 | `aria-pressed` en VoteSheet refleje estado real (con T10) | `vote-sheet/VoteSheet.tsx` |
-
-### 🟢 Baja — pendientes
-| # | Acción | Archivo |
-|---|--------|---------|
-| 11 | Limpiar `eventUpdated` de location.state en EventsListPage | `src/pages/events/events-list/EventsListPage.tsx` |
-| 12 | `onEdit={() => undefined}` → no pasar la prop | `src/pages/members/linked-members/LinkedMembersPage.tsx` |
+> **Decisiones tomadas:** `useReducer` en EventDetailPage, MemberDetailPage, ForgotPasswordPage y JoinGroupPage descartado — sus estados son independientes y no forman máquinas de estados. `useCallback` en `toggleMember` descartado — `onToggle` se pasa como inline arrow function con `member.uid`, creando nueva referencia igualmente. `onEdit` en LinkedMembersPage eliminado hasta que exista la pantalla de edición de miembro vinculado.
