@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function myProfile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // Verifica que el usuario autenticado pertenece al grupo solicitado
+    function isMemberOfGroup(groupId) {
+      return isAuthenticated() && myProfile().get('groupId', null) == groupId;
+    }
+
+    // Verifica que el usuario es admin del grupo
+    function isAdminOfGroup(groupId) {
+      return isMemberOfGroup(groupId) && myProfile().get('role', '') == 'admin';
+    }
+
+    // Verifica que el usuario es organizer o admin del grupo
+    function isOrganizerOrAdmin(groupId) {
+      return isMemberOfGroup(groupId) &&
+             myProfile().get('role', '') in ['admin', 'organizer'];
+    }
+
+    // ─── Usuarios ──────────────────────────────────────────────────────────────
+    match /users/{userId} {
+      // Solo el propio usuario puede leer su perfil
+      allow get: if isAuthenticated() && request.auth.uid == userId;
+
+      // Queries de lista requieren autenticación (ej. buscar miembros del grupo)
+      allow list: if isAuthenticated();
+
+      // Crear perfil propio en el registro
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+
+      // Actualizar perfil propio — no se puede cambiar groupId una vez asignado
+      allow update: if isAuthenticated() && request.auth.uid == userId &&
+        (
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['groupId']) ||
+          !resource.data.keys().hasAll(['groupId']) ||
+          resource.data.groupId == null
+        );
+    }
+
+    // ─── Grupos ────────────────────────────────────────────────────────────────
+    match /groups/{groupId} {
+      // Solo los miembros del grupo pueden leer sus datos
+      allow read: if isMemberOfGroup(groupId);
+
+      // Cualquier usuario autenticado puede crear un grupo
+      allow create: if isAuthenticated();
+
+      // Solo admins pueden modificar el grupo (nombre, código de invitación, miembros)
+      allow update: if isAdminOfGroup(groupId);
+
+      // Los grupos nunca se eliminan
+      allow delete: if false;
+
+      // ─── Eventos ─────────────────────────────────────────────────────────────
+      match /events/{eventId} {
+        // Solo miembros del grupo pueden ver los eventos
+        allow read: if isMemberOfGroup(groupId);
+
+        // Solo organizers y admins pueden crear, editar y borrar eventos
+        allow create: if isOrganizerOrAdmin(groupId);
+        allow update: if isOrganizerOrAdmin(groupId);
+        allow delete: if isOrganizerOrAdmin(groupId);
+
+        // ─── Asistencia ────────────────────────────────────────────────────────
+        match /attendances/{attendanceId} {
+          // Todos los miembros del grupo pueden ver la asistencia
+          allow read: if isMemberOfGroup(groupId);
+
+          // Cada usuario solo puede escribir su propia asistencia
+          allow write: if isMemberOfGroup(groupId) && request.auth.uid == attendanceId;
+        }
+      }
+
+      // ─── Solicitudes de unión ─────────────────────────────────────────────────
+      match /joinRequests/{requestId} {
+        // Solo admins pueden ver y gestionar solicitudes
+        allow read: if isAdminOfGroup(groupId);
+
+        // Cualquier usuario autenticado puede enviar una solicitud
+        allow create: if isAuthenticated();
+
+        // Solo admins pueden aprobar o rechazar
+        allow update: if isAdminOfGroup(groupId);
+        allow delete: if isAdminOfGroup(groupId);
+      }
+
+      // ─── Miembros vinculados (familiares) ─────────────────────────────────────
+      match /linkedMembers/{linkedMemberId} {
+        allow read: if isMemberOfGroup(groupId);
+        allow write: if isMemberOfGroup(groupId);
+      }
+    }
+
+    // ─── Query global de asistencia ────────────────────────────────────────────
+    // Necesario para getMyAttendances() que usa collectionGroup("attendances")
+    // Cada usuario solo puede leer sus propios documentos de asistencia
+    match /{path=**}/attendances/{attendanceId} {
+      allow read: if isAuthenticated() && request.auth.uid == attendanceId;
+    }
+  }
+}
