@@ -35,7 +35,7 @@ export const GroupContextProvider = ({
         setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
         const memberInGroup = groupData.members.find(m => m.uid === user.uid);
         if (memberInGroup && memberInGroup.role !== profile.role) {
-          await updateUserFields(user.uid, { role: memberInGroup.role }).catch(() => {});
+          await updateUserFields(user.uid, { role: memberInGroup.role }).catch(() => undefined);
         }
       }
     }
