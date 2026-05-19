@@ -43,7 +43,7 @@ Ejemplo: `.member-card`, `.member-card__avatar`, `.member-card__name--highlighte
 
 **Context providers:** el `value` del provider siempre va envuelto en `useMemo`. Las funciones expuestas en el contexto siempre van envueltas en `useCallback`.
 
-**Reducers:** los formularios con 3+ estados relacionados usan `useReducer`. El reducer vive en un archivo `[nombre].reducer.ts` en la misma carpeta que el componente.
+**Reducers:** usar `useReducer` cuando los estados forman una máquina de estados con transiciones coordinadas — múltiples valores que cambian juntos ante una misma acción (ej. `SUBMIT_START` → `isLoading=true, error=""`). El criterio no es el número de estados sino si tienen fases claras: idle → loading → success/error. Los formularios de auth y wizards multi-paso son los candidatos naturales. El reducer vive en un archivo `[nombre].reducer.ts` en la misma carpeta. Ver regla completa en `component-patterns.md`.
 
 **Componentes de lista:** los componentes que se renderizan en listas (tarjetas, filas) se exportan envueltos en `React.memo`.
 
