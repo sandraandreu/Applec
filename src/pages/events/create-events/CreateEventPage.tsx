@@ -74,7 +74,7 @@ const CreateEventPage = () => {
   };
 
   return (
-    <div {...swipeHandlers} style={{ height: "100%", overflow: "hidden" }}>
+    <div {...swipeHandlers} className="create-event">
       <SlideTransition key={state.step} direction={state.direction}>
         {state.step === 1 && (
           <CreateEventStep1Page
