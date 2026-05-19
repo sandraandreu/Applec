@@ -76,7 +76,7 @@ const Modal = ({
   };
 
   return createPortal(
-    <dialog ref={dialogRef} className="modal" onClose={onDismiss}>
+    <dialog ref={dialogRef} className="modal" onClose={onDismiss} aria-labelledby={header ? "modal-title" : undefined}>
       <div
         className="modal__sheet"
         ref={(node) => {
@@ -87,7 +87,7 @@ const Modal = ({
       >
         <div className="modal__handle" aria-hidden="true" />
         <div className="modal__text">
-          {header && <h2 className="modal__header">{header}</h2>}
+          {header && <h2 id="modal-title" className="modal__header">{header}</h2>}
           {message && <p className="modal__message">{message}</p>}
         </div>
         <div className="modal__buttons">

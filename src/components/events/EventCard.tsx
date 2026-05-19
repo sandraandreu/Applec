@@ -75,12 +75,12 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
           </Link>
         )}
         {!isFinished && isGoing && (
-          <div className="event-card__indicator event-card__indicator--going" aria-label={t("card.going")}>
-            <Icon name="check" size={10} />
-          </div>
+          <span role="img" aria-label={t("card.going")} className="event-card__indicator event-card__indicator--going">
+            <Icon name="check" aria-hidden={true} size={10} />
+          </span>
         )}
         {!isFinished && isPending && (
-          <div className="event-card__indicator event-card__indicator--pending" aria-label={t("card.pending")} />
+          <span role="img" aria-label={t("card.pending")} className="event-card__indicator event-card__indicator--pending" />
         )}
       </div>
     </div>

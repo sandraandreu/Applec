@@ -79,7 +79,7 @@ const VoteSheet = ({
   });
 
   return createPortal(
-    <dialog ref={dialogRef} className="vote-sheet" onClose={onDismiss}>
+    <dialog ref={dialogRef} className="vote-sheet" onClose={onDismiss} aria-labelledby="vote-sheet-title">
       <div
         className="vote-sheet__panel"
         ref={(node) => {
@@ -99,7 +99,7 @@ const VoteSheet = ({
           </div>
 
           <div className="vote-sheet__question">
-            <h2 className="vote-sheet__question-title">{t("vote.title")}</h2>
+            <h2 id="vote-sheet-title" className="vote-sheet__question-title">{t("vote.title")}</h2>
             {deadline && (
               <p className="vote-sheet__question-deadline">
                 {t("vote.deadline", { date: deadline })}

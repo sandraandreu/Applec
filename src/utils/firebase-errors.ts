@@ -5,8 +5,6 @@ export const isFirebaseError = (error: unknown): error is FirebaseError =>
 
 const errorMapping: Record<string, string> = {
   "auth/invalid-credential": "auth:login.errors.invalidCredentials",
-  "auth/wrong-password": "auth:login.errors.invalidCredentials",
-  "auth/user-not-found": "auth:login.errors.invalidCredentials",
   "auth/email-already-in-use": "auth:register.errors.emailTakenMessage",
   "auth/network-request-failed": "common:errors.noConnection",
 };
