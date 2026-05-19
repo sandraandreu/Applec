@@ -1,7 +1,7 @@
 import "./invite-group.scss";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import illustration from "../../../assets/images/invite-group-illustration.png";
 import Icon from "../../../ui-kit/icons/icon/Icon";
@@ -16,12 +16,19 @@ const InviteGroupPage = () => {
   const fromCreate = location.state?.fromCreate === true;
 
   const [copied, setCopied] = useState<boolean>(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   const handleCopy = async () => {
     if (!inviteCode) return;
     await navigator.clipboard.writeText(inviteCode);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
   };
 
   const handleShare = async () => {

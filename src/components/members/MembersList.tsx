@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
 import { useAuthContext } from "../../context/auth/AuthContext";
@@ -87,4 +87,4 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
   );
 };
 
-export default MembersList;
+export default React.memo(MembersList);

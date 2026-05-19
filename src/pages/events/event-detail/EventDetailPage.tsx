@@ -36,8 +36,7 @@ const EventDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
   const [attendeeFilter, setAttendeeFilter] = useState("all");
   const [showAllAttendees, setShowAllAttendees] = useState(false);
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
@@ -165,14 +164,12 @@ const EventDetailPage = () => {
 
   const handleDelete = async () => {
     if (!profile?.groupId || !event.id) return;
-    setIsDeleting(true);
-    setDeleteError(null);
+    setDeleteState({ isLoading: true, error: null });
     try {
       await deleteEvent(profile.groupId, event.id);
       navigate("/events", { replace: true });
     } catch {
-      setIsDeleting(false);
-      setDeleteError(t("delete.error"));
+      setDeleteState({ isLoading: false, error: t("delete.error") });
     }
   };
 
@@ -192,8 +189,9 @@ const EventDetailPage = () => {
               </button>
               {showMenu && (
                 <>
-                  <div
+                  <button
                     className="event-detail-page__menu-overlay"
+                    aria-label={t("common:buttons.close")}
                     onClick={() => setShowMenu(false)}
                   />
                   <ul className="event-detail-page__menu">
@@ -380,10 +378,10 @@ const EventDetailPage = () => {
           }}
         />
 
-        {deleteError && (
+        {deleteState.error && (
           <p className="event-detail-page__delete-error">
             <Icon name="error-circle" size={24} className="icon" />
-            {deleteError}
+            {deleteState.error}
           </p>
         )}
       </div>
@@ -436,7 +434,7 @@ const EventDetailPage = () => {
         ]}
       />
 
-      {isDeleting && <Loading />}
+      {deleteState.isLoading && <Loading />}
     </div>
   );
 };

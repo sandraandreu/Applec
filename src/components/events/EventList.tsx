@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
@@ -48,4 +49,4 @@ const EventList = ({ events, permissions, userId, attendances, hasAnyEvents }: E
   );
 };
 
-export default EventList;
+export default React.memo(EventList);

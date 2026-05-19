@@ -56,7 +56,6 @@ const LinkedMembersPage = () => {
                 role="member"
                 showChevron={false}
                 showRole={false}
-                onEdit={() => undefined}
               />
             ))}
           </div>

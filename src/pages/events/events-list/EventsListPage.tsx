@@ -32,6 +32,12 @@ const EventsListPage = () => {
   useLayoutBackground(profile?.role);
 
   useEffect(() => {
+    if (showEventUpdated) {
+      window.history.replaceState({}, "");
+    }
+  }, []);
+
+  useEffect(() => {
     if (!profile?.groupId || !user) return;
 
     let isMounted = true;
