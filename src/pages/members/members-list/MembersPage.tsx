@@ -4,7 +4,7 @@ import MembersList from "../../../components/members/MembersList";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Button from "../../../ui-kit/button/Button";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -24,6 +24,10 @@ const MembersPage = () => {
   const locationState = (location.state ?? {}) as { roleUpdated?: boolean; memberDeleted?: boolean };
   const [showRoleUpdated, setShowRoleUpdated] = useState(!!locationState.roleUpdated);
   const [showMemberDeleted, setShowMemberDeleted] = useState(!!locationState.memberDeleted);
+
+  useEffect(() => {
+    window.history.replaceState(null, "");
+  }, []);
 
   const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({
     adminCount: group?.members.filter((m) => m.role === "admin").length ?? 0,
