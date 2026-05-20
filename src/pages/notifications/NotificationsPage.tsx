@@ -37,7 +37,7 @@ const NotificationsPage = () => {
       items: [
         {
           id: "new-event",
-          iconName: "ticket",
+          iconName: "calendar-plus",
           iconBg: "blue",
           title: t("newEvent.title"),
           message: t("newEvent.message"),
@@ -82,7 +82,7 @@ const NotificationsPage = () => {
         },
         {
           id: "event-modified",
-          iconName: "calendar-plus",
+          iconName: "edit",
           iconBg: "teal",
           title: t("eventModified.title"),
           message: t("eventModified.message"),
@@ -125,7 +125,6 @@ const NotificationsPage = () => {
             <div className="notifications-page__section-header">
               {section.hasDot && <span className="notifications-page__section-dot" aria-hidden="true" />}
               <span className="notifications-page__section-label">{section.label}</span>
-              <div className="notifications-page__section-line" aria-hidden="true" />
             </div>
             <ul className="notifications-page__list">
               {section.items.map(item => (

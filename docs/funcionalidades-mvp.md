@@ -154,6 +154,6 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 | 13 | Inicio de sesión con Google | Versión futura |
 | 14 | Gráfico circular de asistencia | Versión futura |
 | 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
-| 16 | Notificaciones | Pantalla con datos hardcodeados para la presentación |
+| 16 | Notificaciones | ✓ Pantalla implementada con HTML + SCSS y datos hardcodeados. Badge en TopBar. Filtro por rol (joinRequest solo Admin/Org). |
 | 17 | Planes de pago (gratuito / premium) | Monetización |
 | 18 | Swipe en tarjetas de lista | Swipe izquierdo en `EventCard` / `MemberCard` para revelar acciones rápidas (editar, eliminar). Requiere rediseño de las cards con action buttons ocultos |

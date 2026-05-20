@@ -1,7 +1,7 @@
 .notification-item {
   display: flex;
-  gap: var(--gap-compact);
-  padding: var(--size-16) 0;
+  gap: var(--gap-content);
+  padding: var(--size-24) 0;
 
   &__icon {
     display: flex;
@@ -20,10 +20,10 @@
     &--brand  { background: var(--blue-500);    color: var(--white);      }
   }
 
-  &__body {
+  &__info {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-tight);
+    gap: var(--gap-items);
     flex: 1;
     min-width: 0;
   }
