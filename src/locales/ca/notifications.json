@@ -4,42 +4,61 @@
     "today": "Avui",
     "thisWeek": "Aquesta setmana"
   },
-  "newEvent": {
-    "title": "Nou event creat",
-    "message": "Joan Martínez ha creat Menjà de paella el 14 de març a les 14:00. Tens fins al 10 de març per confirmar.",
-    "cta": "Confirmar assistència"
-  },
-  "eventCancelled": {
-    "title": "Event cancel·lat",
-    "message": "Menjà de paella ha estat cancel·lat. La teva confirmació anterior ja no té efecte."
-  },
   "joinRequest": {
-    "title": "Sol·licitud d'entrada al grup",
-    "message": "Marc Ferrer ha demanat unir-se a Falla Barri del Carme. Accepta'l o rebutja'l des de la llista de membres.",
-    "cta": "Veure sol·licitud"
+    "title": "Pere Mas Carbonell",
+    "message": "Ha demanat unir-se a Falla Convento Jerusalén."
   },
-  "deadlineClosed": {
-    "title": "Termini tancat",
-    "message": "Ja no pots confirmar Sopar de germanor. El termini de confirmació ha tancat. Si tens cap dubte, contacta amb l'organitzador."
-  },
-  "newPost": {
-    "title": "Nova publicació de l'administrador",
-    "message": "Joan Martínez ha compartit alguna cosa amb la colla.",
-    "cta": "Veure publicació"
-  },
-  "eventModified": {
-    "title": "Event modificat",
-    "message": "Menjà de paella ha canviat. S'ha actualitzat la data i hora de l'event. Revisa'l abans de confirmar.",
-    "cta": "Veure event"
-  },
-  "deadlineSoon": {
+  "deadlineSoonSopar": {
     "title": "Termini a punt de tancar",
-    "message": "Tanca demà: Sopar de germanor. Tens fins al 15 de març a les 20:00 per confirmar la teva assistència.",
-    "cta": "Confirmar ara"
+    "message": "Tanca el 20 de juny: Sopar de Germandat. Només 3 dies per al tancament de confirmacions."
   },
-  "roleChanged": {
+  "newEventBerenar": {
+    "title": "Nou event creat",
+    "message": "Vicent Ferrer ha creat Berenar de Xiquets el 30 d'agost a les 18:00 al local social. El termini de confirmació és el 25 d'agost."
+  },
+  "eventModifiedReunio": {
+    "title": "Event modificat",
+    "message": "Amparo Tortosa ha actualitzat la Reunió de Junta. S'ha canviat la ubicació de l'event."
+  },
+  "deadlineSoonReunio": {
+    "title": "Termini a punt de tancar",
+    "message": "Tanca el 22 de juny: Reunió de Junta. Queden 5 dies per al tancament de confirmacions."
+  },
+  "newEventMissa": {
+    "title": "Nou event creat",
+    "message": "Amparo Tortosa ha creat Missa Fallera el 10 de juliol a les 12:00 a la Parròquia de Sant Esteve. El termini de confirmació és el 5 de juliol."
+  },
+  "deadlineSoonAssembleaAdmin": {
+    "title": "Termini a punt de tancar",
+    "message": "Tanca l'1 de juliol: Assemblea General. Queden 14 dies per al tancament de confirmacions."
+  },
+  "eventModifiedSopar": {
+    "title": "Event modificat",
+    "message": "Maria Ortega ha modificat el Sopar de Germandat. Revisa els detalls abans del 28 de juny."
+  },
+  "deadlineSoonAssemblea": {
+    "title": "Termini a punt de tancar",
+    "message": "Tanca l'1 de juliol: Assemblea General. Confirma la teua assistència abans que es tanque el termini."
+  },
+  "roleChangedMember": {
     "title": "Rol canviat",
-    "message": "Joan Martínez t'ha assignat el rol d'Organitzador a Falla Barri del Carme.",
-    "cta": "Veure el meu perfil"
+    "message": "Maria Ortega t'ha assignat el rol d'Organitzadora a Falla Convento Jerusalén."
+  },
+  "newEventVisita": {
+    "title": "Nou event creat",
+    "message": "Maria Ortega ha creat Visita al Museu Faller el 3 d'agost a les 11:00. El termini de confirmació és el 28 de juliol."
+  },
+  "joinRequestAccepted": {
+    "title": "Ferran Català",
+    "message": "Has acceptat la seua sol·licitud. Ja és membre del grup."
+  },
+  "requestsPage": {
+    "title": "Sol·licituds",
+    "viewAll": "Veure totes les sol·licituds",
+    "message": "Ha demanat unir-se a Falla Convento Jerusalén.",
+    "pere": "Pere Mas Carbonell",
+    "julia": "Júlia Soler Navarro",
+    "andreu": "Andreu Ibáñez Llop",
+    "rosa": "Rosa Martínez Peris"
   }
 }

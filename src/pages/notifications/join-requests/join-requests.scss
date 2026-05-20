@@ -1,0 +1,25 @@
+.join-requests-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-compact);
+    padding: var(--size-16);
+  }
+
+  &__title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    padding: var(--size-8) var(--size-24) var(--size-24);
+    margin: 0;
+  }
+}

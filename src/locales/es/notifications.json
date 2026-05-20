@@ -4,42 +4,61 @@
     "today": "Hoy",
     "thisWeek": "Esta semana"
   },
-  "newEvent": {
-    "title": "Nuevo evento creado",
-    "message": "Joan Martínez ha creado Menjà de paella el 14 de marzo a las 14:00. Tienes hasta el 10 de marzo para confirmar.",
-    "cta": "Confirmar asistencia"
-  },
-  "eventCancelled": {
-    "title": "Evento cancelado",
-    "message": "Menjà de paella ha sido cancelado. Tu confirmación anterior ya no tiene efecto."
-  },
   "joinRequest": {
-    "title": "Solicitud de entrada al grupo",
-    "message": "Marc Ferrer ha pedido unirse a Falla Barrio del Carmen. Acéptalo o recházalo desde la lista de miembros.",
-    "cta": "Ver solicitud"
+    "title": "Pere Mas Carbonell",
+    "message": "Ha pedido unirse a Falla Convento Jerusalén."
   },
-  "deadlineClosed": {
-    "title": "Plazo cerrado",
-    "message": "Ya no puedes confirmar Sopar de germanor. El plazo de confirmación ha cerrado. Si tienes alguna duda, contacta con el organizador."
-  },
-  "newPost": {
-    "title": "Nueva publicación del administrador",
-    "message": "Joan Martínez ha compartido algo con la colla.",
-    "cta": "Ver publicación"
-  },
-  "eventModified": {
-    "title": "Evento modificado",
-    "message": "Menjà de paella ha cambiado. Se ha actualizado la fecha y hora del evento. Revísalo antes de confirmar.",
-    "cta": "Ver evento"
-  },
-  "deadlineSoon": {
+  "deadlineSoonSopar": {
     "title": "Plazo a punto de cerrar",
-    "message": "Cierra mañana: Sopar de germanor. Tienes hasta el 15 de marzo a las 20:00 para confirmar tu asistencia.",
-    "cta": "Confirmar ahora"
+    "message": "Cierra el 20 de junio: Sopar de Germandat. Solo 3 días para el cierre de confirmaciones."
   },
-  "roleChanged": {
+  "newEventBerenar": {
+    "title": "Nuevo evento creado",
+    "message": "Vicent Ferrer ha creado Berenar de Xiquets el 30 de agosto a las 18:00 en el local social. El plazo de confirmación es el 25 de agosto."
+  },
+  "eventModifiedReunio": {
+    "title": "Evento modificado",
+    "message": "Amparo Tortosa ha actualizado la Reunió de Junta. Se ha cambiado la ubicación del evento."
+  },
+  "deadlineSoonReunio": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 22 de junio: Reunió de Junta. Quedan 5 días para el cierre de confirmaciones."
+  },
+  "newEventMissa": {
+    "title": "Nuevo evento creado",
+    "message": "Amparo Tortosa ha creado Missa Fallera el 10 de julio a las 12:00 en la Parròquia de Sant Esteve. El plazo de confirmación es el 5 de julio."
+  },
+  "deadlineSoonAssembleaAdmin": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 1 de julio: Assemblea General. Quedan 14 días para el cierre de confirmaciones."
+  },
+  "eventModifiedSopar": {
+    "title": "Evento modificado",
+    "message": "Maria Ortega ha modificado el Sopar de Germandat. Revisa los detalles antes del 28 de junio."
+  },
+  "deadlineSoonAssemblea": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 1 de julio: Assemblea General. Confirma tu asistencia antes de que se cierre el plazo."
+  },
+  "roleChangedMember": {
     "title": "Rol cambiado",
-    "message": "Joan Martínez te ha asignado el rol de Organizador en Falla Barrio del Carmen.",
-    "cta": "Ver mi perfil"
+    "message": "Maria Ortega te ha asignado el rol de Organitzadora en Falla Convento Jerusalén."
+  },
+  "newEventVisita": {
+    "title": "Nuevo evento creado",
+    "message": "Maria Ortega ha creado Visita al Museu Faller el 3 de agosto a las 11:00. El plazo de confirmación es el 28 de julio."
+  },
+  "joinRequestAccepted": {
+    "title": "Ferran Català",
+    "message": "Has aceptado su solicitud. Ya es miembro del grupo."
+  },
+  "requestsPage": {
+    "title": "Solicitudes",
+    "viewAll": "Ver todas las solicitudes",
+    "message": "Ha pedido unirse a Falla Convento Jerusalén.",
+    "pere": "Pere Mas Carbonell",
+    "julia": "Júlia Soler Navarro",
+    "andreu": "Andreu Ibáñez Llop",
+    "rosa": "Rosa Martínez Peris"
   }
 }

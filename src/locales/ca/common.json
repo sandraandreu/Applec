@@ -15,7 +15,9 @@
     "hidePassword": "Ocultar contrasenya",
     "logout": "Tancar sessió",
     "edit": "Editar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "accept": "Acceptar",
+    "reject": "Rebutjar"
   },
   "search": {
     "label": "Cercar"
