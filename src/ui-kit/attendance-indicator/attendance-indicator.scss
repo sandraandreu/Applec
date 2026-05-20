@@ -1,0 +1,26 @@
+.attendance-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &--going {
+    background: var(--color-going);
+    color: var(--white);
+  }
+
+  &--not-going {
+    background: var(--color-not-going);
+    color: var(--white);
+  }
+
+  &--pending {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    color: var(--color-pending);
+  }
+}

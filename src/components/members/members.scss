@@ -37,39 +37,6 @@
     margin-left: var(--size-32);
   }
 
-  &--not-going &__name {
-    text-decoration: line-through;
-  }
-
-  &__indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-
-    &--going {
-      width: var(--size-24);
-      height: var(--size-24);
-      border-radius: 50%;
-      background: var(--color-going);
-      color: var(--white);
-    }
-
-    &--not-going {
-      width: var(--size-24);
-      height: var(--size-24);
-      border-radius: 50%;
-      background: var(--color-not-going);
-      color: var(--white);
-    }
-
-    &--pending {
-      color: var(--color-pending);
-    }
-  }
-
-
-
   &__you-tag {
     display: inline-block;
     font-size: var(--font-size-body-s);

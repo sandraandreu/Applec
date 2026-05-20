@@ -876,7 +876,7 @@ const StyleGuide = () => {
           <h3 className="style-guide__component-name">EventCard</h3>
           <div className="style-guide__stack">
             <span className="style-guide__label">Admin — botón editar</span>
-            <EventCard event={mockEventBase} permissions={computePermissions("admin")} userId="user-admin" />
+            <EventCard event={mockEventBase} permissions={computePermissions("admin")} />
 
             <span className="style-guide__label">
               Organizador — evento de otro (sin editar)
@@ -884,8 +884,7 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventBase}
               permissions={computePermissions("organizer")}
-              userId="user-other"
-            />
+              />
 
             <span className="style-guide__label">
               Miembro — sin respuesta (punto naranja)
@@ -893,7 +892,6 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventBase}
               permissions={computePermissions("member")}
-              userId="user-1"
               attendanceResponse={null}
             />
 
@@ -903,7 +901,6 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventBase}
               permissions={computePermissions("member")}
-              userId="user-1"
               attendanceResponse="yes"
             />
 
@@ -913,7 +910,6 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventBase}
               permissions={computePermissions("member")}
-              userId="user-1"
               attendanceResponse="no"
             />
 
@@ -923,7 +919,6 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventSpecial}
               permissions={computePermissions("member")}
-              userId="user-1"
               attendanceResponse="yes"
             />
 
@@ -933,15 +928,13 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventNoConfirmation}
               permissions={computePermissions("member")}
-              userId="user-1"
-            />
+              />
 
             <span className="style-guide__label">Nombre largo (truncado)</span>
             <EventCard
               event={mockEventLongName}
               permissions={computePermissions("admin")}
-              userId="user-admin"
-            />
+              />
 
             <span className="style-guide__label">
               Evento finalizado (badge finalizado)
@@ -949,8 +942,7 @@ const StyleGuide = () => {
             <EventCard
               event={mockEventFinished}
               permissions={computePermissions("admin")}
-              userId="user-admin"
-            />
+              />
           </div>
         </div>
 

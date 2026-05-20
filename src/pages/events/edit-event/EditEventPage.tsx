@@ -1,10 +1,10 @@
 import "./edit-event.scss";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import { getEventById, updateEvent } from "../../../services/event.service";
+import { getEventById, updateEvent, deleteEvent } from "../../../services/event.service";
 import { getErrorKey } from "../../../utils/firebase-errors";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
@@ -13,6 +13,7 @@ import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButt
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
+import Modal from "../../../components/modal/Modal";
 import { editEventReducer, initialState } from "./edit-event.reducer";
 
 interface FormFields {
@@ -33,13 +34,15 @@ const EditEventPage = () => {
   today.setHours(0, 0, 0, 0);
 
   const [state, dispatch] = useReducer(editEventReducer, initialState);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
 
   const {
     register,
     handleSubmit,
     reset,
     watch,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<FormFields>();
   const eventNameLength = watch("eventName")?.length ?? 0;
   const descriptionLength = watch("description")?.length ?? 0;
@@ -106,10 +109,39 @@ const EditEventPage = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!profile?.groupId || !state.event?.id) return;
+    setDeleteState({ isLoading: true, error: null });
+    try {
+      await deleteEvent(profile.groupId, state.event.id);
+      navigate("/events", { replace: true });
+    } catch {
+      setDeleteState({ isLoading: false, error: t("delete.error") });
+    }
+  };
+
   if (state.isLoading) return <Loading />;
   if (!state.event) return null;
 
   const eventId = state.event.id;
+
+  const isReducerModified = (() => {
+    const event = state.event!;
+    if (state.eventType !== (event.isSpecial ? "special" : "normal")) return true;
+    if (state.requiresConfirmation !== event.requiresConfirmation) return true;
+    if (state.sendReminder !== event.sendReminder) return true;
+    if (state.selectedDate?.getTime() !== event.date.getTime()) return true;
+    const originalDeadline = event.confirmationDeadline?.getTime() ?? null;
+    if (!state.deadlineDate && originalDeadline !== null) return true;
+    if (state.deadlineDate) {
+      const combined = new Date(state.deadlineDate);
+      const [hours, minutes] = state.deadlineTime.split(":").map(Number);
+      combined.setHours(hours, minutes, 0, 0);
+      if (combined.getTime() !== (originalDeadline ?? -1)) return true;
+    }
+    return false;
+  })();
+  const isModified = isDirty || isReducerModified;
 
   return (
     <div
@@ -325,22 +357,41 @@ const EditEventPage = () => {
         {state.errorKey && (
           <span className="edit-event__error">{i18n.t(state.errorKey)}</span>
         )}
+        {deleteState.error && (
+          <span className="edit-event__error">{deleteState.error}</span>
+        )}
 
-        <div className="edit-event__actions">
-          <Button
-            type="submit"
-            text={t("edit.submit")}
-            variant="especial"
-            disabled={state.isSubmitting}
-          />
-          <Button
-            type="button"
-            text={t("edit.cancel")}
-            variant="secondary"
-            onClick={() => navigate(`/events/${eventId}`)}
-          />
-        </div>
+        <button
+          type="button"
+          className="edit-event__delete-btn"
+          onClick={() => setShowDeleteAlert(true)}
+        >
+          {t("detail.delete")}
+        </button>
+
+        {isModified && (
+          <div className="edit-event__actions">
+            <Button
+              type="submit"
+              text={t("edit.submit")}
+              variant="especial"
+              disabled={state.isSubmitting}
+            />
+          </div>
+        )}
       </form>
+
+      <Modal
+        isOpen={showDeleteAlert}
+        header={t("delete.confirm")}
+        message={t("delete.message")}
+        onDismiss={() => setShowDeleteAlert(false)}
+        buttons={[
+          { text: t("delete.cancel"), role: "cancel" },
+          { text: t("delete.submit"), role: "danger", handler: handleDelete },
+        ]}
+      />
+      {deleteState.isLoading && <Loading />}
     </div>
   );
 };

@@ -10,12 +10,11 @@ import "./events.scss";
 interface EventListProps {
   events: FallesEvent[];
   permissions: UserPermissions;
-  userId: string;
   attendances?: Record<string, "yes" | "no">;
   hasAnyEvents: boolean;
 }
 
-const EventList = ({ events, permissions, userId, attendances, hasAnyEvents }: EventListProps) => {
+const EventList = ({ events, permissions, attendances, hasAnyEvents }: EventListProps) => {
   const { t } = useTranslation("events");
   const navigate = useNavigate();
 
@@ -40,7 +39,6 @@ const EventList = ({ events, permissions, userId, attendances, hasAnyEvents }: E
           <EventCard
             event={event}
             permissions={permissions}
-            userId={userId}
             attendanceResponse={attendances?.[event.id] ?? null}
           />
         </li>

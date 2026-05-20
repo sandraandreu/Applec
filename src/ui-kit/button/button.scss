@@ -30,9 +30,8 @@
   }
 
   &--danger {
-    background: transparent;
-    border: 3px solid var(--color-error);
-    color: var(--color-error);
+    background: var(--color-error);
+    color: var(--white);
   }
 
   &--going-no-active {

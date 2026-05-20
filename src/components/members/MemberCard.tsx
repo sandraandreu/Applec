@@ -5,6 +5,7 @@ import Avatar from "../../ui-kit/avatar/Avatar";
 import type { AvatarAttendance } from "../../ui-kit/avatar/Avatar";
 import Chip from "../../ui-kit/chip/Chip";
 import Icon from "../../ui-kit/icons/icon/Icon";
+import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 
 interface MemberCardProps {
   firstName: string;
@@ -28,7 +29,6 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
   const { t: tMembers } = useTranslation("members");
   const classes = [
     "member-card",
-    attendance === "not-going" ? "member-card--not-going" : "",
     isLinked ? "member-card--linked" : "",
   ].filter(Boolean).join(" ");
 
@@ -51,21 +51,7 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
           className="member-card__expand-icon"
         />
       )}
-      {attendance === "going" && (
-        <div className="member-card__indicator member-card__indicator--going">
-          <Icon name="check" size={14} />
-        </div>
-      )}
-      {attendance === "not-going" && (
-        <div className="member-card__indicator member-card__indicator--not-going">
-          <Icon name="x-mark" size={14} />
-        </div>
-      )}
-      {attendance === "pending" && (
-        <div className="member-card__indicator member-card__indicator--pending">
-          <Icon name="clock" size={28} />
-        </div>
-      )}
+      {attendance && <AttendanceIndicator attendance={attendance} />}
       {onEdit && (
         <div className="member-card__actions">
           <button

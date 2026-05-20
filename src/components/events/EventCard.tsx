@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import { getEventStatus } from "../../models/event.model";
 import type { UserPermissions } from "../../models/user.model";
-import Icon from "../../ui-kit/icons/icon/Icon";
 import Badge from "../../ui-kit/badge/Badge";
+import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 import "./events.scss";
 
 type AttendanceResponse = "yes" | "no" | null;
@@ -13,17 +13,15 @@ type AttendanceResponse = "yes" | "no" | null;
 interface EventCardProps {
   event: FallesEvent;
   permissions: UserPermissions;
-  userId: string;
   attendanceResponse?: AttendanceResponse;
 }
 
-const EventCard = ({ event, permissions, userId, attendanceResponse = null }: EventCardProps) => {
+const EventCard = ({ event, permissions, attendanceResponse = null }: EventCardProps) => {
   const { t, i18n } = useTranslation("events");
 
   const status = getEventStatus(event);
   const isFinished = status === "finalizado";
 
-  const isEditable = permissions.canEditAllEvents || (permissions.canEditOwnEvents && event.createdBy === userId);
   const showIndicator = !permissions.canCreateEvents && event.requiresConfirmation;
   const isNotGoing = showIndicator && attendanceResponse === "no";
   const isGoing = showIndicator && attendanceResponse === "yes";
@@ -38,7 +36,6 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
   const cardClass = [
     "event-card",
     event.isSpecial ? "event-card--special" : "",
-    isNotGoing ? "event-card--not-going" : "",
     isFinished ? "event-card--finished" : "",
   ]
     .filter(Boolean)
@@ -65,30 +62,9 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
         {isFinished && (
           <Badge variant="finalizado" label={t("status.finalizado")} />
         )}
-        {!isFinished && isEditable && (
-          <Link
-            to={`/events/${event.id}/edit`}
-            className="event-card__edit"
-            aria-label={t("card.edit")}
-          >
-            <Icon name="edit" size={24} />
-          </Link>
-        )}
-        {!isFinished && isGoing && (
-          <span role="img" aria-label={t("card.going")} className="event-card__indicator event-card__indicator--going">
-            <Icon name="check" aria-hidden={true} size={14} />
-          </span>
-        )}
-        {!isFinished && isNotGoing && (
-          <span role="img" aria-label={t("card.notGoing")} className="event-card__indicator event-card__indicator--not-going">
-            <Icon name="x-mark" aria-hidden={true} size={14} />
-          </span>
-        )}
-        {!isFinished && isPending && (
-          <span role="img" aria-label={t("card.pending")} className="event-card__indicator event-card__indicator--pending">
-            <Icon name="clock" size={28} aria-hidden={true} />
-          </span>
-        )}
+{!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
+        {!isFinished && isNotGoing && <AttendanceIndicator attendance="not-going" />}
+        {!isFinished && isPending && <AttendanceIndicator attendance="pending" />}
       </div>
     </div>
   );

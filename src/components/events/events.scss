@@ -73,11 +73,6 @@
     text-overflow: ellipsis;
   }
 
-  &--not-going {
-    .event-card__name { text-decoration: line-through; }
-    .event-card__meta { text-decoration: line-through; }
-  }
-
   &--finished {
     .event-card__day { color: var(--color-text-muted); }
     .event-card__month { color: var(--color-text-muted); }
@@ -92,39 +87,6 @@
     padding-right: var(--size-14);
   }
 
-
-  &__edit {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--color-brand);
-  }
-
-  &__indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &--going {
-      width: var(--size-24);
-      height: var(--size-24);
-      border-radius: 50%;
-      background: var(--color-going);
-      color: white;
-    }
-
-    &--not-going {
-      width: var(--size-24);
-      height: var(--size-24);
-      border-radius: 50%;
-      background: var(--color-not-going);
-      color: white;
-    }
-
-    &--pending {
-      color: var(--color-pending);
-    }
-  }
 }
 
 .events-list {
