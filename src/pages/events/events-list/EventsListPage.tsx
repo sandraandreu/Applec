@@ -24,7 +24,9 @@ const EventsListPage = () => {
   const [attendances, setAttendances] = useState<Record<string, "yes" | "no">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [filter, setFilter] = useState<FilterKey>("all");
+  const [filter, setFilter] = useState<FilterKey>(
+    user?.permissions.canSeeDetailedFilters ? "active" : "upcoming"
+  );
   const [showEventUpdated, setShowEventUpdated] = useState(
     !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
   );
@@ -70,10 +72,10 @@ const EventsListPage = () => {
       ];
     }
     return [
-      { key: "all",             label: t("events.filters.all"),             count: events.length },
       { key: "active",          label: t("events.filters.active"),          count: countEvents(event => getEventStatus(event) === "activo") },
       { key: "deadline-closed", label: t("events.filters.deadline-closed"), count: countEvents(event => getEventStatus(event) === "plazo-cerrado") },
       { key: "finished",        label: t("events.filters.finished"),        count: countEvents(event => getEventStatus(event) === "finalizado") },
+      { key: "all",             label: t("events.filters.all"),             count: events.length },
     ];
   }, [events, user?.permissions.canSeeDetailedFilters, t]);
 
