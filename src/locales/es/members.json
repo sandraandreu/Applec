@@ -8,6 +8,7 @@
     "emptySearch": "No se encontraron miembros con ese nombre.",
     "emptyFilter": "No hay miembros con este rol.",
     "loading": "Cargando miembros...",
+    "you": "Tú",
     "filters": {
       "all": "Todos"
     },

@@ -20,10 +20,12 @@ interface MemberCardProps {
   onToggle?: () => void;
   onClick?: () => void;
   onEdit?: () => void;
+  isOwnProfile?: boolean;
 }
 
-const MemberCard = ({ firstName, lastName, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit, isOwnProfile = false }: MemberCardProps) => {
   const { t } = useTranslation("common");
+  const { t: tMembers } = useTranslation("members");
   const classes = [
     "member-card",
     attendance === "not-going" ? "member-card--not-going" : "",
@@ -35,6 +37,7 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
       <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
+        {isOwnProfile && <span className="member-card__you-tag">{tMembers("members.you")}</span>}
         {relationship && <span className="member-card__relationship">{relationship}</span>}
       </div>
       {showRole && <Chip role={role} variant="short" />}

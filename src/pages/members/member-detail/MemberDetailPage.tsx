@@ -49,7 +49,7 @@ const MemberDetailPage = () => {
 
   if (isLoading || !member) return <Loading />;
 
-  const canManage = (user?.permissions.canManageMembers ?? false) && member.role !== "admin";
+  const canManage = (user?.permissions.canManageMembers ?? false) && member.uid !== user?.uid;
   const availableRoles = (["admin", "organizer", "member"] as const).filter(role => role !== member.role);
   const adminCount = group?.members.filter(m => m.role === "admin").length ?? 0;
   const isAdminLimitReached = adminCount >= 3;

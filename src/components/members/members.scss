@@ -70,6 +70,18 @@
 
 
 
+  &__you-tag {
+    display: inline-block;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-regular);
+    color: var(--white);
+    background-color: var(--color-brand);
+    border-radius: 20px;
+    padding: 4px 12px;
+    align-self: flex-start;
+    margin-top: 6px;
+  }
+
   &__relationship {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
