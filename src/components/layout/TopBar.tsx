@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
@@ -9,6 +9,8 @@ const TopBar = () => {
   const { t } = useTranslation("common");
   const { user, profile } = useAuthContext();
   const { group } = useGroupContext();
+  const { pathname } = useLocation();
+  const isOnNotifications = pathname === "/notifications";
 
   if (!profile || !group) return null;
 
@@ -38,12 +40,16 @@ const TopBar = () => {
           </Link>
         )}
 
-        <button
+        <Link
+          to="/notifications"
           className="top-bar__action"
           aria-label={t("nav.notifications")}
         >
-          <Icon name="bell" size={32} />
-        </button>
+          <span className="top-bar__bell">
+            <Icon name="bell" size={32} />
+            {!isOnNotifications && <span className="top-bar__badge" aria-hidden="true" />}
+          </span>
+        </Link>
       </div>
     </header>
   );

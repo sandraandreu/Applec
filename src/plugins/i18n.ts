@@ -8,6 +8,7 @@ import esOnboarding from "../locales/es/onboarding.json";
 import esGroups from "../locales/es/groups.json";
 import esMembers from "../locales/es/members.json";
 import esEvents from "../locales/es/events.json";
+import esNotifications from "../locales/es/notifications.json";
 
 import caCommon from "../locales/ca/common.json";
 import caAuth from "../locales/ca/auth.json";
@@ -15,6 +16,7 @@ import caOnboarding from "../locales/ca/onboarding.json";
 import caGroups from "../locales/ca/groups.json";
 import caMembers from "../locales/ca/members.json";
 import caEvents from "../locales/ca/events.json";
+import caNotifications from "../locales/ca/notifications.json";
 
 export const resources = {
   es: {
@@ -24,6 +26,7 @@ export const resources = {
     groups: esGroups,
     members: esMembers,
     events: esEvents,
+    notifications: esNotifications,
   },
   ca: {
     common: caCommon,
@@ -32,6 +35,7 @@ export const resources = {
     groups: caGroups,
     members: caMembers,
     events: caEvents,
+    notifications: caNotifications,
   },
 };
 
@@ -42,7 +46,7 @@ i18n
     resources,
     fallbackLng: "es",
     defaultNS: "common",
-    ns: ["common", "auth", "onboarding", "groups", "members", "events"],
+    ns: ["common", "auth", "onboarding", "groups", "members", "events", "notifications"],
     interpolation: {
       escapeValue: false,
     },

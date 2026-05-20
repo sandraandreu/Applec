@@ -1,0 +1,45 @@
+{
+  "title": "Notificaciones",
+  "sections": {
+    "today": "Hoy",
+    "thisWeek": "Esta semana"
+  },
+  "newEvent": {
+    "title": "Nuevo evento creado",
+    "message": "Joan Martínez ha creado Menjà de paella el 14 de marzo a las 14:00. Tienes hasta el 10 de marzo para confirmar.",
+    "cta": "Confirmar asistencia"
+  },
+  "eventCancelled": {
+    "title": "Evento cancelado",
+    "message": "Menjà de paella ha sido cancelado. Tu confirmación anterior ya no tiene efecto."
+  },
+  "joinRequest": {
+    "title": "Solicitud de entrada al grupo",
+    "message": "Marc Ferrer ha pedido unirse a Falla Barrio del Carmen. Acéptalo o recházalo desde la lista de miembros.",
+    "cta": "Ver solicitud"
+  },
+  "deadlineClosed": {
+    "title": "Plazo cerrado",
+    "message": "Ya no puedes confirmar Sopar de germanor. El plazo de confirmación ha cerrado. Si tienes alguna duda, contacta con el organizador."
+  },
+  "newPost": {
+    "title": "Nueva publicación del administrador",
+    "message": "Joan Martínez ha compartido algo con la colla.",
+    "cta": "Ver publicación"
+  },
+  "eventModified": {
+    "title": "Evento modificado",
+    "message": "Menjà de paella ha cambiado. Se ha actualizado la fecha y hora del evento. Revísalo antes de confirmar.",
+    "cta": "Ver evento"
+  },
+  "deadlineSoon": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra mañana: Sopar de germanor. Tienes hasta el 15 de marzo a las 20:00 para confirmar tu asistencia.",
+    "cta": "Confirmar ahora"
+  },
+  "roleChanged": {
+    "title": "Rol cambiado",
+    "message": "Joan Martínez te ha asignado el rol de Organizador en Falla Barrio del Carmen.",
+    "cta": "Ver mi perfil"
+  }
+}

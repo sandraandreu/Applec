@@ -1,0 +1,45 @@
+{
+  "title": "Notificacions",
+  "sections": {
+    "today": "Avui",
+    "thisWeek": "Aquesta setmana"
+  },
+  "newEvent": {
+    "title": "Nou event creat",
+    "message": "Joan Martínez ha creat Menjà de paella el 14 de març a les 14:00. Tens fins al 10 de març per confirmar.",
+    "cta": "Confirmar assistència"
+  },
+  "eventCancelled": {
+    "title": "Event cancel·lat",
+    "message": "Menjà de paella ha estat cancel·lat. La teva confirmació anterior ja no té efecte."
+  },
+  "joinRequest": {
+    "title": "Sol·licitud d'entrada al grup",
+    "message": "Marc Ferrer ha demanat unir-se a Falla Barri del Carme. Accepta'l o rebutja'l des de la llista de membres.",
+    "cta": "Veure sol·licitud"
+  },
+  "deadlineClosed": {
+    "title": "Termini tancat",
+    "message": "Ja no pots confirmar Sopar de germanor. El termini de confirmació ha tancat. Si tens cap dubte, contacta amb l'organitzador."
+  },
+  "newPost": {
+    "title": "Nova publicació de l'administrador",
+    "message": "Joan Martínez ha compartit alguna cosa amb la colla.",
+    "cta": "Veure publicació"
+  },
+  "eventModified": {
+    "title": "Event modificat",
+    "message": "Menjà de paella ha canviat. S'ha actualitzat la data i hora de l'event. Revisa'l abans de confirmar.",
+    "cta": "Veure event"
+  },
+  "deadlineSoon": {
+    "title": "Termini a punt de tancar",
+    "message": "Tanca demà: Sopar de germanor. Tens fins al 15 de març a les 20:00 per confirmar la teva assistència.",
+    "cta": "Confirmar ara"
+  },
+  "roleChanged": {
+    "title": "Rol canviat",
+    "message": "Joan Martínez t'ha assignat el rol d'Organitzador a Falla Barri del Carme.",
+    "cta": "Veure el meu perfil"
+  }
+}
