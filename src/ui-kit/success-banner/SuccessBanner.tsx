@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Icon from "../icons/icon/Icon";
 import "./success-banner.scss";
 
@@ -8,13 +8,21 @@ interface SuccessBannerProps {
 }
 
 const SuccessBanner = ({ message, onDismiss }: SuccessBannerProps) => {
+  const [isDismissing, setIsDismissing] = useState(false);
+
   useEffect(() => {
-    const timer = setTimeout(onDismiss, 2500);
+    const timer = setTimeout(() => setIsDismissing(true), 2500);
     return () => clearTimeout(timer);
-  }, [onDismiss]);
+  }, []);
+
+  useEffect(() => {
+    if (!isDismissing) return;
+    const timer = setTimeout(onDismiss, 250);
+    return () => clearTimeout(timer);
+  }, [isDismissing, onDismiss]);
 
   return (
-    <div className="success-banner" role="status">
+    <div className={`success-banner${isDismissing ? " success-banner--dismissing" : ""}`} role="status">
       <Icon name="check-bold" size={18} />
       {message}
     </div>
