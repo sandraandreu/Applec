@@ -299,6 +299,8 @@ const EventDetailPage = () => {
               {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map((member) => {
                 const hasLinked = member.linkedMembers.length > 0;
                 const isExpanded = expandedMembers.has(member.uid);
+                const shouldAutoExpand = !!targetAttendance && member.attendance !== targetAttendance;
+                const effectivelyExpanded = isExpanded || shouldAutoExpand;
                 return (
                   <div key={member.uid} className="event-detail-page__attendee-group">
                     <MemberCard
@@ -309,10 +311,10 @@ const EventDetailPage = () => {
                       showRole={false}
                       attendance={member.attendance}
                       isExpandable={hasLinked}
-                      isExpanded={isExpanded}
+                      isExpanded={effectivelyExpanded}
                       onToggle={() => toggleMember(member.uid)}
                     />
-                    {isExpanded && member.linkedMembers.map((linked) => (
+                    {effectivelyExpanded && member.linkedMembers.map((linked) => (
                       <MemberCard
                         key={linked.id}
                         firstName={linked.firstName}
@@ -346,9 +348,6 @@ const EventDetailPage = () => {
         <VoteSheet
           isOpen={showVoteSheet}
           onDismiss={() => setShowVoteSheet(false)}
-          userFirstName={profile?.firstName ?? ""}
-          userLastName={profile?.lastName ?? ""}
-          userRole={profile?.role ?? "member"}
           deadline={
             event.confirmationDeadline
               ? event.confirmationDeadline.toLocaleDateString(

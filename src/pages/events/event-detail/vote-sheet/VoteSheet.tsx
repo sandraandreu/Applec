@@ -17,9 +17,6 @@ export interface VoteLinkedMember {
 interface VoteSheetProps {
   isOpen: boolean;
   onDismiss: () => void;
-  userFirstName: string;
-  userLastName: string;
-  userRole: "admin" | "organizer" | "member";
   deadline?: string;
   linkedMembers: VoteLinkedMember[];
   onAddLinked: () => void;
@@ -28,9 +25,6 @@ interface VoteSheetProps {
 const VoteSheet = ({
   isOpen,
   onDismiss,
-  userFirstName,
-  userLastName,
-  userRole,
   deadline,
   linkedMembers,
   onAddLinked,
@@ -91,13 +85,6 @@ const VoteSheet = ({
         <div className="vote-sheet__handle" aria-hidden="true" />
 
         <div className="vote-sheet__scroll">
-          <div className="vote-sheet__user">
-            <Avatar firstName={userFirstName} lastName={userLastName} role={userRole} size="md" />
-            <span className="vote-sheet__user-name">
-              {userFirstName} {userLastName}
-            </span>
-          </div>
-
           <div className="vote-sheet__question">
             <h2 id="vote-sheet-title" className="vote-sheet__question-title">{t("vote.title")}</h2>
             {deadline && (

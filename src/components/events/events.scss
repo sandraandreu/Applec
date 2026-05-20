@@ -74,10 +74,8 @@
   }
 
   &--not-going {
-    .event-card__day { color: var(--color-not-going); }
-    .event-card__month { color: var(--color-not-going); }
-    .event-card__name { color: var(--color-not-going); text-decoration: line-through; }
-    .event-card__meta { color: var(--color-not-going); text-decoration: line-through; }
+    .event-card__name { text-decoration: line-through; }
+    .event-card__meta { text-decoration: line-through; }
   }
 
   &--finished {
@@ -111,15 +109,20 @@
       width: var(--size-24);
       height: var(--size-24);
       border-radius: 50%;
-      background: var(--color-brand);
+      background: var(--color-going);
+      color: white;
+    }
+
+    &--not-going {
+      width: var(--size-24);
+      height: var(--size-24);
+      border-radius: 50%;
+      background: var(--color-not-going);
       color: white;
     }
 
     &--pending {
-      width: var(--size-12);
-      height: var(--size-12);
-      border-radius: 50%;
-      background: var(--color-pending);
+      color: var(--color-pending);
     }
   }
 }

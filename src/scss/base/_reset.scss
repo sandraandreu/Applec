@@ -11,6 +11,7 @@ html {
 
 body {
   min-height: 100vh;
+  background-color: var(--color-surface);
   -webkit-font-smoothing: antialiased; // suaviza el renderizado de fuentes en iOS/macOS
   overscroll-behavior-x: none;
 }

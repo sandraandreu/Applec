@@ -76,11 +76,18 @@ const EventCard = ({ event, permissions, userId, attendanceResponse = null }: Ev
         )}
         {!isFinished && isGoing && (
           <span role="img" aria-label={t("card.going")} className="event-card__indicator event-card__indicator--going">
-            <Icon name="check" aria-hidden={true} size={10} />
+            <Icon name="check" aria-hidden={true} size={14} />
+          </span>
+        )}
+        {!isFinished && isNotGoing && (
+          <span role="img" aria-label={t("card.notGoing")} className="event-card__indicator event-card__indicator--not-going">
+            <Icon name="x-mark" aria-hidden={true} size={14} />
           </span>
         )}
         {!isFinished && isPending && (
-          <span role="img" aria-label={t("card.pending")} className="event-card__indicator event-card__indicator--pending" />
+          <span role="img" aria-label={t("card.pending")} className="event-card__indicator event-card__indicator--pending">
+            <Icon name="clock" size={28} aria-hidden={true} />
+          </span>
         )}
       </div>
     </div>

@@ -119,23 +119,6 @@ const EditEventPage = () => {
         <BackButton />
 
         <h1 className="edit-event__title">{t("edit.title")}</h1>
-
-        <div className="edit-event__types">
-          <button
-            type="button"
-            className={`edit-event__type-btn${state.eventType === "special" ? " edit-event__type-btn--active" : ""}`}
-            onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "special" })}
-          >
-            {t("create.type.special")}
-          </button>
-          <button
-            type="button"
-            className={`edit-event__type-btn${state.eventType === "normal" ? " edit-event__type-btn--active" : ""}`}
-            onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "normal" })}
-          >
-            {t("create.type.normal")}
-          </button>
-        </div>
       </div>
 
       <form
@@ -144,6 +127,31 @@ const EditEventPage = () => {
           if (!state.selectedDate) dispatch({ type: "SET_DATE_ERROR" });
         })}
       >
+        <div className="edit-event__section">
+          <p className="edit-event__section-title">{t("create.typeSection")}</p>
+          <div className="edit-event__type-block">
+            <div className="edit-event__types">
+              <button
+                type="button"
+                className={`edit-event__type-btn${state.eventType === "special" ? " edit-event__type-btn--active" : ""}`}
+                onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "special" })}
+              >
+                {t("create.type.special")}
+              </button>
+              <button
+                type="button"
+                className={`edit-event__type-btn${state.eventType === "normal" ? " edit-event__type-btn--active" : ""}`}
+                onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "normal" })}
+              >
+                {t("create.type.normal")}
+              </button>
+            </div>
+            <p className="edit-event__type-desc">
+              {t(`create.type.${state.eventType}Desc`)}
+            </p>
+          </div>
+        </div>
+
         <div className="edit-event__section">
           <p className="edit-event__section-title">{t("create.infoSection")}</p>
           <div className="edit-event__form">

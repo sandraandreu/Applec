@@ -857,19 +857,16 @@ const StyleGuide = () => {
             <MemberCard
               firstName="Ana"
               lastName="García"
-              email="ana@falla.com"
               role="admin"
             />
             <MemberCard
               firstName="Pere"
               lastName="Mas"
-              email="pere@falla.com"
               role="organizer"
             />
             <MemberCard
               firstName="Joan"
               lastName="Valls"
-              email="joan@falla.com"
               role="member"
             />
           </div>

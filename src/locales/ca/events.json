@@ -26,6 +26,7 @@
   "card": {
     "edit": "Editar esdeveniment",
     "going": "Confirmat: hi vaig",
+    "notGoing": "No hi vaig",
     "pending": "Sense resposta"
   },
   "detail": {

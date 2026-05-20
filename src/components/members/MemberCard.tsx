@@ -41,20 +41,27 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
       {showChevron && (
         <Icon name="chevron-right" size={20} className="member-card__chevron" />
       )}
-      {attendance === "going" && (
-        <div className="member-card__indicator member-card__indicator--going">
-          <Icon name="check" size={10} />
-        </div>
-      )}
-      {attendance === "pending" && (
-        <div className="member-card__indicator member-card__indicator--pending" />
-      )}
       {isExpandable && (
         <Icon
           name={isExpanded ? "chevron-up" : "chevron-down"}
           size={24}
           className="member-card__expand-icon"
         />
+      )}
+      {attendance === "going" && (
+        <div className="member-card__indicator member-card__indicator--going">
+          <Icon name="check" size={14} />
+        </div>
+      )}
+      {attendance === "not-going" && (
+        <div className="member-card__indicator member-card__indicator--not-going">
+          <Icon name="x-mark" size={14} />
+        </div>
+      )}
+      {attendance === "pending" && (
+        <div className="member-card__indicator member-card__indicator--pending">
+          <Icon name="clock" size={28} />
+        </div>
       )}
       {onEdit && (
         <div className="member-card__actions">

@@ -39,7 +39,6 @@
 
   &--not-going &__name {
     text-decoration: line-through;
-    color: var(--color-not-going);
   }
 
   &__indicator {
@@ -52,15 +51,20 @@
       width: var(--size-24);
       height: var(--size-24);
       border-radius: 50%;
-      background: var(--color-brand);
+      background: var(--color-going);
+      color: var(--white);
+    }
+
+    &--not-going {
+      width: var(--size-24);
+      height: var(--size-24);
+      border-radius: 50%;
+      background: var(--color-not-going);
       color: var(--white);
     }
 
     &--pending {
-      width: var(--size-12);
-      height: var(--size-12);
-      border-radius: 50%;
-      background: var(--color-pending);
+      color: var(--color-pending);
     }
   }
 

@@ -26,6 +26,7 @@
   "card": {
     "edit": "Editar evento",
     "going": "Confirmado: voy",
+    "notGoing": "No voy",
     "pending": "Sin respuesta"
   },
   "detail": {
