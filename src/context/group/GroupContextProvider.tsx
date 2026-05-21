@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { GroupContext } from "./GroupContext";
 import type { GroupData } from "./GroupContext";
@@ -18,6 +18,12 @@ export const GroupContextProvider = ({
 
   const [group, setGroup] = useState<GroupData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  }, []);
 
   const loadGroup = useCallback(async () => {
     setIsLoading(true);
@@ -31,6 +37,7 @@ export const GroupContextProvider = ({
         getGroupById(profile.groupId),
         getGroupLinkedMembers(profile.groupId),
       ]);
+      if (!isMountedRef.current) return;
       if (groupData) {
         setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
         const memberInGroup = groupData.members.find(m => m.uid === user.uid);
@@ -39,7 +46,7 @@ export const GroupContextProvider = ({
         }
       }
     }
-    setIsLoading(false);
+    if (isMountedRef.current) setIsLoading(false);
   }, [user, profile]);
 
   useEffect(() => {
