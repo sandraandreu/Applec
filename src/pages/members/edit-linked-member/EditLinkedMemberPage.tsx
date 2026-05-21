@@ -69,7 +69,7 @@ const EditLinkedMemberPage = () => {
       setIsLoading(true);
       await editLinkedMember(profile.groupId, id, user.uid, data);
       await refreshGroup();
-      navigate("/members/linked");
+      navigate("/members/linked", { state: { linkedMemberUpdated: true } });
     } catch {
       setErrorConnection(t("linked.editError"));
     } finally {

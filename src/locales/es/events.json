@@ -141,7 +141,8 @@
     "saveError": "No se ha podido añadir el acompañante. Inténtalo de nuevo.",
     "editTitle": "Editar acompañante",
     "editSave": "Guardar cambios",
-    "editError": "No se han podido guardar los cambios. Inténtalo de nuevo."
+    "editError": "No se han podido guardar los cambios. Inténtalo de nuevo.",
+    "editSuccess": "Acompañante actualizado correctamente"
   },
   "attendance": {
     "going": "Voy",
