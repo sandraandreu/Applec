@@ -4,6 +4,7 @@ export interface LinkedMember {
   id: string;
   firstName: string;
   lastName: string;
+  relationship: string;
 }
 
 export interface UserProfile {
