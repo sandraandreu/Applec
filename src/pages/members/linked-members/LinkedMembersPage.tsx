@@ -56,6 +56,7 @@ const LinkedMembersPage = () => {
                 role="member"
                 showChevron={false}
                 showRole={false}
+                onEdit={() => navigate(`/members/linked/${lm.id}/edit`)}
               />
             ))}
           </div>
