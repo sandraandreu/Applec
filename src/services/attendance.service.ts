@@ -1,4 +1,4 @@
-import { collection, collectionGroup, query, where, getDocs } from "firebase/firestore";
+import { collection, collectionGroup, query, where, getDocs, setDoc, doc } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { AttendanceResponse, EventAttendanceData } from "../models/attendance.model";
 
@@ -39,4 +39,17 @@ export const getMyAttendances = async (
   } catch {
     return null;
   }
+};
+
+export const saveAttendance = async (
+  groupId: string,
+  eventId: string,
+  userId: string,
+  data: { response: "yes" | "no"; linkedResponses: Record<string, "yes" | "no"> },
+): Promise<void> => {
+  await setDoc(
+    doc(db, "groups", groupId, "events", eventId, "attendances", userId),
+    { ...data, userId, eventId, confirmedAt: new Date() },
+    { merge: true },
+  );
 };
