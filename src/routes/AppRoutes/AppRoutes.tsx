@@ -277,16 +277,20 @@ const AppRoutes = () => (
           }
         />
 
-        <Route path="/style-guide" element={<StyleGuide />} />
+        {process.env.NODE_ENV !== 'production' && (
+          <Route path="/style-guide" element={<StyleGuide />} />
+        )}
 
-        <Route
-          path="/seed"
-          element={
-            <PrivateRoutes requiresGroup>
-              <SeedPage />
-            </PrivateRoutes>
-          }
-        />
+        {process.env.NODE_ENV !== 'production' && (
+          <Route
+            path="/seed"
+            element={
+              <PrivateRoutes requiresGroup>
+                <SeedPage />
+              </PrivateRoutes>
+            }
+          />
+        )}
       </Routes>
     </Suspense>
   </BrowserRouter>
