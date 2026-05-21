@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import "./events.scss";
 
@@ -18,6 +18,7 @@ interface EventsFilterProps {
 
 const EventsFilter = ({ options, selected, onChange }: EventsFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find(o => o.key === selected);
 
@@ -26,8 +27,23 @@ const EventsFilter = ({ options, selected, onChange }: EventsFilterProps) => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleOutside = (event: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="events-filter">
+    <div className="events-filter" ref={containerRef}>
       <button
         type="button"
         className="events-filter__trigger"

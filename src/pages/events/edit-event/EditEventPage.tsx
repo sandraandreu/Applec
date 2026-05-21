@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEventById, updateEvent, deleteEvent } from "../../../services/event.service";
 import { getErrorKey } from "../../../utils/firebase-errors";
+import { combineDateAndTime } from "../../../utils/dates";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
@@ -92,10 +93,7 @@ const EditEventPage = () => {
 
     let confirmationDeadline: Date | undefined;
     if (state.deadlineDate) {
-      const combined = new Date(state.deadlineDate);
-      const [hours, minutes] = state.deadlineTime.split(":").map(Number);
-      combined.setHours(hours, minutes, 0, 0);
-      confirmationDeadline = combined;
+      confirmationDeadline = combineDateAndTime(state.deadlineDate, state.deadlineTime);
     }
 
     dispatch({ type: "SET_SUBMITTING" });
@@ -143,9 +141,7 @@ const EditEventPage = () => {
     const originalDeadline = event.confirmationDeadline?.getTime() ?? null;
     if (!state.deadlineDate && originalDeadline !== null) return true;
     if (state.deadlineDate) {
-      const combined = new Date(state.deadlineDate);
-      const [hours, minutes] = state.deadlineTime.split(":").map(Number);
-      combined.setHours(hours, minutes, 0, 0);
+      const combined = combineDateAndTime(state.deadlineDate, state.deadlineTime);
       if (combined.getTime() !== (originalDeadline ?? -1)) return true;
     }
     return false;
