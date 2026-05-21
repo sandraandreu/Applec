@@ -1,4 +1,4 @@
-.join-group-page {
+﻿.join-group-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -132,7 +132,7 @@
     border: 1px solid var(--color-brand);
     border-radius: var(--radius-input);
     text-align: left;
-    color: #0068FF;
+    color: var(--color-brand);
 
   }
 

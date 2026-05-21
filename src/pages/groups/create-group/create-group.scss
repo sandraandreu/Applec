@@ -1,4 +1,4 @@
-.create-group-page {
+﻿.create-group-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -42,7 +42,7 @@
     justify-content: center;
     overflow: hidden;
     background: var(--color-surface);
-    color: #666666;
+    color: var(--color-icon);
   }
 
   &__image-preview {

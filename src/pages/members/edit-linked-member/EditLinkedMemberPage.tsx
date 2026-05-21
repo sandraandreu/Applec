@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -23,7 +23,7 @@ interface EditLinkedMemberFormData {
 const EditLinkedMemberPage = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation("events");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const { user, profile } = useAuthContext();
   const { group, refreshGroup } = useGroupContext();
@@ -41,7 +41,7 @@ const EditLinkedMemberPage = () => {
 
   useEffect(() => {
     if (!id || !group) return;
-    const linked = group.linkedMembers.find((lm) => lm.id === id);
+    const linked = group.linkedMembers.find((linkedMember) => linkedMember.id === id);
     if (!linked) {
       navigate("/members/linked", { replace: true });
       return;
@@ -107,7 +107,7 @@ const EditLinkedMemberPage = () => {
               placeholder={t("linked.firstNamePlaceholder")}
               required
               registration={register("firstName", { required: true })}
-              error={errors.firstName?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.firstName?.type === "required" ? tCommon("errors.required") : undefined}
             />
             <Input
               label={t("linked.lastName")}
@@ -115,7 +115,7 @@ const EditLinkedMemberPage = () => {
               placeholder={t("linked.lastNamePlaceholder")}
               required
               registration={register("lastName", { required: true })}
-              error={errors.lastName?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.lastName?.type === "required" ? tCommon("errors.required") : undefined}
             />
             <Input
               label={t("linked.relationship")}
@@ -123,7 +123,7 @@ const EditLinkedMemberPage = () => {
               placeholder={t("linked.relationshipPlaceholder")}
               required
               registration={register("relationship", { required: true })}
-              error={errors.relationship?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.relationship?.type === "required" ? tCommon("errors.required") : undefined}
             />
           </div>
 
@@ -150,12 +150,12 @@ const EditLinkedMemberPage = () => {
 
       <Modal
         isOpen={showDiscardModal}
-        header={tc("discard.title")}
-        message={tc("discard.message")}
+        header={tCommon("discard.title")}
+        message={tCommon("discard.message")}
         onDismiss={() => setShowDiscardModal(false)}
         buttons={[
-          { text: tc("buttons.cancel"), role: "cancel" },
-          { text: tc("discard.confirm"), role: "danger", handler: handleDiscard },
+          { text: tCommon("buttons.cancel"), role: "cancel" },
+          { text: tCommon("discard.confirm"), role: "danger", handler: handleDiscard },
         ]}
       />
     </div>

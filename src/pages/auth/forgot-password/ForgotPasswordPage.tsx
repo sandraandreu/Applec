@@ -1,4 +1,4 @@
-import "./forgot-password.scss";
+﻿import "./forgot-password.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -17,7 +17,7 @@ interface ForgotPasswordFormData {
 
 const ForgotPasswordPage = () => {
   const { t } = useTranslation("auth");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const ForgotPasswordPage = () => {
     } catch (error: unknown) {
       const firebaseError = error as FirebaseError;
       if (firebaseError.code === "auth/network-request-failed") {
-        setErrorConnection(tc("errors.noConnection"));
+        setErrorConnection(tCommon("errors.noConnection"));
         return;
       }
     } finally {
@@ -75,7 +75,7 @@ const ForgotPasswordPage = () => {
           <div className="forgot-password-page__fields">
             <Input
               id="forgot_password-email"
-              label={tc("fields.email")}
+              label={tCommon("fields.email")}
               placeholder={t("forgotPassword.emailPlaceholder")}
               type="text"
               required
@@ -87,9 +87,9 @@ const ForgotPasswordPage = () => {
               })}
               error={
                 errors.email?.type === "required"
-                  ? tc("errors.required")
+                  ? tCommon("errors.required")
                   : errors.email?.type === "pattern"
-                    ? tc("errors.emailInvalid")
+                    ? tCommon("errors.emailInvalid")
                     : undefined
               }
             />

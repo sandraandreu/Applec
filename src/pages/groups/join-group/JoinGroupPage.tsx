@@ -1,4 +1,4 @@
-import "./join-group.scss";
+﻿import "./join-group.scss";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ interface JoinGroupFormData {
 
 const JoinGroupPage = () => {
   const { t } = useTranslation("groups");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const { user, profile, refreshProfile } = useAuthContext();
   const navigate = useNavigate();
 
@@ -63,7 +63,7 @@ const JoinGroupPage = () => {
       setGroupFound(group);
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
-        setErrorConnection(tc("errors.noConnection"));
+        setErrorConnection(tCommon("errors.noConnection"));
       }
     } finally {
       setIsLoading(false);
@@ -93,7 +93,7 @@ const JoinGroupPage = () => {
       navigate("/events");
     } catch (error: unknown) {
       if (error instanceof FirebaseError && error.code === "unavailable") {
-        setErrorConnection(tc("errors.noConnection"));
+        setErrorConnection(tCommon("errors.noConnection"));
       }
     } finally {
       setIsLoading(false);
@@ -214,7 +214,7 @@ const JoinGroupPage = () => {
               />
               <Button
                 variant="secondary"
-                text={tc("buttons.cancel")}
+                text={tCommon("buttons.cancel")}
                 onClick={() => setGroupFound(null)}
               />
             </div>

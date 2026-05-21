@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -26,7 +26,7 @@ interface AddLinkedMemberFormData {
 
 const AddLinkedMemberPage = () => {
   const { t } = useTranslation("events");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
   const locationState = (location.state ?? {}) as LocationState;
@@ -99,7 +99,7 @@ const AddLinkedMemberPage = () => {
               placeholder={t("linked.firstNamePlaceholder")}
               required
               registration={register("firstName", { required: true })}
-              error={errors.firstName?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.firstName?.type === "required" ? tCommon("errors.required") : undefined}
             />
             <Input
               label={t("linked.lastName")}
@@ -107,7 +107,7 @@ const AddLinkedMemberPage = () => {
               placeholder={t("linked.lastNamePlaceholder")}
               required
               registration={register("lastName", { required: true })}
-              error={errors.lastName?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.lastName?.type === "required" ? tCommon("errors.required") : undefined}
             />
             <Input
               label={t("linked.relationship")}
@@ -115,7 +115,7 @@ const AddLinkedMemberPage = () => {
               placeholder={t("linked.relationshipPlaceholder")}
               required
               registration={register("relationship", { required: true })}
-              error={errors.relationship?.type === "required" ? tc("errors.required") : undefined}
+              error={errors.relationship?.type === "required" ? tCommon("errors.required") : undefined}
             />
           </div>
 

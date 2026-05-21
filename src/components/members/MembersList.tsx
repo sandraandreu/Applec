@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+﻿import React, { useMemo } from "react";
 import "./members.scss";
 import { useGroupContext } from "../../context/group/GroupContext";
 import { useAuthContext } from "../../context/auth/AuthContext";
@@ -31,9 +31,9 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
 
   const membersByRole = useMemo(() =>
     filteredMembers.reduce<Record<MemberRole, typeof filteredMembers>>(
-      (acc, member) => {
-        acc[member.role].push(member);
-        return acc;
+      (grouped, member) => {
+        grouped[member.role].push(member);
+        return grouped;
       },
       { admin: [], organizer: [], member: [] }
     ),
