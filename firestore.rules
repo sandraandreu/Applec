@@ -31,8 +31,8 @@ service cloud.firestore {
       // Solo el propio usuario puede leer su perfil
       allow get: if isAuthenticated() && request.auth.uid == userId;
 
-      // Queries de lista requieren autenticación (ej. buscar miembros del grupo)
-      allow list: if isAuthenticated();
+      // Queries de lista restringidas al propio grupo
+      allow list: if isAuthenticated() && resource.data.groupId == myProfile().groupId;
 
       // Crear perfil propio en el registro
       allow create: if isAuthenticated() && request.auth.uid == userId;
@@ -96,7 +96,9 @@ service cloud.firestore {
       // ─── Miembros vinculados (familiares) ─────────────────────────────────────
       match /linkedMembers/{linkedMemberId} {
         allow read: if isMemberOfGroup(groupId);
-        allow write: if isMemberOfGroup(groupId);
+        allow create: if isMemberOfGroup(groupId) && request.resource.data.ownerUid == request.auth.uid;
+        allow update: if isMemberOfGroup(groupId) && resource.data.ownerUid == request.auth.uid;
+        allow delete: if isMemberOfGroup(groupId) && resource.data.ownerUid == request.auth.uid;
       }
     }
 
