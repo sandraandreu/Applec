@@ -42,6 +42,11 @@
     "subtitle": "Ha ocurrido un error inesperado. Recarga la página para continuar.",
     "reload": "Recargar"
   },
+  "discard": {
+    "title": "¿Descartar cambios?",
+    "message": "Perderás los cambios que no hayas guardado.",
+    "confirm": "Descartar"
+  },
   "nav": {
     "tabBar": "Navegación principal",
     "feed": "Feed",

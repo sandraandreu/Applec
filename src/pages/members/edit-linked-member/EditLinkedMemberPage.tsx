@@ -10,6 +10,7 @@ import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButt
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
+import Modal from "../../../components/modal/Modal";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import "./edit-linked-member.scss";
 
@@ -29,12 +30,13 @@ const EditLinkedMemberPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
+  const [showDiscardModal, setShowDiscardModal] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<EditLinkedMemberFormData>();
 
   useEffect(() => {
@@ -51,7 +53,15 @@ const EditLinkedMemberPage = () => {
     });
   }, [id, group, reset, navigate]);
 
-  const handleBack = () => navigate("/members/linked");
+  const handleBack = () => {
+    if (isDirty) {
+      setShowDiscardModal(true);
+      return;
+    }
+    navigate("/members/linked");
+  };
+
+  const handleDiscard = () => navigate("/members/linked");
 
   const onSubmit = async (data: EditLinkedMemberFormData) => {
     if (!profile?.groupId || !user?.uid || !id) return;
@@ -59,7 +69,7 @@ const EditLinkedMemberPage = () => {
       setIsLoading(true);
       await editLinkedMember(profile.groupId, id, user.uid, data);
       await refreshGroup();
-      handleBack();
+      navigate("/members/linked");
     } catch {
       setErrorConnection(t("linked.editError"));
     } finally {
@@ -124,22 +134,30 @@ const EditLinkedMemberPage = () => {
             </span>
           )}
 
-          <div className="edit-linked-member-page__actions">
-            <Button
-              variant="secondary"
-              text={t("linked.cancel")}
-              onClick={handleBack}
-            />
-            <Button
-              variant="primary"
-              text={t("linked.editSave")}
-              type="submit"
-              disabled={Object.keys(errors).length > 0}
-              isLoading={isLoading}
-            />
-          </div>
+          {isDirty && (
+            <div className="edit-linked-member-page__actions">
+              <Button
+                variant="primary"
+                text={t("linked.editSave")}
+                type="submit"
+                disabled={Object.keys(errors).length > 0}
+                isLoading={isLoading}
+              />
+            </div>
+          )}
         </form>
       </div>
+
+      <Modal
+        isOpen={showDiscardModal}
+        header={tc("discard.title")}
+        message={tc("discard.message")}
+        onDismiss={() => setShowDiscardModal(false)}
+        buttons={[
+          { text: tc("buttons.cancel"), role: "cancel" },
+          { text: tc("discard.confirm"), role: "danger", handler: handleDiscard },
+        ]}
+      />
     </div>
   );
 };

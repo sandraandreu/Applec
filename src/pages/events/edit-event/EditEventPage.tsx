@@ -36,6 +36,7 @@ const EditEventPage = () => {
   const [state, dispatch] = useReducer(editEventReducer, initialState);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
+  const [showDiscardModal, setShowDiscardModal] = useState(false);
 
   const {
     register,
@@ -73,6 +74,14 @@ const EditEventPage = () => {
       isMounted = false;
     };
   }, [profile?.groupId, id, navigate, reset]);
+
+  const handleBack = () => {
+    if (isModified) {
+      setShowDiscardModal(true);
+      return;
+    }
+    navigate(-1);
+  };
 
   const onSubmit = async (fields: FormFields) => {
     if (!state.selectedDate) {
@@ -149,7 +158,7 @@ const EditEventPage = () => {
     >
       <div className="edit-event__gradient-zone">
         <div className="edit-event__top-bar">
-          <BackButton />
+          <BackButton onClick={handleBack} />
           <h1 className="edit-event__title">{t("edit.title")}</h1>
         </div>
       </div>
@@ -390,6 +399,17 @@ const EditEventPage = () => {
         buttons={[
           { text: t("delete.cancel"), role: "cancel" },
           { text: t("delete.submit"), role: "danger", handler: handleDelete },
+        ]}
+      />
+
+      <Modal
+        isOpen={showDiscardModal}
+        header={tc("discard.title")}
+        message={tc("discard.message")}
+        onDismiss={() => setShowDiscardModal(false)}
+        buttons={[
+          { text: tc("buttons.cancel"), role: "cancel" },
+          { text: tc("discard.confirm"), role: "danger", handler: () => navigate(-1) },
         ]}
       />
       {deleteState.isLoading && <Loading />}
