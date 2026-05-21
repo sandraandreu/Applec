@@ -8,7 +8,7 @@ import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import { sendPasswordReset } from "../../../services/auth.service";
-import type { FirebaseError } from "../../../models/error.model";
+import { isFirebaseError } from "../../../utils/firebase-errors";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 
 interface ForgotPasswordFormData {
@@ -42,8 +42,7 @@ const ForgotPasswordPage = () => {
       await sendPasswordReset(email);
       setForgotPasswordState("success");
     } catch (error: unknown) {
-      const firebaseError = error as FirebaseError;
-      if (firebaseError.code === "auth/network-request-failed") {
+      if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
         setErrorConnection(tCommon("errors.noConnection"));
         return;
       }

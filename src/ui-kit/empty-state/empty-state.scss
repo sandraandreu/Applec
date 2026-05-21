@@ -21,22 +21,22 @@
       color: var(--color-text-muted);
     }
   }
-}
 
-.empty-state__text {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-items);
-}
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
 
-.empty-state__title {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-brand);
-  line-height: 1.2;
-}
+  &__title {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-brand);
+    line-height: 1.2;
+  }
 
-.empty-state__subtitle {
-  font-size: var(--font-size-body-s);
-  color: var(--color-text-muted);
+  &__subtitle {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
 }

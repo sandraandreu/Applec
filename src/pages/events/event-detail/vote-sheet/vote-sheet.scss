@@ -95,7 +95,7 @@
 
       &.vote-sheet__own-btn--active {
         background: var(--color-going);
-        color: var(--white);
+        color: var(--color-text-inverse);
       }
     }
 
@@ -106,7 +106,7 @@
       &.vote-sheet__own-btn--active {
         background: var(--color-not-going);
         border-color: var(--color-not-going);
-        color: var(--white);
+        color: var(--color-text-inverse);
       }
     }
   }
@@ -177,7 +177,7 @@
 
       &.vote-sheet__vote-btn--active {
         background: var(--color-going);
-        color: var(--white);
+        color: var(--color-text-inverse);
       }
     }
 
@@ -187,7 +187,7 @@
 
       &.vote-sheet__vote-btn--active {
         background: var(--color-not-going);
-        color: var(--white);
+        color: var(--color-text-inverse);
       }
     }
   }

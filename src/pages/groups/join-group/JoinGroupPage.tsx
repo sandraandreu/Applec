@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Loading from "../../../components/loading/Loading";
 import Input from "../../../ui-kit/input/Input";
 import Button from "../../../ui-kit/button/Button";
-import { FirebaseError } from "firebase/app";
+import { isFirebaseError } from "../../../utils/firebase-errors";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
@@ -62,7 +62,7 @@ const JoinGroupPage = () => {
 
       setGroupFound(group);
     } catch (error: unknown) {
-      if (error instanceof FirebaseError && error.code === "unavailable") {
+      if (isFirebaseError(error) && error.code === "unavailable") {
         setErrorConnection(tCommon("errors.noConnection"));
       }
     } finally {
@@ -92,7 +92,7 @@ const JoinGroupPage = () => {
       await refreshProfile();
       navigate("/events");
     } catch (error: unknown) {
-      if (error instanceof FirebaseError && error.code === "unavailable") {
+      if (isFirebaseError(error) && error.code === "unavailable") {
         setErrorConnection(tCommon("errors.noConnection"));
       }
     } finally {
