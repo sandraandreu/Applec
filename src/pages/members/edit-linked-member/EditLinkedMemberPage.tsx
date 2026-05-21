@@ -81,10 +81,7 @@ const EditLinkedMemberPage = () => {
       <div className="edit-linked-member-page__gradient-zone">
         <div className="edit-linked-member-page__top-bar">
           <BackButton onClick={handleBack} />
-        </div>
-        <div className="edit-linked-member-page__header">
           <h1 className="edit-linked-member-page__title">{t("linked.editTitle")}</h1>
-          <p className="edit-linked-member-page__description">{t("linked.description")}</p>
         </div>
       </div>
 

@@ -148,9 +148,10 @@ const EditEventPage = () => {
       className={`edit-event${state.eventType === "special" ? " edit-event--special" : ""}`}
     >
       <div className="edit-event__gradient-zone">
-        <BackButton />
-
-        <h1 className="edit-event__title">{t("edit.title")}</h1>
+        <div className="edit-event__top-bar">
+          <BackButton />
+          <h1 className="edit-event__title">{t("edit.title")}</h1>
+        </div>
       </div>
 
       <form
@@ -374,7 +375,7 @@ const EditEventPage = () => {
             <Button
               type="submit"
               text={t("edit.submit")}
-              variant="especial"
+              variant="primary"
               disabled={state.isSubmitting}
             />
           </div>
