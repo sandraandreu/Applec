@@ -104,7 +104,7 @@ Visible para todos los miembros. Vista mensual con navegación por mes. Días co
 ---
 
 ### 9. Confirmación de asistencia
-**Estado:** ✓ UI completa implementada (VoteSheet, AddLinkedMemberPage, LinkedMembersPage), ✗ lógica Firestore pendiente (servicio `saveAttendance`, estado en VoteSheet, refresco tras guardar)
+**Estado:** ✓ Parcialmente implementado — VoteSheet, AddLinkedMemberPage y LinkedMembersPage completos con HTML + SCSS; añadir y editar vinculados funcional con Firebase; votación por vinculados con escritura en Firestore; respuestas de vinculados visibles en el sheet. ✗ Pendiente: cargar respuesta guardada del miembro principal al abrir el sheet, bloqueo por `confirmationDeadline`
 
 Todos los roles (Admin, Organizador, Miembro) pueden confirmar asistencia. No confirmar = "sin respuesta" (pendiente).
 
@@ -124,7 +124,7 @@ Los miembros solo ven su propia confirmación. El listado completo es solo para 
 ---
 
 ### 10. Listado de asistentes
-**Estado:** ✓ UI implementada en el detalle del evento, ✗ datos reales pendientes (vinculados al punto 9)
+**Estado:** ✓ UI implementada en el detalle del evento; respuestas de vinculados visibles. ✗ Respuesta real del miembro principal pendiente (vinculada al punto 9)
 
 Integrado directamente en la página de detalle del evento (no es una página separada). Visible solo para Admin y Organizadores. Lista con filtros: Todos / Confirmados / Pendientes / No van. Muestra todos los miembros del grupo (todos los roles) y sus acompañantes. Por defecto se muestran 4 entradas con botón para expandir el listado completo.
 
@@ -150,7 +150,7 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 
 | # | Funcionalidad | Plan |
 |---|---|---|
-| 12 | Miembros vinculados (familia sin cuenta propia) | UI implementada (LinkedMembersPage + AddLinkedMemberPage), ✗ Firebase pendiente (crear, editar, eliminar) |
+| 12 | Miembros vinculados (familia sin cuenta propia) | ✓ Implementado (LinkedMembersPage, AddLinkedMemberPage — crear y editar en Firebase; votación y respuestas integradas en VoteSheet). ✗ Pendiente: eliminar vinculado |
 | 13 | Inicio de sesión con Google | Versión futura |
 | 14 | Gráfico circular de asistencia | Versión futura |
 | 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
