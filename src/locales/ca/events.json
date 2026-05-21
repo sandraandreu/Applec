@@ -137,7 +137,12 @@
     "relationship": "Parentiu",
     "relationshipPlaceholder": "Filla, Marit...",
     "save": "Afegir",
-    "cancel": "Cancel·lar"
+    "cancel": "Cancel·lar",
+    "saveError": "No s'ha pogut afegir l'acompanyant. Torna-ho a intentar.",
+    "editTitle": "Editar acompanyant",
+    "editSave": "Guardar canvis",
+    "editError": "No s'han pogut guardar els canvis. Torna-ho a intentar.",
+    "editSuccess": "Acompanyant actualitzat correctament"
   },
   "attendance": {
     "going": "Hi vaig",

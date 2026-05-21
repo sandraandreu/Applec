@@ -15,10 +15,15 @@
     gap: var(--gap-content);
   }
 
+  &__top-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-compact);
+  }
+
   &__title {
-    font-family: var(--font-display);
-    font-size: var(--font-size-h2);
-    font-weight: var(--font-weight-extrabold);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
   }
 

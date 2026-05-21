@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useState, useLayoutEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -9,13 +10,23 @@ import MemberCard from "../../../components/members/MemberCard";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import Loading from "../../../components/loading/Loading";
 import EmptyState from "../../../ui-kit/empty-state/EmptyState";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import "./linked-members.scss";
 
 const LinkedMembersPage = () => {
   const { t } = useTranslation("events");
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuthContext();
   const { group, isLoading } = useGroupContext();
+
+  const [showUpdated, setShowUpdated] = useState(
+    !!(location.state as { linkedMemberUpdated?: boolean } | null)?.linkedMemberUpdated
+  );
+
+  useLayoutEffect(() => {
+    if (showUpdated) window.history.replaceState({}, "");
+  }, []);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -32,6 +43,9 @@ const LinkedMembersPage = () => {
 
   return (
     <div className="linked-members-page" {...swipeHandlers}>
+      {showUpdated && (
+        <SuccessBanner message={t("linked.editSuccess")} onDismiss={() => setShowUpdated(false)} />
+      )}
       <div className="linked-members-page__gradient-zone">
         <div className="linked-members-page__top-bar">
           <BackButton />
@@ -56,6 +70,7 @@ const LinkedMembersPage = () => {
                 role="member"
                 showChevron={false}
                 showRole={false}
+                onEdit={() => navigate(`/members/linked/${lm.id}/edit`)}
               />
             ))}
           </div>

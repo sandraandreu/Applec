@@ -37,6 +37,7 @@ const MembersPage = lazy(() => import("../../pages/members/members-list/MembersP
 const MemberDetailPage = lazy(() => import("../../pages/members/member-detail/MemberDetailPage"));
 const LinkedMembersPage = lazy(() => import("../../pages/members/linked-members/LinkedMembersPage"));
 const AddLinkedMemberPage = lazy(() => import("../../pages/members/add-linked-member/AddLinkedMemberPage"));
+const EditLinkedMemberPage = lazy(() => import("../../pages/members/edit-linked-member/EditLinkedMemberPage"));
 const EventsListPage = lazy(
   () => import("../../pages/events/events-list/EventsListPage"),
 );
@@ -198,6 +199,15 @@ const AppRoutes = () => (
           element={
             <PrivateRoutes requiresGroup>
               <AddLinkedMemberPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/members/linked/:id/edit"
+          element={
+            <PrivateRoutes requiresGroup>
+              <EditLinkedMemberPage />
             </PrivateRoutes>
           }
         />

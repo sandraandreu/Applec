@@ -42,6 +42,11 @@
     "subtitle": "Ha ocorregut un error inesperat. Recarrega la pàgina per continuar.",
     "reload": "Recarregar"
   },
+  "discard": {
+    "title": "Descartar canvis?",
+    "message": "Perdràs els canvis que no hagis guardat.",
+    "confirm": "Descartar"
+  },
   "nav": {
     "tabBar": "Navegació principal",
     "feed": "Feed",
