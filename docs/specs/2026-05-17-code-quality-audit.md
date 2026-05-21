@@ -2,6 +2,7 @@
 
 **Fecha:** 2026-05-21
 **Rama analizada:** `feature/linked-members`
+**Última revisión:** 2026-05-21 — correcciones aplicadas en rama `fix/code-quality-audit`
 
 ---
 
@@ -11,9 +12,9 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `src/pages/auth/forgot-password/ForgotPasswordPage.tsx:45` | 🟠 alto | `as FirebaseError` sin type guard — si `error` no es un `FirebaseError` el acceso a `.code` falla silenciosamente | Usar `isFirebaseError(error)` de `utils/firebase-errors.ts` como en `LoginPage` y `RegisterPage` |
-| `src/pages/groups/join-group/JoinGroupPage.tsx:8` | 🟠 alto | Importación directa de `FirebaseError` de `firebase/app` con `instanceof` en lugar del util compartido `isFirebaseError` | Reemplazar los 2 `instanceof FirebaseError` por `isFirebaseError(error)` |
-| `src/models/error.model.ts:1–4` | 🟡 medio | `interface FirebaseError { code?: string; message?: string }` duplica parcialmente el tipo de `firebase/app` con campos opcionales — permite que `{} as FirebaseError` pase el chequeo | Eliminar el archivo y sustituir todos los usos por `isFirebaseError()` |
+| ~~`src/pages/auth/forgot-password/ForgotPasswordPage.tsx:45`~~ | ~~🟠 alto~~ | ~~`as FirebaseError` sin type guard~~ | ✅ Resuelto — usa `isFirebaseError(error)` |
+| ~~`src/pages/groups/join-group/JoinGroupPage.tsx:8`~~ | ~~🟠 alto~~ | ~~Importación directa de `FirebaseError` de `firebase/app`~~ | ✅ Resuelto — usa `isFirebaseError(error)` |
+| ~~`src/models/error.model.ts:1–4`~~ | ~~🟡 medio~~ | ~~`interface FirebaseError` duplicada con campos opcionales~~ | ✅ Resuelto — archivo eliminado |
 | `src/components/event-calendar/EventCalendar.tsx:42`, `src/components/layout/MainLayout.tsx:7` | 🟡 medio | Interfaz genérica `Props` en lugar de `EventCalendarProps` / `MainLayoutProps` | Renombrar a nombre semántico |
 | `src/ui-kit/input/Input.tsx:48` | 🟡 medio | Cast `as React.TextareaHTMLAttributes<HTMLTextAreaElement>` para `UseFormRegisterReturn` — pierde type-safety en el `ref` | Extraer props explícitamente (`onChange`, `onBlur`, `name`) o separar la sobrecarga multiline |
 | `src/ui-kit/input/Input.tsx:9` | 🟡 medio | `type?: string` acepta cualquier cadena | Cambiar a `"text" \| "email" \| "password" \| "search" \| "number" \| "tel"` |
@@ -26,11 +27,11 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `EditEventPage.tsx:349`, `CreateEventStep3Page.tsx:216` | 🟡 medio | Parámetro `e` prohibido por convención | Renombrar a `changeEvent` |
-| `LoginPage.tsx:28`, `RegisterPage.tsx:38`, `ForgotPasswordPage.tsx:20`, y otros | 🟡 medio | `{ t: tc }` — abreviación `tc` opaca y prohibida | Renombrar a `tCommon` en todo el proyecto |
-| `LinkedMembersPage.tsx:29`, `MemberDetailPage.tsx:56`, `EventDetailPage.tsx:112` y otros | 🟡 medio | Iterador `lm` prohibido | Renombrar a `linkedMember` |
-| `GroupContextProvider.tsx:37`, `MemberDetailPage.tsx:35`, `SeedPage.tsx:51` y otros | 🟡 medio | Iterador `m` prohibido | Renombrar a `member` |
-| `MembersList.tsx:33` | 🟡 medio | Acumulador `acc` en reduce — genérico y prohibido | Renombrar a `grouped` o `membersByRole` |
+| ~~`EditEventPage.tsx:349`~~ | ~~🟡 medio~~ | ~~Parámetro `e` prohibido~~ | ✅ Resuelto — renombrado a `changeEvent` |
+| ~~`LoginPage.tsx:28` y otros (12 archivos)~~ | ~~🟡 medio~~ | ~~`{ t: tc }` prohibido~~ | ✅ Resuelto — renombrado a `tCommon` en todo el proyecto |
+| ~~`LinkedMembersPage.tsx` y otros~~ | ~~🟡 medio~~ | ~~Iterador `lm` prohibido~~ | ✅ Resuelto — renombrado a `linkedMember` |
+| ~~`GroupContextProvider.tsx` y otros~~ | ~~🟡 medio~~ | ~~Iterador `m` prohibido~~ | ✅ Resuelto — renombrado a `member` |
+| ~~`MembersList.tsx:33`~~ | ~~🟡 medio~~ | ~~Acumulador `acc` prohibido~~ | ✅ Resuelto — renombrado a `grouped` |
 | `SeedPage.tsx:346` | 🟡 medio | Iterador `d` sobre `eventsSnap.docs` | Renombrar a `eventDoc` |
 
 ---
@@ -89,7 +90,7 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `linked-member.service.ts:12–31` | 🟠 alto | `addLinkedMember` hace `addDoc` + `updateDoc` sin transacción — si la segunda falla, los datos quedan inconsistentes | Envolver ambas operaciones en `writeBatch` o `runTransaction` |
+| ~~`linked-member.service.ts:12–31`~~ | ~~🟠 alto~~ | ~~`addLinkedMember` hace `addDoc` + `updateDoc` sin transacción~~ | ✅ Resuelto — usa `writeBatch` |
 | `group.service.ts:55–82` | 🟠 alto | `createGroup` llama a `getDocs` internamente (lectura sin try/catch) dentro de una función de escritura | Extraer la verificación de unicidad a una función de lectura separada con try/catch |
 | `group.service.ts:102–123` | 🟠 alto | `updateMemberRole` y `removeMemberFromGroup` ejecutan `getDoc` interno sin proteger | Separar el `getDoc` en método de lectura dedicado con try/catch |
 | `GroupContextProvider.tsx:38` | 🟡 medio | `.catch(() => undefined)` silencia completamente un error de sincronización de rol | Eliminar el swallow o manejar el error en el provider |
@@ -101,10 +102,10 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `AppRoutes.tsx:270` | 🟠 alto | `/style-guide` accesible sin autenticación | Eliminar en producción con `NODE_ENV !== 'production'` o envolver en `<PrivateRoutes>` |
-| `AppRoutes.tsx:274–279` | 🟠 alto | `/seed` protegida por grupo pero cualquier miembro puede destruir datos del grupo | Restringir a rol `admin` o a `NODE_ENV === 'development'` |
+| ~~`AppRoutes.tsx:270`~~ | ~~🟠 alto~~ | ~~`/style-guide` accesible sin autenticación~~ | ✅ Resuelto — guardada con `NODE_ENV !== 'production'` |
+| ~~`AppRoutes.tsx:274–279`~~ | ~~🟠 alto~~ | ~~`/seed` accesible en producción~~ | ✅ Resuelto — guardada con `NODE_ENV !== 'production'` |
 | `PrivateRoutes.tsx:21` | 🟡 medio | Rutas con `requiresNoGroup` no esperan a que `groupLoading` termine — guard puede dar falso positivo durante carga | Cambiar a `authLoading \|\| ((requiresGroup \|\| requiresNoGroup) && groupLoading)` |
-| `PrivateRoutes.tsx:23` | 🟡 medio | Usuario autenticado con email sin verificar redirigido a `/landing` en lugar de `/verify-email` | Distinguir `!user` (→ `/landing`) de `!user.emailVerified` (→ `/verify-email`) |
+| ~~`PrivateRoutes.tsx:23`~~ | ~~🟡 medio~~ | ~~Usuario con email sin verificar redirigido a `/landing`~~ | ✅ Resuelto — distingue `!user` (→ `/landing`) de `!emailVerified` (→ `/verify-email`) |
 | `AppRoutes.tsx:64` | 🟢 mejora | Redirect raíz `/` → `/landing` siempre, incluso para usuarios autenticados — doble redirect innecesario | Convertir en redirect inteligente según estado de auth/grupo |
 
 ---
@@ -113,8 +114,8 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `GroupContextProvider.tsx:22–55` | 🟠 alto | `useEffect` async sin flag `isMounted` — con React 18 StrictMode el double-mounting lo hace especialmente probable | Añadir `let isMounted = true` y cleanup `return () => { isMounted = false; }` |
-| `AuthContextProvider.tsx:40–57` | 🟠 alto | Callback de `onAuthStateChanged` es async y llama a `getUserProfile` sin flag `isMounted` | Añadir flag `isMounted` dentro del callback |
+| ~~`GroupContextProvider.tsx:22–55`~~ | ~~🟠 alto~~ | ~~`useEffect` async sin flag `isMounted`~~ | ✅ Resuelto — añadido `isMountedRef` con cleanup |
+| ~~`AuthContextProvider.tsx:40–57`~~ | ~~🟠 alto~~ | ~~Callback async sin flag `isMounted`~~ | ✅ Resuelto — añadido `isMounted` con cleanup |
 | `GroupContextProvider.tsx:22–43` | 🟡 medio | `loadGroup` depende del objeto `profile` completo — cualquier cambio en el perfil re-ejecuta la carga | Usar solo `profile?.groupId` y `profile?.role` como dependencias |
 | `AuthContext.ts:9` | 🟢 mejora | Interfaz declara `logout: () => void` pero la implementación devuelve `Promise<void>` | Cambiar a `logout: () => Promise<void>` |
 | `GroupContext.ts:17` | 🟢 mejora | `GroupContextType` no expone `error: string \| null` — imposible distinguir "sin grupo" de "error al cargar" | Añadir campo `error: string \| null` |
@@ -127,7 +128,7 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `empty-state.scss:26–42`, `error-boundary.scss:10–27` | 🟠 alto | Elementos (`__text`, `__title`, `__subtitle`) definidos como clases de nivel superior en lugar de anidados con `&__` | Anidar dentro del bloque principal |
+| ~~`empty-state.scss:26–42`, `error-boundary.scss:10–27`~~ | ~~🟠 alto~~ | ~~Elementos BEM definidos como clases de nivel superior~~ | ✅ Resuelto — anidados con `&__` dentro del bloque |
 | `_typography.scss:33` | 🟡 medio | `.h1--large` mezcla nombre de etiqueta HTML con modificador BEM | Renombrar a `.display-title` o clase semántica equivalente |
 | `style-guide.scss:113–148` | 🟡 medio | `&__type-button` (elemento) vs `&__type--bold` (modificador sin elemento base) — inconsistencia interna | Añadir `.style-guide__type` como elemento base y aplicar modificadores sobre él |
 | `stepper.scss:12–18` | 🟢 mejora | `&__dot--active` definido dos veces — redundancia | Mantener solo una definición dentro de `&__dot--active` |
@@ -138,20 +139,20 @@
 
 | Archivo:línea | Severidad | Problema | Solución |
 |---|---|---|---|
-| `src/scss/base/_reset.scss:32` | 🔴 crítico | `cursor: pointer` en el reset global afecta a TODOS los botones de la app — la regla del proyecto lo prohíbe explícitamente | Eliminar `cursor: pointer;` del bloque `button` en `_reset.scss` |
-| `vote-sheet.scss` (20+ líneas) | 🔴 crítico | Todos los colores son hex directos: `#ffffff`, `#d5d5d5`, `#e5f0ff`, `#00c8c5`, `#ff1c4e`, `#e0e0e0` — ninguno usa los design tokens ya definidos | Reemplazar cada hex por su variable semántica |
-| `members.scss:12,17,83` | 🟠 alto | `#666666` y `#9ca3af` hardcodeados — no existen en el sistema de tokens | `#666666` → `var(--color-icon)`, `#9ca3af` → `var(--color-text-muted)` |
-| `members-list.scss:39,41` | 🟠 alto | `#d1d5db` y `#555` hardcodeados | `→ var(--color-border)` y `var(--color-text-secondary)` |
-| `create-group.scss:45`, `join-group.scss:135` | 🟠 alto | `#666666` y `#0068FF` hardcodeados | `→ var(--color-icon)` y `var(--color-brand)` |
-| `event-detail.scss:66,163` | 🟠 alto | `background: white` hardcodeado | `→ var(--color-surface)` |
-| `edit-event.scss:95` | 🟠 alto | `box-shadow` hardcodeado, inconsistente con `var(--shadow-card)` usado en `create-event.scss` | Usar `var(--shadow-card)` |
-| `vote-sheet.scss:170` | 🟠 alto | `font-size: 18px` hardcodeado | `→ var(--font-size-body-m)` |
+| ~~`src/scss/base/_reset.scss:32`~~ | ~~🔴 crítico~~ | ~~`cursor: pointer` en reset global~~ | ⏭️ Descartado — app mobile, no aplica |
+| ~~`vote-sheet.scss` (20+ líneas)~~ | ~~🔴 crítico~~ | ~~Colores hex directos sin tokens~~ | ✅ Resuelto — todos reemplazados por tokens semánticos |
+| ~~`members.scss:12,17,83`~~ | ~~🟠 alto~~ | ~~`#666666` y `#9ca3af` hardcodeados~~ | ✅ Resuelto — `var(--color-icon)` y `var(--color-text-muted)` |
+| ~~`members-list.scss:39,41`~~ | ~~🟠 alto~~ | ~~`#d1d5db` y `#555` hardcodeados~~ | ✅ Resuelto — `var(--color-border)` y `var(--color-text-secondary)` |
+| ~~`create-group.scss:45`, `join-group.scss:135`~~ | ~~🟠 alto~~ | ~~`#666666` y `#0068FF` hardcodeados~~ | ✅ Resuelto — `var(--color-icon)` y `var(--color-brand)` |
+| ~~`event-detail.scss:66`~~ | ~~🟠 alto~~ | ~~`background: white` hardcodeado~~ | ✅ Resuelto — `var(--color-surface)` |
+| ~~`edit-event.scss:95`~~ | ~~🟠 alto~~ | ~~`box-shadow` hardcodeado~~ | ✅ Resuelto — `var(--shadow-card)` |
+| ~~`vote-sheet.scss:170`~~ | ~~🟠 alto~~ | ~~`font-size: 18px` hardcodeado~~ | ✅ Resuelto — `var(--font-size-body-m)` |
 | `avatar.scss:25` | 🟠 alto | `font-size: 28px` hardcodeado sin token equivalente | Crear `--size-28: 28px` o usar `var(--size-24)` si el diseño lo permite |
-| `vote-sheet.scss` (múltiples) | 🟡 medio | Padding y border-radius con valores directos: `24px`, `32px`, `20px`, `12px`, `14px`, `16px`, `2px` | Usar `var(--size-XX)` y `var(--radius-card)` / `var(--radius-pill)` correspondientes |
+| ~~`vote-sheet.scss` (múltiples)~~ | ~~🟡 medio~~ | ~~Padding y border-radius con valores directos~~ | ✅ Resuelto — todos reemplazados por `var(--size-XX)`, `var(--radius-*)` |
 | `create-event.scss:278`, `edit-event.scss:158` | 🟡 medio | `padding: 20px var(--gap-content)` — valor `20px` hardcodeado | `→ var(--size-20) var(--gap-content)` |
-| `modal.scss:28`, `vote-sheet.scss:23` | 🟡 medio | `border-radius: 20px 20px 0 0` en dos lugares sin token compartido | Crear token `--radius-sheet` o usar `var(--size-20)` |
-| `members.scss:47–49` | 🟡 medio | `padding: 4px 12px; margin-top: 6px` hardcodeados en `.you-tag` | `→ var(--size-4)`, `var(--size-12)`, `var(--size-6)` |
-| `event-detail.scss:11` | 🟡 medio | `rgba(255,255,255,0.6)` no usa `var(--color-overlay-white-soft)` ya definido | Sustituir por la variable |
+| ~~`modal.scss:28`, `vote-sheet.scss:23`~~ | ~~🟡 medio~~ | ~~`border-radius: 20px 20px 0 0` sin token compartido~~ | ✅ Resuelto — creado token `--radius-sheet` |
+| ~~`members.scss:47–49`~~ | ~~🟡 medio~~ | ~~`padding: 4px 12px; margin-top: 6px` hardcodeados~~ | ✅ Resuelto — `var(--size-4)`, `var(--size-12)`, `var(--size-6)` |
+| ~~`event-detail.scss:11`~~ | ~~🟡 medio~~ | ~~`rgba(255,255,255,0.6)` sin token~~ | ✅ Resuelto — `var(--color-overlay-white-soft)` |
 | `_typography.scss:35` | 🟢 mejora | `line-height: 42px` — valor absoluto en px para line-height | Cambiar a valor sin unidad (`1.05`) o usar `var(--size-40)` |
 
 ---
@@ -254,7 +255,22 @@
 
 ---
 
-## Resumen ejecutivo — Los 5 problemas más urgentes
+## Resumen ejecutivo — Estado de correcciones
+
+### ✅ Resueltos en `fix/code-quality-audit` (2026-05-21)
+- Seguridad: SeedPage y StyleGuide protegidas en producción, `.env` en `.gitignore`
+- Firestore rules: `linkedMembers` restringido al propietario, usuarios listables solo por grupo
+- isMounted: `AuthContextProvider` y `GroupContextProvider` protegidos
+- Nombres prohibidos: `tc→tCommon`, `lm→linkedMember`, `m→member`, `acc→grouped`, `e→changeEvent` (18 archivos)
+- SCSS tokens: tokens semánticos en `vote-sheet`, `members`, `members-list`, `create-group`, `join-group`, `event-detail`, `edit-event`; nuevos tokens `--size-2`, `--radius-sheet`
+- TypeScript: `isFirebaseError` en ForgotPasswordPage, JoinGroupPage y CreateGroupPage; eliminado `error.model.ts`
+- Routing: `PrivateRoutes` distingue `!user` (→ `/landing`) de `!emailVerified` (→ `/verify-email`)
+- Servicios: `addLinkedMember` atomico con `writeBatch`
+- BEM: elementos anidados en `empty-state.scss` y `error-boundary.scss`
+
+---
+
+## Problemas pendientes más urgentes
 
 ### 🔴 1. VoteSheet no funcional con estado de accesibilidad incorrecto
 **`src/pages/events/event-detail/vote-sheet/VoteSheet.tsx:99–160`**
