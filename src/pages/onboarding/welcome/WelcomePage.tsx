@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+﻿import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import "./welcome.scss";
@@ -10,7 +10,7 @@ import welcomeIllustration from "../../../assets/images/welcome-illustration.png
 
 const WelcomePage = () => {
   const { t } = useTranslation("onboarding");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
   const { profile } = useAuthContext();
@@ -46,7 +46,7 @@ const WelcomePage = () => {
           </div>
 
           <Button
-            text={tc("buttons.start")}
+            text={tCommon("buttons.start")}
             onClick={() => navigate("/onboarding/language", { state: { direction: "forward" } })}
           />
         </div>

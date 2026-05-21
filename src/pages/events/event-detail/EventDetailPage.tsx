@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -108,15 +108,15 @@ const EventDetailPage = () => {
   const allMembers = (group?.members ?? []).map((member) => {
     const attendance = toAttendance(memberResponses[member.uid]);
     const memberLinked = (group?.linkedMembers ?? [])
-      .filter(lm => lm.ownerUid === member.uid)
-      .map(lm => ({
-        ...lm,
-        attendance: toAttendance(linkedResponses[member.uid]?.[lm.id]),
+      .filter(linkedMember => linkedMember.ownerUid === member.uid)
+      .map(linkedMember => ({
+        ...linkedMember,
+        attendance: toAttendance(linkedResponses[member.uid]?.[linkedMember.id]),
       }));
     return { ...member, attendance, linkedMembers: memberLinked };
   });
 
-  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(lm => ({ ...lm, uid: lm.id, role: "member" as const, isLinked: true }))]);
+  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(linkedMember => ({ ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true }))]);
   const totalMembers = allRows.length;
   const goingCount = allRows.filter(r => r.attendance === "going").length;
 
@@ -148,11 +148,11 @@ const EventDetailPage = () => {
   const filteredMembers = allMembers
     .filter(member => {
       if (!targetAttendance) return true;
-      return member.attendance === targetAttendance || member.linkedMembers.some(lm => lm.attendance === targetAttendance);
+      return member.attendance === targetAttendance || member.linkedMembers.some(linkedMember => linkedMember.attendance === targetAttendance);
     })
     .map(member => {
       if (!targetAttendance) return member;
-      return { ...member, linkedMembers: member.linkedMembers.filter(lm => lm.attendance === targetAttendance) };
+      return { ...member, linkedMembers: member.linkedMembers.filter(linkedMember => linkedMember.attendance === targetAttendance) };
     });
 
   const attendeeFilterOptions = [
@@ -358,12 +358,12 @@ const EventDetailPage = () => {
           }
           linkedMembers={
             (group?.linkedMembers ?? [])
-              .filter((lm) => lm.ownerUid === user?.uid)
-              .map((lm) => ({
-                id: lm.id,
-                firstName: lm.firstName,
-                lastName: lm.lastName,
-                relationship: lm.relationship ?? "",
+              .filter((linkedMember) => linkedMember.ownerUid === user?.uid)
+              .map((linkedMember) => ({
+                id: linkedMember.id,
+                firstName: linkedMember.firstName,
+                lastName: linkedMember.lastName,
+                relationship: linkedMember.relationship ?? "",
               }))
           }
           onAddLinked={() => {

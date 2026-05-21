@@ -78,7 +78,7 @@ export const updateEvent = async (
   eventId: string,
   data: Partial<FallesEventCreate>,
 ): Promise<void> => {
-  await updateDoc(doc(db, "groups", groupId, "events", eventId), { ...data });
+  await updateDoc(doc(db, "groups", groupId, "events", eventId), data);
 };
 
 export const deleteEvent = async (

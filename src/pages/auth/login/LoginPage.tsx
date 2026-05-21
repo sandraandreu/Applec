@@ -1,4 +1,4 @@
-import "./login.scss";
+﻿import "./login.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
 import { useReducer } from "react";
@@ -25,7 +25,7 @@ interface LoginFormData {
 
 const LoginPage = () => {
   const { t } = useTranslation("auth");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(loginReducer, initialLoginState);
@@ -75,7 +75,7 @@ const LoginPage = () => {
       ) {
         dispatch({
           type: "ERROR_CONNECTION",
-          message: tc("errors.noConnection"),
+          message: tCommon("errors.noConnection"),
         });
         return;
       }
@@ -102,7 +102,7 @@ const LoginPage = () => {
           <div className="login-page__fields">
             <Input
               id="login-email"
-              label={tc("fields.email")}
+              label={tCommon("fields.email")}
               placeholder={t("login.emailPlaceholder")}
               type="text"
               required
@@ -114,16 +114,16 @@ const LoginPage = () => {
               })}
               error={
                 errors.email?.type === "required"
-                  ? tc("errors.required")
+                  ? tCommon("errors.required")
                   : errors.email?.type === "pattern"
-                    ? tc("errors.emailInvalid")
+                    ? tCommon("errors.emailInvalid")
                     : undefined
               }
             />
 
             <Input
               id="login-password"
-              label={tc("fields.password")}
+              label={tCommon("fields.password")}
               placeholder={t("login.passwordPlaceholder")}
               type={showPassword ? "text" : "password"}
               required
@@ -131,7 +131,7 @@ const LoginPage = () => {
               registration={register("password", { required: true, maxLength: 128 })}
               error={
                 errors.password?.type === "required"
-                  ? tc("errors.required")
+                  ? tCommon("errors.required")
                   : undefined
               }
               endIcon={
@@ -180,11 +180,11 @@ const LoginPage = () => {
         onDismiss={() => dispatch({ type: "DISMISS_UNVERIFIED" })}
         buttons={[
           {
-            text: tc("buttons.resendEmail"),
+            text: tCommon("buttons.resendEmail"),
             handler: () => handleResendEmail(),
           },
           {
-            text: tc("buttons.close"),
+            text: tCommon("buttons.close"),
             role: "cancel",
           },
         ]}

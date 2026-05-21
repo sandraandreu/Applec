@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { doc, updateDoc, addDoc, setDoc, getDocs, getDoc, deleteDoc, collection, deleteField } from "firebase/firestore";
 import { db } from "../../plugins/firebase";
 import { useAuthContext } from "../../context/auth/AuthContext";
@@ -318,7 +318,7 @@ const SeedPage = () => {
       // Reincorporar a Carmen al array members del grupo, borrando cualquier entrada stale
       const groupSnap = await getDoc(doc(db, "groups", groupId));
       const currentMembers = (groupSnap.data()?.members ?? []) as { uid: string }[];
-      const membersWithoutCarmen = currentMembers.filter(m => m.uid !== memberUid);
+      const membersWithoutCarmen = currentMembers.filter(member => member.uid !== memberUid);
 
       await Promise.all([
         updateDoc(doc(db, "groups", groupId), {

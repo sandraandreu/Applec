@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -32,7 +32,7 @@ const MemberDetailPage = () => {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
-  const member = group?.members.find(m => m.uid === uid) ?? null;
+  const member = group?.members.find(member => member.uid === uid) ?? null;
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -51,9 +51,9 @@ const MemberDetailPage = () => {
 
   const canManage = (user?.permissions.canManageMembers ?? false) && member.uid !== user?.uid;
   const availableRoles = (["admin", "organizer", "member"] as const).filter(role => role !== member.role);
-  const adminCount = group?.members.filter(m => m.role === "admin").length ?? 0;
+  const adminCount = group?.members.filter(member => member.role === "admin").length ?? 0;
   const isAdminLimitReached = adminCount >= 3;
-  const memberLinked = group?.linkedMembers.filter(lm => lm.ownerUid === uid) ?? [];
+  const memberLinked = group?.linkedMembers.filter(linkedMember => linkedMember.ownerUid === uid) ?? [];
 
   const executeSave = async () => {
     if (!pendingRole || !profile?.groupId) return;

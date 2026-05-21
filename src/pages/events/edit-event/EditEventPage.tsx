@@ -1,4 +1,4 @@
-import "./edit-event.scss";
+﻿import "./edit-event.scss";
 import { useEffect, useReducer, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ const EditEventPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation("events");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const { profile } = useAuthContext();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -262,7 +262,7 @@ const EditEventPage = () => {
 
             <div className="field">
               <label className="field__label" htmlFor="end-time">
-                {t("create.endTime")}<span className="field__optional"> ({tc("fields.optional")})</span>
+                {t("create.endTime")}<span className="field__optional"> ({tCommon("fields.optional")})</span>
               </label>
               <div className="edit-event__time-box">
                 <Icon name="clock" size={24} className="edit-event__time-icon" />
@@ -356,7 +356,7 @@ const EditEventPage = () => {
                     className="edit-event__time-input"
                     aria-label={t("create.deadlineTime")}
                     value={state.deadlineTime}
-                    onChange={(e) => dispatch({ type: "SET_DEADLINE_TIME", payload: e.target.value })}
+                    onChange={(changeEvent) => dispatch({ type: "SET_DEADLINE_TIME", payload: changeEvent.target.value })}
                   />
                 </div>
               </div>
@@ -404,12 +404,12 @@ const EditEventPage = () => {
 
       <Modal
         isOpen={showDiscardModal}
-        header={tc("discard.title")}
-        message={tc("discard.message")}
+        header={tCommon("discard.title")}
+        message={tCommon("discard.message")}
         onDismiss={() => setShowDiscardModal(false)}
         buttons={[
-          { text: tc("buttons.cancel"), role: "cancel" },
-          { text: tc("discard.confirm"), role: "danger", handler: () => navigate(-1) },
+          { text: tCommon("buttons.cancel"), role: "cancel" },
+          { text: tCommon("discard.confirm"), role: "danger", handler: () => navigate(-1) },
         ]}
       />
       {deleteState.isLoading && <Loading />}

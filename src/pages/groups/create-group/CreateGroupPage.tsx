@@ -1,4 +1,4 @@
-import "./create-group.scss";
+﻿import "./create-group.scss";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
@@ -15,7 +15,7 @@ import {
 } from "../../../services/group.service";
 import { updateUserFields } from "../../../services/user.service";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import type { FirebaseError } from "../../../models/error.model";
+import { isFirebaseError } from "../../../utils/firebase-errors";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
@@ -25,7 +25,7 @@ interface CreateGroupFormData {
 
 const CreateGroupPage = () => {
   const { t } = useTranslation("groups");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const { user, profile, refreshProfile } = useAuthContext();
 
@@ -89,9 +89,8 @@ const CreateGroupPage = () => {
       navigate("/invite-group", { state: { fromCreate: true } });
       await refreshProfile();
     } catch (error: unknown) {
-      const firebaseError = error as FirebaseError;
-      if (firebaseError.code === "auth/network-request-failed") {
-        setErrorConnection(tc("errors.noConnection"));
+      if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
+        setErrorConnection(tCommon("errors.noConnection"));
         return;
       }
     } finally {
@@ -169,7 +168,7 @@ const CreateGroupPage = () => {
             })}
             error={
               errors.name?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.name?.type === "maxLength"
                   ? t("createGroup.errors.nameTooLong")
                   : undefined

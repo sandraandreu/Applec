@@ -36,7 +36,12 @@
       "Bash(git rm *)",
       "Bash(npm install *)",
       "Bash(dir *)",
-      "mcp__plugin_context7_context7__query-docs"
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\sandr\\\\Desktop\\\\applec\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "PowerShell(Get-NetTCPConnection *)",
+      "Bash(npx react-scripts *)",
+      "PowerShell(netstat *)"
     ]
   }
 }

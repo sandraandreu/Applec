@@ -38,22 +38,30 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
   }, [firebaseUser]);
 
   useEffect(() => {
+    let isMounted = true;
+
     const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (!isMounted) return;
       setIsLoading(true);
       setFirebaseUser(fbUser);
 
       if (fbUser) {
         const userProfile = await getUserProfile(fbUser.uid);
-        setProfile(userProfile);
+        if (isMounted) setProfile(userProfile);
       } else {
-        setProfile(null);
+        if (isMounted) setProfile(null);
       }
 
-      setIsLoading(false);
-      setIsInitialized(true);
+      if (isMounted) {
+        setIsLoading(false);
+        setIsInitialized(true);
+      }
     });
 
-    return unsubscribe;
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
 
   const contextValue = useMemo(

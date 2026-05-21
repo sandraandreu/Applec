@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+﻿import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import "./language.scss";
@@ -10,7 +10,7 @@ import SlideTransition from "../../../ui-kit/slide-transition/SlideTransition";
 
 const LanguagePage = () => {
   const { t } = useTranslation("onboarding");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,7 +45,7 @@ const LanguagePage = () => {
           <LanguageSelector />
 
           <Button
-            text={tc("buttons.continue")}
+            text={tCommon("buttons.continue")}
             onClick={() => navigate("/onboarding/group", { state: { direction: "forward" } })}
           />
         </div>

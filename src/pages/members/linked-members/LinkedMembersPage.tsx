@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+﻿import { useState, useLayoutEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -38,7 +38,7 @@ const LinkedMembersPage = () => {
   if (isLoading) return <Loading />;
 
   const myLinked = (group?.linkedMembers ?? []).filter(
-    (lm) => lm.ownerUid === user?.uid
+    (linkedMember) => linkedMember.ownerUid === user?.uid
   );
 
   return (
@@ -61,16 +61,16 @@ const LinkedMembersPage = () => {
           <EmptyState title={t("linked.empty")} variant="light" expand />
         ) : (
           <div className="linked-members-page__list">
-            {myLinked.map((lm) => (
+            {myLinked.map((linkedMember) => (
               <MemberCard
-                key={lm.id}
-                firstName={lm.firstName}
-                lastName={lm.lastName}
-                relationship={lm.relationship}
+                key={linkedMember.id}
+                firstName={linkedMember.firstName}
+                lastName={linkedMember.lastName}
+                relationship={linkedMember.relationship}
                 role="member"
                 showChevron={false}
                 showRole={false}
-                onEdit={() => navigate(`/members/linked/${lm.id}/edit`)}
+                onEdit={() => navigate(`/members/linked/${linkedMember.id}/edit`)}
               />
             ))}
           </div>

@@ -1,4 +1,4 @@
-import "./register.scss";
+﻿import "./register.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -35,7 +35,7 @@ const hasNumber = (value: string) => /[0-9]/.test(value);
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation("auth");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
 
   const [state, dispatch] = useReducer(registerReducer, initialRegisterState);
   const {
@@ -69,7 +69,7 @@ const RegisterPage = () => {
       ) {
         dispatch({
           type: "ERROR_CONNECTION",
-          message: tc("errors.noConnection"),
+          message: tCommon("errors.noConnection"),
         });
       } else {
         dispatch({ type: "REGISTER_ERROR" });
@@ -147,7 +147,7 @@ const RegisterPage = () => {
             })}
             error={
               errors.firstName?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.firstName?.type === "pattern"
                   ? t("register.errors.nameInvalid")
                   : undefined
@@ -168,7 +168,7 @@ const RegisterPage = () => {
             })}
             error={
               errors.lastName?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.lastName?.type === "pattern"
                   ? t("register.errors.nameInvalid")
                   : undefined
@@ -177,7 +177,7 @@ const RegisterPage = () => {
 
           <Input
             id="register-email"
-            label={tc("fields.email")}
+            label={tCommon("fields.email")}
             placeholder={t("register.emailPlaceholder")}
             type="text"
             required
@@ -189,16 +189,16 @@ const RegisterPage = () => {
             })}
             error={
               errors.email?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.email?.type === "pattern"
-                  ? tc("errors.emailInvalid")
+                  ? tCommon("errors.emailInvalid")
                   : undefined
             }
           />
 
           <Input
             id="register-password"
-            label={tc("fields.password")}
+            label={tCommon("fields.password")}
             placeholder={t("register.passwordPlaceholder")}
             type={showPassword ? "text" : "password"}
             required
@@ -214,7 +214,7 @@ const RegisterPage = () => {
             })}
             error={
               errors.password?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.password
                   ? t("register.errors.passwordInvalid")
                   : undefined
@@ -263,7 +263,7 @@ const RegisterPage = () => {
             })}
             error={
               errors.confirmPassword?.type === "required"
-                ? tc("errors.required")
+                ? tCommon("errors.required")
                 : errors.confirmPassword?.type === "validate"
                   ? t("register.errors.passwordMismatch")
                   : undefined
@@ -336,7 +336,7 @@ const RegisterPage = () => {
         onDismiss={() => dispatch({ type: "DISMISS_ERROR" })}
         buttons={[
           {
-            text: tc("buttons.close"),
+            text: tCommon("buttons.close"),
             role: "cancel",
           },
           {

@@ -1,4 +1,4 @@
-import "./verify-email.scss";
+﻿import "./verify-email.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -12,7 +12,7 @@ interface VerifyEmailLocationState {
 
 const VerifyEmailPage = () => {
   const { t } = useTranslation("auth");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuthContext();
@@ -57,7 +57,7 @@ const VerifyEmailPage = () => {
         <div className="verify-email-page__actions">
           <Button
             variant="secondary"
-            text={tc("buttons.resendEmail")}
+            text={tCommon("buttons.resendEmail")}
             onClick={handleResend}
             isLoading={isLoading}
           />

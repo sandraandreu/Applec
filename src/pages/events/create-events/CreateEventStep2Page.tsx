@@ -1,4 +1,4 @@
-import "./create-event.scss";
+﻿import "./create-event.scss";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
@@ -39,7 +39,7 @@ interface Props {
 
 const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack, initialData, eventType }, ref) => {
   const { t } = useTranslation("events");
-  const { t: tc } = useTranslation("common");
+  const { t: tCommon } = useTranslation("common");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialData?.date);
   const [currentMonth, setCurrentMonth] = useState<Date>(initialData?.date ?? new Date());
   const today = new Date();
@@ -142,7 +142,7 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
 
           <div className="field">
             <label className="field__label" htmlFor="end-time">
-              {t("create.endTime")}<span className="field__optional"> ({tc("fields.optional")})</span>
+              {t("create.endTime")}<span className="field__optional"> ({tCommon("fields.optional")})</span>
             </label>
             <div className="create-events-step2__time-box">
               <Icon name="clock" size={24} className="create-events-step2__time-icon" />

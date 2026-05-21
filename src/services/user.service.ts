@@ -32,6 +32,6 @@ export const updateUserFields = async (
   uid: string,
   fields: Partial<UserProfile>,
 ): Promise<void> => {
-  await updateDoc(doc(db, "users", uid), { ...fields });
+  await updateDoc(doc(db, "users", uid), fields);
 };
 
