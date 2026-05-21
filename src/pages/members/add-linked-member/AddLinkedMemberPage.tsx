@@ -89,33 +89,35 @@ const AddLinkedMemberPage = () => {
 
       <div className="add-linked-member-page__content">
         <form
-          className="add-linked-member-page__fields"
+          className="add-linked-member-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <Input
-            label={t("linked.firstName")}
-            id="linked-first-name"
-            placeholder={t("linked.firstNamePlaceholder")}
-            required
-            registration={register("firstName", { required: true })}
-            error={errors.firstName?.type === "required" ? tc("errors.required") : undefined}
-          />
-          <Input
-            label={t("linked.lastName")}
-            id="linked-last-name"
-            placeholder={t("linked.lastNamePlaceholder")}
-            required
-            registration={register("lastName", { required: true })}
-            error={errors.lastName?.type === "required" ? tc("errors.required") : undefined}
-          />
-          <Input
-            label={t("linked.relationship")}
-            id="linked-relationship"
-            placeholder={t("linked.relationshipPlaceholder")}
-            required
-            registration={register("relationship", { required: true })}
-            error={errors.relationship?.type === "required" ? tc("errors.required") : undefined}
-          />
+          <div className="add-linked-member-page__fields">
+            <Input
+              label={t("linked.firstName")}
+              id="linked-first-name"
+              placeholder={t("linked.firstNamePlaceholder")}
+              required
+              registration={register("firstName", { required: true })}
+              error={errors.firstName?.type === "required" ? tc("errors.required") : undefined}
+            />
+            <Input
+              label={t("linked.lastName")}
+              id="linked-last-name"
+              placeholder={t("linked.lastNamePlaceholder")}
+              required
+              registration={register("lastName", { required: true })}
+              error={errors.lastName?.type === "required" ? tc("errors.required") : undefined}
+            />
+            <Input
+              label={t("linked.relationship")}
+              id="linked-relationship"
+              placeholder={t("linked.relationshipPlaceholder")}
+              required
+              registration={register("relationship", { required: true })}
+              error={errors.relationship?.type === "required" ? tc("errors.required") : undefined}
+            />
+          </div>
 
           {errorConnection && (
             <span className="add-linked-member-page__error">

@@ -16,17 +16,10 @@ export const addLinkedMember = async (
 ): Promise<void> => {
   const docRef = await addDoc(collection(db, "groups", groupId, "linkedMembers"), {
     ownerUid,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    relationship: data.relationship,
+    ...data,
   });
   await updateDoc(doc(db, "users", ownerUid), {
-    linkedMembers: arrayUnion({
-      id: docRef.id,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      relationship: data.relationship,
-    }),
+    linkedMembers: arrayUnion({ id: docRef.id, ...data }),
   });
 };
 
