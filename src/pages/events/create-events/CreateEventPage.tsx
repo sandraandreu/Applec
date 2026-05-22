@@ -67,7 +67,7 @@ const CreateEventPage = () => {
         ...(state.step2Data.endTime && { endTime: state.step2Data.endTime }),
         ...(data.confirmationDeadline && { confirmationDeadline: data.confirmationDeadline }),
       });
-      navigate("/events");
+      navigate("/events", { replace: true });
     } catch (error) {
       dispatch({ type: "SET_ERROR", payload: getErrorKey(error) });
     }

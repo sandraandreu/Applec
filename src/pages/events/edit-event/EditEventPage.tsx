@@ -110,7 +110,7 @@ const EditEventPage = () => {
         ...(fields.endTime && { endTime: fields.endTime }),
         ...(confirmationDeadline && { confirmationDeadline }),
       });
-      navigate("/events", { state: { eventUpdated: true } });
+      navigate("/events", { replace: true, state: { eventUpdated: true } });
     } catch (error) {
       dispatch({ type: "SET_ERROR", payload: getErrorKey(error) });
     }
