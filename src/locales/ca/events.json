@@ -12,9 +12,7 @@
       "active": "Actius",
       "deadline-closed": "Termini tancat",
       "finished": "Finalitzats",
-      "upcoming": "Pròxims",
-      "pending": "Pendents de confirmar",
-      "past": "Passats"
+      "pending": "Pendents de confirmar"
     }
   },
   "status": {
@@ -144,13 +142,19 @@
     "editTitle": "Editar acompanyant",
     "editSave": "Guardar canvis",
     "editError": "No s'han pogut guardar els canvis. Torna-ho a intentar.",
-    "editSuccess": "Acompanyant actualitzat correctament"
+    "editSuccess": "Acompanyant actualitzat correctament",
+    "deleteBtn": "Eliminar acompanyant",
+    "deleteConfirm": "Eliminar acompanyant?",
+    "deleteMessage": "Aquesta acció no es pot desfer.",
+    "deleteSubmit": "Eliminar",
+    "deleteError": "No s'ha pogut eliminar l'acompanyant. Torna-ho a intentar."
   },
   "attendance": {
     "going": "Hi vaig",
     "notGoing": "No hi vaig",
     "deadlinePassed": "El termini de confirmació ha passat",
-    "error": "Error en desar la resposta"
+    "error": "Error en desar la resposta",
+    "success": "Assistència desada correctament"
   },
   "attendanceList": {
     "title": "Assistència",

@@ -10,6 +10,7 @@ import { getEventStatus } from "../../../models/event.model";
 import VoteSheet from "./vote-sheet/VoteSheet";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import MemberCard from "../../../components/members/MemberCard";
@@ -43,6 +44,7 @@ const EventDetailPage = () => {
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
+  const [showVoteSuccess, setShowVoteSuccess] = useState(false);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -112,7 +114,7 @@ const EventDetailPage = () => {
   const myLinkedMembers = (group?.linkedMembers ?? []).filter(
     (linkedMember) => linkedMember.ownerUid === user?.uid
   );
-  const hasVoted = !!myResponse || Object.keys(myLinkedResponses).length > 0;
+  const hasVoted = !!myResponse || myLinkedMembers.some(linkedMember => myLinkedResponses[linkedMember.id]);
   const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
     response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
 
@@ -196,9 +198,16 @@ const EventDetailPage = () => {
       });
       if (response) {
         setMemberResponses((prev) => ({ ...prev, [user.uid]: response }));
+      } else {
+        setMemberResponses((prev) => {
+          const next = { ...prev };
+          delete next[user.uid];
+          return next;
+        });
       }
       setLinkedResponses((prev) => ({ ...prev, [user.uid]: linkedVotes }));
       setVoteError(null);
+      setShowVoteSuccess(true);
     } catch {
       setVoteError(t("attendance.error"));
     }
@@ -206,6 +215,9 @@ const EventDetailPage = () => {
 
   return (
     <div className={`event-detail-page${isPast ? " event-detail-page--past" : ""}`} {...swipeHandlers}>
+      {showVoteSuccess && (
+        <SuccessBanner message={t("attendance.success")} onDismiss={() => setShowVoteSuccess(false)} />
+      )}
       <div className="event-detail-page__gradient-zone">
         <div className="event-detail-page__top-bar">
           <BackButton />

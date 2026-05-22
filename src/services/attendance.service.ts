@@ -1,4 +1,4 @@
-import { collection, getDocs, setDoc, doc, getDoc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, getDoc, deleteField, serverTimestamp } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { EventAttendanceData } from "../models/attendance.model";
 
@@ -59,12 +59,10 @@ export const saveAttendance = async (
   const payload: Record<string, unknown> = {
     userId,
     eventId,
-    confirmedAt: new Date(),
+    confirmedAt: serverTimestamp(),
     linkedResponses: data.linkedResponses,
+    response: data.response !== undefined ? data.response : deleteField(),
   };
-  if (data.response !== undefined) {
-    payload.response = data.response;
-  }
   await setDoc(
     doc(db, "groups", groupId, "events", eventId, "attendances", userId),
     payload,

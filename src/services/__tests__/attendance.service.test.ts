@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 import { saveAttendance } from "../attendance.service";
 
 vi.mock("../../plugins/firebase", () => ({ db: {} }));
@@ -11,6 +11,8 @@ vi.mock("firebase/firestore", async (importOriginal) => {
     setDoc: vi.fn().mockResolvedValue(undefined),
     doc: vi.fn().mockReturnValue("mock-doc-ref"),
     getDocs: vi.fn(),
+    serverTimestamp: vi.fn().mockReturnValue("mock-server-timestamp"),
+    deleteField: vi.fn().mockReturnValue("mock-delete-field"),
   };
 });
 
@@ -41,19 +43,15 @@ describe("saveAttendance", () => {
     );
   });
 
-  it("incluye confirmedAt de tipo Date en el documento", async () => {
-    const before = new Date();
+  it("incluye confirmedAt usando serverTimestamp", async () => {
     await saveAttendance("group1", "event1", "user1", {
       response: "no",
       linkedResponses: {},
     });
-    const after = new Date();
 
+    expect(serverTimestamp).toHaveBeenCalled();
     const payload = vi.mocked(setDoc).mock.calls[0][1] as Record<string, unknown>;
-    expect(payload.confirmedAt).toBeInstanceOf(Date);
-    const ts = (payload.confirmedAt as Date).getTime();
-    expect(ts).toBeGreaterThanOrEqual(before.getTime());
-    expect(ts).toBeLessThanOrEqual(after.getTime());
+    expect(payload.confirmedAt).toBe("mock-server-timestamp");
   });
 
   it("guarda linkedResponses en el documento", async () => {

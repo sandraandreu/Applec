@@ -81,17 +81,11 @@ const mockEventFinished: FallesEvent = {
   location: "Plaza del Ángel",
 };
 
-const adminFilterOptions: FilterOption[] = [
-  { key: "all", label: "Todos", count: 8 },
-  { key: "active", label: "Activos", count: 3 },
-  { key: "deadline-closed", label: "Plazo cerrado", count: 1 },
-  { key: "finished", label: "Finalizados", count: 4 },
-];
-
-const memberFilterOptions: FilterOption[] = [
-  { key: "all",      label: "Todos",    count: 8 },
-  { key: "upcoming", label: "Próximos", count: 4 },
-  { key: "past",     label: "Pasados",  count: 4 },
+const filterOptions: FilterOption[] = [
+  { key: "active",          label: "Activos",        count: 3 },
+  { key: "deadline-closed", label: "Plazo cerrado",  count: 1 },
+  { key: "finished",        label: "Finalizados",    count: 4 },
+  { key: "all",             label: "Todos",          count: 8 },
 ];
 
 const ColorSwatch = ({
@@ -157,8 +151,7 @@ const StyleGuide = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [toggleChecked, setToggleChecked] = useState(false);
-  const [adminFilter, setAdminFilter] = useState<FilterKey>("all");
-  const [memberFilter, setMemberFilter] = useState<FilterKey>("all");
+  const [eventsFilter, setEventsFilter] = useState<FilterKey>("active");
   const [bombKey, setBombKey] = useState(0);
   const [showBomb, setShowBomb] = useState(false);
 
@@ -962,27 +955,12 @@ const StyleGuide = () => {
 
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">EventsFilter</h3>
-          <div className="style-guide__stack">
-            <div className="style-guide__item">
-              <span className="style-guide__label">Admin / Organizador</span>
-              <div className="style-guide__filter-row">
-                <EventsFilter
-                  options={adminFilterOptions}
-                  selected={adminFilter}
-                  onChange={setAdminFilter}
-                />
-              </div>
-            </div>
-            <div className="style-guide__item">
-              <span className="style-guide__label">Miembro</span>
-              <div className="style-guide__filter-row">
-                <EventsFilter
-                  options={memberFilterOptions}
-                  selected={memberFilter}
-                  onChange={setMemberFilter}
-                />
-              </div>
-            </div>
+          <div className="style-guide__filter-row">
+            <EventsFilter
+              options={filterOptions}
+              selected={eventsFilter}
+              onChange={setEventsFilter}
+            />
           </div>
         </div>
 

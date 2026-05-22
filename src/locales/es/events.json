@@ -12,9 +12,7 @@
       "active": "Activos",
       "deadline-closed": "Plazo cerrado",
       "finished": "Finalizados",
-      "upcoming": "Próximos",
-      "pending": "Pendientes de confirmar",
-      "past": "Pasados"
+      "pending": "Pendientes de confirmar"
     }
   },
   "status": {
@@ -144,13 +142,19 @@
     "editTitle": "Editar acompañante",
     "editSave": "Guardar cambios",
     "editError": "No se han podido guardar los cambios. Inténtalo de nuevo.",
-    "editSuccess": "Acompañante actualizado correctamente"
+    "editSuccess": "Acompañante actualizado correctamente",
+    "deleteBtn": "Eliminar acompañante",
+    "deleteConfirm": "¿Eliminar acompañante?",
+    "deleteMessage": "Esta acción no se puede deshacer.",
+    "deleteSubmit": "Eliminar",
+    "deleteError": "No se ha podido eliminar el acompañante. Inténtalo de nuevo."
   },
   "attendance": {
     "going": "Voy",
     "notGoing": "No voy",
     "deadlinePassed": "El plazo de confirmación ha pasado",
-    "error": "Error al guardar la respuesta"
+    "error": "Error al guardar la respuesta",
+    "success": "Asistencia guardada correctamente"
   },
   "attendanceList": {
     "title": "Asistencia",
