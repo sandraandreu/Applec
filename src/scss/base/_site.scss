@@ -4,9 +4,9 @@
   margin: 0 auto;
   overflow-x: hidden;
   overscroll-behavior-x: none;
-}
 
-.page {
-  min-height: 100vh;
-  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom); // evita que el contenido quede tapado por el notch (arriba) y el home indicator (abajo) en iPhone
+  &__main > *:not(.main-layout) {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

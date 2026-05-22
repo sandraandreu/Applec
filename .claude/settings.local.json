@@ -41,7 +41,11 @@
       "Bash(Select-Object Name, PSIsContainer)",
       "PowerShell(Get-NetTCPConnection *)",
       "Bash(npx react-scripts *)",
-      "PowerShell(netstat *)"
+      "PowerShell(netstat *)",
+      "Bash(npx cap *)",
+      "Bash(pod install *)",
+      "Bash(DEBUG=* npx cap open ios)",
+      "Bash(npm ls *)"
     ]
   }
 }
