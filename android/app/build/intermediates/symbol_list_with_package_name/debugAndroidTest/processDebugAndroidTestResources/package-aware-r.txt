@@ -1,3 +1,0 @@
-com.applec.app111.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme
