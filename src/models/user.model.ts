@@ -26,7 +26,6 @@ export interface UserPermissions {
   canEditOwnEvents: boolean;
   canEditAllEvents: boolean;
   canManageMembers: boolean;
-  canSeeDetailedFilters: boolean;
   canInviteMembers: boolean;
 }
 
@@ -43,7 +42,6 @@ export function computePermissions(role: UserProfile["role"] | undefined): UserP
     canEditOwnEvents: isOrganizer,
     canEditAllEvents: isAdmin,
     canManageMembers: isAdmin,
-    canSeeDetailedFilters: isAdmin || isOrganizer,
     canInviteMembers: isAdmin || isOrganizer,
   };
 }

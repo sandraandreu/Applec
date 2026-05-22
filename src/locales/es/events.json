@@ -12,9 +12,7 @@
       "active": "Activos",
       "deadline-closed": "Plazo cerrado",
       "finished": "Finalizados",
-      "upcoming": "Próximos",
-      "pending": "Pendientes de confirmar",
-      "past": "Pasados"
+      "pending": "Pendientes de confirmar"
     }
   },
   "status": {

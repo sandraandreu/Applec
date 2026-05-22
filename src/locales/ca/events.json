@@ -12,9 +12,7 @@
       "active": "Actius",
       "deadline-closed": "Termini tancat",
       "finished": "Finalitzats",
-      "upcoming": "Pròxims",
-      "pending": "Pendents de confirmar",
-      "past": "Passats"
+      "pending": "Pendents de confirmar"
     }
   },
   "status": {

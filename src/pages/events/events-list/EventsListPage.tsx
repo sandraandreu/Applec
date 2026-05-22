@@ -24,9 +24,7 @@ const EventsListPage = () => {
   const [attendances, setAttendances] = useState<Record<string, "yes" | "no">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [filter, setFilter] = useState<FilterKey>(
-    user?.permissions.canSeeDetailedFilters ? "active" : "upcoming"
-  );
+  const [filter, setFilter] = useState<FilterKey>("active");
   const [showEventUpdated, setShowEventUpdated] = useState(
     !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
   );
@@ -46,7 +44,6 @@ const EventsListPage = () => {
     setHasError(false);
 
     const groupId = profile.groupId;
-    const isMember = !user.permissions.canCreateEvents;
 
     (async () => {
       const eventsData = await getEvents(groupId);
@@ -58,7 +55,7 @@ const EventsListPage = () => {
       }
       setEvents(eventsData);
 
-      if (isMember && eventsData.length > 0) {
+      if (eventsData.length > 0) {
         const eventIds = eventsData.map(e => e.id);
         const attendancesData = await getMyAttendances(groupId, user.uid, eventIds);
         if (!isMounted) return;
@@ -73,29 +70,19 @@ const EventsListPage = () => {
 
   const filterOptions: FilterOption[] = useMemo(() => {
     const countEvents = (predicate: (event: FallesEvent) => boolean) => events.filter(predicate).length;
-
-    if (!user?.permissions.canSeeDetailedFilters) {
-      return [
-        { key: "all",      label: t("events.filters.all"),      count: events.length },
-        { key: "upcoming", label: t("events.filters.upcoming"), count: countEvents(event => getEventStatus(event) !== "finalizado") },
-        { key: "past",     label: t("events.filters.past"),     count: countEvents(event => getEventStatus(event) === "finalizado") },
-      ];
-    }
     return [
       { key: "active",          label: t("events.filters.active"),          count: countEvents(event => getEventStatus(event) === "activo") },
       { key: "deadline-closed", label: t("events.filters.deadline-closed"), count: countEvents(event => getEventStatus(event) === "plazo-cerrado") },
       { key: "finished",        label: t("events.filters.finished"),        count: countEvents(event => getEventStatus(event) === "finalizado") },
       { key: "all",             label: t("events.filters.all"),             count: events.length },
     ];
-  }, [events, user?.permissions.canSeeDetailedFilters, t]);
+  }, [events, t]);
 
   const filteredEvents = useMemo(() => {
     switch (filter) {
       case "active":          return events.filter(event => getEventStatus(event) === "activo");
       case "deadline-closed": return events.filter(event => getEventStatus(event) === "plazo-cerrado");
       case "finished":        return events.filter(event => getEventStatus(event) === "finalizado");
-      case "upcoming":        return events.filter(event => getEventStatus(event) !== "finalizado");
-      case "past":            return events.filter(event => getEventStatus(event) === "finalizado");
       default:                return events;
     }
   }, [events, filter]);
