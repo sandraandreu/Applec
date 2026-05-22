@@ -162,7 +162,8 @@
     "notGoing": "No van",
     "noResponse": "Sin respuesta",
     "empty": "Sin respuestas aún",
-    "error": "Error al cargar la asistencia"
+    "error": "Error al cargar la asistencia",
+    "total": "Total"
   },
   "validation": {
     "nameRequired": "El nombre del evento es obligatorio",

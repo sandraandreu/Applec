@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import { getEventStatus } from "../../models/event.model";
-import type { UserPermissions } from "../../models/user.model";
 import Badge from "../../ui-kit/badge/Badge";
 import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 import "./events.scss";
@@ -13,11 +12,10 @@ type AttendanceResponse = "yes" | "no" | null;
 
 interface EventCardProps {
   event: FallesEvent;
-  permissions: UserPermissions;
   attendanceResponse?: AttendanceResponse;
 }
 
-const EventCard = ({ event, permissions, attendanceResponse = null }: EventCardProps) => {
+const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
   const { t, i18n } = useTranslation("events");
 
   const status = getEventStatus(event);

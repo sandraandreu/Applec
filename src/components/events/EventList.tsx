@@ -38,7 +38,6 @@ const EventList = ({ events, permissions, attendances, hasAnyEvents }: EventList
         <li key={event.id}>
           <EventCard
             event={event}
-            permissions={permissions}
             attendanceResponse={attendances?.[event.id] ?? null}
           />
         </li>

@@ -162,7 +162,8 @@
     "notGoing": "No hi van",
     "noResponse": "Sense resposta",
     "empty": "Sense respostes encara",
-    "error": "Error en carregar l'assistència"
+    "error": "Error en carregar l'assistència",
+    "total": "Total"
   },
   "validation": {
     "nameRequired": "El nom de l'esdeveniment és obligatori",

@@ -19,6 +19,7 @@ import EventsFilter from "../../../components/events/EventsFilter";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EmptyState from "../../../ui-kit/empty-state/EmptyState";
 import Badge from "../../../ui-kit/badge/Badge";
+import AttendanceDonut from "./attendance-donut/AttendanceDonut";
 import "./event-detail.scss";
 import { getIntlLocale } from "../../../utils/dates";
 
@@ -314,17 +315,24 @@ const EventDetailPage = () => {
             </p>
           </div>
         )}
+        {event.requiresConfirmation && (
+          <div className="event-detail-page__attendance-summary">
+            <span className="event-detail-page__section-label">
+              {t("attendanceList.title")}
+            </span>
+            <AttendanceDonut
+              goingCount={goingCount}
+              notGoingCount={notGoingCount}
+              pendingCount={pendingCount}
+              total={totalMembers}
+            />
+          </div>
+        )}
         <div className="event-detail-page__attendees">
           <div className="event-detail-page__attendees-header">
             <div className="event-detail-page__attendees-left">
               <span className="event-detail-page__attendees-label">
                 {t("detail.attendees")}
-              </span>
-              <span className="event-detail-page__attendees-count">
-                <span className="event-detail-page__attendees-count-going">
-                  {goingCount}
-                </span>
-                /{totalMembers}
               </span>
             </div>
             <div className="event-detail-page__attendees-right">

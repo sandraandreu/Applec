@@ -883,22 +883,18 @@ const StyleGuide = () => {
           <h3 className="style-guide__component-name">EventCard</h3>
           <div className="style-guide__stack">
             <span className="style-guide__label">Admin — botón editar</span>
-            <EventCard event={mockEventBase} permissions={computePermissions("admin")} />
+            <EventCard event={mockEventBase} />
 
             <span className="style-guide__label">
               Organizador — evento de otro (sin editar)
             </span>
-            <EventCard
-              event={mockEventBase}
-              permissions={computePermissions("organizer")}
-              />
+            <EventCard event={mockEventBase} />
 
             <span className="style-guide__label">
               Miembro — sin respuesta (punto naranja)
             </span>
             <EventCard
               event={mockEventBase}
-              permissions={computePermissions("member")}
               attendanceResponse={null}
             />
 
@@ -907,7 +903,6 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              permissions={computePermissions("member")}
               attendanceResponse="yes"
             />
 
@@ -916,7 +911,6 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              permissions={computePermissions("member")}
               attendanceResponse="no"
             />
 
@@ -925,31 +919,21 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventSpecial}
-              permissions={computePermissions("member")}
               attendanceResponse="yes"
             />
 
             <span className="style-guide__label">
               Sin confirmación requerida (sin indicador)
             </span>
-            <EventCard
-              event={mockEventNoConfirmation}
-              permissions={computePermissions("member")}
-              />
+            <EventCard event={mockEventNoConfirmation} />
 
             <span className="style-guide__label">Nombre largo (truncado)</span>
-            <EventCard
-              event={mockEventLongName}
-              permissions={computePermissions("admin")}
-              />
+            <EventCard event={mockEventLongName} />
 
             <span className="style-guide__label">
               Evento finalizado (badge finalizado)
             </span>
-            <EventCard
-              event={mockEventFinished}
-              permissions={computePermissions("admin")}
-              />
+            <EventCard event={mockEventFinished} />
           </div>
         </div>
 

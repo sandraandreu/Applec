@@ -119,6 +119,11 @@
     color: var(--color-text-secondary);
   }
 
+  &__section-label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+  }
+
   &__description {
     display: flex;
     flex-direction: column;
@@ -128,6 +133,12 @@
   &__description-label {
     font-size: var(--font-size-body-s);
     color: var(--color-text-secondary);
+  }
+
+  &__attendance-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
   }
 
   &__description-text {
@@ -178,16 +189,6 @@
     display: flex;
     align-items: center;
     gap: var(--gap-compact);
-  }
-
-  &__attendees-count {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
-  &__attendees-count-going {
-    color: var(--color-brand);
-    font-weight: var(--font-weight-bold);
   }
 
   &__attendee-group {
