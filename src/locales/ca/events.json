@@ -142,7 +142,12 @@
     "editTitle": "Editar acompanyant",
     "editSave": "Guardar canvis",
     "editError": "No s'han pogut guardar els canvis. Torna-ho a intentar.",
-    "editSuccess": "Acompanyant actualitzat correctament"
+    "editSuccess": "Acompanyant actualitzat correctament",
+    "deleteBtn": "Eliminar acompanyant",
+    "deleteConfirm": "Eliminar acompanyant?",
+    "deleteMessage": "Aquesta acció no es pot desfer.",
+    "deleteSubmit": "Eliminar",
+    "deleteError": "No s'ha pogut eliminar l'acompanyant. Torna-ho a intentar."
   },
   "attendance": {
     "going": "Hi vaig",

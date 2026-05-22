@@ -5,7 +5,7 @@ import { useSwipeable } from "react-swipeable";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
-import { editLinkedMember } from "../../../services/linked-member.service";
+import { editLinkedMember, deleteLinkedMember } from "../../../services/linked-member.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
@@ -31,6 +31,8 @@ const EditLinkedMemberPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
 
   const {
     register,
@@ -74,6 +76,24 @@ const EditLinkedMemberPage = () => {
       setErrorConnection(t("linked.editError"));
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!profile?.groupId || !user?.uid || !id) return;
+    const linked = group?.linkedMembers.find((linkedMember) => linkedMember.id === id);
+    if (!linked) return;
+    setDeleteState({ isLoading: true, error: null });
+    try {
+      await deleteLinkedMember(profile.groupId, id, user.uid, {
+        firstName: linked.firstName,
+        lastName: linked.lastName,
+        relationship: linked.relationship,
+      });
+      await refreshGroup();
+      navigate("/members/linked", { replace: true });
+    } catch {
+      setDeleteState({ isLoading: false, error: t("linked.deleteError") });
     }
   };
 
@@ -127,12 +147,20 @@ const EditLinkedMemberPage = () => {
             />
           </div>
 
-          {errorConnection && (
+          {(errorConnection || deleteState.error) && (
             <span className="edit-linked-member-page__error">
               <Icon name="error-circle" size={24} className="icon" />
-              {errorConnection}
+              {errorConnection || deleteState.error}
             </span>
           )}
+
+          <button
+            type="button"
+            className="edit-linked-member-page__delete-btn"
+            onClick={() => setShowDeleteModal(true)}
+          >
+            {t("linked.deleteBtn")}
+          </button>
 
           {isDirty && (
             <div className="edit-linked-member-page__actions">
@@ -158,6 +186,18 @@ const EditLinkedMemberPage = () => {
           { text: tCommon("discard.confirm"), role: "danger", handler: handleDiscard },
         ]}
       />
+
+      <Modal
+        isOpen={showDeleteModal}
+        header={t("linked.deleteConfirm")}
+        message={t("linked.deleteMessage")}
+        onDismiss={() => setShowDeleteModal(false)}
+        buttons={[
+          { text: tCommon("buttons.cancel"), role: "cancel" },
+          { text: t("linked.deleteSubmit"), role: "danger", handler: handleDelete },
+        ]}
+      />
+      {deleteState.isLoading && <Loading />}
     </div>
   );
 };

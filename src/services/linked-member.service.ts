@@ -1,4 +1,4 @@
-﻿import { collection, getDocs, getDoc, doc, updateDoc, writeBatch, arrayUnion } from "firebase/firestore";
+﻿import { collection, getDocs, getDoc, doc, updateDoc, deleteDoc, writeBatch, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { LinkedMember } from "../models/user.model";
 
@@ -37,6 +37,18 @@ export const editLinkedMember = async (
     linkedMember.id === linkedMemberId ? { ...linkedMember, ...data } : linkedMember
   );
   await updateDoc(doc(db, "users", ownerUid), { linkedMembers: updatedLinkedMembers });
+};
+
+export const deleteLinkedMember = async (
+  groupId: string,
+  linkedMemberId: string,
+  ownerUid: string,
+  linkedMemberData: { firstName: string; lastName: string; relationship: string },
+): Promise<void> => {
+  await deleteDoc(doc(db, "groups", groupId, "linkedMembers", linkedMemberId));
+  await updateDoc(doc(db, "users", ownerUid), {
+    linkedMembers: arrayRemove({ id: linkedMemberId, ownerUid, ...linkedMemberData }),
+  });
 };
 
 export const getGroupLinkedMembers = async (groupId: string): Promise<LinkedMemberData[] | null> => {
