@@ -45,18 +45,28 @@ const EventsListPage = () => {
     let isMounted = true;
     setHasError(false);
 
+    const groupId = profile.groupId;
     const isMember = !user.permissions.canCreateEvents;
 
-    Promise.all([
-      getEvents(profile.groupId),
-      isMember ? getMyAttendances(user.uid) : Promise.resolve({}),
-    ]).then(([eventsData, attendancesData]) => {
+    (async () => {
+      const eventsData = await getEvents(groupId);
       if (!isMounted) return;
-      setIsLoading(false);
-      if (eventsData === null) { setHasError(true); return; }
+      if (eventsData === null) {
+        setHasError(true);
+        setIsLoading(false);
+        return;
+      }
       setEvents(eventsData);
-      setAttendances(attendancesData ?? {});
-    });
+
+      if (isMember && eventsData.length > 0) {
+        const eventIds = eventsData.map(e => e.id);
+        const attendancesData = await getMyAttendances(groupId, user.uid, eventIds);
+        if (!isMounted) return;
+        setAttendances(attendancesData ?? {});
+      }
+
+      setIsLoading(false);
+    })();
 
     return () => { isMounted = false; };
   }, [profile?.groupId, user]);
