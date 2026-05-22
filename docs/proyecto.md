@@ -115,8 +115,8 @@ El estado (`activo` | `plazo-cerrado` | `finalizado`) se deriva con `getEventSta
 interface Attendance {
   userId: string;
   eventId: string;
-  response: "yes" | "no";
-  confirmedAt: Date;
+  response?: "yes" | "no";
+  confirmedAt: Timestamp;   // serverTimestamp() de Firestore
   linkedResponses?: { [linkedMemberId: string]: "yes" | "no" };
 }
 ```
@@ -163,7 +163,8 @@ El menú de miembros tiene menos ítems que el de admin/organizadores (las pági
 
 **Lista de eventos** (`/events`) ✓ Implementado
 - Lista de eventos del grupo con fecha, nombre, lugar y hora
-- Filtros diferenciados por rol: admin/org ven Activos · Plazo cerrado · Finalizados; miembro ve Próximos · Pendientes de confirmar · Pasados
+- Filtros iguales para todos los roles: Activos · Plazo cerrado · Finalizados · Todos
+- Todos los roles ven el indicador de su propia asistencia en cada tarjeta
 - Tarjeta con fondo degradado azul si `isSpecial === true`
 - Icono de editar en tarjetas (admin: todas; organizer: solo las propias)
 
