@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { getEventById, deleteEvent } from "../../../services/event.service";
-import { getEventAttendances } from "../../../services/attendance.service";
+import { getEventAttendances, saveAttendance } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import VoteSheet from "./vote-sheet/VoteSheet";
 import type { FallesEvent } from "../../../models/event.model";
@@ -19,6 +19,7 @@ import Icon from "../../../ui-kit/icons/icon/Icon";
 import EmptyState from "../../../ui-kit/empty-state/EmptyState";
 import Badge from "../../../ui-kit/badge/Badge";
 import "./event-detail.scss";
+import { getIntlLocale } from "../../../utils/dates";
 
 const EventDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -41,6 +42,7 @@ const EventDetailPage = () => {
   const [showAllAttendees, setShowAllAttendees] = useState(false);
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
   const [showVoteSheet, setShowVoteSheet] = useState(false);
+  const [voteError, setVoteError] = useState<string | null>(null);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -68,6 +70,9 @@ const EventDetailPage = () => {
       return;
     }
     let isMounted = true;
+    setIsLoading(true);
+    setMemberResponses({});
+    setLinkedResponses({});
 
     Promise.all([
       getEventById(profile.groupId, id),
@@ -102,6 +107,12 @@ const EventDetailPage = () => {
 
   const eventStatus = getEventStatus(event);
   const isPast = eventStatus === "finalizado";
+  const myResponse = user?.uid ? memberResponses[user.uid] : undefined;
+  const myLinkedResponses = user?.uid ? (linkedResponses[user.uid] ?? {}) : {};
+  const myLinkedMembers = (group?.linkedMembers ?? []).filter(
+    (linkedMember) => linkedMember.ownerUid === user?.uid
+  );
+  const hasVoted = !!myResponse || Object.keys(myLinkedResponses).length > 0;
   const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
     response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
 
@@ -121,7 +132,7 @@ const EventDetailPage = () => {
   const goingCount = allRows.filter(r => r.attendance === "going").length;
 
   const rawDate = event.date.toLocaleDateString(
-    i18n.language === "ca" ? "ca-ES" : "es-ES",
+    getIntlLocale(i18n.language),
     { weekday: "long", day: "numeric", month: "long" },
   );
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
@@ -170,6 +181,26 @@ const EventDetailPage = () => {
       navigate("/events", { replace: true });
     } catch {
       setDeleteState({ isLoading: false, error: t("delete.error") });
+    }
+  };
+
+  const handleVoteSave = async (
+    response: "yes" | "no" | undefined,
+    linkedVotes: Record<string, "yes" | "no">
+  ) => {
+    if (!profile?.groupId || !id || !user?.uid) return;
+    try {
+      await saveAttendance(profile.groupId, id, user.uid, {
+        response,
+        linkedResponses: linkedVotes,
+      });
+      if (response) {
+        setMemberResponses((prev) => ({ ...prev, [user.uid]: response }));
+      }
+      setLinkedResponses((prev) => ({ ...prev, [user.uid]: linkedVotes }));
+      setVoteError(null);
+    } catch {
+      setVoteError(t("attendance.error"));
     }
   };
 
@@ -351,27 +382,26 @@ const EventDetailPage = () => {
           deadline={
             event.confirmationDeadline
               ? event.confirmationDeadline.toLocaleDateString(
-                  i18n.language === "ca" ? "ca-ES" : "es-ES",
+                  getIntlLocale(i18n.language),
                   { day: "numeric", month: "long" },
                 )
               : undefined
           }
-          linkedMembers={
-            (group?.linkedMembers ?? [])
-              .filter((linkedMember) => linkedMember.ownerUid === user?.uid)
-              .map((linkedMember) => ({
-                id: linkedMember.id,
-                firstName: linkedMember.firstName,
-                lastName: linkedMember.lastName,
-                relationship: linkedMember.relationship ?? "",
-              }))
-          }
+          linkedMembers={myLinkedMembers.map((linkedMember) => ({
+            id: linkedMember.id,
+            firstName: linkedMember.firstName,
+            lastName: linkedMember.lastName,
+            relationship: linkedMember.relationship ?? "",
+          }))}
           onAddLinked={() => {
             setShowVoteSheet(false);
             navigate("/members/linked/new", {
               state: { returnTo: `/events/${id}`, openVoteSheet: true },
             });
           }}
+          initialResponse={myResponse}
+          initialLinkedResponses={myLinkedResponses}
+          onSave={handleVoteSave}
         />
 
         {deleteState.error && (
@@ -382,31 +412,81 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      {(eventStatus === "activo" || (!user?.permissions.canCreateEvents && eventStatus === "plazo-cerrado")) && (
+      {eventStatus !== "finalizado" && event.requiresConfirmation && (
         <div className="event-detail-page__vote-sticky">
-          {eventStatus === "activo" && (
+          {hasVoted ? (
+            <div className="event-detail-page__vote-summary">
+              <div className="event-detail-page__vote-own-row">
+                <span className="event-detail-page__vote-label">{t("vote.myVote")}</span>
+                {myResponse ? (
+                  <span className={`event-detail-page__vote-own-chip event-detail-page__vote-own-chip--${myResponse === "yes" ? "going" : "not-going"}`}>
+                    <Icon name={myResponse === "yes" ? "check-bold" : "x-mark"} size={20} aria-hidden="true" />
+                    {myResponse === "yes" ? t("attendance.going") : t("attendance.notGoing")}
+                  </span>
+                ) : (
+                  <span className="event-detail-page__vote-own-chip event-detail-page__vote-own-chip--pending">
+                    –
+                  </span>
+                )}
+              </div>
+              {myLinkedMembers.filter(linked => myLinkedResponses[linked.id]).length > 0 && (
+                <ul className="event-detail-page__vote-linked-list">
+                  {myLinkedMembers
+                    .filter(linked => myLinkedResponses[linked.id])
+                    .map(linked => (
+                      <li key={linked.id} className="event-detail-page__vote-linked-row">
+                        <span className="event-detail-page__vote-linked-name">
+                          {linked.firstName}
+                        </span>
+                        <span className={`event-detail-page__vote-linked-chip event-detail-page__vote-linked-chip--${myLinkedResponses[linked.id] === "yes" ? "going" : "not-going"}`}>
+                          <Icon name={myLinkedResponses[linked.id] === "yes" ? "check-bold" : "x-mark"} size={16} aria-hidden="true" />
+                          {myLinkedResponses[linked.id] === "yes" ? t("vote.yes") : t("vote.no")}
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              )}
+              {eventStatus === "activo" && (
+                <Button
+                  variant="primary"
+                  text={t("vote.modify")}
+                  onClick={() => setShowVoteSheet(true)}
+                />
+              )}
+            </div>
+          ) : (
             <>
-              {event.confirmationDeadline && (
-                <p className="event-detail-page__vote-deadline">
-                  <Icon name="clock" size={20} aria-hidden="true" />
-                  {t("vote.deadline", {
-                    date: event.confirmationDeadline.toLocaleDateString(
-                      i18n.language === "ca" ? "ca-ES" : "es-ES",
-                      { day: "numeric", month: "long" },
-                    ),
-                  })}
+              {eventStatus === "activo" && (
+                <>
+                  {event.confirmationDeadline && (
+                    <p className="event-detail-page__vote-deadline">
+                      <Icon name="clock" size={20} aria-hidden="true" />
+                      {t("vote.deadline", {
+                        date: event.confirmationDeadline.toLocaleDateString(
+                          getIntlLocale(i18n.language),
+                          { day: "numeric", month: "long" },
+                        ),
+                      })}
+                    </p>
+                  )}
+                  <Button
+                    variant="especial"
+                    text={t("vote.cta")}
+                    onClick={() => setShowVoteSheet(true)}
+                  />
+                </>
+              )}
+              {eventStatus === "plazo-cerrado" && (
+                <p className="event-detail-page__vote-closed-info">
+                  {t("vote.closed")}
                 </p>
               )}
-              <Button
-                variant="especial"
-                text={t("vote.cta")}
-                onClick={() => setShowVoteSheet(true)}
-              />
             </>
           )}
-          {!user?.permissions.canCreateEvents && eventStatus === "plazo-cerrado" && (
-            <p className="event-detail-page__vote-closed-info">
-              {t("vote.closed")}
+          {voteError && (
+            <p className="event-detail-page__vote-error">
+              <Icon name="error-circle" size={20} aria-hidden="true" />
+              {voteError}
             </p>
           )}
         </div>
