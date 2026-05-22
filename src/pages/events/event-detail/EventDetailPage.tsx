@@ -52,7 +52,7 @@ const EventDetailPage = () => {
   useLayoutEffect(() => {
     const el = stickyRef.current;
     if (!el) return;
-    const observer = new ResizeObserver(() => setStickyHeight(el.offsetHeight));
+    const observer = new ResizeObserver(() => setStickyHeight(el.offsetHeight + 16));
     observer.observe(el);
     return () => observer.disconnect();
   }, [memberResponses, linkedResponses]);
