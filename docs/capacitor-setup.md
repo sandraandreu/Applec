@@ -32,6 +32,8 @@ npx cap add ios
 npx cap add android
 ```
 
+> Las carpetas `android/` e `ios/` que hay ahora son de un proyecto Ionic anterior. Hay que borrarlas antes de ejecutar `npx cap add ios/android`.
+
 ---
 
 ## Paso 2 — Script de build + sync
@@ -47,7 +49,7 @@ npx cap sync
 
 ---
 
-## Paso 3 — Plugins necesarios
+## Paso 3 — Plugins del sistema
 
 ### Back button de Android (`@capacitor/app`)
 
@@ -62,7 +64,6 @@ Conectarlo con React Router en `App.tsx` (o en un hook `useAndroidBack`):
 
 ```ts
 import { App } from '@capacitor/app';
-import { useNavigate } from 'react-router-dom';
 
 App.addListener('backButton', ({ canGoBack }) => {
   if (canGoBack) {
@@ -75,7 +76,7 @@ App.addListener('backButton', ({ canGoBack }) => {
 
 ### Status bar (`@capacitor/status-bar`)
 
-Permite controlar el color y estilo de la barra de estado del móvil.
+Controla el color y estilo de la barra de estado del móvil.
 
 ```bash
 npm install @capacitor/status-bar
@@ -91,7 +92,7 @@ StatusBar.setStyle({ style: Style.Light }); // texto oscuro sobre fondo claro
 StatusBar.setBackgroundColor({ color: '#FFFFFF' }); // solo Android
 ```
 
-### Keyboard (`@capacitor/keyboard`)
+### Teclado (`@capacitor/keyboard`)
 
 Evita que el teclado tape los inputs de la parte inferior.
 
@@ -105,7 +106,7 @@ Configuración en `capacitor.config.ts`:
 ```ts
 plugins: {
   Keyboard: {
-    resize: 'body',     // iOS: redimensiona el body al subir el teclado
+    resize: 'body',
     resizeOnFullScreen: true,
   },
 },
@@ -113,7 +114,144 @@ plugins: {
 
 ---
 
-## Paso 4 — Abrir en Xcode / Android Studio
+## Paso 4 — Plugins de funcionalidades nativas
+
+### Cámara y galería (`@capacitor/camera`)
+
+Para subir foto de perfil u otras imágenes desde la cámara o la galería del móvil.
+
+```bash
+npm install @capacitor/camera
+npx cap sync
+```
+
+**Permisos requeridos:**
+
+iOS — añadir en `ios/App/App/Info.plist`:
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Necesitamos acceso a la cámara para que puedas subir tu foto de perfil.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Necesitamos acceso a la galería para que puedas elegir tu foto de perfil.</string>
+```
+
+Android — ya incluido automáticamente por el plugin en `AndroidManifest.xml`.
+
+Uso básico:
+
+```ts
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+
+const photo = await Camera.getPhoto({
+  resultType: CameraResultType.DataUrl,
+  source: CameraSource.Prompt, // pregunta si usar cámara o galería
+  quality: 80,
+});
+```
+
+---
+
+### Compartir (`@capacitor/share`)
+
+Abre el share sheet nativo del sistema (WhatsApp, guardar imagen, correo, etc.).
+
+```bash
+npm install @capacitor/share
+npx cap sync
+```
+
+No requiere permisos adicionales.
+
+Uso básico:
+
+```ts
+import { Share } from '@capacitor/share';
+
+await Share.share({
+  title: 'Applec',
+  text: 'Únete a mi falla en Applec',
+  url: 'https://applec.app',
+});
+```
+
+---
+
+### Push notifications (`@capacitor/push-notifications`)
+
+Para notificaciones push (recordatorios de eventos, novedades de la falla, etc.).
+
+```bash
+npm install @capacitor/push-notifications
+npx cap sync
+```
+
+Es el plugin más complejo — requiere configuración en dos sitios:
+
+**Firebase Cloud Messaging (FCM):**
+1. Ir a Firebase Console → Project Settings → Cloud Messaging
+2. Descargar `google-services.json` (Android) y `GoogleService-Info.plist` (iOS)
+3. Colocarlos en las carpetas nativas correspondientes
+
+**APNs (Apple Push Notification service) — solo iOS:**
+1. Necesita una cuenta de Apple Developer de pago
+2. Crear un certificado APNs o Auth Key en developer.apple.com
+3. Subir la key a Firebase Console
+
+Uso básico:
+
+```ts
+import { PushNotifications } from '@capacitor/push-notifications';
+
+await PushNotifications.requestPermissions();
+await PushNotifications.register();
+
+PushNotifications.addListener('registration', (token) => {
+  // guardar el token en Firestore asociado al usuario
+});
+```
+
+---
+
+### Portapapeles (`@capacitor/clipboard`)
+
+Para copiar códigos de invitación, links, etc.
+
+```bash
+npm install @capacitor/clipboard
+npx cap sync
+```
+
+No requiere permisos adicionales.
+
+```ts
+import { Clipboard } from '@capacitor/clipboard';
+
+await Clipboard.write({ string: codigoInvitacion });
+```
+
+---
+
+### Vibración / haptics (`@capacitor/haptics`)
+
+Feedback táctil al hacer acciones (confirmar asistencia, guardar, etc.). Mejora mucho la sensación nativa.
+
+```bash
+npm install @capacitor/haptics
+npx cap sync
+```
+
+No requiere permisos adicionales.
+
+```ts
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+
+await Haptics.impact({ style: ImpactStyle.Medium }); // vibración media
+await Haptics.notification({ type: NotificationType.Success }); // patrón de éxito
+```
+
+---
+
+## Paso 5 — Abrir en Xcode / Android Studio
 
 ```bash
 npx cap open ios      # abre Xcode
@@ -126,6 +264,5 @@ Desde ahí se hace el build nativo y se instala en el dispositivo o simulador.
 
 ## Notas
 
-- Las carpetas `android/` e `ios/` que existen ahora son de un proyecto Ionic anterior. Hay que borrarlas antes de hacer `npx cap add ios/android` para empezar limpio.
 - Si en el futuro se añade Google Sign-in u otro OAuth, hay que usar `@capacitor-firebase/authentication` en vez del SDK web nativo de Firebase Auth.
 - Las fuentes (Google Fonts, Fontshare) se cargan de CDN. Para soportar offline hay que auto-hostarlas en `public/`.
