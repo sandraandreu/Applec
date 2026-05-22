@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import JoinRequestItem from "../join-request-item/JoinRequestItem";
+import PageTransition from "../../../ui-kit/page-transition/PageTransition";
 import "./join-requests.scss";
 
 const JoinRequestsPage = () => {
@@ -14,6 +15,7 @@ const JoinRequestsPage = () => {
   ];
 
   return (
+    <PageTransition>
     <div className="join-requests-page">
       <div className="join-requests-page__header">
         <BackButton />
@@ -32,6 +34,7 @@ const JoinRequestsPage = () => {
         ))}
       </ul>
     </div>
+    </PageTransition>
   );
 };
 

@@ -4,6 +4,7 @@ import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton"
 import NotificationItem from "./notification-item/NotificationItem";
 import JoinRequestItem from "./join-request-item/JoinRequestItem";
 import Button from "../../ui-kit/button/Button";
+import PageTransition from "../../ui-kit/page-transition/PageTransition";
 import type { NotificationIconBg } from "./notification-item/NotificationItem";
 import type { IconName } from "../../ui-kit/icons/icon/Icon";
 import "./notifications.scss";
@@ -164,6 +165,7 @@ const NotificationsPage = () => {
   const sections = isAdminOrOrg ? adminSections : memberSections;
 
   return (
+    <PageTransition>
     <div className="notifications-page">
       <div className="notifications-page__header">
         <BackButton />
@@ -211,6 +213,7 @@ const NotificationsPage = () => {
         ))}
       </div>
     </div>
+    </PageTransition>
   );
 };
 
