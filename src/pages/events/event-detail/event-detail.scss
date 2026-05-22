@@ -212,8 +212,8 @@
     left: 0;
     right: 0;
     background: var(--white);
-    border-top: 1px solid var(--color-border);
-    padding: var(--size-16) var(--size-32);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    padding: var(--size-20) var(--size-32);
     z-index: 5;
     display: flex;
     flex-direction: column;
@@ -236,6 +236,99 @@
     text-align: center;
     margin: 0;
     padding: var(--size-4) 0;
+  }
+
+  &__vote-summary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__vote-label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__vote-own-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__vote-own-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-items);
+    padding: var(--size-10) var(--size-20);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-semibold);
+
+    &--going {
+      background: var(--color-going);
+      color: var(--color-text-inverse);
+    }
+
+    &--not-going {
+      background: var(--color-not-going);
+      color: var(--color-text-inverse);
+    }
+
+    &--pending {
+      background: var(--color-border-light);
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__vote-linked-list {
+    list-style: none;
+    margin: 0;
+    padding: var(--gap-content) 0 0;
+    border-top: 1px solid var(--color-border-light);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__vote-linked-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__vote-linked-name {
+    font-size: var(--font-size-body);
+    color: var(--color-text-secondary);
+  }
+
+  &__vote-linked-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--size-4);
+    padding: var(--size-6) var(--size-14);
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+
+    &--going {
+      background: var(--teal-50);
+      color: var(--color-going);
+    }
+
+    &--not-going {
+      background: var(--red-50);
+      color: var(--color-not-going);
+    }
+  }
+
+  &__vote-error {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    font-size: var(--font-size-body-s);
+    color: var(--color-error);
+    margin: 0;
   }
 
   &__delete-error {

@@ -32,8 +32,15 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
     isLinked ? "member-card--linked" : "",
   ].filter(Boolean).join(" ");
 
+  const isInteractive = isExpandable || !!onClick;
+  const Tag = isInteractive ? "button" : "div";
+
   return (
-    <div className={classes} onClick={isExpandable ? onToggle : onClick} role={isExpandable || onClick ? "button" : undefined}>
+    <Tag
+      className={classes}
+      {...(isInteractive && { type: "button" as const })}
+      onClick={isExpandable ? onToggle : onClick}
+    >
       <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
@@ -64,7 +71,7 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
           </button>
         </div>
       )}
-    </div>
+    </Tag>
   );
 };
 

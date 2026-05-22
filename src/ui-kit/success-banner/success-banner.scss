@@ -1,11 +1,19 @@
 @keyframes slideDown {
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-100%); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
 }
 
 .success-banner {
@@ -18,7 +26,8 @@
   align-items: center;
   gap: var(--gap-items);
   padding: var(--size-24) var(--size-32);
-  background: var(--color-going);
+  background: var(--teal-50);
+  color: var(--color-going);
   font-size: var(--font-size-body-s);
   font-weight: var(--font-weight-semibold);
   animation: slideDown 0.25s ease-out;

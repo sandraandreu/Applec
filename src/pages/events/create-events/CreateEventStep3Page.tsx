@@ -1,7 +1,7 @@
 import "./create-event.scss";
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { es, ca } from "react-day-picker/locale";
 import { format } from "date-fns";
+import { combineDateAndTime, getDateFnsLocale } from "../../../utils/dates";
 import { useTranslation } from "react-i18next";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
@@ -47,7 +47,7 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
   errorKey,
 }, ref) => {
   const { t, i18n } = useTranslation(["events", "common"]);
-  const dateLocale = i18n.language === "ca" ? ca : es;
+  const dateLocale = getDateFnsLocale(i18n.language);
 
   const [requiresConfirmation, setRequiresConfirmation] = useState(initialData?.requiresConfirmation ?? false);
   const [sendReminder, setSendReminder] = useState(initialData?.sendReminder ?? false);
@@ -70,12 +70,9 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
   const buildAndSubmit = () => {
     let confirmationDeadline: Date | undefined;
     if (deadlineDate) {
-      const combined = new Date(deadlineDate);
-      if (deadlineTime) {
-        const [hours, minutes] = deadlineTime.split(":").map(Number);
-        combined.setHours(hours, minutes, 0, 0);
-      }
-      confirmationDeadline = combined;
+      confirmationDeadline = deadlineTime
+        ? combineDateAndTime(deadlineDate, deadlineTime)
+        : new Date(deadlineDate);
     }
     onComplete({ requiresConfirmation, sendReminder, confirmationDeadline });
   };

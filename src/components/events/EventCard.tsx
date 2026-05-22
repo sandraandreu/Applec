@@ -7,6 +7,7 @@ import type { UserPermissions } from "../../models/user.model";
 import Badge from "../../ui-kit/badge/Badge";
 import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 import "./events.scss";
+import { getIntlLocale } from "../../utils/dates";
 
 type AttendanceResponse = "yes" | "no" | null;
 
@@ -29,7 +30,7 @@ const EventCard = ({ event, permissions, attendanceResponse = null }: EventCardP
 
   const day = event.date.getDate();
   const month = event.date.toLocaleDateString(
-    i18n.language === "ca" ? "ca-ES" : "es-ES",
+    getIntlLocale(i18n.language),
     { month: "short" },
   );
 

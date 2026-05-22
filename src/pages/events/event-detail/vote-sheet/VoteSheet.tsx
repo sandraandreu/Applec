@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -20,6 +20,9 @@ interface VoteSheetProps {
   deadline?: string;
   linkedMembers: VoteLinkedMember[];
   onAddLinked: () => void;
+  initialResponse?: "yes" | "no";
+  initialLinkedResponses?: Record<string, "yes" | "no">;
+  onSave: (response: "yes" | "no" | undefined, linkedResponses: Record<string, "yes" | "no">) => Promise<void>;
 }
 
 const VoteSheet = ({
@@ -28,10 +31,28 @@ const VoteSheet = ({
   deadline,
   linkedMembers,
   onAddLinked,
+  initialResponse,
+  initialLinkedResponses,
+  onSave,
 }: VoteSheetProps) => {
   const { t } = useTranslation("events");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const sheetRef = useRef<HTMLDivElement | null>(null);
+  const [selectedResponse, setSelectedResponse] = useState<"yes" | "no" | null>(
+    initialResponse ?? null
+  );
+  const [linkedVotes, setLinkedVotes] = useState<Record<string, "yes" | "no" | null>>({});
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setSelectedResponse(initialResponse ?? null);
+    const initial: Record<string, "yes" | "no" | null> = {};
+    linkedMembers.forEach((member) => {
+      initial[member.id] = initialLinkedResponses?.[member.id] ?? null;
+    });
+    setLinkedVotes(initial);
+  }, [isOpen]); // reset draft state on each open
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -72,8 +93,26 @@ const VoteSheet = ({
     preventScrollOnSwipe: true,
   });
 
+  const handleSave = async () => {
+    const hasAnyVote = !!selectedResponse || Object.values(linkedVotes).some(v => v !== null);
+    if (!hasAnyVote || isSaving) return;
+    setIsSaving(true);
+    const filteredLinkedVotes: Record<string, "yes" | "no"> = {};
+    Object.entries(linkedVotes).forEach(([id, vote]) => {
+      if (vote !== null) filteredLinkedVotes[id] = vote;
+    });
+    await onSave(selectedResponse ?? undefined, filteredLinkedVotes);
+    setIsSaving(false);
+    onDismiss();
+  };
+
   return createPortal(
-    <dialog ref={dialogRef} className="vote-sheet" onClose={onDismiss} aria-labelledby="vote-sheet-title">
+    <dialog
+      ref={dialogRef}
+      className="vote-sheet"
+      onClose={onDismiss}
+      aria-labelledby="vote-sheet-title"
+    >
       <div
         className="vote-sheet__panel"
         ref={(node) => {
@@ -86,7 +125,9 @@ const VoteSheet = ({
 
         <div className="vote-sheet__scroll">
           <div className="vote-sheet__question">
-            <h2 id="vote-sheet-title" className="vote-sheet__question-title">{t("vote.title")}</h2>
+            <h2 id="vote-sheet-title" className="vote-sheet__question-title">
+              {t("vote.title")}
+            </h2>
             {deadline && (
               <p className="vote-sheet__question-deadline">
                 {t("vote.deadline", { date: deadline })}
@@ -95,16 +136,18 @@ const VoteSheet = ({
             <div className="vote-sheet__own-buttons">
               <button
                 type="button"
-                className="vote-sheet__own-btn vote-sheet__own-btn--yes"
-                aria-pressed={false}
+                className={`vote-sheet__own-btn vote-sheet__own-btn--yes${selectedResponse === "yes" ? " vote-sheet__own-btn--active" : ""}`}
+                aria-pressed={selectedResponse === "yes"}
+                onClick={() => setSelectedResponse((prev) => prev === "yes" ? null : "yes")}
               >
                 <Icon name="check-bold" size={20} aria-hidden="true" />
                 {t("vote.yes")}
               </button>
               <button
                 type="button"
-                className="vote-sheet__own-btn vote-sheet__own-btn--no vote-sheet__own-btn--active"
-                aria-pressed={true}
+                className={`vote-sheet__own-btn vote-sheet__own-btn--no${selectedResponse === "no" ? " vote-sheet__own-btn--active" : ""}`}
+                aria-pressed={selectedResponse === "no"}
+                onClick={() => setSelectedResponse((prev) => prev === "no" ? null : "no")}
               >
                 <Icon name="x-mark" size={20} aria-hidden="true" />
                 {t("vote.no")}
@@ -128,17 +171,23 @@ const VoteSheet = ({
                   <div className="vote-sheet__linked-actions">
                     <button
                       type="button"
-                      className="vote-sheet__vote-btn vote-sheet__vote-btn--yes vote-sheet__vote-btn--active"
+                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--yes${linkedVotes[member.id] === "yes" ? " vote-sheet__vote-btn--active" : ""}`}
                       aria-label={`${member.firstName} ${t("vote.yes")}`}
-                      aria-pressed={true}
+                      aria-pressed={linkedVotes[member.id] === "yes"}
+                      onClick={() =>
+                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "yes" ? null : "yes" }))
+                      }
                     >
                       <Icon name="check-bold" size={18} aria-hidden="true" />
                     </button>
                     <button
                       type="button"
-                      className="vote-sheet__vote-btn vote-sheet__vote-btn--no"
+                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--no${linkedVotes[member.id] === "no" ? " vote-sheet__vote-btn--active" : ""}`}
                       aria-label={`${member.firstName} ${t("vote.no")}`}
-                      aria-pressed={false}
+                      aria-pressed={linkedVotes[member.id] === "no"}
+                      onClick={() =>
+                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "no" ? null : "no" }))
+                      }
                     >
                       <Icon name="x-mark" size={18} aria-hidden="true" />
                     </button>
@@ -157,7 +206,13 @@ const VoteSheet = ({
         </div>
 
         <div className="vote-sheet__footer">
-          <Button variant="primary" text={t("vote.save")} />
+          <Button
+            variant="primary"
+            text={t("vote.save")}
+            onClick={handleSave}
+            disabled={!selectedResponse && !Object.values(linkedVotes).some(v => v !== null)}
+            isLoading={isSaving}
+          />
         </div>
       </div>
     </dialog>,
