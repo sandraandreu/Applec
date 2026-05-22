@@ -196,6 +196,12 @@ const EventDetailPage = () => {
       });
       if (response) {
         setMemberResponses((prev) => ({ ...prev, [user.uid]: response }));
+      } else {
+        setMemberResponses((prev) => {
+          const next = { ...prev };
+          delete next[user.uid];
+          return next;
+        });
       }
       setLinkedResponses((prev) => ({ ...prev, [user.uid]: linkedVotes }));
       setVoteError(null);
