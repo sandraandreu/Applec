@@ -148,7 +148,8 @@
     "going": "Voy",
     "notGoing": "No voy",
     "deadlinePassed": "El plazo de confirmación ha pasado",
-    "error": "Error al guardar la respuesta"
+    "error": "Error al guardar la respuesta",
+    "success": "Asistencia guardada correctamente"
   },
   "attendanceList": {
     "title": "Asistencia",

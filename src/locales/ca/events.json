@@ -148,7 +148,8 @@
     "going": "Hi vaig",
     "notGoing": "No hi vaig",
     "deadlinePassed": "El termini de confirmació ha passat",
-    "error": "Error en desar la resposta"
+    "error": "Error en desar la resposta",
+    "success": "Assistència desada correctament"
   },
   "attendanceList": {
     "title": "Assistència",
