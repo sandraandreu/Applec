@@ -23,7 +23,7 @@ const EventCard = ({ event, permissions, attendanceResponse = null }: EventCardP
   const status = getEventStatus(event);
   const isFinished = status === "finalizado";
 
-  const showIndicator = !permissions.canCreateEvents && event.requiresConfirmation;
+  const showIndicator = event.requiresConfirmation;
   const isNotGoing = showIndicator && attendanceResponse === "no";
   const isGoing = showIndicator && attendanceResponse === "yes";
   const isPending = showIndicator && attendanceResponse === null;
