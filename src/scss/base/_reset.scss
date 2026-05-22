@@ -6,14 +6,14 @@
 
 html {
   -webkit-text-size-adjust: 100%; // evita que iOS escale el texto al rotar
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
 }
 
 body {
   min-height: 100vh;
   background-color: var(--color-surface);
   -webkit-font-smoothing: antialiased; // suaviza el renderizado de fuentes en iOS/macOS
-  overscroll-behavior-x: none;
+  overscroll-behavior: none;
 }
 
 img, svg {
