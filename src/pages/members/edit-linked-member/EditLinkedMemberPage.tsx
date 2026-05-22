@@ -60,10 +60,10 @@ const EditLinkedMemberPage = () => {
       setShowDiscardModal(true);
       return;
     }
-    navigate("/members/linked");
+    navigate("/members/linked", { replace: true });
   };
 
-  const handleDiscard = () => navigate("/members/linked");
+  const handleDiscard = () => navigate("/members/linked", { replace: true });
 
   const onSubmit = async (data: EditLinkedMemberFormData) => {
     if (!profile?.groupId || !user?.uid || !id) return;
@@ -71,7 +71,7 @@ const EditLinkedMemberPage = () => {
       setIsLoading(true);
       await editLinkedMember(profile.groupId, id, user.uid, data);
       await refreshGroup();
-      navigate("/members/linked", { state: { linkedMemberUpdated: true } });
+      navigate("/members/linked", { replace: true, state: { linkedMemberUpdated: true } });
     } catch {
       setErrorConnection(t("linked.editError"));
     } finally {

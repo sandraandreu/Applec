@@ -408,6 +408,7 @@ const EventDetailPage = () => {
           onAddLinked={() => {
             setShowVoteSheet(false);
             navigate("/members/linked/new", {
+              replace: true,
               state: { returnTo: `/events/${id}`, openVoteSheet: true },
             });
           }}

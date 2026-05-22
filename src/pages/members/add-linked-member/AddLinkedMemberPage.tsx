@@ -45,6 +45,7 @@ const AddLinkedMemberPage = () => {
   const handleBack = () => {
     if (locationState.returnTo) {
       navigate(locationState.returnTo, {
+        replace: true,
         state: locationState.openVoteSheet ? { openVoteSheet: true } : null,
       });
     } else {
