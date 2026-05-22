@@ -113,16 +113,17 @@
     "title": "¿Te vienes?",
     "yes": "Sí",
     "no": "No",
-    "save": "Confirmar",
-    "update": "Actualizar",
-    "cta": "Votar",
-    "modify": "Cambiar mi respuesta",
+    "save": "Guardar",
+    "update": "Guardar",
+    "cta": "Confirmar asistencia",
+    "modify": "Modificar votaciones",
     "closed": "El plazo ya está cerrado",
     "myVote": "Tu asistencia",
     "going": "Vas",
     "notGoing": "No vas",
     "addLinked": "Añadir acompañante",
-    "linkedLabel": "Acompañantes"
+    "linkedLabel": "Acompañantes",
+    "you": "Tú"
   },
   "linked": {
     "title": "Añadir acompañante",
