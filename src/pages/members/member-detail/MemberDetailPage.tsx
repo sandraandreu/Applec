@@ -14,6 +14,7 @@ import IconButton from "../../../ui-kit/icons/icon-button/IconButton";
 import MemberCard from "../../../components/members/MemberCard";
 import Modal from "../../../components/modal/Modal";
 import Loading from "../../../components/loading/Loading";
+import RadioCircle from "../../../ui-kit/radio-circle/RadioCircle";
 import "./member-detail.scss";
 
 const MemberDetailPage = () => {
@@ -158,7 +159,7 @@ const MemberDetailPage = () => {
                           aria-pressed={pendingRole === role}
                           aria-disabled={isDisabled}
                         >
-                          <span className={`member-detail-page__role-radio${pendingRole === role ? " member-detail-page__role-radio--selected" : ""}`} />
+                          <RadioCircle selected={pendingRole === role} />
                           {t(`detail.makeRole.${role}`)}
                         </button>
                         <IconButton

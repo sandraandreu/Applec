@@ -20,6 +20,7 @@ import EmptyState from "../../ui-kit/empty-state/EmptyState";
 import SuccessBanner from "../../ui-kit/success-banner/SuccessBanner";
 import ErrorBoundary from "../../ui-kit/error-boundary/error-boundary";
 import MemberCard from "../../components/members/MemberCard";
+import RadioCircle from "../../ui-kit/radio-circle/RadioCircle";
 import EventCard from "../../components/events/EventCard";
 import EventsFilter from "../../components/events/EventsFilter";
 import type {
@@ -842,6 +843,19 @@ const StyleGuide = () => {
                 title="No se encontraron miembros con ese nombre"
                 variant="light"
               />
+            </div>
+          </div>
+        </div>
+        <div className="style-guide__component">
+          <h3 className="style-guide__component-name">RadioCircle</h3>
+          <div className="style-guide__row">
+            <div className="style-guide__item">
+              <span className="style-guide__label">Sin seleccionar</span>
+              <RadioCircle selected={false} />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">Seleccionado</span>
+              <RadioCircle selected={true} />
             </div>
           </div>
         </div>
