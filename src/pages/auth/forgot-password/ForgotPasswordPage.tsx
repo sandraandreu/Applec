@@ -20,11 +20,8 @@ const ForgotPasswordPage = () => {
   const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [forgotPasswordState, setForgotPasswordState] = useState<
-    "form" | "success"
-  >("form");
-  const [errorConnection, setErrorConnection] = useState<string>("");
+  const [submitState, setSubmitState] = useState({ isLoading: false, error: "" });
+  const [forgotPasswordState, setForgotPasswordState] = useState<"form" | "success">("form");
 
   const {
     register,
@@ -37,23 +34,22 @@ const ForgotPasswordPage = () => {
   };
 
   const handleForgotPassword = async (email: string) => {
+    setSubmitState({ isLoading: true, error: "" });
     try {
-      setIsLoading(true);
       await sendPasswordReset(email);
       setForgotPasswordState("success");
+      setSubmitState({ isLoading: false, error: "" });
     } catch (error: unknown) {
-      if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
-        setErrorConnection(tCommon("errors.noConnection"));
-        return;
-      }
-    } finally {
-      setIsLoading(false);
+      const errorMessage = isFirebaseError(error) && error.code === "auth/network-request-failed"
+        ? tCommon("errors.noConnection")
+        : tCommon("errors.unknown");
+      setSubmitState({ isLoading: false, error: errorMessage });
     }
   };
 
   return (
     <div className="forgot-password-page">
-      {isLoading && <Loading />}
+      {submitState.isLoading && <Loading />}
 
       <BackButton />
 
@@ -93,7 +89,7 @@ const ForgotPasswordPage = () => {
               }
             />
 
-            {errorConnection && (
+            {submitState.error && (
               <span className="forgot-password-page__error">
                 <svg
                   className="icon"
@@ -109,7 +105,7 @@ const ForgotPasswordPage = () => {
                     fill="currentColor"
                   />
                 </svg>
-                {errorConnection}
+                {submitState.error}
               </span>
             )}
           </div>
@@ -119,7 +115,7 @@ const ForgotPasswordPage = () => {
               text={t("forgotPassword.button")}
               type="submit"
               disabled={Object.keys(errors).length > 0}
-              isLoading={isLoading}
+              isLoading={submitState.isLoading}
             />
             <Link className="forgot-password-page__login" to="/login">
               {t("forgotPassword.back")}
