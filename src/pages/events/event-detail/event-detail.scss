@@ -155,10 +155,6 @@
     flex-direction: column;
     gap: var(--gap-section);
     flex: 1;
-
-    &--with-sticky {
-      padding-bottom: var(--size-120);
-    }
   }
 
   &__attendees {

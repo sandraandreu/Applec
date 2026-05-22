@@ -160,7 +160,7 @@ const EditEventPage = () => {
       </div>
 
       <form
-        className="edit-event__content"
+        className={`edit-event__content${isModified ? " edit-event__content--with-sticky" : ""}`}
         onSubmit={handleSubmit(onSubmit, () => {
           if (!state.selectedDate) dispatch({ type: "SET_DATE_ERROR" });
         })}

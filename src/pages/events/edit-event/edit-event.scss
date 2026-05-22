@@ -62,11 +62,14 @@
   &__content {
     background-color: var(--color-surface);
     padding: var(--padding-page);
-    padding-bottom: var(--size-120);
     display: flex;
     flex-direction: column;
     gap: var(--gap-section);
     flex: 1;
+
+    &--with-sticky {
+      padding-bottom: var(--size-120);
+    }
   }
 
   &__section {

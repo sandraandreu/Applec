@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -46,6 +46,16 @@ const EventDetailPage = () => {
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const [stickyHeight, setStickyHeight] = useState(0);
+
+  useLayoutEffect(() => {
+    const el = stickyRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setStickyHeight(el.offsetHeight));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [memberResponses, linkedResponses]);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
@@ -304,7 +314,10 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      <div className={`event-detail-page__content${(eventStatus === "activo" || eventStatus === "plazo-cerrado") ? " event-detail-page__content--with-sticky" : ""}`}>
+      <div
+        className="event-detail-page__content"
+        style={stickyHeight > 0 ? { paddingBottom: `${stickyHeight}px` } : undefined}
+      >
         {event.description && (
           <div className="event-detail-page__description">
             <span className="event-detail-page__description-label">
@@ -434,7 +447,7 @@ const EventDetailPage = () => {
       </div>
 
       {eventStatus !== "finalizado" && event.requiresConfirmation && (
-        <div className="event-detail-page__vote-sticky">
+        <div className="event-detail-page__vote-sticky" ref={stickyRef}>
           {hasVoted ? (
             <div className="event-detail-page__vote-summary">
               <div className="event-detail-page__vote-own-row">
