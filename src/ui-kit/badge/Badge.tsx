@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./badge.scss";
 
 type BadgeVariant = "activo" | "plazo-cerrado" | "finalizado";
@@ -11,4 +12,4 @@ const Badge = ({ variant, label }: BadgeProps) => (
   <span className={`badge badge--${variant}`}>{label}</span>
 );
 
-export default Badge;
+export default memo(Badge);

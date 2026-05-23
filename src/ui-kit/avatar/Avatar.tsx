@@ -1,3 +1,4 @@
+import { memo } from "react";
 import "./avatar.scss";
 
 type AvatarRole = "admin" | "organizer" | "member";
@@ -28,4 +29,4 @@ const Avatar = ({ firstName, lastName, role = "member", size = "md", attendance,
   );
 };
 
-export default Avatar;
+export default memo(Avatar);

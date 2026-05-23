@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import "./chip.scss";
 
@@ -24,4 +25,4 @@ const Chip = ({ role, variant = "short" }: ChipProps) => {
   );
 };
 
-export default Chip;
+export default memo(Chip);
