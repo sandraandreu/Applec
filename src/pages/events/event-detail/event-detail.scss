@@ -259,7 +259,7 @@
     padding: var(--size-10) var(--size-20);
     border-radius: var(--radius-pill);
     font-family: var(--font-display);
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
 
     &--going {
@@ -295,7 +295,7 @@
   }
 
   &__vote-linked-name {
-    font-size: var(--font-size-body);
+    font-size: var(--font-size-body-s);
     color: var(--color-text-secondary);
   }
 
@@ -334,7 +334,7 @@
     justify-content: center;
     gap: var(--gap-items);
     font-size: var(--font-size-body-s);
-    color: var(--color-danger);
+    color: var(--color-error);
     margin: 0;
   }
 

@@ -237,11 +237,11 @@ const RegisterPage = () => {
               ].map(({ met, label }) => (
                 <li
                   key={label}
-                  className={`register-page__password-requirements__item${met ? " register-page__password-requirements__item--met" : ""}`}
+                  className={`register-page__password-requirements-item${met ? " register-page__password-requirements-item--met" : ""}`}
                 >
                   {met
                     ? <Icon name="check-bold" size={16} aria-hidden="true" />
-                    : <span className="register-page__password-requirements__dot" aria-hidden="true" />
+                    : <span className="register-page__password-requirements-dot" aria-hidden="true" />
                   }
                   <span>{label}</span>
                 </li>

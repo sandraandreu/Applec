@@ -90,7 +90,7 @@ const JoinGroupPage = () => {
         updateUserFields(user.uid, { groupId: groupFound.id, role: "member" }),
       ]);
       await refreshProfile();
-      navigate("/events");
+      navigate("/events", { replace: true });
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "unavailable") {
         setErrorConnection(tCommon("errors.noConnection"));

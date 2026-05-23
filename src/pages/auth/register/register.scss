@@ -55,25 +55,25 @@
     list-style: none;
     padding: 0;
     margin: 0;
+  }
 
-    &__item {
-      display: flex;
-      align-items: center;
-      gap: var(--gap-tight);
-      font-size: var(--font-size-body-s);
-      color: var(--color-text-muted);
+  &__password-requirements-item {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-tight);
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
 
-      &--met {
-        color: var(--color-accent-teal);
-      }
+    &--met {
+      color: var(--color-accent-teal);
     }
+  }
 
-    &__dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--color-text-muted);
-      flex-shrink: 0;
-    }
+  &__password-requirements-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    flex-shrink: 0;
   }
 }

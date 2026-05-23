@@ -63,7 +63,7 @@ const MemberDetailPage = () => {
     try {
       await updateMemberRole(profile.groupId, member.uid, pendingRole);
       await refreshGroup();
-      navigate("/members", { state: { roleUpdated: true } });
+      navigate("/members", { state: { roleUpdated: true }, replace: true });
     } catch {
       setIsSaving(false);
       setSaveError(t("detail.saveError"));
@@ -86,7 +86,7 @@ const MemberDetailPage = () => {
     try {
       await removeMemberFromGroup(profile.groupId, member.uid);
       await refreshGroup();
-      navigate("/members", { state: { memberDeleted: true } });
+      navigate("/members", { state: { memberDeleted: true }, replace: true });
     } catch {
       setIsDeleting(false);
       setDeleteError(t("detail.deleteError"));
