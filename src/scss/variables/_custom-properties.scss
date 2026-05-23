@@ -97,7 +97,10 @@
   --color-stepper-active:   var(--blue-500);
 
   // Shadows
-  --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.1);
+  --shadow-card:   0 4px 24px hsl(0 0% 0% / 0.1);
+  --shadow-menu:   0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-sticky: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-toggle: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   // Borders
   --color-border:       var(--neutral-200);

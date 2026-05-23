@@ -25,7 +25,7 @@
     gap: var(--gap-content);
     padding: var(--size-12) var(--size-24) var(--size-32);
     background: var(--color-surface);
-    border-radius: 20px 20px 0 0;
+    border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
   }
 
   &__handle {

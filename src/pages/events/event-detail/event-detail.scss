@@ -65,7 +65,7 @@
     min-width: 180px;
     background: var(--color-surface);
     border-radius: var(--radius-card);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-menu);
     overflow: hidden;
     z-index: 10;
     list-style: none;
@@ -209,7 +209,7 @@
     left: 0;
     right: 0;
     background: var(--white);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-sticky);
     padding: var(--size-20) var(--size-32);
     z-index: 5;
     display: flex;

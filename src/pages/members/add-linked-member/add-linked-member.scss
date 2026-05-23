@@ -64,7 +64,7 @@
   &__error {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
   }

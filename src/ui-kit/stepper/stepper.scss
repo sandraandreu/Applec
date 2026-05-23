@@ -10,11 +10,7 @@
     background: var(--color-stepper-inactive);
 
     &--active {
-      background: var(--color-text-primary);
+      background: var(--color-stepper-active);
     }
-  }
-
-  &__dot--active {
-    background-color: var(--color-stepper-active);
   }
 }
