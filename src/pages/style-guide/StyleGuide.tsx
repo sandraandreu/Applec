@@ -194,7 +194,7 @@ const StyleGuide = () => {
         <div className="style-guide__swatch-grid">
           <ColorSwatch variable="--color-bg-blue" hex="#E5F0FF" />
           <ColorSwatch variable="--color-bg-teal" hex="#B2EEEE" />
-          <ColorSwatch variable="--color-bg-pink" hex="#FCE6FF" />
+          <ColorSwatch variable="--color-bg-purple" hex="#FCE6FF" />
           <ColorSwatch variable="--color-bg-yellow" hex="#FEFFE7" />
           <ColorSwatch variable="--color-bg-neutral" hex="#E0E0E0" />
         </div>

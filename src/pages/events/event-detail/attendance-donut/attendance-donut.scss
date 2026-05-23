@@ -9,7 +9,7 @@
     border-radius: var(--radius-pill);
     overflow: hidden;
     gap: 2px;
-    background: var(--neutral-300);
+    background: var(--color-bg-neutral);
   }
 
   &__bar-segment {
@@ -38,7 +38,7 @@
     border-radius: 50%;
     flex-shrink: 0;
 
-    &--total { background: var(--neutral-400); }
+    &--total { background: var(--color-bg-neutral-mid); }
     &--going { background: var(--color-going); }
     &--not-going { background: var(--color-not-going); }
     &--pending { background: var(--color-pending); }
