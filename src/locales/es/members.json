@@ -10,7 +10,7 @@
     "loading": "Cargando miembros...",
     "you": "Tú",
     "filters": {
-      "all": "Todos"
+      "all": "Todos {{count}}"
     },
     "roles": {
       "admin": "Administrador",

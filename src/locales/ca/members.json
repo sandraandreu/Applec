@@ -10,7 +10,7 @@
     "loading": "Carregant membres...",
     "you": "Tu",
     "filters": {
-      "all": "Tots"
+      "all": "Tots {{count}}"
     },
     "roles": {
       "admin": "Administrador",

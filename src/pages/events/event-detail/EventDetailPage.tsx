@@ -50,12 +50,12 @@ const EventDetailPage = () => {
   const [stickyHeight, setStickyHeight] = useState(0);
 
   useLayoutEffect(() => {
-    const el = stickyRef.current;
-    if (!el) return;
-    const observer = new ResizeObserver(() => setStickyHeight(el.offsetHeight + 16));
-    observer.observe(el);
+    const stickyBar = stickyRef.current;
+    if (!stickyBar) return;
+    const observer = new ResizeObserver(() => setStickyHeight(stickyBar.offsetHeight + 16));
+    observer.observe(stickyBar);
     return () => observer.disconnect();
-  }, [memberResponses, linkedResponses]);
+  }, []);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),

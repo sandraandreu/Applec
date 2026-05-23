@@ -62,24 +62,28 @@ const MembersPage = () => {
           <button
             className={`members-page__filter-btn${activeFilter === "all" ? " members-page__filter-btn--active" : ""}`}
             onClick={() => setActiveFilter("all")}
+            aria-pressed={activeFilter === "all"}
           >
-            {t("members.filters.all")} {totalCount}
+            {t("members.filters.all", { count: totalCount })}
           </button>
           <button
             className={`members-page__filter-btn${activeFilter === "admin" ? " members-page__filter-btn--active" : ""}`}
             onClick={() => setActiveFilter("admin")}
+            aria-pressed={activeFilter === "admin"}
           >
             {t("members.roles.admin")} {adminCount}
           </button>
           <button
             className={`members-page__filter-btn${activeFilter === "organizer" ? " members-page__filter-btn--active" : ""}`}
             onClick={() => setActiveFilter("organizer")}
+            aria-pressed={activeFilter === "organizer"}
           >
             {t("members.roles.organizers")} {organizerCount}
           </button>
           <button
             className={`members-page__filter-btn${activeFilter === "member" ? " members-page__filter-btn--active" : ""}`}
             onClick={() => setActiveFilter("member")}
+            aria-pressed={activeFilter === "member"}
           >
             {t("members.roles.members")} {memberCount}
           </button>
