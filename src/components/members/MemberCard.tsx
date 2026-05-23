@@ -39,6 +39,7 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
     <Tag
       className={classes}
       {...(isInteractive && { type: "button" as const })}
+      {...(isExpandable && { "aria-expanded": isExpanded })}
       onClick={isExpandable ? onToggle : onClick}
     >
       <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
