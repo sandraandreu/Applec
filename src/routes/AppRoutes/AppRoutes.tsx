@@ -54,7 +54,6 @@ const EditEventPage = lazy(
 const VerifyEmailPage = lazy(
   () => import("../../pages/auth/verify-email/VerifyEmailPage"),
 );
-const SeedPage = lazy(() => import("../../pages/seed/SeedPage"));
 const NotificationsPage = lazy(() => import("../../pages/notifications/NotificationsPage"));
 const JoinRequestsPage = lazy(() => import("../../pages/notifications/join-requests/JoinRequestsPage"));
 
@@ -281,16 +280,6 @@ const AppRoutes = () => (
           <Route path="/style-guide" element={<StyleGuide />} />
         )}
 
-        {process.env.NODE_ENV !== 'production' && (
-          <Route
-            path="/seed"
-            element={
-              <PrivateRoutes requiresGroup>
-                <SeedPage />
-              </PrivateRoutes>
-            }
-          />
-        )}
       </Routes>
     </Suspense>
   </BrowserRouter>
