@@ -8,6 +8,7 @@ import {
   where,
   getDocs,
   arrayUnion,
+  runTransaction,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
@@ -105,10 +106,12 @@ export const updateMemberRole = async (
   newRole: "admin" | "organizer" | "member",
 ): Promise<void> => {
   const groupRef = doc(db, "groups", groupId);
-  const snap = await getDoc(groupRef);
-  const members = (snap.data()?.members ?? []) as GroupData["members"];
-  const updated = members.map(m => m.uid === uid ? { ...m, role: newRole } : m);
-  await updateDoc(groupRef, { members: updated });
+  await runTransaction(db, async (transaction) => {
+    const snap = await transaction.get(groupRef);
+    const members = (snap.data()?.members ?? []) as GroupData["members"];
+    const updated = members.map(member => member.uid === uid ? { ...member, role: newRole } : member);
+    transaction.update(groupRef, { members: updated });
+  });
 };
 
 export const removeMemberFromGroup = async (
@@ -116,10 +119,12 @@ export const removeMemberFromGroup = async (
   uid: string,
 ): Promise<void> => {
   const groupRef = doc(db, "groups", groupId);
-  const snap = await getDoc(groupRef);
-  const members = (snap.data()?.members ?? []) as GroupData["members"];
-  const updated = members.filter(m => m.uid !== uid);
-  await updateDoc(groupRef, { members: updated });
+  await runTransaction(db, async (transaction) => {
+    const snap = await transaction.get(groupRef);
+    const members = (snap.data()?.members ?? []) as GroupData["members"];
+    const updated = members.filter(member => member.uid !== uid);
+    transaction.update(groupRef, { members: updated });
+  });
 };
 
 export const addMemberToGroup = async (

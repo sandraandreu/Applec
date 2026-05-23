@@ -1,4 +1,4 @@
-﻿import { collection, getDocs, getDoc, doc, updateDoc, deleteDoc, writeBatch, arrayUnion, arrayRemove } from "firebase/firestore";
+﻿import { collection, getDocs, doc, updateDoc, deleteDoc, writeBatch, arrayUnion, arrayRemove, runTransaction } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { LinkedMember } from "../models/user.model";
 
@@ -30,13 +30,17 @@ export const editLinkedMember = async (
   ownerUid: string,
   data: { firstName: string; lastName: string; relationship: string },
 ): Promise<void> => {
-  await updateDoc(doc(db, "groups", groupId, "linkedMembers", linkedMemberId), data);
-  const userSnap = await getDoc(doc(db, "users", ownerUid));
-  const currentLinkedMembers = (userSnap.data()?.linkedMembers ?? []) as LinkedMember[];
-  const updatedLinkedMembers = currentLinkedMembers.map((linkedMember) =>
-    linkedMember.id === linkedMemberId ? { ...linkedMember, ...data } : linkedMember
-  );
-  await updateDoc(doc(db, "users", ownerUid), { linkedMembers: updatedLinkedMembers });
+  const linkedMemberRef = doc(db, "groups", groupId, "linkedMembers", linkedMemberId);
+  const userRef = doc(db, "users", ownerUid);
+  await runTransaction(db, async (transaction) => {
+    const userSnap = await transaction.get(userRef);
+    const currentLinkedMembers = (userSnap.data()?.linkedMembers ?? []) as LinkedMember[];
+    const updatedLinkedMembers = currentLinkedMembers.map((linkedMember) =>
+      linkedMember.id === linkedMemberId ? { ...linkedMember, ...data } : linkedMember
+    );
+    transaction.update(linkedMemberRef, data);
+    transaction.update(userRef, { linkedMembers: updatedLinkedMembers });
+  });
 };
 
 export const deleteLinkedMember = async (
@@ -45,10 +49,12 @@ export const deleteLinkedMember = async (
   ownerUid: string,
   linkedMemberData: { firstName: string; lastName: string; relationship: string },
 ): Promise<void> => {
-  await deleteDoc(doc(db, "groups", groupId, "linkedMembers", linkedMemberId));
-  await updateDoc(doc(db, "users", ownerUid), {
+  const batch = writeBatch(db);
+  batch.delete(doc(db, "groups", groupId, "linkedMembers", linkedMemberId));
+  batch.update(doc(db, "users", ownerUid), {
     linkedMembers: arrayRemove({ id: linkedMemberId, ownerUid, ...linkedMemberData }),
   });
+  await batch.commit();
 };
 
 export const getGroupLinkedMembers = async (groupId: string): Promise<LinkedMemberData[] | null> => {
