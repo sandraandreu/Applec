@@ -140,7 +140,7 @@ const EventDetailPage = () => {
     return { ...member, attendance, linkedMembers: memberLinked };
   });
 
-  const allRows = allMembers.flatMap(m => [m, ...m.linkedMembers.map(linkedMember => ({ ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true }))]);
+  const allRows = allMembers.flatMap(member => [member, ...member.linkedMembers.map(linkedMember => ({ ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true }))]);
   const totalMembers = allRows.length;
   const goingCount = allRows.filter(r => r.attendance === "going").length;
 

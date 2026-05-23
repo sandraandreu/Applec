@@ -30,9 +30,9 @@ const MembersPage = () => {
   }, []);
 
   const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({
-    adminCount: group?.members.filter((m) => m.role === "admin").length ?? 0,
-    organizerCount: group?.members.filter((m) => m.role === "organizer").length ?? 0,
-    memberCount: group?.members.filter((m) => m.role === "member").length ?? 0,
+    adminCount: group?.members.filter((member) => member.role === "admin").length ?? 0,
+    organizerCount: group?.members.filter((member) => member.role === "organizer").length ?? 0,
+    memberCount: group?.members.filter((member) => member.role === "member").length ?? 0,
     totalCount: group?.members.length ?? 0,
   }), [group?.members]);
 

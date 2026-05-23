@@ -48,8 +48,8 @@ const CreateGroupPage = () => {
   } = useForm<CreateGroupFormData>();
   const nameLength = watch("name")?.length ?? 0;
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (!file) return;
 
     if (file.size > MAX_IMAGE_SIZE) {

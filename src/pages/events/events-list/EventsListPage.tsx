@@ -56,7 +56,7 @@ const EventsListPage = () => {
       setEvents(eventsData);
 
       if (eventsData.length > 0) {
-        const eventIds = eventsData.map(e => e.id);
+        const eventIds = eventsData.map(event => event.id);
         const attendancesData = await getMyAttendances(groupId, user.uid, eventIds);
         if (!isMounted) return;
         setAttendances(attendancesData ?? {});
