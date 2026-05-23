@@ -94,7 +94,7 @@ const VoteSheet = ({
   });
 
   const handleSave = async () => {
-    const hasAnyVote = !!selectedResponse || Object.values(linkedVotes).some(v => v !== null);
+    const hasAnyVote = !!selectedResponse || Object.values(linkedVotes).some(linkedVote => linkedVote !== null);
     if (!hasAnyVote || isSaving) return;
     setIsSaving(true);
     const filteredLinkedVotes: Record<string, "yes" | "no"> = {};
@@ -210,7 +210,7 @@ const VoteSheet = ({
             variant="primary"
             text={t("vote.save")}
             onClick={handleSave}
-            disabled={!selectedResponse && !Object.values(linkedVotes).some(v => v !== null)}
+            disabled={!selectedResponse && !Object.values(linkedVotes).some(linkedVote => linkedVote !== null)}
             isLoading={isSaving}
           />
         </div>

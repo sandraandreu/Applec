@@ -28,10 +28,8 @@ const MemberDetailPage = () => {
   const [expandedDescription, setExpandedDescription] = useState<"admin" | "organizer" | "member" | null>(null);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showAdminConfirm, setShowAdminConfirm] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
+  const [saveState, setSaveState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
+  const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
 
   const member = group?.members.find(member => member.uid === uid) ?? null;
 
@@ -58,15 +56,13 @@ const MemberDetailPage = () => {
 
   const executeSave = async () => {
     if (!pendingRole || !profile?.groupId) return;
-    setIsSaving(true);
-    setSaveError(null);
+    setSaveState({ isLoading: true, error: null });
     try {
       await updateMemberRole(profile.groupId, member.uid, pendingRole);
       await refreshGroup();
       navigate("/members", { state: { roleUpdated: true }, replace: true });
     } catch {
-      setIsSaving(false);
-      setSaveError(t("detail.saveError"));
+      setSaveState({ isLoading: false, error: t("detail.saveError") });
     }
   };
 
@@ -81,15 +77,13 @@ const MemberDetailPage = () => {
 
   const handleDelete = async () => {
     if (!profile?.groupId) return;
-    setIsDeleting(true);
-    setDeleteError(null);
+    setDeleteState({ isLoading: true, error: null });
     try {
       await removeMemberFromGroup(profile.groupId, member.uid);
       await refreshGroup();
       navigate("/members", { state: { memberDeleted: true }, replace: true });
     } catch {
-      setIsDeleting(false);
-      setDeleteError(t("detail.deleteError"));
+      setDeleteState({ isLoading: false, error: t("detail.deleteError") });
     }
   };
 
@@ -190,7 +184,7 @@ const MemberDetailPage = () => {
                   <Button
                     text={t("detail.save")}
                     onClick={handleSave}
-                    isLoading={isSaving}
+                    isLoading={saveState.isLoading}
                   />
                   <Button
                     text={t("detail.cancel")}
@@ -200,10 +194,10 @@ const MemberDetailPage = () => {
                 </div>
               )}
 
-              {saveError && (
+              {saveState.error && (
                 <p className="member-detail-page__error">
                   <Icon name="error-circle" size={20} />
-                  {saveError}
+                  {saveState.error}
                 </p>
               )}
             </div>
@@ -219,10 +213,10 @@ const MemberDetailPage = () => {
                   <Icon name="chevron-right" size={20} className="member-detail-page__action-chevron" />
                 </button>
               </div>
-              {deleteError && (
+              {deleteState.error && (
                 <p className="member-detail-page__error">
                   <Icon name="error-circle" size={20} />
-                  {deleteError}
+                  {deleteState.error}
                 </p>
               )}
             </div>
@@ -259,7 +253,7 @@ const MemberDetailPage = () => {
         ]}
       />
 
-      {isDeleting && <Loading />}
+      {deleteState.isLoading && <Loading />}
     </div>
   );
 };

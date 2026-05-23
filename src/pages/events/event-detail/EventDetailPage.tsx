@@ -142,7 +142,7 @@ const EventDetailPage = () => {
 
   const allRows = allMembers.flatMap(member => [member, ...member.linkedMembers.map(linkedMember => ({ ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true }))]);
   const totalMembers = allRows.length;
-  const goingCount = allRows.filter(r => r.attendance === "going").length;
+  const goingCount = allRows.filter(row => row.attendance === "going").length;
 
   const rawDate = event.date.toLocaleDateString(
     getIntlLocale(i18n.language),
@@ -150,8 +150,8 @@ const EventDetailPage = () => {
   );
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
 
-  const pendingCount = allRows.filter(r => r.attendance === "pending").length;
-  const notGoingCount = allRows.filter(r => r.attendance === "not-going").length;
+  const pendingCount = allRows.filter(row => row.attendance === "pending").length;
+  const notGoingCount = allRows.filter(row => row.attendance === "not-going").length;
 
   const ATTENDEES_PREVIEW = 4;
 

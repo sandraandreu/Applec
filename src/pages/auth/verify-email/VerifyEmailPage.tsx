@@ -20,16 +20,15 @@ const VerifyEmailPage = () => {
   const emailSent =
     (location.state as VerifyEmailLocationState)?.emailSent ?? true;
 
-  const [resendSuccess, setResendSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [resendState, setResendState] = useState({ isLoading: false, success: false });
 
   const handleResend = async () => {
-    setIsLoading(true);
+    setResendState(prev => ({ ...prev, isLoading: true }));
     try {
       await sendVerificationEmail();
-      setResendSuccess(true);
+      setResendState(prev => ({ ...prev, success: true }));
     } finally {
-      setIsLoading(false);
+      setResendState(prev => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -59,13 +58,13 @@ const VerifyEmailPage = () => {
             variant="secondary"
             text={tCommon("buttons.resendEmail")}
             onClick={handleResend}
-            isLoading={isLoading}
+            isLoading={resendState.isLoading}
           />
           <Button
             text={t("register.verifyLoginButton")}
             onClick={handleLogin}
           />
-          {resendSuccess && (
+          {resendState.success && (
             <p className="verify-email-page__resend-success">
               {t("register.verifyResendSuccess")}
             </p>

@@ -29,8 +29,7 @@ const CreateGroupPage = () => {
   const navigate = useNavigate();
   const { user, profile, refreshProfile } = useAuthContext();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorConnection, setErrorConnection] = useState<string>("");
+  const [submitState, setSubmitState] = useState({ isLoading: false, errorConnection: "" });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageError, setImageError] = useState<string>("");
@@ -71,7 +70,7 @@ const CreateGroupPage = () => {
   const handleCreateGroup = async (name: string) => {
     if (!user) return;
     try {
-      setIsLoading(true);
+      setSubmitState(prev => ({ ...prev, isLoading: true }));
 
       const groupId = await createGroup({
         name,
@@ -90,17 +89,17 @@ const CreateGroupPage = () => {
       await refreshProfile();
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
-        setErrorConnection(tCommon("errors.noConnection"));
+        setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
         return;
       }
     } finally {
-      setIsLoading(false);
+      setSubmitState(prev => ({ ...prev, isLoading: false }));
     }
   };
 
   return (
     <div className="create-group-page">
-      {isLoading && <Loading />}
+      {submitState.isLoading && <Loading />}
 
       <BackButton />
 
@@ -175,10 +174,10 @@ const CreateGroupPage = () => {
             }
           />
 
-          {errorConnection && (
+          {submitState.errorConnection && (
             <span className="create-group-page__error">
               <Icon name="error-circle" size={24} className="icon" />
-              {errorConnection}
+              {submitState.errorConnection}
             </span>
           )}
 
@@ -187,7 +186,7 @@ const CreateGroupPage = () => {
               text={t("createGroup.button")}
               type="submit"
               disabled={Object.keys(errors).length > 0 || !!imageError}
-              isLoading={isLoading}
+              isLoading={submitState.isLoading}
             />
           </div>
         </form>
