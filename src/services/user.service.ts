@@ -4,7 +4,8 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../plugins/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../plugins/firebase";
 import type { UserProfile, UserProfileCreate } from "../models/user.model";
 
 export type { UserProfile };
@@ -26,6 +27,15 @@ export const createUserProfile = async (
   data: UserProfileCreate,
 ): Promise<void> => {
   await setDoc(doc(db, "users", uid), data);
+};
+
+export const uploadProfilePhoto = async (
+  uid: string,
+  file: File,
+): Promise<string> => {
+  const storageRef = ref(storage, `users/${uid}/avatar`);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
 };
 
 export const updateUserFields = async (
