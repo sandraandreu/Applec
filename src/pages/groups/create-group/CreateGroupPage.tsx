@@ -69,6 +69,7 @@ const CreateGroupPage = () => {
 
   const handleCreateGroup = async (name: string) => {
     if (!user) return;
+    let isMounted = true;
     try {
       setSubmitState(prev => ({ ...prev, isLoading: true }));
 
@@ -85,16 +86,17 @@ const CreateGroupPage = () => {
       }
 
       await updateUserFields(user.uid, { groupId, role: "admin" });
-      navigate("/invite-group", { state: { fromCreate: true } });
       await refreshProfile();
+      navigate("/invite-group", { state: { fromCreate: true } });
     } catch (error: unknown) {
+      if (!isMounted) return;
       if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
         setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
-        return;
       }
     } finally {
-      setSubmitState(prev => ({ ...prev, isLoading: false }));
+      if (isMounted) setSubmitState(prev => ({ ...prev, isLoading: false }));
     }
+    return () => { isMounted = false; };
   };
 
   return (

@@ -133,7 +133,7 @@ const EditEventPage = () => {
   const eventId = state.event.id;
 
   const isReducerModified = (() => {
-    const event = state.event!;
+    const event = state.event;
     if (state.eventType !== (event.isSpecial ? "special" : "normal")) return true;
     if (state.requiresConfirmation !== event.requiresConfirmation) return true;
     if (state.sendReminder !== event.sendReminder) return true;

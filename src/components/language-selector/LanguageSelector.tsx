@@ -18,7 +18,7 @@ const LanguageSelector = () => {
       i18n.changeLanguage(savedLanguage);
       setLanguage(savedLanguage);
     }
-  }, []);
+  }, [i18n]);
 
   const handleLanguageChange = (lang: "es" | "ca") => {
     i18n.changeLanguage(lang);

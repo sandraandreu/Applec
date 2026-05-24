@@ -33,9 +33,7 @@ const JoinGroupPage = () => {
     imageUrl?: string;
   } | null>(null);
   const [requestSent, setRequestSent] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorConnection, setErrorConnection] = useState<string>("");
-  const [errorCode, setErrorCode] = useState<string>("");
+  const [submitState, setSubmitState] = useState({ isLoading: false, errorConnection: "", errorCode: "" });
 
   const {
     register,
@@ -49,24 +47,23 @@ const JoinGroupPage = () => {
 
   const handleSearch = async (code: string) => {
     try {
-      setIsLoading(true);
-      setErrorCode("");
+      setSubmitState({ isLoading: true, errorConnection: "", errorCode: "" });
       setGroupFound(null);
 
       const group = await findGroupByInviteCode(code);
 
       if (!group) {
-        setErrorCode(t("joinGroup.errors.codeNotFound"));
+        setSubmitState(prev => ({ ...prev, errorCode: t("joinGroup.errors.codeNotFound") }));
         return;
       }
 
       setGroupFound(group);
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "unavailable") {
-        setErrorConnection(tCommon("errors.noConnection"));
+        setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
       }
     } finally {
-      setIsLoading(false);
+      setSubmitState(prev => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -78,7 +75,7 @@ const JoinGroupPage = () => {
   const handleConfirmJoin = async () => {
     if (!user || !groupFound) return;
     try {
-      setIsLoading(true);
+      setSubmitState(prev => ({ ...prev, isLoading: true }));
 
       await Promise.all([
         addMemberToGroup(
@@ -93,17 +90,17 @@ const JoinGroupPage = () => {
       navigate("/events", { replace: true });
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "unavailable") {
-        setErrorConnection(tCommon("errors.noConnection"));
+        setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
       }
     } finally {
-      setIsLoading(false);
+      setSubmitState(prev => ({ ...prev, isLoading: false }));
     }
   };
 
   if (requestSent) {
     return (
       <div className="join-group-page join-group-page--sent">
-        {isLoading && <Loading />}
+        {submitState.isLoading && <Loading />}
         <div className="join-group-page__pending">
           <div className="join-group-page__pending-header">
             <h1 className="join-group-page__pending-title">
@@ -128,7 +125,7 @@ const JoinGroupPage = () => {
           <Button
             text={t("joinGroup.requestSent.button")}
             onClick={handleConfirmJoin}
-            isLoading={isLoading}
+            isLoading={submitState.isLoading}
           />
         </div>
       </div>
@@ -137,7 +134,7 @@ const JoinGroupPage = () => {
 
   return (
     <div className="join-group-page">
-      {isLoading && <Loading />}
+      {submitState.isLoading && <Loading />}
 
       <BackButton />
 
@@ -165,16 +162,16 @@ const JoinGroupPage = () => {
                 error={
                   errors.code?.type === "required"
                     ? t("joinGroup.errors.codeRequired")
-                    : errorCode
-                      ? errorCode
+                    : submitState.errorCode
+                      ? submitState.errorCode
                       : undefined
                 }
               />
 
-              {errorConnection && (
+              {submitState.errorConnection && (
                 <span className="join-group-page__error">
                   <Icon name="error-circle" size={24} className="icon" />
-                  {errorConnection}
+                  {submitState.errorConnection}
                 </span>
               )}
 
@@ -183,7 +180,7 @@ const JoinGroupPage = () => {
                   text={t("joinGroup.button")}
                   type="submit"
                   disabled={Object.keys(errors).length > 0}
-                  isLoading={isLoading}
+                  isLoading={submitState.isLoading}
                 />
               </div>
             </form>
