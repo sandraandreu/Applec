@@ -137,6 +137,13 @@ export const removeMemberFromGroup = async (
   });
 };
 
+export const updateGroupSettings = async (
+  groupId: string,
+  data: Partial<Pick<GroupData, "name" | "imageUrl">>,
+): Promise<void> => {
+  await updateDoc(doc(db, "groups", groupId), data);
+};
+
 export const addMemberToGroup = async (
   groupId: string,
   uid: string,
