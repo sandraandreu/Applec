@@ -72,6 +72,20 @@
     font-weight: var(--font-weight-bold);
   }
 
+  &__regenerate {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-body-s);
+    font-family: var(--font-body);
+    text-decoration: underline;
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
   &__skip {
     background: none;
     border: none;

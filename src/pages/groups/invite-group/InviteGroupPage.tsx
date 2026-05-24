@@ -1,21 +1,30 @@
 import "./invite-group.scss";
 import { useTranslation } from "react-i18next";
 import { useGroupContext } from "../../../context/group/GroupContext";
+import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import illustration from "../../../assets/images/invite-group-illustration.png";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import Modal from "../../../components/modal/Modal";
+import { regenerateInviteCode } from "../../../services/group.service";
 
 const InviteGroupPage = () => {
-  const { t } = useTranslation("groups");
-  const { group } = useGroupContext();
+  const { t: tGroups } = useTranslation("groups");
+  const { t: tProfile } = useTranslation("profile");
+  const { group, refreshGroup } = useGroupContext();
+  const { profile } = useAuthContext();
   const inviteCode = group?.inviteCode ?? null;
   const location = useLocation();
   const navigate = useNavigate();
   const fromCreate = location.state?.fromCreate === true;
+  const fromProfile = location.state?.fromProfile === true;
+  const isAdmin = profile?.role === "admin";
 
   const [copied, setCopied] = useState<boolean>(false);
+  const [showRegenerateModal, setShowRegenerateModal] = useState(false);
+  const [isRegenerating, setIsRegenerating] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -36,14 +45,25 @@ const InviteGroupPage = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: t("invite.shareTitle"),
-          text: t("invite.shareText", { inviteCode }),
+          title: tGroups("invite.shareTitle"),
+          text: tGroups("invite.shareText", { inviteCode }),
         });
       } catch {
         // user cancelled or share not allowed
       }
     } else {
       handleCopy();
+    }
+  };
+
+  const handleRegenerateConfirm = async () => {
+    if (!group?.groupId) return;
+    setIsRegenerating(true);
+    try {
+      await regenerateInviteCode(group.groupId);
+      await refreshGroup();
+    } finally {
+      setIsRegenerating(false);
     }
   };
 
@@ -56,10 +76,10 @@ const InviteGroupPage = () => {
       )}
       <div className="invite-group-page__header">
         <h1 className="invite-group-page__title">
-          {fromCreate ? t("invite.titleCreate") : t("invite.titleInvite")}
+          {fromCreate ? tGroups("invite.titleCreate") : tGroups("invite.titleInvite")}
         </h1>
         <p className="invite-group-page__description">
-          {fromCreate ? t("invite.subtitleCreate") : t("invite.subtitleInvite")}
+          {fromCreate ? tGroups("invite.subtitleCreate") : tGroups("invite.subtitleInvite")}
         </p>
       </div>
 
@@ -76,10 +96,10 @@ const InviteGroupPage = () => {
           type="button"
         >
           <span className="invite-group-page__code-label">
-            {t("invite.code")}
+            {tGroups("invite.code")}
           </span>
           <span className="invite-group-page__code-value">
-            {copied ? t("invite.copied") : inviteCode}
+            {copied ? tGroups("invite.copied") : inviteCode}
           </span>
         </button>
 
@@ -89,14 +109,42 @@ const InviteGroupPage = () => {
           type="button"
         >
           <Icon name="share" size={24} className="invite-group-page__share-icon" />
-          {t("invite.share")}
+          {tGroups("invite.share")}
         </button>
       </div>
 
+      {isAdmin && fromProfile && (
+        <button
+          className="invite-group-page__regenerate"
+          type="button"
+          disabled={isRegenerating}
+          onClick={() => setShowRegenerateModal(true)}
+        >
+          {tProfile("inviteGroup.regenerateCode")}
+        </button>
+      )}
+
       {fromCreate
-        ? <Link to="/events" className="invite-group-page__skip">{t("invite.skip")}</Link>
-        : <button type="button" className="invite-group-page__skip" onClick={() => navigate(-1)}>{t("invite.skip")}</button>
+        ? <Link to="/events" className="invite-group-page__skip">{tGroups("invite.skip")}</Link>
+        : <button type="button" className="invite-group-page__skip" onClick={() => navigate(-1)}>{tGroups("invite.skip")}</button>
       }
+
+      <Modal
+        isOpen={showRegenerateModal}
+        header={tProfile("inviteGroup.regenerateConfirmTitle")}
+        message={tProfile("inviteGroup.regenerateConfirmMessage")}
+        onDismiss={() => setShowRegenerateModal(false)}
+        buttons={[
+          {
+            text: tProfile("inviteGroup.regenerateConfirmCancel"),
+            role: "cancel",
+          },
+          {
+            text: tProfile("inviteGroup.regenerateConfirmSubmit"),
+            handler: handleRegenerateConfirm,
+          },
+        ]}
+      />
     </div>
   );
 };
