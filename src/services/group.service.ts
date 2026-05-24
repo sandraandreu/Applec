@@ -4,6 +4,8 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  deleteField,
+  writeBatch,
   collection,
   query,
   where,
@@ -138,8 +140,16 @@ export const removeMemberFromGroup = async (
   });
 };
 
-export const deleteGroup = async (groupId: string): Promise<void> => {
-  await deleteDoc(doc(db, "groups", groupId));
+export const deleteGroup = async (
+  groupId: string,
+  memberUids: string[],
+): Promise<void> => {
+  const batch = writeBatch(db);
+  batch.delete(doc(db, "groups", groupId));
+  for (const uid of memberUids) {
+    batch.update(doc(db, "users", uid), { groupId: deleteField() });
+  }
+  await batch.commit();
 };
 
 export const updateGroupSettings = async (
