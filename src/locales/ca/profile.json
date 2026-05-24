@@ -60,6 +60,13 @@
       "nameTooLong": "El nom no pot tindre més de 60 caràcters"
     }
   },
+  "inviteGroup": {
+    "regenerateCode": "Regenerar codi",
+    "regenerateConfirmTitle": "Regenerar codi",
+    "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
+    "regenerateConfirmCancel": "Cancel·lar",
+    "regenerateConfirmSubmit": "Regenerar"
+  },
   "notificationsSettings": {
     "title": "Notificacions",
     "sections": {

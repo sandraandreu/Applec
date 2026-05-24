@@ -60,6 +60,13 @@
       "nameTooLong": "El nombre no puede tener más de 60 caracteres"
     }
   },
+  "inviteGroup": {
+    "regenerateCode": "Regenerar código",
+    "regenerateConfirmTitle": "Regenerar código",
+    "regenerateConfirmMessage": "El enlace anterior dejará de funcionar. ¿Quieres continuar?",
+    "regenerateConfirmCancel": "Cancelar",
+    "regenerateConfirmSubmit": "Regenerar"
+  },
   "notificationsSettings": {
     "title": "Notificaciones",
     "sections": {
