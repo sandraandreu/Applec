@@ -3,17 +3,13 @@
   flex-direction: column;
   height: 100dvh;
 
-  &--bg-blue {
-    background: var(--color-bg-gradient-blue);
-  }
+  &--bg-red  { background: var(--color-bg-gradient-red); }
+  &--bg-teal { background: var(--color-bg-gradient-teal); }
+  &--bg-blue { background: var(--color-bg-gradient-blue); }
 
-  &--bg-red {
-    background: var(--color-bg-gradient-red);
-  }
-
-  &--bg-teal {
-    background: var(--color-bg-gradient-teal);
-  }
+  &--bg-red-top  { background-image: linear-gradient(to bottom, var(--red-100),  var(--yellow-100)); background-repeat: no-repeat; background-size: 100% 340px; }
+  &--bg-teal-top { background-image: linear-gradient(to bottom, var(--teal-100), var(--yellow-100)); background-repeat: no-repeat; background-size: 100% 340px; }
+  &--bg-blue-top { background-image: linear-gradient(to bottom, var(--blue-200), var(--yellow-100)); background-repeat: no-repeat; background-size: 100% 340px; }
 
   &__content {
     flex: 1;

@@ -15,7 +15,7 @@ const SettingsRow = ({ label, iconName, to, onClick, danger }: SettingsRowProps)
   const modifier = danger ? " settings-row--danger" : "";
   const content = (
     <>
-      <Icon name={iconName} size={24} className="settings-row__icon" aria-hidden="true" />
+      <Icon name={iconName} size={28} className="settings-row__icon" aria-hidden="true" />
       <span className="settings-row__label">{label}</span>
       <Icon name="chevron-right" size={20} className="settings-row__chevron" aria-hidden="true" />
     </>

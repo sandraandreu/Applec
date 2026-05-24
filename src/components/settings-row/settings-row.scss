@@ -5,11 +5,16 @@
   width: 100%;
   background: none;
   border: none;
+  border-bottom: 1px solid var(--color-border);
   padding: var(--size-16) var(--size-14);
   text-align: left;
   text-decoration: none;
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font-family: var(--font-body);
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &--danger {
     .settings-row__icon,
@@ -20,7 +25,7 @@
   }
 
   &__icon {
-    color: var(--color-brand);
+    color: var(--color-icon);
     flex-shrink: 0;
   }
 
@@ -28,7 +33,7 @@
     flex: 1;
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
+    color: var(--color-text-secondary);
   }
 
   &__chevron {
