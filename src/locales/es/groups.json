@@ -44,6 +44,11 @@
     "copied": "¡Copiado!",
     "skip": "Ahora no, invitaré más tarde",
     "shareTitle": "Applec",
-    "shareText": "Únete a mi falla con el código: {{inviteCode}}"
+    "shareText": "Únete a mi falla con el código: {{inviteCode}}",
+    "regenerate": "Regenerar código",
+    "regenerateConfirmTitle": "Regenerar código",
+    "regenerateConfirmMessage": "El enlace anterior dejará de funcionar. ¿Quieres continuar?",
+    "regenerateCancel": "Cancelar",
+    "regenerateConfirm": "Regenerar"
   }
 }

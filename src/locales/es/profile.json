@@ -1,0 +1,91 @@
+{
+  "profile": {
+    "myAccount": "Mi cuenta",
+    "myGroup": "Mi falla",
+    "editProfile": "Editar perfil",
+    "changePassword": "Cambiar contraseña",
+    "linkedMembers": "Mis vinculados",
+    "notifications": "Notificaciones",
+    "language": "Idioma",
+    "shareAccess": "Compartir acceso",
+    "groupSettings": "Configuración del grupo",
+    "logout": "Cerrar sesión",
+    "logoutConfirmTitle": "Cerrar sesión",
+    "logoutConfirmMessage": "¿Seguro que quieres cerrar sesión?",
+    "logoutCancel": "Cancelar",
+    "logoutConfirm": "Cerrar sesión"
+  },
+  "editProfile": {
+    "title": "Editar perfil",
+    "changePhoto": "Cambiar foto",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "email": "Correo electrónico",
+    "save": "Guardar cambios",
+    "saveSuccess": "Perfil actualizado",
+    "saveError": "No se pudo guardar. Inténtalo de nuevo.",
+    "errors": {
+      "firstNameRequired": "El nombre es obligatorio",
+      "lastNameRequired": "Los apellidos son obligatorios"
+    }
+  },
+  "changePassword": {
+    "title": "Cambiar contraseña",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "save": "Guardar cambios",
+    "saveSuccess": "Contraseña actualizada",
+    "errorMismatch": "Las contraseñas no coinciden",
+    "errorWrongPassword": "La contraseña actual es incorrecta",
+    "errorWeakPassword": "La contraseña es demasiado débil",
+    "errorDefault": "No se pudo cambiar la contraseña. Inténtalo de nuevo."
+  },
+  "groupSettings": {
+    "title": "Configuración del grupo",
+    "groupName": "Nombre del grupo",
+    "changeImage": "Cambiar imagen",
+    "save": "Guardar cambios",
+    "saveSuccess": "Cambios guardados",
+    "saveError": "No se pudo guardar. Inténtalo de nuevo.",
+    "dangerZone": "Zona de peligro",
+    "deleteGroup": "Eliminar grupo",
+    "deleteConfirmTitle": "Eliminar grupo",
+    "deleteConfirmMessage": "Esta acción es irreversible. Todos los miembros perderán el acceso inmediatamente.",
+    "deleteCancel": "Cancelar",
+    "deleteConfirm": "Eliminar",
+    "deleteError": "No se pudo eliminar el grupo. Inténtalo de nuevo.",
+    "errors": {
+      "nameRequired": "El nombre es obligatorio",
+      "nameTooLong": "El nombre no puede tener más de 60 caracteres"
+    }
+  },
+  "notificationsSettings": {
+    "title": "Notificaciones",
+    "sections": {
+      "events": "Eventos",
+      "feed": "Feed",
+      "group": "Grupo"
+    },
+    "items": {
+      "newEvent": "Nuevo evento creado",
+      "newEventDesc": "Tu falla tiene un nuevo evento",
+      "attendanceReminder": "Recordatorio de asistencia",
+      "attendanceReminderDesc": "Antes de que expire el plazo",
+      "eventChanges": "Cambios en el evento",
+      "eventChangesDesc": "Si se modifica hora, lugar o fecha",
+      "eventCancelled": "Evento cancelado",
+      "eventCancelledDesc": "Si se cancela un evento",
+      "newPost": "Nueva publicación",
+      "newPostDesc": "Cuando alguien publica en el feed",
+      "adminPost": "Publicaciones del admin",
+      "adminPostDesc": "Cambios importantes",
+      "postComments": "Comentarios en tus posts",
+      "postCommentsDesc": "Respuestas a tus publicaciones",
+      "newRequests": "Nuevas solicitudes",
+      "newRequestsDesc": "Personas que quieren unirse",
+      "accepted": "Has sido aceptado",
+      "acceptedDesc": "Confirmación de acceso al grupo"
+    }
+  }
+}
