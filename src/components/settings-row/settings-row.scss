@@ -1,0 +1,38 @@
+.settings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-compact);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--size-16) var(--size-14);
+  text-align: left;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+
+  &--danger {
+    .settings-row__icon,
+    .settings-row__label,
+    .settings-row__chevron {
+      color: var(--color-error);
+    }
+  }
+
+  &__icon {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  &__label {
+    flex: 1;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  &__chevron {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
+}
