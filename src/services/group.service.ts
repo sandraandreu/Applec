@@ -3,6 +3,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
+  deleteDoc,
   collection,
   query,
   where,
@@ -135,6 +136,10 @@ export const removeMemberFromGroup = async (
     const updated = members.filter(member => member.uid !== uid);
     transaction.update(groupRef, { members: updated });
   });
+};
+
+export const deleteGroup = async (groupId: string): Promise<void> => {
+  await deleteDoc(doc(db, "groups", groupId));
 };
 
 export const updateGroupSettings = async (
