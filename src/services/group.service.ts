@@ -53,6 +53,21 @@ export const updateGroupImage = async (groupId: string, imageUrl: string): Promi
   await updateDoc(doc(db, "groups", groupId), { imageUrl });
 };
 
+const generateInviteCode = () => {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+};
+
+export const regenerateInviteCode = async (groupId: string): Promise<void> => {
+  let code = generateInviteCode();
+  let exists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", code)))).empty;
+  while (exists) {
+    code = generateInviteCode();
+    exists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", code)))).empty;
+  }
+  await updateDoc(doc(db, "groups", groupId), { inviteCode: code });
+};
+
 export const createGroup = async ({
   name,
   imageUrl,
@@ -60,15 +75,10 @@ export const createGroup = async ({
   adminFirstName,
   adminLastName,
 }: CreateGroupData): Promise<string> => {
-  const generateCode = () => {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
-  };
-
-  let inviteCode = generateCode();
+  let inviteCode = generateInviteCode();
   let codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
   while (codeExists) {
-    inviteCode = generateCode();
+    inviteCode = generateInviteCode();
     codeExists = !(await getDocs(query(collection(db, "groups"), where("inviteCode", "==", inviteCode)))).empty;
   }
   const ref = await addDoc(collection(db, "groups"), {
