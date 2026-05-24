@@ -1,0 +1,16 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-compact);
+  color: var(--color-text-primary);
+
+  .back-button {
+    color: inherit;
+  }
+
+  &__title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+  }
+}

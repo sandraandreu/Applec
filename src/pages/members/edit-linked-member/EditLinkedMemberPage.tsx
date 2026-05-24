@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { editLinkedMember, deleteLinkedMember } from "../../../services/linked-member.service";
-import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import PageHeader from "../../../components/page-header/PageHeader";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
@@ -109,10 +109,7 @@ const EditLinkedMemberPage = () => {
       {isLoading && <Loading />}
 
       <div className="edit-linked-member-page__gradient-zone">
-        <div className="edit-linked-member-page__top-bar">
-          <BackButton onClick={handleBack} />
-          <h1 className="edit-linked-member-page__title">{t("linked.editTitle")}</h1>
-        </div>
+        <PageHeader title={t("linked.editTitle")} onBack={handleBack} />
       </div>
 
       <div className="edit-linked-member-page__content">

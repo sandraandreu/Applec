@@ -10,7 +10,7 @@ import { combineDateAndTime } from "../../../utils/dates";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import PageHeader from "../../../components/page-header/PageHeader";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
@@ -153,10 +153,7 @@ const EditEventPage = () => {
       className={`edit-event${state.eventType === "special" ? " edit-event--special" : ""}`}
     >
       <div className="edit-event__gradient-zone">
-        <div className="edit-event__top-bar">
-          <BackButton onClick={handleBack} />
-          <h1 className="edit-event__title">{t("edit.title")}</h1>
-        </div>
+        <PageHeader title={t("edit.title")} onBack={handleBack} />
       </div>
 
       <form
