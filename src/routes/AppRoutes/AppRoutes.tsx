@@ -56,6 +56,11 @@ const VerifyEmailPage = lazy(
 );
 const NotificationsPage = lazy(() => import("../../pages/notifications/NotificationsPage"));
 const JoinRequestsPage = lazy(() => import("../../pages/notifications/join-requests/JoinRequestsPage"));
+const ProfilePage = lazy(() => import("../../pages/profile/profile/ProfilePage"));
+const EditProfilePage = lazy(() => import("../../pages/profile/edit-profile/EditProfilePage"));
+const ChangePasswordPage = lazy(() => import("../../pages/profile/change-password/ChangePasswordPage"));
+const GroupSettingsPage = lazy(() => import("../../pages/profile/group-settings/GroupSettingsPage"));
+const NotificationsSettingsPage = lazy(() => import("../../pages/profile/notifications-settings/NotificationsSettingsPage"));
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -272,6 +277,53 @@ const AppRoutes = () => (
           element={
             <PrivateRoutes requiresGroup>
               <JoinRequestsPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoutes requiresGroup>
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile/edit"
+          element={
+            <PrivateRoutes requiresGroup>
+              <EditProfilePage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile/change-password"
+          element={
+            <PrivateRoutes requiresGroup>
+              <ChangePasswordPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile/group-settings"
+          element={
+            <PrivateRoutes requiresGroup>
+              <GroupSettingsPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile/notifications-settings"
+          element={
+            <PrivateRoutes requiresGroup>
+              <NotificationsSettingsPage />
             </PrivateRoutes>
           }
         />
