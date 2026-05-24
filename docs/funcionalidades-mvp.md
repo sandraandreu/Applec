@@ -131,7 +131,7 @@ Integrado directamente en la página de detalle del evento (no es una página se
 ---
 
 ### 11. Perfil de usuario
-**Estado:** ✗ Pendiente (pantalla no creada — HTML/SCSS primero)
+**Estado:** ✓ En progreso
 
 Pantalla accesible desde la barra de navegación inferior.
 
@@ -141,6 +141,15 @@ Pantalla accesible desde la barra de navegación inferior.
 - Sección **Mi falla:** Compartir acceso · Configuración del grupo · Cerrar sesión
 
 Idioma se puede cambiar desde el perfil (ya funciona globalmente). Cerrar sesión llama a `logout` del `AuthContext`.
+
+**Implementado:**
+- Servicios: `changePassword`, `uploadProfilePhoto`, `updateUserFields`, `updateGroupSettings`, `regenerateInviteCode`, `deleteGroup`
+- i18n: namespace `profile` completo (es + ca)
+- Rutas: `/profile`, `/profile/edit`, `/profile/change-password`, `/profile/group-settings`, `/profile/notifications-settings`
+- InviteGroupPage: botón "Regenerar código" para admin (solo desde perfil)
+- Componentes: `PageHeader`, `SettingsRow`
+
+**Pendiente:** páginas ProfilePage, EditProfilePage, ChangePasswordPage, GroupSettingsPage, NotificationsSettingsPage
 
 ---
 
