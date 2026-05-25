@@ -1,20 +1,24 @@
 import { useEffect } from "react";
 import type { UserProfile } from "../models/user.model";
 
-const roleToClass: Record<UserProfile["role"], string> = {
-  admin: "main-layout--bg-red",
-  organizer: "main-layout--bg-teal",
-  member: "main-layout--bg-blue",
+type Variant = "full" | "top";
+
+const roleToGradient: Record<UserProfile["role"], string> = {
+  admin:     "var(--color-bg-gradient-red)",
+  organizer: "var(--color-bg-gradient-teal)",
+  member:    "var(--color-bg-gradient-blue)",
 };
 
-const useLayoutBackground = (role: UserProfile["role"] | undefined) => {
+const useLayoutBackground = (role: UserProfile["role"] | undefined, variant: Variant = "full") => {
   useEffect(() => {
     if (!role) return;
-    const layout = document.querySelector(".main-layout");
-    const className = roleToClass[role];
-    layout?.classList.add(className);
-    return () => layout?.classList.remove(className);
-  }, [role]);
+    const gradient = roleToGradient[role];
+    const value = variant === "top"
+      ? `${gradient} no-repeat top / 100% 350px`
+      : gradient;
+    document.documentElement.style.setProperty("--page-bg", value);
+    return () => { document.documentElement.style.removeProperty("--page-bg"); };
+  }, [role, variant]);
 };
 
 export default useLayoutBackground;

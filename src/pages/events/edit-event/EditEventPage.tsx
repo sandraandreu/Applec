@@ -10,7 +10,7 @@ import { combineDateAndTime } from "../../../utils/dates";
 import Loading from "../../../components/loading/Loading";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
-import PageHeader from "../../../components/page-header/PageHeader";
+import PageHeader from "../../../components/layout/PageHeader";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";

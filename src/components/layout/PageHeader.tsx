@@ -1,4 +1,4 @@
-import "./page-header.scss";
+import "./layout.scss";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
 
 interface PageHeaderProps {

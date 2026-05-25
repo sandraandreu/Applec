@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { editLinkedMember, deleteLinkedMember } from "../../../services/linked-member.service";
-import PageHeader from "../../../components/page-header/PageHeader";
+import PageHeader from "../../../components/layout/PageHeader";
 import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
