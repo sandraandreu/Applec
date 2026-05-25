@@ -93,17 +93,21 @@ const VoteSheet = ({
     preventScrollOnSwipe: true,
   });
 
+  const hasAnyVote = !!selectedResponse || Object.values(linkedVotes).some(v => v !== null);
+
   const handleSave = async () => {
-    const hasAnyVote = !!selectedResponse || Object.values(linkedVotes).some(linkedVote => linkedVote !== null);
     if (!hasAnyVote || isSaving) return;
     setIsSaving(true);
     const filteredLinkedVotes: Record<string, "yes" | "no"> = {};
     Object.entries(linkedVotes).forEach(([id, vote]) => {
       if (vote !== null) filteredLinkedVotes[id] = vote;
     });
-    await onSave(selectedResponse ?? undefined, filteredLinkedVotes);
-    setIsSaving(false);
-    onDismiss();
+    try {
+      await onSave(selectedResponse ?? undefined, filteredLinkedVotes);
+      onDismiss();
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return createPortal(
