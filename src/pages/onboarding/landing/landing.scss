@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: var(--gap-section);
+  gap: var(--gap-content);
   background: var(--color-bg-blue);
   height: 100vh;
   overflow: hidden;
-  padding: var(--padding-page);
+  padding: var(--size-40) var(--size-32);
 
   &__header {
     text-align: center;
@@ -21,10 +21,11 @@
   }
 
   &__img {
-    width: 100%;
+    flex: 1;
+    min-height: 0;
 
     img {
-      max-height: 52vh;
+      height: 100%;
       width: 100%;
       object-fit: contain;
     }
