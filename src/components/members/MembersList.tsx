@@ -71,6 +71,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
                     firstName={member.firstName}
                     lastName={member.lastName}
                     role={member.role}
+                    photoUrl={member.photoUrl}
                     isOwnProfile={member.uid === user?.uid}
                     onClick={() => navigate(member.uid === user?.uid ? "/profile" : `/members/${member.uid}`)}
                   />

@@ -16,6 +16,8 @@ interface InputProps {
   optional?: boolean;
   endIcon?: ReactNode;
   multiline?: boolean;
+  disabled?: boolean;
+  defaultValue?: string;
 }
 
 const Input = ({
@@ -30,6 +32,8 @@ const Input = ({
   optional,
   endIcon,
   multiline = false,
+  disabled = false,
+  defaultValue,
 }: InputProps) => {
   const { t } = useTranslation("common");
 
@@ -45,7 +49,9 @@ const Input = ({
             placeholder={placeholder}
             className="field__input"
             maxLength={maxLength}
+            defaultValue={defaultValue}
             {...(registration as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            disabled={disabled}
           />
         ) : (
           <input
@@ -54,7 +60,9 @@ const Input = ({
             placeholder={placeholder}
             className={`field__input${endIcon ? " field__input--with-icon" : ""}`}
             maxLength={maxLength}
+            defaultValue={defaultValue}
             {...registration}
+            disabled={disabled}
           />
         )}
         {!multiline && endIcon && <span className="field__icon">{endIcon}</span>}

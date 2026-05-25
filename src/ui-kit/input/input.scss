@@ -31,6 +31,11 @@
   &--with-icon {
     padding-right: 44px;
   }
+
+  &:disabled {
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+  }
 }
 
 textarea.field__input {
@@ -49,6 +54,10 @@ textarea.field__input {
     display: flex;
     align-items: center;
   }
+}
+
+.field:has(.field__input:disabled) .field__label {
+  color: var(--color-text-muted);
 }
 
 .field__error {

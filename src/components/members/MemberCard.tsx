@@ -12,6 +12,7 @@ interface MemberCardProps {
   lastName: string;
   relationship?: string;
   role: "admin" | "organizer" | "member";
+  photoUrl?: string;
   showChevron?: boolean;
   showRole?: boolean;
   attendance?: AvatarAttendance;
@@ -24,7 +25,7 @@ interface MemberCardProps {
   isOwnProfile?: boolean;
 }
 
-const MemberCard = ({ firstName, lastName, relationship, role, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit, isOwnProfile = false }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, relationship, role, photoUrl, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit, isOwnProfile = false }: MemberCardProps) => {
   const { t } = useTranslation("common");
   const { t: tMembers } = useTranslation("members");
   const classes = [
@@ -42,7 +43,7 @@ const MemberCard = ({ firstName, lastName, relationship, role, showChevron = tru
       {...(isExpandable && { "aria-expanded": isExpanded })}
       onClick={isExpandable ? onToggle : onClick}
     >
-      <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} />
+      <Avatar firstName={firstName} lastName={lastName} role={role} size={isLinked ? "sm" : "md"} attendance={attendance} photoUrl={photoUrl} />
       <div className="member-card__info">
         <span className="member-card__name">{firstName} {lastName}</span>
         {isOwnProfile && <span className="member-card__you-tag">{tMembers("members.you")}</span>}

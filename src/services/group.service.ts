@@ -127,6 +127,20 @@ export const updateMemberRole = async (
   });
 };
 
+export const updateMemberPhotoUrl = async (
+  groupId: string,
+  uid: string,
+  photoUrl: string,
+): Promise<void> => {
+  const groupRef = doc(db, "groups", groupId);
+  await runTransaction(db, async (transaction) => {
+    const snap = await transaction.get(groupRef);
+    const members = (snap.data()?.members ?? []) as GroupData["members"];
+    const updated = members.map(member => member.uid === uid ? { ...member, photoUrl } : member);
+    transaction.update(groupRef, { members: updated });
+  });
+};
+
 export const removeMemberFromGroup = async (
   groupId: string,
   uid: string,

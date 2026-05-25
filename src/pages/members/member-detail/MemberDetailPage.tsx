@@ -94,7 +94,7 @@ const MemberDetailPage = () => {
           <BackButton />
         </div>
         <div className="member-detail-page__profile">
-          <Avatar firstName={member.firstName} lastName={member.lastName} role={member.role} size="lg" />
+          <Avatar firstName={member.firstName} lastName={member.lastName} role={member.role} size="lg" photoUrl={member.photoUrl} />
           <div className="member-detail-page__profile-info">
             <h1 className="member-detail-page__name">{member.firstName} {member.lastName}</h1>
           </div>

@@ -371,6 +371,7 @@ const EventDetailPage = () => {
                       firstName={member.firstName}
                       lastName={member.lastName}
                       role={member.role}
+                      photoUrl={member.photoUrl}
                       showChevron={false}
                       showRole={false}
                       attendance={member.attendance}

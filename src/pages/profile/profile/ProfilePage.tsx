@@ -1,8 +1,10 @@
 import "./profile.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
+import useLayoutBackground from "../../../hooks/useLayoutBackground";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Avatar from "../../../ui-kit/avatar/Avatar";
 import Chip from "../../../ui-kit/chip/Chip";
 import SettingsRow from "../../../components/settings-row/SettingsRow";
@@ -13,7 +15,17 @@ const ProfilePage = () => {
   const { profile, logout } = useAuthContext();
   const navigate = useNavigate();
 
+  const location = useLocation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showProfileUpdated, setShowProfileUpdated] = useState(
+    !!(location.state as { profileUpdated?: boolean } | null)?.profileUpdated
+  );
+
+  useLayoutBackground(profile?.role, "top");
+
+  useEffect(() => {
+    if (showProfileUpdated) window.history.replaceState({}, "");
+  }, []);
 
   if (!profile) return null;
 
@@ -22,6 +34,12 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
+      {showProfileUpdated && (
+        <SuccessBanner
+          message={t("editProfile.saveSuccess")}
+          onDismiss={() => setShowProfileUpdated(false)}
+        />
+      )}
       <div className="profile-page__header">
         <Avatar
           firstName={profile.firstName}

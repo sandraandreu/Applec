@@ -7,7 +7,7 @@ export interface GroupData {
   imageUrl?: string;
   inviteCode: string;
   adminId: string;
-  members: { uid: string; role: "admin" | "organizer" | "member"; firstName: string; lastName: string }[];
+  members: { uid: string; role: "admin" | "organizer" | "member"; firstName: string; lastName: string; photoUrl?: string }[];
   linkedMembers: LinkedMemberData[];
 }
 
