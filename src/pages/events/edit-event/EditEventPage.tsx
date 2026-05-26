@@ -152,16 +152,17 @@ const EditEventPage = () => {
     <div
       className={`edit-event${state.eventType === "special" ? " edit-event--special" : ""}`}
     >
-      <div className="edit-event__gradient-zone">
-        <PageHeader title={t("edit.title")} onBack={handleBack} />
-      </div>
-
       <form
-        className={`edit-event__content${isModified ? " edit-event__content--with-sticky" : ""}`}
+        className="edit-event__form-wrapper"
         onSubmit={handleSubmit(onSubmit, () => {
           if (!state.selectedDate) dispatch({ type: "SET_DATE_ERROR" });
         })}
       >
+        <div className="edit-event__scroll-area">
+          <div className="edit-event__gradient-zone">
+            <PageHeader title={t("edit.title")} onBack={handleBack} />
+          </div>
+        <div className="edit-event__content">
         <div className="edit-event__section">
           <p className="edit-event__section-title">{t("create.typeSection")}</p>
           <div className="edit-event__type-block">
@@ -371,6 +372,9 @@ const EditEventPage = () => {
         >
           {t("detail.delete")}
         </button>
+
+        </div>
+        </div>
 
         {isModified && (
           <div className="edit-event__actions">

@@ -1,4 +1,4 @@
-﻿import { useEffect, useLayoutEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -46,17 +46,6 @@ const EventDetailPage = () => {
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
   const [showVoteSuccess, setShowVoteSuccess] = useState(false);
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const [stickyHeight, setStickyHeight] = useState(0);
-
-  useLayoutEffect(() => {
-    const stickyBar = stickyRef.current;
-    if (!stickyBar) return;
-    const observer = new ResizeObserver(() => setStickyHeight(stickyBar.offsetHeight + 16));
-    observer.observe(stickyBar);
-    return () => observer.disconnect();
-  }, []);
-
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
     trackMouse: false,
@@ -229,6 +218,7 @@ const EventDetailPage = () => {
       {showVoteSuccess && (
         <SuccessBanner message={t("attendance.success")} onDismiss={() => setShowVoteSuccess(false)} />
       )}
+      <div className="event-detail-page__scroll-area">
       <div className="event-detail-page__gradient-zone">
         <div className="event-detail-page__top-bar">
           <BackButton />
@@ -326,10 +316,7 @@ const EventDetailPage = () => {
         )}
       </div>
 
-      <div
-        className="event-detail-page__content"
-        style={stickyHeight > 0 ? { paddingBottom: `${stickyHeight}px` } : undefined}
-      >
+      <div className="event-detail-page__content">
         {event.description && (
           <div className="event-detail-page__description">
             <span className="event-detail-page__description-label">
@@ -461,8 +448,10 @@ const EventDetailPage = () => {
         )}
       </div>
 
+      </div>
+
       {eventStatus !== "finalizado" && event.requiresConfirmation && (
-        <div className="event-detail-page__vote-sticky" ref={stickyRef}>
+        <div className="event-detail-page__vote-sticky">
           {hasVoted ? (
             <div className="event-detail-page__vote-summary">
               <div className="event-detail-page__vote-own-row">

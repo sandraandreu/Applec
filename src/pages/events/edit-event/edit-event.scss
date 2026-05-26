@@ -1,11 +1,26 @@
 ﻿.edit-event {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100dvh;
   background: var(--color-bg-gradient-orange);
 
   &--special {
     background: var(--color-bg-gradient-pink);
+  }
+
+  &__form-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__scroll-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   &__gradient-zone {
@@ -54,10 +69,6 @@
     flex-direction: column;
     gap: var(--gap-section);
     flex: 1;
-
-    &--with-sticky {
-      padding-bottom: var(--size-120);
-    }
   }
 
   &__section {
@@ -216,14 +227,10 @@
   }
 
   &__actions {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    flex-shrink: 0;
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
     padding: var(--size-16) var(--size-32);
-    z-index: 5;
     display: flex;
     flex-direction: column;
     gap: var(--gap-compact);
