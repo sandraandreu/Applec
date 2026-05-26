@@ -1,4 +1,4 @@
-
+import "./change-password.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -45,6 +45,7 @@ const ChangePasswordPage = () => {
     register,
     handleSubmit,
     watch,
+    getValues,
     setError,
     formState: { errors },
   } = useForm<FormFields>({ mode: "onSubmit" });
@@ -122,17 +123,23 @@ const ChangePasswordPage = () => {
             registration={register("newPassword", {
               required: true,
               maxLength: 128,
-              validate: (value) =>
-                hasMinLength(value) &&
-                hasUpperCase(value) &&
-                hasLowerCase(value) &&
-                hasNumber(value),
+              validate: {
+                notSameAsCurrent: (value) =>
+                  value !== getValues("currentPassword") ||
+                  t("changePassword.errorSamePassword"),
+                strongPassword: (value) =>
+                  (hasMinLength(value) &&
+                    hasUpperCase(value) &&
+                    hasLowerCase(value) &&
+                    hasNumber(value)) ||
+                  tAuth("register.errors.passwordInvalid"),
+              },
             })}
             error={
               errors.newPassword?.type === "required"
                 ? tCommon("errors.required")
                 : errors.newPassword
-                  ? tAuth("register.errors.passwordInvalid")
+                  ? errors.newPassword.message
                   : undefined
             }
             endIcon={

@@ -36,6 +36,7 @@
     "confirmPassword": "Confirmar contraseña",
     "save": "Guardar cambios",
     "saveSuccess": "Contraseña actualizada",
+    "errorSamePassword": "La nueva contraseña no puede ser igual a la actual",
     "errorMismatch": "Las contraseñas no coinciden",
     "errorWrongPassword": "La contraseña actual es incorrecta",
     "errorWeakPassword": "La contraseña es demasiado débil",
@@ -66,6 +67,11 @@
     "regenerateConfirmMessage": "El enlace anterior dejará de funcionar. ¿Quieres continuar?",
     "regenerateConfirmCancel": "Cancelar",
     "regenerateConfirmSubmit": "Regenerar"
+  },
+  "languageSettings": {
+    "title": "Idioma",
+    "subtitle": "¿En qué idioma prefieres usar Applec?",
+    "description": "El cambio se aplica de inmediato."
   },
   "notificationsSettings": {
     "title": "Notificaciones",

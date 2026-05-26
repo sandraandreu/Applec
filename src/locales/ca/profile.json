@@ -36,6 +36,7 @@
     "confirmPassword": "Confirmar contrasenya",
     "save": "Guardar canvis",
     "saveSuccess": "Contrasenya actualitzada",
+    "errorSamePassword": "La nova contrasenya no pot ser igual a l'actual",
     "errorMismatch": "Les contrasenyes no coincideixen",
     "errorWrongPassword": "La contrasenya actual és incorrecta",
     "errorWeakPassword": "La contrasenya és massa feble",
@@ -66,6 +67,11 @@
     "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
     "regenerateConfirmCancel": "Cancel·lar",
     "regenerateConfirmSubmit": "Regenerar"
+  },
+  "languageSettings": {
+    "title": "Idioma",
+    "subtitle": "En quin idioma prefereixes usar Applec?",
+    "description": "El canvi s'aplica de manera immediata."
   },
   "notificationsSettings": {
     "title": "Notificacions",
