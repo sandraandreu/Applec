@@ -124,10 +124,11 @@ const InviteGroupPage = () => {
         </button>
       )}
 
-      {fromCreate
-        ? <Link to="/events" className="invite-group-page__skip">{tGroups("invite.skip")}</Link>
-        : <button type="button" className="invite-group-page__skip" onClick={() => navigate(-1)}>{tGroups("invite.skip")}</button>
-      }
+      {!fromProfile && (
+        fromCreate
+          ? <Link to="/events" className="invite-group-page__skip">{tGroups("invite.skip")}</Link>
+          : <button type="button" className="invite-group-page__skip" onClick={() => navigate(-1)}>{tGroups("invite.skip")}</button>
+      )}
 
       <Modal
         isOpen={showRegenerateModal}
