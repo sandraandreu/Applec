@@ -68,9 +68,6 @@
     box-shadow: var(--shadow-menu);
     overflow: hidden;
     z-index: 10;
-    list-style: none;
-    margin: 0;
-    padding: 0;
   }
 
   &__menu-item {
@@ -149,7 +146,6 @@
     font-size: var(--font-size-body-s);
     color: var(--color-text-primary);
     line-height: 1.5;
-    margin: 0;
   }
 
   &__scroll-area {
@@ -231,14 +227,12 @@
     gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-brand);
-    margin: 0;
   }
 
   &__vote-closed-info {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
     text-align: center;
-    margin: 0;
     padding: var(--size-4) 0;
   }
 
@@ -286,8 +280,6 @@
   }
 
   &__vote-linked-list {
-    list-style: none;
-    margin: 0;
     padding: var(--gap-content) 0 0;
     border-top: 1px solid var(--color-border-light);
     display: flex;
@@ -332,7 +324,6 @@
     gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
-    margin: 0;
   }
 
   &__delete-error {
@@ -342,7 +333,6 @@
     gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
-    margin: 0;
   }
 
 }

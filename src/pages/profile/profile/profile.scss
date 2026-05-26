@@ -20,14 +20,12 @@
     font-size: var(--font-size-h2);
     font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
-    margin: 0;
     text-align: center;
   }
 
   &__email {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-    margin: 0;
   }
 
   &__content {
@@ -48,7 +46,6 @@
   &__section-title {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-    margin: 0;
   }
 
   &__card {

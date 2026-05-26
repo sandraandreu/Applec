@@ -41,7 +41,6 @@
     font-weight: var(--font-weight-extrabold);
     color: var(--color-text-primary);
     text-align: center;
-    margin: 0;
   }
 
   &__content {
@@ -69,7 +68,6 @@
   &__section-title {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-    margin: 0;
   }
 
   &__linked-list {
@@ -177,13 +175,11 @@
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
     line-height: 1.4;
-    margin: 0;
   }
 
   &__role-option-warning {
     font-size: var(--font-size-body-s);
     color: var(--color-error);
-    margin: 0;
   }
 
   &__buttons {
@@ -199,6 +195,5 @@
     gap: var(--gap-items);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
-    margin: 0;
   }
 }
