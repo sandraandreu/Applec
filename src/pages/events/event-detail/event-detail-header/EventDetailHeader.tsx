@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { getEventStatus } from "../../../models/event.model";
-import type { FallesEvent } from "../../../models/event.model";
-import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
-import Icon from "../../../ui-kit/icons/icon/Icon";
-import Badge from "../../../ui-kit/badge/Badge";
+import { getEventStatus } from "../../../../models/event.model";
+import type { FallesEvent } from "../../../../models/event.model";
+import BackButton from "../../../../ui-kit/button/icon-buttons/back-button/BackButton";
+import Icon from "../../../../ui-kit/icons/icon/Icon";
+import Badge from "../../../../ui-kit/badge/Badge";
 
 interface Props {
   event: FallesEvent;
