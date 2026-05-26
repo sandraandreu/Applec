@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  background: var(--page-bg);
+  background: var(--color-surface);
   padding: var(--padding-page);
 
   &__content {
@@ -22,12 +22,7 @@
     text-align: center;
   }
 
-  &__subtitle {
-    margin: 0;
-  }
-
   &__description {
     color: var(--color-text-secondary);
-    margin: 0;
   }
 }
