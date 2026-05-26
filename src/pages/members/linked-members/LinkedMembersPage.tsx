@@ -25,7 +25,7 @@ const LinkedMembersPage = () => {
   );
 
   useLayoutEffect(() => {
-    if (showUpdated) window.history.replaceState({}, "");
+    if (showUpdated) navigate(location.pathname, { replace: true, state: null });
   }, []);
 
   const swipeHandlers = useSwipeable({

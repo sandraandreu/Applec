@@ -26,7 +26,9 @@ const MembersPage = () => {
   const [showMemberDeleted, setShowMemberDeleted] = useState(!!locationState.memberDeleted);
 
   useEffect(() => {
-    window.history.replaceState(null, "");
+    if (showRoleUpdated || showMemberDeleted) {
+      navigate(location.pathname, { replace: true, state: null });
+    }
   }, []);
 
   const { adminCount, organizerCount, memberCount, totalCount } = useMemo(() => ({

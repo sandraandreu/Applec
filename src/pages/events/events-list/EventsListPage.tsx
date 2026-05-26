@@ -12,12 +12,13 @@ import type { FilterKey, FilterOption } from "../../../components/events/EventsF
 import Loading from "../../../components/loading/Loading";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./events-list.scss";
 
 const EventsListPage = () => {
   const { user, profile } = useAuthContext();
   const { t } = useTranslation("events");
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
@@ -33,7 +34,7 @@ const EventsListPage = () => {
 
   useEffect(() => {
     if (showEventUpdated) {
-      window.history.replaceState({}, "");
+      navigate(location.pathname, { replace: true, state: null });
     }
   }, []);
 

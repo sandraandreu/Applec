@@ -27,7 +27,9 @@ const ProfilePage = () => {
   useLayoutBackground(profile?.role, "top");
 
   useEffect(() => {
-    if (showProfileUpdated) window.history.replaceState({}, "");
+    if (showProfileUpdated || showPasswordUpdated) {
+      navigate(location.pathname, { replace: true, state: null });
+    }
   }, []);
 
   if (!profile) return null;
@@ -72,7 +74,7 @@ const ProfilePage = () => {
             <SettingsRow label={t("profile.changePassword")} iconName="lock" to="/profile/change-password" />
             <SettingsRow label={t("profile.linkedMembers")} iconName="link" to="/members/linked" />
             <SettingsRow label={t("profile.notifications")} iconName="bell" to="/profile/notifications-settings" />
-            <SettingsRow label={t("profile.language")} iconName="globe" to="/onboarding/language" />
+            <SettingsRow label={t("profile.language")} iconName="globe" to="/profile/language" />
           </div>
         </section>
 
