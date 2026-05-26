@@ -48,6 +48,7 @@
     },
     "showAll": "Veure tots ({{count}})",
     "showLess": "Veure menys",
+    "noConfirmationRequired": "No requereix confirmació d'assistència",
     "filter": {
       "confirmed": "Confirmats",
       "pending": "Pendents",

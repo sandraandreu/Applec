@@ -102,6 +102,10 @@
     border-radius: var(--size-8);
     flex-shrink: 0;
     color: var(--color-brand);
+
+    &--no-bg {
+      background: none;
+    }
   }
 
   &__field-content {

@@ -52,7 +52,8 @@
       "notGoing": "No van"
     },
     "showAll": "Ver todos ({{count}})",
-    "showLess": "Ver menos"
+    "showLess": "Ver menos",
+    "noConfirmationRequired": "No requiere confirmación de asistencia"
   },
   "delete": {
     "confirm": "¿Estás seguro?",
