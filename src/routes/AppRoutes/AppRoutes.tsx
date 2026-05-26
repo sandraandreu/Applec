@@ -61,6 +61,7 @@ const EditProfilePage = lazy(() => import("../../pages/profile/edit-profile/Edit
 const ChangePasswordPage = lazy(() => import("../../pages/profile/change-password/ChangePasswordPage"));
 const GroupSettingsPage = lazy(() => import("../../pages/profile/group-settings/GroupSettingsPage"));
 const NotificationsSettingsPage = lazy(() => import("../../pages/profile/notifications-settings/NotificationsSettingsPage"));
+const LanguageSettingsPage = lazy(() => import("../../pages/profile/language/LanguageSettingsPage"));
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -324,6 +325,15 @@ const AppRoutes = () => (
           element={
             <PrivateRoutes requiresGroup>
               <NotificationsSettingsPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/profile/language"
+          element={
+            <PrivateRoutes requiresGroup>
+              <LanguageSettingsPage />
             </PrivateRoutes>
           }
         />
