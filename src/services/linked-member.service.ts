@@ -1,4 +1,4 @@
-﻿import { collection, getDocs, doc, updateDoc, deleteDoc, writeBatch, arrayUnion, arrayRemove, runTransaction } from "firebase/firestore";
+﻿import { collection, getDocs, doc, writeBatch, arrayUnion, arrayRemove, runTransaction } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { LinkedMember } from "../models/user.model";
 

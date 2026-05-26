@@ -130,7 +130,6 @@ const EditEventPage = () => {
   if (state.isLoading) return <Loading />;
   if (!state.event) return null;
 
-  const eventId = state.event.id;
 
   const isReducerModified = (() => {
     const event = state.event;

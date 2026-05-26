@@ -28,7 +28,6 @@ import type {
   FilterKey,
 } from "../../components/events/EventsFilter";
 import type { FallesEvent } from "../../models/event.model";
-import { computePermissions } from "../../models/user.model";
 
 const mockEventBase: FallesEvent = {
   id: "evt-1",

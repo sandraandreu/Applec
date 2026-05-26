@@ -20,6 +20,9 @@ const ProfilePage = () => {
   const [showProfileUpdated, setShowProfileUpdated] = useState(
     !!(location.state as { profileUpdated?: boolean } | null)?.profileUpdated
   );
+  const [showPasswordUpdated, setShowPasswordUpdated] = useState(
+    !!(location.state as { passwordUpdated?: boolean } | null)?.passwordUpdated
+  );
 
   useLayoutBackground(profile?.role, "top");
 
@@ -38,6 +41,12 @@ const ProfilePage = () => {
         <SuccessBanner
           message={t("editProfile.saveSuccess")}
           onDismiss={() => setShowProfileUpdated(false)}
+        />
+      )}
+      {showPasswordUpdated && (
+        <SuccessBanner
+          message={t("changePassword.saveSuccess")}
+          onDismiss={() => setShowPasswordUpdated(false)}
         />
       )}
       <div className="profile-page__header">

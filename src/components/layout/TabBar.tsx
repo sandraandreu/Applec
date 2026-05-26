@@ -15,7 +15,7 @@ const getActiveTab = (pathname: string) => {
 
 const TabBar = () => {
   const { t } = useTranslation("common");
-  const { user, profile } = useAuthContext();
+  const { profile } = useAuthContext();
   const { pathname } = useLocation();
 
   if (!profile) return null;
