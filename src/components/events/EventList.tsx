@@ -10,7 +10,7 @@ import "./events.scss";
 interface EventListProps {
   events: FallesEvent[];
   permissions: UserPermissions;
-  attendances?: Record<string, "yes" | "no">;
+  attendances?: Record<string, "going" | "not-going">;
   hasAnyEvents: boolean;
 }
 

@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
@@ -8,17 +8,16 @@ import { getEventById, deleteEvent } from "../../../services/event.service";
 import { getEventAttendances, saveAttendance } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import VoteSheet from "./vote-sheet/VoteSheet";
+import EventDetailHeader from "./event-detail-header";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Button from "../../../ui-kit/button/Button";
-import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import MemberCard from "../../../components/members/MemberCard";
 import Modal from "../../../components/modal/Modal";
 import EventsFilter from "../../../components/events/EventsFilter";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import EmptyState from "../../../ui-kit/empty-state/EmptyState";
-import Badge from "../../../ui-kit/badge/Badge";
 import AttendanceDonut from "./attendance-donut/AttendanceDonut";
 import "./event-detail.scss";
 import { getIntlLocale } from "../../../utils/dates";
@@ -34,10 +33,11 @@ const EventDetailPage = () => {
   const { profile, user } = useAuthContext();
   const { group } = useGroupContext();
   const [event, setEvent] = useState<FallesEvent | null>(null);
-  const [memberResponses, setMemberResponses] = useState<Record<string, "yes" | "no">>({});
-  const [linkedResponses, setLinkedResponses] = useState<Record<string, Record<string, "yes" | "no">>>({});
+  const [attendance, setAttendance] = useState<{
+    members: Record<string, "going" | "not-going">;
+    linked: Record<string, Record<string, "going" | "not-going">>;
+  }>({ members: {}, linked: {} });
   const [isLoading, setIsLoading] = useState(true);
-  const [showMenu, setShowMenu] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
   const [attendeeFilter, setAttendeeFilter] = useState("all");
@@ -73,8 +73,7 @@ const EventDetailPage = () => {
     }
     let isMounted = true;
     setIsLoading(true);
-    setMemberResponses({});
-    setLinkedResponses({});
+    setAttendance({ members: {}, linked: {} });
 
     Promise.all([
       getEventById(profile.groupId, id),
@@ -87,8 +86,10 @@ const EventDetailPage = () => {
         return;
       }
       setEvent(eventData);
-      setMemberResponses(attendancesData?.memberResponses ?? {});
-      setLinkedResponses(attendancesData?.linkedResponses ?? {});
+      setAttendance({
+        members: attendancesData?.memberResponses ?? {},
+        linked: attendancesData?.linkedResponses ?? {},
+      });
       if (openVoteSheetOnLoad.current) {
         openVoteSheetOnLoad.current = false;
         setShowVoteSheet(true);
@@ -100,6 +101,76 @@ const EventDetailPage = () => {
     };
   }, [profile?.groupId, id, navigate]);
 
+  const myLinkedMembers = useMemo(
+    () => (group?.linkedMembers ?? []).filter(lm => lm.ownerUid === user?.uid),
+    [group?.linkedMembers, user?.uid]
+  );
+
+  const myResponse = user?.uid ? attendance.members[user.uid] : undefined;
+  const myLinkedResponses = user?.uid ? (attendance.linked[user.uid] ?? {}) : {};
+
+  const hasVoted = !!myResponse || myLinkedMembers.some(lm => myLinkedResponses[lm.id]);
+
+  const allMembers = useMemo(
+    () => (group?.members ?? []).map(member => {
+      const memberAttendance = attendance.members[member.uid] ?? "pending";
+      const memberLinked = (group?.linkedMembers ?? [])
+        .filter(lm => lm.ownerUid === member.uid)
+        .map(lm => ({
+          ...lm,
+          attendance: attendance.linked[member.uid]?.[lm.id] ?? "pending",
+        }));
+      return { ...member, attendance: memberAttendance, linkedMembers: memberLinked };
+    }),
+    [group?.members, group?.linkedMembers, attendance]
+  );
+
+  const {
+    allRows,
+    counters: {
+      "not-going": notGoingCount,
+      going: goingCount,
+      pending: pendingCount,
+    },
+  } = useMemo(() => {
+    const counters = { going: 0, "not-going": 0, pending: 0 };
+    const allRows = allMembers.flatMap(member => {
+      const { attendance = "pending" } = member;
+      counters[attendance] = counters[attendance] + 1;
+      const normalizedMembers = member.linkedMembers.map(linkedMember => {
+        const { attendance = "pending" } = linkedMember;
+        counters[attendance] = counters[attendance] + 1;
+        return { ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true };
+      });
+      return [member, ...normalizedMembers];
+    });
+    return { allRows, counters };
+  }, [allMembers]);
+
+  const totalMembers = allRows.length;
+
+  const targetAttendance = attendeeFilter === "all" ? null : attendeeFilter as "going" | "not-going" | "pending";
+
+  const filteredMembers = useMemo(
+    () => allMembers
+      .filter(member => {
+        if (!targetAttendance) return true;
+        return member.attendance === targetAttendance || member.linkedMembers.some(lm => lm.attendance === targetAttendance);
+      })
+      .map(member => {
+        if (!targetAttendance) return member;
+        return { ...member, linkedMembers: member.linkedMembers.filter(lm => lm.attendance === targetAttendance) };
+      }),
+    [allMembers, targetAttendance]
+  );
+
+  const attendeeFilterOptions = useMemo(() => [
+    { key: "all", label: t("events.filters.all"), count: totalMembers },
+    { key: "going", label: t("detail.filter.confirmed"), count: goingCount },
+    { key: "pending", label: t("detail.filter.pending"), count: pendingCount },
+    { key: "not-going", label: t("detail.filter.notGoing"), count: notGoingCount },
+  ], [t, totalMembers, goingCount, pendingCount, notGoingCount]);
+
   if (isLoading) return <Loading />;
   if (!event) return null;
 
@@ -109,29 +180,6 @@ const EventDetailPage = () => {
 
   const eventStatus = getEventStatus(event);
   const isPast = eventStatus === "finalizado";
-  const myResponse = user?.uid ? memberResponses[user.uid] : undefined;
-  const myLinkedResponses = user?.uid ? (linkedResponses[user.uid] ?? {}) : {};
-  const myLinkedMembers = (group?.linkedMembers ?? []).filter(
-    (linkedMember) => linkedMember.ownerUid === user?.uid
-  );
-  const hasVoted = !!myResponse || myLinkedMembers.some(linkedMember => myLinkedResponses[linkedMember.id]);
-  const toAttendance = (response: "yes" | "no" | undefined): "going" | "not-going" | "pending" =>
-    response === "yes" ? "going" : response === "no" ? "not-going" : "pending";
-
-  const allMembers = (group?.members ?? []).map((member) => {
-    const attendance = toAttendance(memberResponses[member.uid]);
-    const memberLinked = (group?.linkedMembers ?? [])
-      .filter(linkedMember => linkedMember.ownerUid === member.uid)
-      .map(linkedMember => ({
-        ...linkedMember,
-        attendance: toAttendance(linkedResponses[member.uid]?.[linkedMember.id]),
-      }));
-    return { ...member, attendance, linkedMembers: memberLinked };
-  });
-
-  const allRows = allMembers.flatMap(member => [member, ...member.linkedMembers.map(linkedMember => ({ ...linkedMember, uid: linkedMember.id, role: "member" as const, isLinked: true }))]);
-  const totalMembers = allRows.length;
-  const goingCount = allRows.filter(row => row.attendance === "going").length;
 
   const rawDate = event.date.toLocaleDateString(
     getIntlLocale(i18n.language),
@@ -139,41 +187,12 @@ const EventDetailPage = () => {
   );
   const formattedDate = rawDate.charAt(0).toUpperCase() + rawDate.slice(1);
 
-  const pendingCount = allRows.filter(row => row.attendance === "pending").length;
-  const notGoingCount = allRows.filter(row => row.attendance === "not-going").length;
-
   const ATTENDEES_PREVIEW = 4;
 
   const handleFilterChange = (filter: string) => {
     setAttendeeFilter(filter);
     setShowAllAttendees(false);
   };
-
-  const filterToAttendance = (filterKey: string): "going" | "not-going" | "pending" | null => {
-    if (filterKey === "confirmed") return "going";
-    if (filterKey === "pending") return "pending";
-    if (filterKey === "not-going") return "not-going";
-    return null;
-  };
-
-  const targetAttendance = filterToAttendance(attendeeFilter);
-
-  const filteredMembers = allMembers
-    .filter(member => {
-      if (!targetAttendance) return true;
-      return member.attendance === targetAttendance || member.linkedMembers.some(linkedMember => linkedMember.attendance === targetAttendance);
-    })
-    .map(member => {
-      if (!targetAttendance) return member;
-      return { ...member, linkedMembers: member.linkedMembers.filter(linkedMember => linkedMember.attendance === targetAttendance) };
-    });
-
-  const attendeeFilterOptions = [
-    { key: "all", label: t("events.filters.all"), count: totalMembers },
-    { key: "confirmed", label: t("detail.filter.confirmed"), count: goingCount },
-    { key: "pending", label: t("detail.filter.pending"), count: pendingCount },
-    { key: "not-going", label: t("detail.filter.notGoing"), count: notGoingCount },
-  ];
 
   const handleDelete = async () => {
     if (!profile?.groupId || !event.id) return;
@@ -187,8 +206,8 @@ const EventDetailPage = () => {
   };
 
   const handleVoteSave = async (
-    response: "yes" | "no" | undefined,
-    linkedVotes: Record<string, "yes" | "no">
+    response: "going" | "not-going" | undefined,
+    linkedVotes: Record<string, "going" | "not-going">
   ) => {
     if (!profile?.groupId || !id || !user?.uid) return;
     try {
@@ -196,16 +215,18 @@ const EventDetailPage = () => {
         response,
         linkedResponses: linkedVotes,
       });
-      if (response) {
-        setMemberResponses((prev) => ({ ...prev, [user.uid]: response }));
-      } else {
-        setMemberResponses((prev) => {
-          const next = { ...prev };
-          delete next[user.uid];
-          return next;
-        });
-      }
-      setLinkedResponses((prev) => ({ ...prev, [user.uid]: linkedVotes }));
+      setAttendance(prev => {
+        const members = { ...prev.members };
+        if (response) {
+          members[user.uid] = response;
+        } else {
+          delete members[user.uid];
+        }
+        return {
+          members,
+          linked: { ...prev.linked, [user.uid]: linkedVotes },
+        };
+      });
       setVoteError(null);
       setShowVoteSuccess(true);
     } catch {
@@ -219,102 +240,12 @@ const EventDetailPage = () => {
         <SuccessBanner message={t("attendance.success")} onDismiss={() => setShowVoteSuccess(false)} />
       )}
       <div className="event-detail-page__scroll-area">
-      <div className="event-detail-page__gradient-zone">
-        <div className="event-detail-page__top-bar">
-          <BackButton />
-          {canEdit && (
-            <div className="event-detail-page__menu-wrapper">
-              <button
-                className="event-detail-page__menu-trigger"
-                aria-label={t("detail.menuOptions")}
-                onClick={() => setShowMenu((prev) => !prev)}
-              >
-                <Icon name="menu-dots" size={32} />
-              </button>
-              {showMenu && (
-                <>
-                  <button
-                    className="event-detail-page__menu-overlay"
-                    aria-label={t("common:buttons.close")}
-                    onClick={() => setShowMenu(false)}
-                  />
-                  <ul className="event-detail-page__menu">
-                    {!isPast && (
-                      <li>
-                        <button
-                          type="button"
-                          className="event-detail-page__menu-item"
-                          onClick={() => navigate(`/events/${event.id}/edit`)}
-                        >
-                          {t("detail.edit")}
-                        </button>
-                      </li>
-                    )}
-                    <li>
-                      <button
-                        type="button"
-                        className="event-detail-page__menu-item"
-                        onClick={() => {
-                          setShowMenu(false);
-                          setShowDeleteAlert(true);
-                        }}
-                      >
-                        {t("detail.delete")}
-                      </button>
-                    </li>
-                  </ul>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-
-        <h1 className="event-detail-page__name">{event.name}</h1>
-
-        <Badge variant={eventStatus} label={t(`status.${eventStatus}`)} />
-
-        <div className="event-detail-page__field">
-          <div className="event-detail-page__field-icon">
-            <Icon name="calendar" size={28} />
-          </div>
-          <div className="event-detail-page__field-content">
-            <span className="event-detail-page__field-value">
-              {formattedDate} · {event.startTime}
-            </span>
-            <span className="event-detail-page__field-label">
-              {t("detail.dateTime")}
-            </span>
-          </div>
-        </div>
-
-        {event.location && (
-          <div className="event-detail-page__field">
-            <div className="event-detail-page__field-icon">
-              <Icon name="location" size={28} />
-            </div>
-            <div className="event-detail-page__field-content">
-              <span className="event-detail-page__field-value">
-                {event.location}
-              </span>
-              <span className="event-detail-page__field-label">
-                {t("detail.location")}
-              </span>
-            </div>
-          </div>
-        )}
-        {!event.requiresConfirmation && (
-          <div className="event-detail-page__field">
-            <div className="event-detail-page__field-icon event-detail-page__field-icon--no-bg">
-              <Icon name="info-circle" size={28} />
-            </div>
-            <div className="event-detail-page__field-content">
-              <span className="event-detail-page__field-value">
-                {t("detail.noConfirmationRequired")}
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
+      <EventDetailHeader
+        event={event}
+        canEdit={canEdit}
+        formattedDate={formattedDate}
+        onDeleteRequest={() => setShowDeleteAlert(true)}
+      />
 
       <div className="event-detail-page__content">
         {event.description && (
@@ -457,9 +388,9 @@ const EventDetailPage = () => {
               <div className="event-detail-page__vote-own-row">
                 <span className="event-detail-page__vote-label">{t("vote.myVote")}</span>
                 {myResponse ? (
-                  <span className={`event-detail-page__vote-own-chip event-detail-page__vote-own-chip--${myResponse === "yes" ? "going" : "not-going"}`}>
-                    <Icon name={myResponse === "yes" ? "check-bold" : "x-mark"} size={20} aria-hidden="true" />
-                    {myResponse === "yes" ? t("attendance.going") : t("attendance.notGoing")}
+                  <span className={`event-detail-page__vote-own-chip event-detail-page__vote-own-chip--${myResponse}`}>
+                    <Icon name={myResponse === "going" ? "check-bold" : "x-mark"} size={20} aria-hidden="true" />
+                    {myResponse === "going" ? t("attendance.going") : t("attendance.notGoing")}
                   </span>
                 ) : (
                   <span className="event-detail-page__vote-own-chip event-detail-page__vote-own-chip--pending">
@@ -476,9 +407,9 @@ const EventDetailPage = () => {
                         <span className="event-detail-page__vote-linked-name">
                           {linked.firstName}
                         </span>
-                        <span className={`event-detail-page__vote-linked-chip event-detail-page__vote-linked-chip--${myLinkedResponses[linked.id] === "yes" ? "going" : "not-going"}`}>
-                          <Icon name={myLinkedResponses[linked.id] === "yes" ? "check-bold" : "x-mark"} size={16} aria-hidden="true" />
-                          {myLinkedResponses[linked.id] === "yes" ? t("vote.yes") : t("vote.no")}
+                        <span className={`event-detail-page__vote-linked-chip event-detail-page__vote-linked-chip--${myLinkedResponses[linked.id]}`}>
+                          <Icon name={myLinkedResponses[linked.id] === "going" ? "check-bold" : "x-mark"} size={16} aria-hidden="true" />
+                          {myLinkedResponses[linked.id] === "going" ? t("vote.yes") : t("vote.no")}
                         </span>
                       </li>
                     ))}

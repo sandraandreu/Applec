@@ -22,7 +22,7 @@ const EventsListPage = () => {
   const location = useLocation();
 
   const [events, setEvents] = useState<FallesEvent[]>([]);
-  const [attendances, setAttendances] = useState<Record<string, "yes" | "no">>({});
+  const [attendances, setAttendances] = useState<Record<string, "going" | "not-going">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [filter, setFilter] = useState<FilterKey>("active");

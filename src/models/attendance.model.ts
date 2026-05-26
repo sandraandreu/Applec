@@ -1,14 +1,14 @@
 export interface Attendance {
   userId: string;
   eventId: string;
-  response?: "yes" | "no";
+  response?: "going" | "not-going";
   confirmedAt: Date;
-  linkedResponses?: { [linkedMemberId: string]: "yes" | "no" };
+  linkedResponses?: { [linkedMemberId: string]: "going" | "not-going" };
 }
 
 export type AttendanceResponse = Attendance["response"];
 
 export interface EventAttendanceData {
-  memberResponses: Record<string, "yes" | "no">;
-  linkedResponses: Record<string, Record<string, "yes" | "no">>;
+  memberResponses: Record<string, "going" | "not-going">;
+  linkedResponses: Record<string, Record<string, "going" | "not-going">>;
 }

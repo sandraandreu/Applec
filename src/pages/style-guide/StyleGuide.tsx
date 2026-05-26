@@ -902,7 +902,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              attendanceResponse="yes"
+              attendanceResponse="going"
             />
 
             <span className="style-guide__label">
@@ -910,7 +910,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventBase}
-              attendanceResponse="no"
+              attendanceResponse="not-going"
             />
 
             <span className="style-guide__label">
@@ -918,7 +918,7 @@ const StyleGuide = () => {
             </span>
             <EventCard
               event={mockEventSpecial}
-              attendanceResponse="yes"
+              attendanceResponse="going"
             />
 
             <span className="style-guide__label">

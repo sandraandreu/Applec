@@ -20,9 +20,9 @@ interface VoteSheetProps {
   deadline?: string;
   linkedMembers: VoteLinkedMember[];
   onAddLinked: () => void;
-  initialResponse?: "yes" | "no";
-  initialLinkedResponses?: Record<string, "yes" | "no">;
-  onSave: (response: "yes" | "no" | undefined, linkedResponses: Record<string, "yes" | "no">) => Promise<void>;
+  initialResponse?: "going" | "not-going";
+  initialLinkedResponses?: Record<string, "going" | "not-going">;
+  onSave: (response: "going" | "not-going" | undefined, linkedResponses: Record<string, "going" | "not-going">) => Promise<void>;
 }
 
 const VoteSheet = ({
@@ -38,16 +38,16 @@ const VoteSheet = ({
   const { t } = useTranslation("events");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const sheetRef = useRef<HTMLDivElement | null>(null);
-  const [selectedResponse, setSelectedResponse] = useState<"yes" | "no" | null>(
+  const [selectedResponse, setSelectedResponse] = useState<"going" | "not-going" | null>(
     initialResponse ?? null
   );
-  const [linkedVotes, setLinkedVotes] = useState<Record<string, "yes" | "no" | null>>({});
+  const [linkedVotes, setLinkedVotes] = useState<Record<string, "going" | "not-going" | null>>({});
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
     setSelectedResponse(initialResponse ?? null);
-    const initial: Record<string, "yes" | "no" | null> = {};
+    const initial: Record<string, "going" | "not-going" | null> = {};
     linkedMembers.forEach((member) => {
       initial[member.id] = initialLinkedResponses?.[member.id] ?? null;
     });
@@ -98,7 +98,7 @@ const VoteSheet = ({
   const handleSave = async () => {
     if (!hasAnyVote || isSaving) return;
     setIsSaving(true);
-    const filteredLinkedVotes: Record<string, "yes" | "no"> = {};
+    const filteredLinkedVotes: Record<string, "going" | "not-going"> = {};
     Object.entries(linkedVotes).forEach(([id, vote]) => {
       if (vote !== null) filteredLinkedVotes[id] = vote;
     });
@@ -140,18 +140,18 @@ const VoteSheet = ({
             <div className="vote-sheet__own-buttons">
               <button
                 type="button"
-                className={`vote-sheet__own-btn vote-sheet__own-btn--yes${selectedResponse === "yes" ? " vote-sheet__own-btn--active" : ""}`}
-                aria-pressed={selectedResponse === "yes"}
-                onClick={() => setSelectedResponse((prev) => prev === "yes" ? null : "yes")}
+                className={`vote-sheet__own-btn vote-sheet__own-btn--yes${selectedResponse === "going" ? " vote-sheet__own-btn--active" : ""}`}
+                aria-pressed={selectedResponse === "going"}
+                onClick={() => setSelectedResponse((prev) => prev === "going" ? null : "going")}
               >
                 <Icon name="check-bold" size={20} aria-hidden="true" />
                 {t("vote.yes")}
               </button>
               <button
                 type="button"
-                className={`vote-sheet__own-btn vote-sheet__own-btn--no${selectedResponse === "no" ? " vote-sheet__own-btn--active" : ""}`}
-                aria-pressed={selectedResponse === "no"}
-                onClick={() => setSelectedResponse((prev) => prev === "no" ? null : "no")}
+                className={`vote-sheet__own-btn vote-sheet__own-btn--no${selectedResponse === "not-going" ? " vote-sheet__own-btn--active" : ""}`}
+                aria-pressed={selectedResponse === "not-going"}
+                onClick={() => setSelectedResponse((prev) => prev === "not-going" ? null : "not-going")}
               >
                 <Icon name="x-mark" size={20} aria-hidden="true" />
                 {t("vote.no")}
@@ -175,22 +175,22 @@ const VoteSheet = ({
                   <div className="vote-sheet__linked-actions">
                     <button
                       type="button"
-                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--yes${linkedVotes[member.id] === "yes" ? " vote-sheet__vote-btn--active" : ""}`}
+                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--yes${linkedVotes[member.id] === "going" ? " vote-sheet__vote-btn--active" : ""}`}
                       aria-label={`${member.firstName} ${t("vote.yes")}`}
-                      aria-pressed={linkedVotes[member.id] === "yes"}
+                      aria-pressed={linkedVotes[member.id] === "going"}
                       onClick={() =>
-                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "yes" ? null : "yes" }))
+                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "going" ? null : "going" }))
                       }
                     >
                       <Icon name="check-bold" size={18} aria-hidden="true" />
                     </button>
                     <button
                       type="button"
-                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--no${linkedVotes[member.id] === "no" ? " vote-sheet__vote-btn--active" : ""}`}
+                      className={`vote-sheet__vote-btn vote-sheet__vote-btn--no${linkedVotes[member.id] === "not-going" ? " vote-sheet__vote-btn--active" : ""}`}
                       aria-label={`${member.firstName} ${t("vote.no")}`}
-                      aria-pressed={linkedVotes[member.id] === "no"}
+                      aria-pressed={linkedVotes[member.id] === "not-going"}
                       onClick={() =>
-                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "no" ? null : "no" }))
+                        setLinkedVotes((prev) => ({ ...prev, [member.id]: prev[member.id] === "not-going" ? null : "not-going" }))
                       }
                     >
                       <Icon name="x-mark" size={18} aria-hidden="true" />

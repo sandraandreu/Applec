@@ -8,7 +8,7 @@ import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceInd
 import "./events.scss";
 import { getIntlLocale } from "../../utils/dates";
 
-type AttendanceResponse = "yes" | "no" | null;
+type AttendanceResponse = "going" | "not-going" | null;
 
 interface EventCardProps {
   event: FallesEvent;
@@ -22,8 +22,8 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
   const isFinished = status === "finalizado";
 
   const showIndicator = event.requiresConfirmation;
-  const isNotGoing = showIndicator && attendanceResponse === "no";
-  const isGoing = showIndicator && attendanceResponse === "yes";
+  const isNotGoing = showIndicator && attendanceResponse === "not-going";
+  const isGoing = showIndicator && attendanceResponse === "going";
   const isPending = showIndicator && attendanceResponse === null;
 
   const day = event.date.getDate();
