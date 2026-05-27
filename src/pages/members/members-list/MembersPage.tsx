@@ -55,7 +55,7 @@ const MembersPage = () => {
                 className="button--compact members-page__invite-btn"
                 icon={<Icon name="plus" size={20} />}
                 text={t("members.invite")}
-                onClick={() => navigate("/invite-group")}
+                to="/invite-group"
               />
             )}
           </div>

@@ -69,7 +69,8 @@ const WelcomePage = () => {
 
           <Button
             text={tCommon("buttons.start")}
-            onClick={() => navigate("/onboarding/language", { state: { direction: "forward" } })}
+            to="/onboarding/language"
+            state={{ direction: "forward" }}
           />
         </div>
 

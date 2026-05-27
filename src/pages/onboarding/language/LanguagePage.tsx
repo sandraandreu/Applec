@@ -32,7 +32,7 @@ const LanguagePage = () => {
   return (
     <SlideTransition direction={direction}>
       <div {...swipeHandlers} className="language-page">
-        <BackButton onClick={() => navigate("/onboarding/welcome", { state: { direction: "backward" } })} />
+        <BackButton to="/onboarding/welcome" state={{ direction: "backward" }} />
 
         <div className="language-page__content">
           <div className="language-page__header">
@@ -46,7 +46,8 @@ const LanguagePage = () => {
 
           <Button
             text={tCommon("buttons.continue")}
-            onClick={() => navigate("/onboarding/group", { state: { direction: "forward" } })}
+            to="/onboarding/group"
+            state={{ direction: "forward" }}
           />
         </div>
 

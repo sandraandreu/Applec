@@ -1,5 +1,5 @@
 ﻿import { useEffect, useRef, useState } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -241,13 +241,12 @@ const EventDetailPage = () => {
                   <ul className="event-detail-page__menu">
                     {!isPast && (
                       <li>
-                        <button
-                          type="button"
+                        <Link
+                          to={`/events/${event.id}/edit`}
                           className="event-detail-page__menu-item"
-                          onClick={() => navigate(`/events/${event.id}/edit`)}
                         >
                           {t("detail.edit")}
-                        </button>
+                        </Link>
                       </li>
                     )}
                     <li>

@@ -5,6 +5,7 @@ import "./button.scss";
 interface ButtonProps {
   text: string;
   to?: string;
+  state?: unknown;
   type?: "submit" | "button" | "reset";
   variant?: "primary" | "secondary" | "language" | "especial" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "linked";
   icon?: ReactNode;
@@ -18,6 +19,7 @@ interface ButtonProps {
 const Button = ({
   text,
   to,
+  state,
   type = "button",
   variant = "primary",
   icon,
@@ -33,7 +35,7 @@ const Button = ({
 
   if (to) {
     return (
-      <Link to={to} className={classes}>
+      <Link to={to} state={state} className={classes}>
         {icon}
         {text}
       </Link>
