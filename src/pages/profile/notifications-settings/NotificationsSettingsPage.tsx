@@ -6,28 +6,44 @@ import { useAuthContext } from "../../../context/auth/AuthContext";
 import PageHeader from "../../../components/layout/PageHeader";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 
+const defaultSettings = {
+  newEvent: true,
+  attendanceReminder: true,
+  eventChanges: true,
+  eventCancelled: true,
+  newPost: true,
+  adminPost: true,
+  postComments: true,
+  newRequests: true,
+  accepted: true,
+  roleChanged: true,
+};
+
 const NotificationsSettingsPage = () => {
   const { t } = useTranslation("profile");
-  const { profile } = useAuthContext();
+  const { profile, user } = useAuthContext();
   const navigate = useNavigate();
 
-  const [settings, setSettings] = useState({
-    newEvent: true,
-    attendanceReminder: true,
-    eventChanges: true,
-    eventCancelled: true,
-    newPost: true,
-    adminPost: true,
-    postComments: true,
-    newRequests: true,
-    accepted: true,
-    roleChanged: true,
+  const storageKey = `notifications-settings-${user?.uid ?? "anon"}`;
+
+  const [settings, setSettings] = useState(() => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) return { ...defaultSettings, ...JSON.parse(stored) };
+    } catch {
+      // ignore
+    }
+    return defaultSettings;
   });
 
   if (!profile) return null;
 
-  const toggle = (key: keyof typeof settings) =>
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggle = (key: keyof typeof defaultSettings) =>
+    setSettings((prev: typeof defaultSettings) => {
+      const next = { ...prev, [key]: !prev[key] };
+      localStorage.setItem(storageKey, JSON.stringify(next));
+      return next;
+    });
 
   const isNotMember = profile.role !== "member";
   const isMember = profile.role === "member";
@@ -124,21 +140,23 @@ const NotificationsSettingsPage = () => {
               aria-label={t("notificationsSettings.items.newPost")}
             />
           </div>
-          <div className="notifications-settings-page__row">
-            <div className="notifications-settings-page__row-text">
-              <span className="notifications-settings-page__row-label">
-                {t("notificationsSettings.items.adminPost")}
-              </span>
-              <span className="notifications-settings-page__row-desc">
-                {t("notificationsSettings.items.adminPostDesc")}
-              </span>
+          {profile.role !== "admin" && (
+            <div className="notifications-settings-page__row">
+              <div className="notifications-settings-page__row-text">
+                <span className="notifications-settings-page__row-label">
+                  {t("notificationsSettings.items.adminPost")}
+                </span>
+                <span className="notifications-settings-page__row-desc">
+                  {t("notificationsSettings.items.adminPostDesc")}
+                </span>
+              </div>
+              <Toggle
+                checked={settings.adminPost}
+                onChange={() => toggle("adminPost")}
+                aria-label={t("notificationsSettings.items.adminPost")}
+              />
             </div>
-            <Toggle
-              checked={settings.adminPost}
-              onChange={() => toggle("adminPost")}
-              aria-label={t("notificationsSettings.items.adminPost")}
-            />
-          </div>
+          )}
           <div className="notifications-settings-page__row">
             <div className="notifications-settings-page__row-text">
               <span className="notifications-settings-page__row-label">
