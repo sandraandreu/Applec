@@ -12,7 +12,7 @@ import Modal from "../../../components/modal/Modal";
 
 const ProfilePage = () => {
   const { t } = useTranslation("profile");
-  const { profile, logout } = useAuthContext();
+  const { user, profile, logout } = useAuthContext();
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -23,19 +23,19 @@ const ProfilePage = () => {
   const [showPasswordUpdated, setShowPasswordUpdated] = useState(
     !!(location.state as { passwordUpdated?: boolean } | null)?.passwordUpdated
   );
+  const [showGroupUpdated, setShowGroupUpdated] = useState(
+    !!(location.state as { groupUpdated?: boolean } | null)?.groupUpdated
+  );
 
   useLayoutBackground(profile?.role, "top");
 
   useEffect(() => {
-    if (showProfileUpdated || showPasswordUpdated) {
+    if (showProfileUpdated || showPasswordUpdated || showGroupUpdated) {
       navigate(location.pathname, { replace: true, state: null });
     }
   }, []);
 
-  if (!profile) return null;
-
-  const isAdmin = profile.role === "admin";
-  const isAdminOrOrganizer = profile.role === "admin" || profile.role === "organizer";
+  if (!profile || !user) return null;
 
   return (
     <div className="profile-page">
@@ -49,6 +49,12 @@ const ProfilePage = () => {
         <SuccessBanner
           message={t("changePassword.saveSuccess")}
           onDismiss={() => setShowPasswordUpdated(false)}
+        />
+      )}
+      {showGroupUpdated && (
+        <SuccessBanner
+          message={t("groupSettings.saveSuccess")}
+          onDismiss={() => setShowGroupUpdated(false)}
         />
       )}
       <div className="profile-page__header">
@@ -81,14 +87,14 @@ const ProfilePage = () => {
         <section className="profile-page__section">
           <h2 className="profile-page__section-title">{t("profile.myGroup")}</h2>
           <div className="profile-page__card">
-            {isAdminOrOrganizer && (
+            {user.permissions.canShareAccess && (
               <SettingsRow
                 label={t("profile.shareAccess")}
                 iconName="person-add"
                 onClick={() => navigate("/invite-group", { state: { fromProfile: true } })}
               />
             )}
-            {isAdmin && (
+            {user.permissions.canManageGroup && (
               <SettingsRow
                 label={t("profile.groupSettings")}
                 iconName="settings"

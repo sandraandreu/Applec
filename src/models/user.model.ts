@@ -15,6 +15,7 @@ export interface UserProfile {
   createdAt: Date;
   role: "admin" | "organizer" | "member";
   groupId?: string;
+  groupDeleted?: boolean;
   linkedMembers?: LinkedMember[];
 }
 
@@ -27,6 +28,8 @@ export interface UserPermissions {
   canEditAllEvents: boolean;
   canManageMembers: boolean;
   canInviteMembers: boolean;
+  canManageGroup: boolean;
+  canShareAccess: boolean;
 }
 
 export interface User extends FirebaseUser {
@@ -43,5 +46,7 @@ export function computePermissions(role: UserProfile["role"] | undefined): UserP
     canEditAllEvents: isAdmin,
     canManageMembers: isAdmin,
     canInviteMembers: isAdmin || isOrganizer,
+    canManageGroup: isAdmin,
+    canShareAccess: isAdmin || isOrganizer,
   };
 }

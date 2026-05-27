@@ -3,6 +3,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteField,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
@@ -43,5 +44,9 @@ export const updateUserFields = async (
   fields: Partial<UserProfile>,
 ): Promise<void> => {
   await updateDoc(doc(db, "users", uid), fields);
+};
+
+export const clearGroupDeletedFlag = async (uid: string): Promise<void> => {
+  await updateDoc(doc(db, "users", uid), { groupDeleted: deleteField() });
 };
 

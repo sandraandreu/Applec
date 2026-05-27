@@ -156,11 +156,16 @@ export const removeMemberFromGroup = async (
 export const deleteGroup = async (
   groupId: string,
   memberUids: string[],
+  nonAdminUids: string[],
 ): Promise<void> => {
+  const notifiedSet = new Set(nonAdminUids);
   const batch = writeBatch(db);
   batch.delete(doc(db, "groups", groupId));
   for (const uid of memberUids) {
-    batch.update(doc(db, "users", uid), { groupId: deleteField() });
+    const fields = notifiedSet.has(uid)
+      ? { groupId: deleteField(), groupDeleted: true }
+      : { groupId: deleteField() };
+    batch.update(doc(db, "users", uid), fields);
   }
   await batch.commit();
 };
