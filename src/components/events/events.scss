@@ -95,10 +95,14 @@
     border-radius: var(--radius-pill);
     border: 1.5px solid var(--color-pending);
     background: var(--orange-100);
-    color: var(--color-pending);
+    color: var(--color-text-primary);
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
     white-space: nowrap;
+
+    svg {
+      color: var(--color-pending);
+    }
   }
 
 }

@@ -75,7 +75,7 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
               navigate(`/events/${event.id}`, { state: { openVoteSheet: true } });
             }}
           >
-            <Icon name="clock" aria-hidden size={16} />
+            <Icon name="clock-simple" aria-hidden size={16} />
             {t("card.confirm")}
           </button>
         )}

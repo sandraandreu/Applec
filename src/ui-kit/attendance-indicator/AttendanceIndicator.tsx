@@ -26,7 +26,7 @@ const AttendanceIndicator = ({ attendance }: AttendanceIndicatorProps) => {
     >
       {attendance === "going" && <Icon name="check" aria-hidden size={16} />}
       {attendance === "not-going" && <Icon name="x-mark" aria-hidden size={16} />}
-      {attendance === "pending" && <Icon name="clock" aria-hidden size={16} />}
+      {attendance === "pending" && <Icon name="clock-simple" aria-hidden size={18} />}
     </span>
   );
 };
