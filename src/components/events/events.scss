@@ -87,6 +87,20 @@
     padding-right: var(--size-14);
   }
 
+  &__confirm-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-tight);
+    padding: var(--size-6) var(--size-12);
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--color-pending);
+    background: var(--orange-100);
+    color: var(--color-pending);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    white-space: nowrap;
+  }
+
 }
 
 .events-list {

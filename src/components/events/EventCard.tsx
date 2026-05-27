@@ -1,10 +1,11 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../models/event.model";
 import { getEventStatus } from "../../models/event.model";
 import Badge from "../../ui-kit/badge/Badge";
 import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
+import Icon from "../../ui-kit/icons/icon/Icon";
 import "./events.scss";
 import { getIntlLocale } from "../../utils/dates";
 
@@ -17,6 +18,7 @@ interface EventCardProps {
 
 const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
   const { t, i18n } = useTranslation("events");
+  const navigate = useNavigate();
 
   const status = getEventStatus(event);
   const isFinished = status === "finalizado";
@@ -61,9 +63,22 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
         {isFinished && (
           <Badge variant="finalizado" label={t("status.finalizado")} />
         )}
-{!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
+        {!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
         {!isFinished && isNotGoing && <AttendanceIndicator attendance="not-going" />}
-        {!isFinished && isPending && <AttendanceIndicator attendance="pending" />}
+        {!isFinished && isPending && (
+          <button
+            type="button"
+            className="event-card__confirm-chip"
+            aria-label={t("card.pending")}
+            onClick={(clickEvent) => {
+              clickEvent.preventDefault();
+              navigate(`/events/${event.id}`, { state: { openVoteSheet: true } });
+            }}
+          >
+            <Icon name="clock" aria-hidden size={16} />
+            {t("card.confirm")}
+          </button>
+        )}
       </div>
     </div>
   );

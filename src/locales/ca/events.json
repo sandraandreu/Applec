@@ -25,7 +25,8 @@
     "edit": "Editar esdeveniment",
     "going": "Confirmat: hi vaig",
     "notGoing": "No hi vaig",
-    "pending": "Sense resposta"
+    "pending": "Sense resposta",
+    "confirm": "Confirmar"
   },
   "detail": {
     "title": "Detall de l'event",

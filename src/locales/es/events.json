@@ -25,7 +25,8 @@
     "edit": "Editar evento",
     "going": "Confirmado: voy",
     "notGoing": "No voy",
-    "pending": "Sin respuesta"
+    "pending": "Sin respuesta",
+    "confirm": "Confirmar"
   },
   "detail": {
     "title": "Detalle del evento",

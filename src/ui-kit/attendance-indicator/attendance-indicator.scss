@@ -18,9 +18,7 @@
   }
 
   &--pending {
-    width: auto;
-    height: auto;
-    border-radius: 0;
-    color: var(--color-pending);
+    background: var(--color-pending);
+    color: var(--white);
   }
 }
