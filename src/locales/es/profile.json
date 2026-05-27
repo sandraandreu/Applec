@@ -98,7 +98,9 @@
       "newRequests": "Nuevas solicitudes",
       "newRequestsDesc": "Personas que quieren unirse",
       "accepted": "Has sido aceptado",
-      "acceptedDesc": "Confirmación de acceso al grupo"
+      "acceptedDesc": "Confirmación de acceso al grupo",
+      "roleChanged": "Cambio de rol",
+      "roleChangedDesc": "Cuando tu rol en la falla cambia"
     }
   }
 }

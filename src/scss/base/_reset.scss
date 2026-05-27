@@ -23,7 +23,15 @@ img, svg {
 
 button, input, textarea, select {
   font: inherit;
+}
+
+:focus:not(:focus-visible) {
   outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
 }
 
 button {

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "./landing.scss";
 import Button from "../../../ui-kit/button/Button";
@@ -6,7 +5,6 @@ import landingIllustration from "../../../assets/images/landing-illustration.png
 
 const LandingPage = () => {
   const { t } = useTranslation("onboarding");
-  const navigate = useNavigate();
 
   return (
     <div className="landing-page">
@@ -22,12 +20,12 @@ const LandingPage = () => {
       <div className="landing-page__actions">
         <Button
           text={t("landing.register")}
-          onClick={() => navigate("/register")}
+          to="/register"
         />
         <Button
           variant="secondary"
           text={t("landing.login")}
-          onClick={() => navigate("/login")}
+          to="/login"
         />
       </div>
     </div>

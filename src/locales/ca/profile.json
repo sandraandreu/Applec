@@ -98,7 +98,9 @@
       "newRequests": "Noves sol·licituds",
       "newRequestsDesc": "Persones que volen unir-se",
       "accepted": "Has sigut acceptat",
-      "acceptedDesc": "Confirmació d'accés al grup"
+      "acceptedDesc": "Confirmació d'accés al grup",
+      "roleChanged": "Canvi de rol",
+      "roleChangedDesc": "Quan el teu rol a la falla canvia"
     }
   }
 }

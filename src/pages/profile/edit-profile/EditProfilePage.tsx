@@ -7,7 +7,7 @@ import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import useLayoutBackground from "../../../hooks/useLayoutBackground";
 import { uploadProfilePhoto, updateUserFields } from "../../../services/user.service";
-import { updateMemberPhotoUrl } from "../../../services/group.service";
+import { updateMemberFields } from "../../../services/group.service";
 import PageHeader from "../../../components/layout/PageHeader";
 import Avatar from "../../../ui-kit/avatar/Avatar";
 import Input from "../../../ui-kit/input/Input";
@@ -51,7 +51,7 @@ const EditProfilePage = () => {
     try {
       const photoUrl = await uploadProfilePhoto(user.uid, file);
       await updateUserFields(user.uid, { photoUrl });
-      if (profile.groupId) await updateMemberPhotoUrl(profile.groupId, user.uid, photoUrl);
+      if (profile.groupId) await updateMemberFields(profile.groupId, user.uid, { photoUrl });
       await Promise.all([refreshProfile(), refreshGroup()]);
     } catch {
       setError(t("editProfile.saveError"));
@@ -65,7 +65,10 @@ const EditProfilePage = () => {
     setError(null);
     try {
       await updateUserFields(user.uid, { firstName: data.firstName, lastName: data.lastName });
-      await refreshProfile();
+      if (profile.groupId) {
+        await updateMemberFields(profile.groupId, user.uid, { firstName: data.firstName, lastName: data.lastName });
+      }
+      await Promise.all([refreshProfile(), refreshGroup()]);
       navigate("/profile", { replace: true, state: { profileUpdated: true } });
     } catch {
       setError(t("editProfile.saveError"));

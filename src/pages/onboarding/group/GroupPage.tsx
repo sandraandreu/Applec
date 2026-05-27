@@ -30,7 +30,7 @@ const GroupPage = () => {
   return (
     <SlideTransition direction={direction}>
       <div {...swipeHandlers} className="group-page">
-        <BackButton onClick={() => navigate("/onboarding/language", { state: { direction: "backward" } })} />
+        <BackButton to="/onboarding/language" state={{ direction: "backward" }} />
 
         <div className="group-page__content">
           <div className="group-page__header">
@@ -46,11 +46,11 @@ const GroupPage = () => {
             <Button
               variant="secondary"
               text={t("group.createGroup")}
-              onClick={() => navigate("/create-group")}
+              to="/create-group"
             />
             <Button
               text={t("group.joinGroup")}
-              onClick={() => navigate("/join-group")}
+              to="/join-group"
             />
           </div>
         </div>

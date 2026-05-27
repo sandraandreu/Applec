@@ -28,6 +28,10 @@
     }
   }
 
+  &:focus-visible {
+    outline: none;
+  }
+
   &--with-icon {
     padding-right: 44px;
   }

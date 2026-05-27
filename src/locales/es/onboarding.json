@@ -10,7 +10,10 @@
   "welcome": {
     "title": "¡Hola, {{name}}!",
     "subtitle": "Tu falla te estaba esperando.",
-    "description": "Tu falla organizada y siempre al día. Todos los eventos de tu comisión en un mismo lugar."
+    "description": "Tu falla organizada y siempre al día. Todos los eventos de tu comisión en un mismo lugar.",
+    "groupDeletedTitle": "Tu falla ha sido eliminada",
+    "groupDeletedMessage": "El administrador ha eliminado el grupo. Puedes crear una nueva falla o unirte a otra.",
+    "groupDeletedButton": "Entendido"
   },
   "language": {
     "title": "¿En qué idioma prefieres usar Applec?",

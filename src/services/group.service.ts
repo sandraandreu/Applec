@@ -126,16 +126,16 @@ export const updateMemberRole = async (
   });
 };
 
-export const updateMemberPhotoUrl = async (
+export const updateMemberFields = async (
   groupId: string,
   uid: string,
-  photoUrl: string,
+  fields: Partial<{ firstName: string; lastName: string; photoUrl: string }>,
 ): Promise<void> => {
   const groupRef = doc(db, "groups", groupId);
   await runTransaction(db, async (transaction) => {
     const snap = await transaction.get(groupRef);
     const members = (snap.data()?.members ?? []) as GroupData["members"];
-    const updated = members.map(member => member.uid === uid ? { ...member, photoUrl } : member);
+    const updated = members.map(member => member.uid === uid ? { ...member, ...fields } : member);
     transaction.update(groupRef, { members: updated });
   });
 };
@@ -156,11 +156,16 @@ export const removeMemberFromGroup = async (
 export const deleteGroup = async (
   groupId: string,
   memberUids: string[],
+  nonAdminUids: string[],
 ): Promise<void> => {
+  const notifiedSet = new Set(nonAdminUids);
   const batch = writeBatch(db);
   batch.delete(doc(db, "groups", groupId));
   for (const uid of memberUids) {
-    batch.update(doc(db, "users", uid), { groupId: deleteField() });
+    const fields = notifiedSet.has(uid)
+      ? { groupId: deleteField(), groupDeleted: true }
+      : { groupId: deleteField() };
+    batch.update(doc(db, "users", uid), fields);
   }
   await batch.commit();
 };
