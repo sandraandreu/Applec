@@ -96,7 +96,7 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 **Objetivo:** todas las pantallas tienen HTML + SCSS con datos de demo. La app se puede demostrar de principio a fin.
 
 - ✅ **T01** · Datos de demo en Firestore (grupo, miembros, eventos, asistencias, vinculados) 🟢
-- ⬜ **T02** · Perfil `/profile` — HTML + SCSS 🟢
+- ✅ **T02** · Perfil `/profile` — HTML + SCSS 🟢
 - ✅ **T03** · Notificaciones `/notifications` — HTML + SCSS con datos hardcodeados 🟢
 - ✅ **T04** · Pantalla de acciones de miembro en `/members` — HTML + SCSS 🟢
 - ✅ **T05** · Confirmación de asistencia de vinculados + pantalla añadir vinculados — HTML + SCSS 🟢
@@ -109,8 +109,8 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 
 - ⬜ **T08** · Finalizar calendario `/calendar` — navegación, puntos en días, lista del día seleccionado 🔴
 - ✅ **T09** · Modelo y servicio de `Attendance` en Firestore 🟡
-- ⬜ **T10** · Conectar botones Sí/No del miembro con escritura en Firestore 🟡
-- ⬜ **T11** · Cargar respuesta del usuario al abrir el detalle del evento 🟡
+- ✅ **T10** · Conectar botones Sí/No del miembro con escritura en Firestore 🟡
+- ✅ **T11** · Cargar respuesta del usuario al abrir el detalle del evento 🟡
 - ✅ **T10** · Conectar botones Sí/No del miembro con escritura en Firestore 🟡
 - ✅ **T11** · Cargar respuesta del usuario al abrir el detalle del evento 🟡
 - ✅ **T34** · Añadir vinculados con escritura en Firestore (Firebase + lógica) 🟡
@@ -140,7 +140,7 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 
 ## Semana 4 — 3-9 junio · Cierre técnico y Capacitor
 
-- ⬜ **T19** · ~~Perfil funcional~~ ✅ completado en semana 3
+- ✅ **T19** · ~~Perfil funcional~~ ✅ completado en semana 3
 - ⬜ **T20** · Verificación i18n completo (todas las claves en `es` y `ca`) 🟢
 - ⬜ **T21** · Estados vacíos y casos límite en todas las pantallas 🟡
 - ⬜ **T22** · Corrección de bugs encontrados 🟡
