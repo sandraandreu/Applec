@@ -7,7 +7,7 @@ interface ButtonProps {
   to?: string;
   state?: unknown;
   type?: "submit" | "button" | "reset";
-  variant?: "primary" | "secondary" | "language" | "especial" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "linked";
+  variant?: "primary" | "secondary" | "language" | "especial" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "linked" | "pending";
   icon?: ReactNode;
   isActiveLanguage?: boolean;
   onClick?: () => void;
