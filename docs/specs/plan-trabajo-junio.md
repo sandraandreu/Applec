@@ -1,7 +1,7 @@
 # Plan de trabajo — Falles App
 
-**Período:** 13 mayo – 11 junio 2026
-**Presentación:** 11 de junio de 2026
+**Período:** 13 mayo – 17 junio 2026
+**Presentación:** 17 de junio de 2026
 
 ---
 
