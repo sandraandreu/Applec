@@ -131,25 +131,24 @@ Integrado directamente en la página de detalle del evento (no es una página se
 ---
 
 ### 11. Perfil de usuario
-**Estado:** ✓ En progreso
+**Estado:** ✓ Implementado
 
 Pantalla accesible desde la barra de navegación inferior.
 
 **Contenido:**
 - Avatar circular + nombre completo + badge de rol
-- Sección **Mi cuenta:** Editar perfil · Mis vinculados · Notificaciones · Idioma
-- Sección **Mi falla:** Compartir acceso · Configuración del grupo · Cerrar sesión
-
-Idioma se puede cambiar desde el perfil (ya funciona globalmente). Cerrar sesión llama a `logout` del `AuthContext`.
+- Sección **Mi cuenta:** Editar perfil · Cambiar contraseña · Mis vinculados · Notificaciones · Idioma
+- Sección **Mi falla:** Compartir acceso (admin + org) · Configuración del grupo (solo admin) · Cerrar sesión
 
 **Implementado:**
-- Servicios: `changePassword`, `uploadProfilePhoto`, `updateUserFields`, `updateGroupSettings`, `regenerateInviteCode`, `deleteGroup`
+- Todas las páginas: `ProfilePage`, `EditProfilePage`, `ChangePasswordPage`, `GroupSettingsPage`, `NotificationsSettingsPage`
+- Servicios: `changePassword`, `uploadProfilePhoto`, `updateUserFields`, `updateMemberFields` (nombre + foto en array de miembros del grupo), `updateGroupSettings`, `regenerateInviteCode`, `deleteGroup`, `clearGroupDeletedFlag`
+- Permisos: `canManageGroup` (solo admin) y `canShareAccess` (admin + org) en el modelo `UserPermissions`
+- Eliminación de grupo: escribe flag `groupDeleted: true` en Firestore para los miembros no-admin; `WelcomePage` muestra modal al detectarlo y limpia el flag
+- Notificaciones: UI con toggles agrupados por sección (Eventos, Feed, Grupo); visibilidad por rol; estado persistido en `localStorage` por usuario; `adminPost` oculto para admin
 - i18n: namespace `profile` completo (es + ca)
 - Rutas: `/profile`, `/profile/edit`, `/profile/change-password`, `/profile/group-settings`, `/profile/notifications-settings`
-- InviteGroupPage: botón "Regenerar código" para admin (solo desde perfil)
 - Componentes: `PageHeader`, `SettingsRow`
-
-**Pendiente:** páginas ProfilePage, EditProfilePage, ChangePasswordPage, GroupSettingsPage, NotificationsSettingsPage
 
 ---
 
