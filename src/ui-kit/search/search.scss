@@ -7,6 +7,10 @@
   border-radius: var(--radius-input);
   background-color: var(--color-surface);
 
+  &:focus-within {
+    border-color: var(--color-brand);
+  }
+
   &__icon {
     color: var(--color-icon);
   }
@@ -17,7 +21,6 @@
     background: transparent;
     font-size: var(--font-size-body-s);
     color: var(--color-text-primary);
-    outline: none;
 
     &::placeholder {
       color: var(--color-text-muted);
@@ -25,6 +28,10 @@
 
     &:focus::placeholder {
       color: transparent;
+    }
+
+    &:focus-visible {
+      outline: none;
     }
   }
 }
