@@ -261,13 +261,13 @@ const EventDetailPage = () => {
         onDismiss={() => setShowDeleteAlert(false)}
         buttons={[
           {
-            text: t("delete.cancel"),
-            role: "cancel",
-          },
-          {
             text: t("delete.submit"),
             role: "danger",
             handler: handleDelete,
+          },
+          {
+            text: t("delete.cancel"),
+            role: "cancel",
           },
         ]}
       />

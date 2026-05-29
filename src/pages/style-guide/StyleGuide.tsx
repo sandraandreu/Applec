@@ -969,8 +969,8 @@ const StyleGuide = () => {
             message="Esta acción no se puede deshacer."
             onDismiss={() => setModalOpen(false)}
             buttons={[
-              { text: "Cancelar", role: "cancel" },
               { text: "Eliminar" },
+              { text: "Cancelar", role: "cancel" },
             ]}
           />
         </div>

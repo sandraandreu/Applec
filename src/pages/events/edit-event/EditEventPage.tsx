@@ -13,6 +13,7 @@ import Input from "../../../ui-kit/input/Input";
 import PageHeader from "../../../components/layout/PageHeader";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
 import Modal from "../../../components/modal/Modal";
 import { editEventReducer, initialState } from "./edit-event.reducer";
@@ -164,27 +165,14 @@ const EditEventPage = () => {
         <div className="edit-event__content">
         <div className="edit-event__section">
           <p className="edit-event__section-title">{t("create.typeSection")}</p>
-          <div className="edit-event__type-block">
-            <div className="edit-event__types">
-              <button
-                type="button"
-                className={`edit-event__type-btn${state.eventType === "special" ? " edit-event__type-btn--active" : ""}`}
-                onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "special" })}
-              >
-                {t("create.type.special")}
-              </button>
-              <button
-                type="button"
-                className={`edit-event__type-btn${state.eventType === "normal" ? " edit-event__type-btn--active" : ""}`}
-                onClick={() => dispatch({ type: "SET_EVENT_TYPE", payload: "normal" })}
-              >
-                {t("create.type.normal")}
-              </button>
-            </div>
-            <p className="edit-event__type-desc">
-              {t(`create.type.${state.eventType}Desc`)}
-            </p>
-          </div>
+          <PillSelector
+            options={[
+              { value: "normal", label: t("create.type.normal"), description: t("create.type.normalDesc") },
+              { value: "special", label: t("create.type.special"), description: t("create.type.specialDesc") },
+            ]}
+            value={state.eventType}
+            onChange={(value) => dispatch({ type: "SET_EVENT_TYPE", payload: value as "normal" | "special" })}
+          />
         </div>
 
         <div className="edit-event__section">
@@ -393,8 +381,8 @@ const EditEventPage = () => {
         message={t("delete.message")}
         onDismiss={() => setShowDeleteAlert(false)}
         buttons={[
-          { text: t("delete.cancel"), role: "cancel" },
           { text: t("delete.submit"), role: "danger", handler: handleDelete },
+          { text: t("delete.cancel"), role: "cancel" },
         ]}
       />
 
@@ -404,8 +392,8 @@ const EditEventPage = () => {
         message={tCommon("discard.message")}
         onDismiss={() => setShowDiscardModal(false)}
         buttons={[
-          { text: tCommon("buttons.cancel"), role: "cancel" },
           { text: tCommon("discard.confirm"), role: "danger", handler: () => navigate(-1) },
+          { text: tCommon("buttons.cancel"), role: "cancel" },
         ]}
       />
       {deleteState.isLoading && <Loading />}

@@ -117,8 +117,8 @@ const ProfilePage = () => {
         message={t("profile.logoutConfirmMessage")}
         onDismiss={() => setShowLogoutModal(false)}
         buttons={[
-          { text: t("profile.logoutCancel"), role: "cancel" },
           { text: t("profile.logoutConfirm"), role: "danger", handler: logout },
+          { text: t("profile.logoutCancel"), role: "cancel" },
         ]}
       />
     </div>

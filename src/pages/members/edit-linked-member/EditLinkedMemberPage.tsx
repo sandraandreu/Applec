@@ -12,6 +12,7 @@ import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
 import Modal from "../../../components/modal/Modal";
 import Icon from "../../../ui-kit/icons/icon/Icon";
+import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
 import "./edit-linked-member.scss";
 
 interface EditLinkedMemberFormData {
@@ -28,6 +29,7 @@ const EditLinkedMemberPage = () => {
   const { user, profile } = useAuthContext();
   const { group, refreshGroup } = useGroupContext();
 
+  const [type, setType] = useState<"fallero" | "extern">("fallero");
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
@@ -48,6 +50,7 @@ const EditLinkedMemberPage = () => {
       navigate("/members/linked", { replace: true });
       return;
     }
+    setType(linked.type ?? "fallero");
     reset({
       firstName: linked.firstName,
       lastName: linked.lastName,
@@ -69,7 +72,7 @@ const EditLinkedMemberPage = () => {
     if (!profile?.groupId || !user?.uid || !id) return;
     try {
       setIsLoading(true);
-      await editLinkedMember(profile.groupId, id, user.uid, data);
+      await editLinkedMember(profile.groupId, id, user.uid, { ...data, type });
       await refreshGroup();
       navigate("/members/linked", { replace: true, state: { linkedMemberUpdated: true } });
     } catch {
@@ -85,11 +88,7 @@ const EditLinkedMemberPage = () => {
     if (!linked) return;
     setDeleteState({ isLoading: true, error: null });
     try {
-      await deleteLinkedMember(profile.groupId, id, user.uid, {
-        firstName: linked.firstName,
-        lastName: linked.lastName,
-        relationship: linked.relationship,
-      });
+      await deleteLinkedMember(profile.groupId, id, user.uid);
       await refreshGroup();
       navigate("/members/linked", { replace: true });
     } catch {
@@ -117,6 +116,19 @@ const EditLinkedMemberPage = () => {
           className="edit-linked-member-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
+          <div className="edit-linked-member-page__type-field">
+            <p>{t("linked.type")}</p>
+            <PillSelector
+              aria-label={t("linked.type")}
+              options={[
+                { value: "fallero", label: t("linked.typeFallero"), description: t("linked.typeFalleroDesc") },
+                { value: "extern", label: t("linked.typeExtern"), description: t("linked.typeExternDesc") },
+              ]}
+              value={type}
+              onChange={(value) => setType(value as "fallero" | "extern")}
+            />
+          </div>
+
           <div className="edit-linked-member-page__fields">
             <Input
               label={t("linked.firstName")}
@@ -179,8 +191,8 @@ const EditLinkedMemberPage = () => {
         message={tCommon("discard.message")}
         onDismiss={() => setShowDiscardModal(false)}
         buttons={[
-          { text: tCommon("buttons.cancel"), role: "cancel" },
           { text: tCommon("discard.confirm"), role: "danger", handler: handleDiscard },
+          { text: tCommon("buttons.cancel"), role: "cancel" },
         ]}
       />
 
@@ -190,8 +202,8 @@ const EditLinkedMemberPage = () => {
         message={t("linked.deleteMessage")}
         onDismiss={() => setShowDeleteModal(false)}
         buttons={[
-          { text: tCommon("buttons.cancel"), role: "cancel" },
           { text: t("linked.deleteSubmit"), role: "danger", handler: handleDelete },
+          { text: tCommon("buttons.cancel"), role: "cancel" },
         ]}
       />
       {deleteState.isLoading && <Loading />}

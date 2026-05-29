@@ -137,12 +137,12 @@ const InviteGroupPage = () => {
         onDismiss={() => setShowRegenerateModal(false)}
         buttons={[
           {
-            text: tProfile("inviteGroup.regenerateConfirmCancel"),
-            role: "cancel",
-          },
-          {
             text: tProfile("inviteGroup.regenerateConfirmSubmit"),
             handler: handleRegenerateConfirm,
+          },
+          {
+            text: tProfile("inviteGroup.regenerateConfirmCancel"),
+            role: "cancel",
           },
         ]}
       />

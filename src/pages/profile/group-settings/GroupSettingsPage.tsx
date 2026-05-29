@@ -177,8 +177,8 @@ const GroupSettingsPage = () => {
         message={t("groupSettings.deleteConfirmMessage")}
         onDismiss={() => setShowDeleteModal(false)}
         buttons={[
-          { text: t("groupSettings.deleteCancel"), role: "cancel" },
           { text: t("groupSettings.deleteConfirm"), role: "danger", handler: handleDeleteConfirm },
+          { text: t("groupSettings.deleteCancel"), role: "cancel" },
         ]}
       />
     </div>
