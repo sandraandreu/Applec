@@ -140,5 +140,9 @@
     &--liked {
       color: var(--red-500);
     }
+
+    &--comment {
+      color: var(--color-brand);
+    }
   }
 }
