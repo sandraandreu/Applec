@@ -179,7 +179,8 @@
   --gap-section: var(--size-48);
 
   // Paddings
-  --padding-page:   var(--size-24) var(--size-32);
+  --padding-side:   var(--size-16);
+  --padding-page:   var(--size-24) var(--padding-side);
   --padding-card:   var(--size-14);
   --padding-input:  var(--size-12) var(--size-14);
   --padding-chip:   var(--size-6)  var(--size-12);
