@@ -55,6 +55,7 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
   });
 
   const locationLength = watch("location")?.length ?? 0;
+  const startTime = watch("startTime");
 
   const handleBack = () => {
     const fields = getValues();
@@ -106,6 +107,7 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
             <label className="field__label">
               {t("create.date")}
             </label>
+            {dateError && <span className="field__error">{t("validation.dateRequired")}</span>}
             <div className={`create-events-step2__calendar-card${dateError ? " create-events-step2__calendar-card--error" : ""}`}>
               <EventCalendar
                 selected={selectedDate}
@@ -121,7 +123,6 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
                 disabled={{ before: today }}
               />
             </div>
-            {dateError && <span className="field__error">{t("validation.dateRequired")}</span>}
           </div>
 
           <div className="field">
@@ -150,9 +151,12 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
                 id="end-time"
                 type="time"
                 className="create-events-step2__time-input"
-                {...register("endTime")}
+                {...register("endTime", {
+                  validate: (value) => !value || value > startTime || t("validation.endTimeBeforeStart"),
+                })}
               />
             </div>
+            {errors.endTime && <span className="field__error">{errors.endTime.message}</span>}
           </div>
 
           <Input

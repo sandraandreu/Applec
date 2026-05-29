@@ -81,17 +81,17 @@ const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initia
             <div className="create-events-page__types">
               <button
                 type="button"
-                className={`create-events-page__type-btn${eventType === "special" ? " create-events-page__type-btn--active" : ""}`}
-                onClick={() => setEventType("special")}
-              >
-                {t("create.type.special")}
-              </button>
-              <button
-                type="button"
                 className={`create-events-page__type-btn${eventType === "normal" ? " create-events-page__type-btn--active" : ""}`}
                 onClick={() => setEventType("normal")}
               >
                 {t("create.type.normal")}
+              </button>
+              <button
+                type="button"
+                className={`create-events-page__type-btn${eventType === "special" ? " create-events-page__type-btn--active" : ""}`}
+                onClick={() => setEventType("special")}
+              >
+                {t("create.type.special")}
               </button>
             </div>
             <p className="create-events-page__type-desc">
