@@ -60,7 +60,7 @@ const FeedPost = ({ post }: FeedPostProps) => {
           <Icon name={post.likedByMe ? "heart-filled" : "heart"} size={28} />
           <span>{post.likesCount}</span>
         </div>
-        <div className="feed-post__stat">
+        <div className="feed-post__stat feed-post__stat--comment">
           <Icon name="chat-dots" size={28} />
           <span>{post.commentsCount}</span>
         </div>
