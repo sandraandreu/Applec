@@ -9,10 +9,8 @@
     "error": "Error al cargar los eventos",
     "filters": {
       "all": "Todos",
-      "active": "Activos",
-      "deadline-closed": "Plazo cerrado",
-      "finished": "Finalizados",
-      "pending": "Pendientes de confirmar"
+      "upcoming": "Próximos",
+      "past": "Pasados"
     }
   },
   "status": {
@@ -26,7 +24,7 @@
     "going": "Confirmado: voy",
     "notGoing": "No voy",
     "pending": "Sin respuesta",
-    "confirm": "Confirmar"
+    "confirm": "¿Vas?"
   },
   "detail": {
     "title": "Detalle del evento",
@@ -48,8 +46,8 @@
       "addLinked": "Votar por mis acompañantes"
     },
     "filter": {
-      "confirmed": "Confirmados",
-      "pending": "Pendientes",
+      "confirmed": "Sí van",
+      "pending": "Sin respuesta",
       "notGoing": "No van"
     },
     "showAll": "Ver todos ({{count}})",
@@ -96,6 +94,13 @@
     "step3Title": "Configuración de asistencia",
     "step3Description": "Configura la confirmación de asistencia y establece un plazo de confirmación.",
     "deadlineTime": "Hora límite",
+    "sectionConfirmation": "Confirmación de asistencia",
+    "sectionGuests": "Acompañantes",
+    "sectionReminder": "Recordatorio",
+    "allowExternalGuests": "Permitir acompañantes externos",
+    "allowExternalGuestsHint": "Los falleros podrán traer personas de fuera de la falla",
+    "maxExternalGuests": "Máximo de externos por fallero",
+    "maxExternalGuestsHint": "Deja vacío para no poner límite",
     "continue": "Continuar",
     "submit": "Crear evento",
     "error": "Error al crear el evento"
@@ -116,7 +121,7 @@
     "save": "Guardar",
     "update": "Guardar",
     "cta": "Confirmar asistencia",
-    "modify": "Modificar votaciones",
+    "modify": "Cambiar respuesta",
     "closed": "El plazo ya está cerrado",
     "myVote": "Tu asistencia",
     "going": "Vas",
@@ -154,6 +159,7 @@
   "attendance": {
     "going": "Voy",
     "notGoing": "No voy",
+    "pending": "Sin respuesta",
     "deadlinePassed": "El plazo de confirmación ha pasado",
     "error": "Error al guardar la respuesta",
     "success": "Asistencia guardada correctamente"
@@ -173,6 +179,7 @@
     "datePast": "La fecha no puede ser en el pasado",
     "timeRequired": "La hora de inicio es obligatoria",
     "locationRequired": "El lugar es obligatorio",
+    "endTimeBeforeStart": "La hora de fin debe ser posterior a la de inicio",
     "deadlineAfterDate": "El plazo no puede ser posterior a la fecha del evento",
     "nameMaxLength": "El nombre no puede superar los 80 caracteres",
     "descriptionMaxLength": "La descripción no puede superar los 500 caracteres"

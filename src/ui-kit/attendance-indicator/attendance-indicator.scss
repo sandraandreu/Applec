@@ -1,10 +1,11 @@
 .attendance-indicator {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  gap: var(--size-4);
+  padding: var(--size-6) var(--size-12);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-semibold);
   flex-shrink: 0;
 
   &--going {
@@ -18,7 +19,8 @@
   }
 
   &--pending {
-    background: var(--color-pending);
-    color: var(--white);
+    background: transparent;
+    color: var(--color-pending);
+    border: 1.5px solid var(--color-pending);
   }
 }
