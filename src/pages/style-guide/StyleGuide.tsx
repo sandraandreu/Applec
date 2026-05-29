@@ -5,7 +5,7 @@ import type { IconName } from "../../ui-kit/icons/icon/Icon";
 import Avatar from "../../ui-kit/avatar/Avatar";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Button from "../../ui-kit/button/Button";
-import Badge from "../../ui-kit/badge/Badge";
+import EventStatusBadge from "../../ui-kit/event-status-badge/EventStatusBadge";
 import Chip from "../../ui-kit/chip/Chip";
 import IconButton from "../../ui-kit/icons/icon-button/IconButton";
 import EyeToggleIcon from "../../ui-kit/button/icon-buttons/eye-toggle/EyeToggleIcon";
@@ -641,19 +641,15 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
-          <h3 className="style-guide__component-name">Badge</h3>
+          <h3 className="style-guide__component-name">EventStatusBadge</h3>
           <div className="style-guide__stack">
             <div className="style-guide__item">
-              <span className="style-guide__label">activo</span>
-              <Badge variant="activo" label="Activo" />
-            </div>
-            <div className="style-guide__item">
               <span className="style-guide__label">plazo-cerrado</span>
-              <Badge variant="plazo-cerrado" label="Plazo cerrado" />
+              <EventStatusBadge variant="plazo-cerrado" label="Plazo cerrado" />
             </div>
             <div className="style-guide__item">
               <span className="style-guide__label">finalizado</span>
-              <Badge variant="finalizado" label="Finalizado" />
+              <EventStatusBadge variant="finalizado" label="Finalizado" />
             </div>
           </div>
         </div>

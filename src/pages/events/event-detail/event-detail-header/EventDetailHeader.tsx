@@ -5,7 +5,7 @@ import { getEventStatus } from "../../../../models/event.model";
 import type { FallesEvent } from "../../../../models/event.model";
 import BackButton from "../../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
-import Badge from "../../../../ui-kit/badge/Badge";
+import EventStatusBadge from "../../../../ui-kit/event-status-badge/EventStatusBadge";
 
 interface Props {
   event: FallesEvent;
@@ -74,7 +74,9 @@ const EventDetailHeader = ({ event, canEdit, formattedDate, onDeleteRequest }: P
 
       <h1 className="event-detail-page__name">{event.name}</h1>
 
-      <Badge variant={eventStatus} label={t(`status.${eventStatus}`)} />
+      {eventStatus !== "activo" && (
+        <EventStatusBadge variant={eventStatus} label={t(`status.${eventStatus}`)} />
+      )}
 
       <div className="event-detail-page__field">
         <div className="event-detail-page__field-icon">
