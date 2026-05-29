@@ -80,6 +80,15 @@ Reglas generales que afectan al sistema en su conjunto, independientemente de la
 - Una vez vencido el plazo, la confirmación queda **bloqueada**.
 - El listado de asistentes (sí / no / sin respuesta) es visible **solo** para Admin y Organizadores.
 
+### Acompañantes en la confirmación
+
+- Cada miembro puede confirmar también por sus acompañantes vinculados.
+- Los acompañantes son de dos tipos: **fallero/a** (pertenece a la falla sin cuenta propia) o **externo/a** (persona ajena a la falla).
+- El admin configura por evento si se permiten externos y cuántos como máximo puede traer cada miembro.
+- Si el evento **no permite externos**: en el VoteSheet solo aparecen los acompañantes falleros.
+- Si el evento **permite externos con límite**: al alcanzar el máximo, los botones "Sí" de los externos restantes quedan deshabilitados.
+- Si el evento **permite externos sin límite**: aparecen todos sin restricción.
+
 ---
 
 ## 4. Gestión del grupo

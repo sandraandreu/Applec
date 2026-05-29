@@ -77,7 +77,7 @@ Solo el Admin puede cambiar roles y expulsar miembros. Los permisos se derivan d
 
 Solo Admin y Organizadores pueden crear eventos.
 
-Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción opcional; (2) fecha, hora de inicio, hora de fin opcional y lugar; (3) configuración de confirmación obligatoria, recordatorio y fecha límite de confirmación opcional.
+Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción opcional; (2) fecha, hora de inicio, hora de fin opcional y lugar; (3) configuración de confirmación obligatoria, recordatorio, fecha límite de confirmación y configuración de acompañantes externos.
 
 **Campos obligatorios:** nombre (máx. 80 caracteres), fecha, hora de inicio, lugar.
 **Campos opcionales:** descripción (máx. 500 caracteres), hora de fin, fecha límite de confirmación.
@@ -158,7 +158,7 @@ Funcionalidades fuera del MVP, a implementar después de la presentación si hay
 
 | # | Funcionalidad | Plan |
 |---|---|---|
-| 12 | Miembros vinculados (familia sin cuenta propia) | ✓ Implementado (LinkedMembersPage, AddLinkedMemberPage — crear y editar en Firebase; votación y respuestas integradas en VoteSheet). ✗ Pendiente: eliminar vinculado |
+| 12 | Miembros vinculados (familia sin cuenta propia) | ✓ Implementado (LinkedMembersPage, AddLinkedMemberPage — crear y editar en Firebase; votación y respuestas integradas en VoteSheet). ✗ Pendiente: eliminar vinculado, tipos de acompañante (fallero/extern), configuración de externos por evento — spec en `docs/specs/2026-05-29-acompanyants-tipus.md` |
 | 13 | Inicio de sesión con Google | Versión futura |
 | 14 | Gráfico circular de asistencia | Versión futura |
 | 15 | Feed interno del grupo (publicaciones + comentarios) | Pantalla con datos hardcodeados para la presentación |
