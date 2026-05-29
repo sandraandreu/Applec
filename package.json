@@ -37,6 +37,7 @@
     "eslint": "^8.35.0",
     "eslint-plugin-react": "^7.32.2",
     "jsdom": "^29.1.1",
+    "playwright": "^1.60.0",
     "vitest": "^4.1.5",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",

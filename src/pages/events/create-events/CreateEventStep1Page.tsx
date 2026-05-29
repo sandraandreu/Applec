@@ -7,6 +7,7 @@ import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
+import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
 
 export interface StepHandle {
   submit: () => void;
@@ -77,27 +78,14 @@ const CreateEventStep1Page = forwardRef<StepHandle, Props>(({ onComplete, initia
           <p className="create-events-page__section-title">
             {t("create.typeSection")}
           </p>
-          <div className="create-events-page__type-block">
-            <div className="create-events-page__types">
-              <button
-                type="button"
-                className={`create-events-page__type-btn${eventType === "normal" ? " create-events-page__type-btn--active" : ""}`}
-                onClick={() => setEventType("normal")}
-              >
-                {t("create.type.normal")}
-              </button>
-              <button
-                type="button"
-                className={`create-events-page__type-btn${eventType === "special" ? " create-events-page__type-btn--active" : ""}`}
-                onClick={() => setEventType("special")}
-              >
-                {t("create.type.special")}
-              </button>
-            </div>
-            <p className="create-events-page__type-desc">
-              {t(`create.type.${eventType}Desc`)}
-            </p>
-          </div>
+          <PillSelector
+            options={[
+              { value: "normal", label: t("create.type.normal"), description: t("create.type.normalDesc") },
+              { value: "special", label: t("create.type.special"), description: t("create.type.specialDesc") },
+            ]}
+            value={eventType}
+            onChange={(value) => setEventType(value as "normal" | "special")}
+          />
         </div>
 
         <div className="create-events-page__form-section">

@@ -40,6 +40,22 @@ const LinkedMembersPage = () => {
   const myLinked = (group?.linkedMembers ?? []).filter(
     (linkedMember) => linkedMember.ownerUid === user?.uid
   );
+  const falleroLinked = myLinked.filter((lm) => (lm.type ?? "fallero") === "fallero");
+  const externLinked = myLinked.filter((lm) => lm.type === "extern");
+  const hasBothTypes = falleroLinked.length > 0 && externLinked.length > 0;
+
+  const renderCard = (linkedMember: typeof myLinked[number]) => (
+    <MemberCard
+      key={linkedMember.id}
+      firstName={linkedMember.firstName}
+      lastName={linkedMember.lastName}
+      relationship={linkedMember.relationship}
+      role="member"
+      showChevron={false}
+      showRole={false}
+      onEdit={() => navigate(`/members/linked/${linkedMember.id}/edit`)}
+    />
+  );
 
   return (
     <div className="linked-members-page" {...swipeHandlers}>
@@ -59,20 +75,20 @@ const LinkedMembersPage = () => {
       <div className="linked-members-page__content">
         {myLinked.length === 0 ? (
           <EmptyState title={t("linked.empty")} variant="light" expand />
+        ) : hasBothTypes ? (
+          <div className="linked-members-page__list">
+            <div className="linked-members-page__section">
+              <p className="linked-members-page__section-label">{t("linked.typeFallero")}</p>
+              {falleroLinked.map(renderCard)}
+            </div>
+            <div className="linked-members-page__section">
+              <p className="linked-members-page__section-label">{t("linked.typeExtern")}</p>
+              {externLinked.map(renderCard)}
+            </div>
+          </div>
         ) : (
           <div className="linked-members-page__list">
-            {myLinked.map((linkedMember) => (
-              <MemberCard
-                key={linkedMember.id}
-                firstName={linkedMember.firstName}
-                lastName={linkedMember.lastName}
-                relationship={linkedMember.relationship}
-                role="member"
-                showChevron={false}
-                showRole={false}
-                onEdit={() => navigate(`/members/linked/${linkedMember.id}/edit`)}
-              />
-            ))}
+            {myLinked.map(renderCard)}
           </div>
         )}
 

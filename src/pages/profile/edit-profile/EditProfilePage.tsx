@@ -130,6 +130,7 @@ const EditProfilePage = () => {
             defaultValue={profile.email ?? ""}
             disabled
           />
+          <p className="edit-profile-page__email-hint">{t("editProfile.emailHint")}</p>
           {error && (
             <p className="edit-profile-page__error">
               <Icon name="error-circle" size={20} aria-hidden />

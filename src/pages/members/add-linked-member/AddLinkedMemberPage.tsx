@@ -112,7 +112,6 @@ const AddLinkedMemberPage = () => {
             <Input
               label={t("linked.firstName")}
               id="linked-first-name"
-              placeholder={t("linked.firstNamePlaceholder")}
               required
               registration={register("firstName", { required: true })}
               error={errors.firstName?.type === "required" ? tCommon("errors.required") : undefined}
@@ -120,7 +119,6 @@ const AddLinkedMemberPage = () => {
             <Input
               label={t("linked.lastName")}
               id="linked-last-name"
-              placeholder={t("linked.lastNamePlaceholder")}
               required
               registration={register("lastName", { required: true })}
               error={errors.lastName?.type === "required" ? tCommon("errors.required") : undefined}

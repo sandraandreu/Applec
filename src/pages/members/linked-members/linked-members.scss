@@ -53,5 +53,17 @@
     flex: 1;
   }
 
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
+
+  &__section-label {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+  }
+
 
 }

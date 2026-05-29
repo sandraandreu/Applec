@@ -37,7 +37,7 @@
       "organizer": "Puede crear y gestionar sus propios eventos, aprobar solicitudes de entrada y añadir miembros. No puede cambiar roles ni eliminar miembros.",
       "member": "Puede ver el calendario de eventos y confirmar su propia asistencia. No tiene acceso a la gestión del grupo."
     },
-    "adminLimitReached": "Ya hay 3 administradores en el grupo. Elimina uno antes de asignar este rol.",
+    "adminLimitReached": "Ya hay 3 administradores en el grupo. Para asignar este rol, cambia primero el de uno de los administradores actuales.",
     "roleInfoLabel": "Ver descripción del rol",
     "adminConfirmHeader": "¿Hacer Administrador?",
     "adminConfirmMessage": "Este miembro tendrá control total del grupo. Podrás cambiar su rol más adelante si es necesario.",

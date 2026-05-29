@@ -117,38 +117,6 @@
 
 // Step 1
 .create-events-page {
-  &__types {
-    display: flex;
-    gap: var(--gap-items);
-  }
-
-  &__type-btn {
-    padding: var(--size-8) var(--size-14);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-pill);
-    background-color: var(--color-surface);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-medium);
-
-    &--active {
-      border-color: var(--color-brand);
-      background-color: var(--color-brand);
-      color: var(--white);
-    }
-  }
-
-  &__type-block {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-tight);
-  }
-
-  &__type-desc {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
   &__form-section {
     display: flex;
     flex-direction: column;

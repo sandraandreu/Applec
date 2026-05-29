@@ -116,12 +116,6 @@ const JoinGroupPage = () => {
             aria-hidden="true"
             className="join-group-page__pending-illustration"
           />
-          <div className="join-group-page__pending-notice">
-            <Icon name="bell" size={24} className="icon" />
-            <p className="join-group-page__pending-notice-text">
-              {t("joinGroup.requestSent.notice")}
-            </p>
-          </div>
           <Button
             text={t("joinGroup.requestSent.button")}
             onClick={handleConfirmJoin}

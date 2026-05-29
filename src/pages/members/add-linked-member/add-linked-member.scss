@@ -59,6 +59,12 @@
     flex: 1;
   }
 
+  &__type-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
+
   &__error {
     display: flex;
     align-items: center;

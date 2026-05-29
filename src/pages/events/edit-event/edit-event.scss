@@ -30,37 +30,6 @@
     gap: var(--gap-content);
   }
 
-  &__type-block {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-tight);
-  }
-
-  &__types {
-    display: flex;
-    gap: var(--gap-items);
-  }
-
-  &__type-btn {
-    padding: var(--size-8) var(--size-14);
-    border: 1px solid var(--color-brand);
-    border-radius: var(--radius-pill);
-    background-color: var(--color-bg-blue);
-    color: var(--color-brand);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-medium);
-
-    &--active {
-      background-color: var(--color-brand);
-      color: var(--white);
-    }
-  }
-
-  &__type-desc {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
   &__content {
     background-color: var(--color-surface);
     padding: var(--padding-page);

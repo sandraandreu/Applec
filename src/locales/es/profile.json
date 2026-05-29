@@ -21,6 +21,7 @@
     "firstName": "Nombre",
     "lastName": "Apellidos",
     "email": "Correo electrónico",
+    "emailHint": "El correo electrónico lo usas para iniciar sesión y no se puede cambiar",
     "save": "Guardar cambios",
     "saveSuccess": "Perfil actualizado",
     "saveError": "No se pudo guardar. Inténtalo de nuevo.",

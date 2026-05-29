@@ -14,7 +14,7 @@
   },
   "joinGroup": {
     "title": "Unirse a una falla",
-    "subtitle": "Pide a tu presidente que te comparta el código o enlace de invitación.",
+    "subtitle": "Pide al administrador de tu falla que te comparta el código o enlace de invitación.",
     "code": "Código de invitación",
     "codePlaceholder": "Introduce el código",
     "button": "Buscar falla",
@@ -23,7 +23,6 @@
     "requestSent": {
       "title": "Pendiente de aprobación",
       "subtitle": "El administrador recibirá una notificación y te avisaremos cuando acepte tu solicitud.",
-      "notice": "Te avisaremos con una notificación en cuanto el administrador acepte.",
       "button": "Entendido"
     },
     "errors": {

@@ -57,6 +57,12 @@
     gap: var(--gap-compact);
   }
 
+  &__email-hint {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+    margin-top: calc(var(--gap-compact) * -0.5);
+  }
+
   &__error {
     display: flex;
     align-items: center;

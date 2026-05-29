@@ -1,10 +1,13 @@
 import { type User as FirebaseUser } from "firebase/auth";
 
+export type LinkedMemberType = "fallero" | "extern";
+
 export interface LinkedMember {
   id: string;
   firstName: string;
   lastName: string;
   relationship: string;
+  type?: LinkedMemberType;
 }
 
 export interface UserProfile {

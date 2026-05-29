@@ -21,6 +21,7 @@
     "firstName": "Nom",
     "lastName": "Cognoms",
     "email": "Correu electrònic",
+    "emailHint": "El correu electrònic l'uses per a iniciar sessió i no es pot canviar",
     "save": "Guardar canvis",
     "saveSuccess": "Perfil actualitzat",
     "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",

@@ -14,7 +14,7 @@
   },
   "joinGroup": {
     "title": "Unir-se a una falla",
-    "subtitle": "Demana al teu president que et compartisca el codi o l’enllaç d’invitació.",
+    "subtitle": "Demana a l’administrador de la teua falla que et compartisca el codi o l’enllaç d’invitació.",
     "code": "Codi d'invitació",
     "codePlaceholder": "Introdueix el codi",
     "button": "Buscar falla",
@@ -23,7 +23,6 @@
     "requestSent": {
       "title": "Pendent d'aprovació",
       "subtitle": "L'administrador rebrà una notificació i t'avisarem quan accepte la teua sol·licitud.",
-      "notice": "T'avisarem amb una notificació quan l'administrador accepte.",
       "button": "Entesos"
     },
     "errors": {
