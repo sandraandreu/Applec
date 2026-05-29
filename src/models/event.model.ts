@@ -13,7 +13,9 @@ export interface FallesEvent {
   description?: string;
   endTime?: string;
   confirmationDeadline?: Date;
-  isSpecial?: boolean
+  isSpecial?: boolean;
+  allowExternalGuests?: boolean;
+  maxExternalGuests?: number;
 }
 
 export type FallesEventCreate = Omit<FallesEvent, "id" | "createdAt">;

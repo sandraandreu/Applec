@@ -17,6 +17,8 @@ export interface CreateEventStep3Data {
   requiresConfirmation: boolean;
   sendReminder: boolean;
   confirmationDeadline?: Date;
+  allowExternalGuests: boolean;
+  maxExternalGuests?: number;
 }
 
 export interface CreateEventStep3Draft {
@@ -25,6 +27,8 @@ export interface CreateEventStep3Draft {
   deadlineOpen: boolean;
   deadlineDate?: Date;
   deadlineTime: string;
+  allowExternalGuests: boolean;
+  maxExternalGuests?: number;
 }
 
 interface Props {
@@ -49,12 +53,15 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
   const { t, i18n } = useTranslation(["events", "common"]);
   const dateLocale = getDateFnsLocale(i18n.language);
 
-  const [requiresConfirmation, setRequiresConfirmation] = useState(initialData?.requiresConfirmation ?? false);
-  const [sendReminder, setSendReminder] = useState(initialData?.sendReminder ?? false);
+  const [requiresConfirmation, setRequiresConfirmation] = useState(initialData?.requiresConfirmation ?? true);
+  const [sendReminder, setSendReminder] = useState(initialData?.sendReminder ?? true);
+  const [allowExternalGuests, setAllowExternalGuests] = useState(initialData?.allowExternalGuests ?? false);
+  const [maxExternalGuests, setMaxExternalGuests] = useState<number | undefined>(initialData?.maxExternalGuests);
   const [deadlineOpen, setDeadlineOpen] = useState(initialData?.deadlineOpen ?? false);
   const [deadlineDate, setDeadlineDate] = useState<Date | undefined>(initialData?.deadlineDate);
   const [deadlineTime, setDeadlineTime] = useState(initialData?.deadlineTime ?? "23:59");
   const [deadlineMonth, setDeadlineMonth] = useState(initialData?.deadlineDate ?? new Date());
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const deadlineMax = new Date(step2Data.date);
@@ -74,11 +81,11 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
         ? combineDateAndTime(deadlineDate, deadlineTime)
         : new Date(deadlineDate);
     }
-    onComplete({ requiresConfirmation, sendReminder, confirmationDeadline });
+    onComplete({ requiresConfirmation, sendReminder, confirmationDeadline, allowExternalGuests, maxExternalGuests });
   };
 
   const handleBack = () => {
-    onBack({ requiresConfirmation, sendReminder, deadlineOpen, deadlineDate, deadlineTime });
+    onBack({ requiresConfirmation, sendReminder, deadlineOpen, deadlineDate, deadlineTime, allowExternalGuests, maxExternalGuests });
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -108,15 +115,10 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
       <form className="create-events-step3__content" onSubmit={handleSubmit}>
 
         <div className="create-events-step3__summary">
-
           <p className="create-events-step3__summary-name">{step1Data.eventName}</p>
-
-          <span
-            className={`create-events-step3__type-chip create-events-step3__type-chip--${step1Data.eventType}`}
-          >
+          <span className={`create-events-step3__type-chip create-events-step3__type-chip--${step1Data.eventType}`}>
             {t(`create.type.${step1Data.eventType}`)}
           </span>
-
           <div className="create-events-step3__field">
             <div className="create-events-step3__field-icon">
               <Icon name="calendar" size={28} />
@@ -138,84 +140,128 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
         </div>
 
         <div className="create-events-step3__settings">
-          <div className="create-events-step3__setting-row">
-            <div className="create-events-step3__setting-text">
-              <span className="create-events-step3__setting-label">
-                {t("create.requiresConfirmation")}
-              </span>
-              <span className="create-events-step3__setting-hint">
-                {t("create.requiresConfirmationHint")}
-              </span>
-            </div>
-            <Toggle
-              checked={requiresConfirmation}
-              onChange={setRequiresConfirmation}
-              aria-label={t("create.requiresConfirmation")}
-            />
-          </div>
 
-          <div className="create-events-step3__setting-row">
-            <div className="create-events-step3__setting-text">
-              <span className="create-events-step3__setting-label">
-                {t("create.sendReminder")}
-              </span>
-              <span className="create-events-step3__setting-hint">
-                {t("create.sendReminderHint")}
-              </span>
-            </div>
-            <Toggle
-              checked={sendReminder}
-              onChange={setSendReminder}
-              aria-label={t("create.sendReminder")}
-            />
-          </div>
-
-          <div className="create-events-step3__deadline">
-            <button
-              type="button"
-              className="create-events-step3__setting-row create-events-step3__setting-row--button"
-              onClick={() => setDeadlineOpen(!deadlineOpen)}
-              aria-expanded={deadlineOpen}
-            >
-              <span className="create-events-step3__setting-label">
-                {t("create.deadline")}
-              </span>
-              <Icon
-                name="chevron-right"
-                size={20}
-                className={`create-events-step3__chevron${deadlineOpen ? " create-events-step3__chevron--open" : ""}`}
+          <div className="create-events-step3__form-section">
+          <p className="create-events-step3__section-label">{t("create.sectionConfirmation")}</p>
+          <div className="create-events-step3__settings-group">
+            <div className="create-events-step3__setting-row">
+              <div className="create-events-step3__setting-text">
+                <span className="create-events-step3__setting-label">{t("create.requiresConfirmation")}</span>
+                <span className="create-events-step3__setting-hint">{t("create.requiresConfirmationHint")}</span>
+              </div>
+              <Toggle
+                checked={requiresConfirmation}
+                onChange={setRequiresConfirmation}
+                aria-label={t("create.requiresConfirmation")}
               />
-            </button>
+            </div>
 
-            {deadlineOpen && (
-              <div className="create-events-step3__deadline-panel">
-                <div className="create-events-step3__calendar-card">
-                  <EventCalendar
-                    selected={deadlineDate}
-                    month={deadlineMonth}
-                    onMonthChange={setDeadlineMonth}
-                    onSelect={(date) => {
-                      setDeadlineDate(date);
-                      if (date) setDeadlineMonth(date);
-                    }}
-                    disabled={[{ before: today }, { after: deadlineMax }]}
+            {requiresConfirmation && (
+              <div className="create-events-step3__deadline">
+                <button
+                  type="button"
+                  className="create-events-step3__setting-row create-events-step3__setting-row--button"
+                  onClick={() => setDeadlineOpen(!deadlineOpen)}
+                  aria-expanded={deadlineOpen}
+                >
+                  <span className="create-events-step3__setting-label">{t("create.deadline")}</span>
+                  <Icon
+                    name="chevron-right"
+                    size={20}
+                    className={`create-events-step3__chevron${deadlineOpen ? " create-events-step3__chevron--open" : ""}`}
                   />
-                </div>
+                </button>
 
-                <div className="create-events-step3__time-box">
-                  <Icon name="clock" size={24} className="create-events-step3__time-icon" />
-                  <input
-                    id="deadline-time"
-                    type="time"
-                    className="create-events-step3__time-input"
-                    aria-label={t("create.deadlineTime")}
-                    value={deadlineTime}
-                    onChange={(event) => setDeadlineTime(event.target.value)}
-                  />
-                </div>
+                {deadlineOpen && (
+                  <div className="create-events-step3__deadline-panel">
+                    <div className="create-events-step3__calendar-card">
+                      <EventCalendar
+                        selected={deadlineDate}
+                        month={deadlineMonth}
+                        onMonthChange={setDeadlineMonth}
+                        onSelect={(date) => {
+                          setDeadlineDate(date);
+                          if (date) setDeadlineMonth(date);
+                        }}
+                        disabled={[{ before: today }, { after: deadlineMax }]}
+                      />
+                    </div>
+                    <div className="create-events-step3__time-box">
+                      <Icon name="clock" size={24} className="create-events-step3__time-icon" />
+                      <input
+                        id="deadline-time"
+                        type="time"
+                        className="create-events-step3__time-input"
+                        aria-label={t("create.deadlineTime")}
+                        value={deadlineTime}
+                        onChange={(event) => setDeadlineTime(event.target.value)}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
+          </div>
+
+          <div className="create-events-step3__form-section">
+          <p className="create-events-step3__section-label">{t("create.sectionGuests")}</p>
+          <div className="create-events-step3__settings-group">
+            <div className="create-events-step3__setting-row">
+              <div className="create-events-step3__setting-text">
+                <span className="create-events-step3__setting-label">{t("create.allowExternalGuests")}</span>
+                <span className="create-events-step3__setting-hint">{t("create.allowExternalGuestsHint")}</span>
+              </div>
+              <Toggle
+                checked={allowExternalGuests}
+                onChange={(value) => {
+                  setAllowExternalGuests(value);
+                  if (!value) setMaxExternalGuests(undefined);
+                }}
+                aria-label={t("create.allowExternalGuests")}
+              />
+            </div>
+
+            {allowExternalGuests && (
+              <div className="create-events-step3__setting-row">
+                <div className="create-events-step3__setting-text">
+                  <span className="create-events-step3__setting-label">{t("create.maxExternalGuests")}</span>
+                  <span className="create-events-step3__setting-hint">{t("create.maxExternalGuestsHint")}</span>
+                </div>
+                <input
+                  type="number"
+                  className="create-events-step3__number-input"
+                  min={1}
+                  max={99}
+                  value={maxExternalGuests ?? ""}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setMaxExternalGuests(value === "" ? undefined : Number(value));
+                  }}
+                  aria-label={t("create.maxExternalGuests")}
+                />
+              </div>
+            )}
+          </div>
+          </div>
+
+          <div className="create-events-step3__form-section">
+          <p className="create-events-step3__section-label">{t("create.sectionReminder")}</p>
+          <div className="create-events-step3__settings-group">
+            <div className="create-events-step3__setting-row">
+              <div className="create-events-step3__setting-text">
+                <span className="create-events-step3__setting-label">{t("create.sendReminder")}</span>
+                <span className="create-events-step3__setting-hint">{t("create.sendReminderHint")}</span>
+              </div>
+              <Toggle
+                checked={sendReminder}
+                onChange={setSendReminder}
+                aria-label={t("create.sendReminder")}
+              />
+            </div>
+          </div>
+          </div>
+
         </div>
 
         {errorKey && (

@@ -5,17 +5,15 @@ interface StepperProps {
   totalSteps: number;
 }
 
-const Stepper = ({ currentStep, totalSteps }: StepperProps) => {
-  return (
-    <div className="stepper">
-      {Array.from({ length: totalSteps }, (_, i) => (
-        <span
-          key={i}
-          className={`stepper__dot${i + 1 === currentStep ? " stepper__dot--active" : ""}`}
-        />
-      ))}
-    </div>
-  );
-};
+const Stepper = ({ currentStep, totalSteps }: StepperProps) => (
+  <div className="stepper">
+    {Array.from({ length: totalSteps }, (_, i) => (
+      <span
+        key={i}
+        className={`stepper__dot${i + 1 === currentStep ? " stepper__dot--active" : ""}`}
+      />
+    ))}
+  </div>
+);
 
 export default Stepper;

@@ -63,9 +63,11 @@ const CreateEventPage = () => {
         requiresConfirmation: data.requiresConfirmation,
         sendReminder: data.sendReminder,
         isSpecial: state.step1Data.eventType === "special",
+        allowExternalGuests: data.allowExternalGuests,
         ...(state.step1Data.description && { description: state.step1Data.description }),
         ...(state.step2Data.endTime && { endTime: state.step2Data.endTime }),
         ...(data.confirmationDeadline && { confirmationDeadline: data.confirmationDeadline }),
+        ...(data.allowExternalGuests && data.maxExternalGuests && { maxExternalGuests: data.maxExternalGuests }),
       });
       navigate("/events", { replace: true });
     } catch (error) {

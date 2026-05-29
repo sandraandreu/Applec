@@ -47,6 +47,9 @@
     "message": "Perdràs els canvis que no hagis guardat.",
     "confirm": "Descartar"
   },
+  "stepper": {
+    "step": "Pas {{current}} de {{total}}"
+  },
   "nav": {
     "tabBar": "Navegació principal",
     "feed": "Feed",
