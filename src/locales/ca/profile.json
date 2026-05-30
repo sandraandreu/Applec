@@ -1,0 +1,107 @@
+{
+  "profile": {
+    "myAccount": "El meu compte",
+    "myGroup": "La meua falla",
+    "editProfile": "Editar perfil",
+    "changePassword": "Canviar contrasenya",
+    "linkedMembers": "Els meus acompanyants",
+    "notifications": "Notificacions",
+    "language": "Idioma",
+    "shareAccess": "Compartir accés",
+    "groupSettings": "Configuració del grup",
+    "logout": "Tancar sessió",
+    "logoutConfirmTitle": "Tancar sessió",
+    "logoutConfirmMessage": "Segur que vols tancar sessió?",
+    "logoutCancel": "Cancel·lar",
+    "logoutConfirm": "Tancar sessió"
+  },
+  "editProfile": {
+    "title": "Editar perfil",
+    "changePhoto": "Canviar foto",
+    "firstName": "Nom",
+    "lastName": "Cognoms",
+    "email": "Correu electrònic",
+    "emailHint": "El correu electrònic l'uses per a iniciar sessió i no es pot canviar",
+    "save": "Guardar canvis",
+    "saveSuccess": "Perfil actualitzat",
+    "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
+    "errors": {
+      "firstNameRequired": "El nom és obligatori",
+      "lastNameRequired": "Els cognoms són obligatoris"
+    }
+  },
+  "changePassword": {
+    "title": "Canviar contrasenya",
+    "currentPassword": "Contrasenya actual",
+    "newPassword": "Nova contrasenya",
+    "confirmPassword": "Confirmar contrasenya",
+    "save": "Guardar canvis",
+    "saveSuccess": "Contrasenya actualitzada",
+    "errorSamePassword": "La nova contrasenya no pot ser igual a l'actual",
+    "errorMismatch": "Les contrasenyes no coincideixen",
+    "errorWrongPassword": "La contrasenya actual és incorrecta",
+    "errorWeakPassword": "La contrasenya és massa feble",
+    "errorDefault": "No s'ha pogut canviar la contrasenya. Torna-ho a intentar."
+  },
+  "groupSettings": {
+    "title": "Configuració del grup",
+    "groupName": "Nom del grup",
+    "changeImage": "Canviar imatge",
+    "save": "Guardar canvis",
+    "saveSuccess": "Canvis guardats",
+    "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
+    "dangerZone": "Zona de perill",
+    "deleteGroup": "Eliminar grup",
+    "deleteConfirmTitle": "Eliminar grup",
+    "deleteConfirmMessage": "Aquesta acció és irreversible. Tots els membres perdran l'accés immediatament.",
+    "deleteCancel": "Cancel·lar",
+    "deleteConfirm": "Eliminar",
+    "deleteError": "No s'ha pogut eliminar el grup. Torna-ho a intentar.",
+    "errors": {
+      "nameRequired": "El nom és obligatori",
+      "nameTooLong": "El nom no pot tindre més de 60 caràcters"
+    }
+  },
+  "inviteGroup": {
+    "regenerateCode": "Regenerar codi",
+    "regenerateConfirmTitle": "Regenerar codi",
+    "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
+    "regenerateConfirmCancel": "Cancel·lar",
+    "regenerateConfirmSubmit": "Regenerar"
+  },
+  "languageSettings": {
+    "title": "Idioma",
+    "subtitle": "En quin idioma prefereixes usar Applec?",
+    "description": "El canvi s'aplica de manera immediata."
+  },
+  "notificationsSettings": {
+    "title": "Notificacions",
+    "sections": {
+      "events": "Esdeveniments",
+      "feed": "Feed",
+      "group": "Grup"
+    },
+    "items": {
+      "newEvent": "Nou esdeveniment creat",
+      "newEventDesc": "La teua falla té un nou esdeveniment",
+      "attendanceReminder": "Recordatori d'assistència",
+      "attendanceReminderDesc": "Abans que expire el termini",
+      "eventChanges": "Canvis en l'esdeveniment",
+      "eventChangesDesc": "Si es modifica hora, lloc o data",
+      "eventCancelled": "Esdeveniment cancel·lat",
+      "eventCancelledDesc": "Si es cancel·la un esdeveniment",
+      "newPost": "Nova publicació",
+      "newPostDesc": "Quan algú publica en el feed",
+      "adminPost": "Publicacions de l'admin",
+      "adminPostDesc": "Canvis importants",
+      "postComments": "Comentaris en els teus posts",
+      "postCommentsDesc": "Respostes a les teues publicacions",
+      "newRequests": "Noves sol·licituds",
+      "newRequestsDesc": "Persones que volen unir-se",
+      "accepted": "Has sigut acceptat",
+      "acceptedDesc": "Confirmació d'accés al grup",
+      "roleChanged": "Canvi de rol",
+      "roleChangedDesc": "Quan el teu rol a la falla canvia"
+    }
+  }
+}

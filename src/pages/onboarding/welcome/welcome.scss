@@ -1,0 +1,32 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--color-bg-teal);
+  min-height: 100vh;
+  padding: var(--padding-page);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    margin: auto 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+    text-align: center;
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+  }
+
+}

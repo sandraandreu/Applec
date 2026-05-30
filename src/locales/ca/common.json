@@ -8,16 +8,56 @@
     "close": "Tancar",
     "back": "Tornar",
     "continue": "Continuar",
+    "cancel": "Cancel·lar",
     "start": "Començar",
-    "resendEmail": "Reenviar correu"
+    "resendEmail": "Reenviar correu",
+    "showPassword": "Mostrar contrasenya",
+    "hidePassword": "Ocultar contrasenya",
+    "logout": "Tancar sessió",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "accept": "Acceptar",
+    "reject": "Rebutjar"
+  },
+  "search": {
+    "label": "Cercar"
   },
   "fields": {
     "email": "Correu electrònic",
-    "password": "Contrasenya"
+    "password": "Contrasenya",
+    "optional": "opcional"
   },
   "errors": {
     "required": "Aquest camp és obligatori",
     "emailInvalid": "Introdueix un correu electrònic vàlid",
-    "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar"
+    "noConnection": "Sense connexió. Comprova la teua xarxa i torna-ho a intentar",
+    "unknown": "Ha ocorregut un error inesperat. Torna-ho a intentar"
+  },
+  "calendar": {
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes següent"
+  },
+  "errorBoundary": {
+    "title": "Alguna cosa ha anat malament",
+    "subtitle": "Ha ocorregut un error inesperat. Recarrega la pàgina per continuar.",
+    "reload": "Recarregar"
+  },
+  "discard": {
+    "title": "Descartar canvis?",
+    "message": "Perdràs els canvis que no hagis guardat.",
+    "confirm": "Descartar"
+  },
+  "stepper": {
+    "step": "Pas {{current}} de {{total}}"
+  },
+  "nav": {
+    "tabBar": "Navegació principal",
+    "feed": "Feed",
+    "events": "Esdeveniments",
+    "calendar": "Calendari",
+    "members": "Membres",
+    "profile": "Perfil",
+    "createEvent": "Crear esdeveniment",
+    "notifications": "Notificacions"
   }
 }

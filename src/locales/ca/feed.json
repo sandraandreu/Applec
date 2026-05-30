@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "today": "Avui",
+    "thisWeek": "Aquesta setmana"
+  },
+  "postDetail": "Publicació",
+  "like": "M'agrada",
+  "unlike": "Ja no m'agrada",
+  "comments": "Comentaris",
+  "reply": "Respondre",
+  "writeComment": "Escriu un comentari...",
+  "newPost": "Nova publicació"
+}

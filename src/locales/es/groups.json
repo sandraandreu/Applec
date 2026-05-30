@@ -1,17 +1,53 @@
 {
   "createGroup": {
-    "title": "Crear una falla",
-    "name": "Nombre de la falla",
+    "title": "Tu falla empieza aquí",
+    "subtitle": "Como administrador podrás invitar miembros y gestionar todos los eventos desde un mismo lugar.",
+    "name": "Nombre",
     "namePlaceholder": "Nombre de tu falla",
-    "nameCounter": "{{count}}/50",
-    "description": "Descripción",
-    "descriptionPlaceholder": "Describe tu falla (opcional)",
-    "descriptionCounter": "{{count}}/200",
+    "image": "Foto o logo",
     "button": "Crear falla",
     "errors": {
-      "nameRequired": "El nombre de la falla es obligatorio",
-      "nameTooLong": "El nombre no puede superar los 50 caracteres",
-      "descriptionTooLong": "La descripción no puede superar los 200 caracteres"
+      "nameRequired": "El nombre es obligatorio",
+      "nameTooLong": "El nombre no puede tener más de 50 caracteres",
+      "imageTooLarge": "La imagen no puede pesar más de 5 MB"
     }
+  },
+  "joinGroup": {
+    "title": "Unirse a una falla",
+    "subtitle": "Pide al administrador de tu falla que te comparta el código o enlace de invitación.",
+    "code": "Código de invitación",
+    "codePlaceholder": "Introduce el código",
+    "button": "Buscar falla",
+    "groupFound": "¡Hemos encontrado tu falla!",
+    "joinButton": "Solicitar unirme",
+    "requestSent": {
+      "title": "Pendiente de aprobación",
+      "subtitle": "El administrador recibirá una notificación y te avisaremos cuando acepte tu solicitud.",
+      "button": "Entendido"
+    },
+    "errors": {
+      "codeRequired": "El código de invitación es obligatorio",
+      "codeNotFound": "El código no es válido o no existe",
+      "alreadyMember": "Ya perteneces a esta falla",
+      "alreadyInGroup": "Ya perteneces a una falla. Debes salir primero para unirte a otra"
+    }
+  },
+  "invite": {
+    "titleCreate": "¡Tu falla está lista!",
+    "subtitleCreate": "Ahora invita a los miembros para que se unan.",
+    "titleInvite": "Invita a más miembros",
+    "subtitleInvite": "Comparte el código con las personas que quieras añadir a tu falla.",
+    "code": "Copiar código",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "skip": "Ahora no, invitaré más tarde",
+    "shareTitle": "Applec",
+    "shareText": "Únete a mi falla con el código: {{inviteCode}}",
+    "regenerate": "Regenerar código",
+    "regenerateConfirmTitle": "Regenerar código",
+    "regenerateConfirmMessage": "El enlace anterior dejará de funcionar. ¿Quieres continuar?",
+    "regenerateCancel": "Cancelar",
+    "regenerateConfirm": "Regenerar"
   }
 }

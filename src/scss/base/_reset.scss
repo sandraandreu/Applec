@@ -1,0 +1,57 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; // evita que iOS escale el texto al rotar
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-surface);
+  -webkit-font-smoothing: antialiased; // suaviza el renderizado de fuentes en iOS/macOS
+  overscroll-behavior: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button, input, textarea, select {
+  font: inherit;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

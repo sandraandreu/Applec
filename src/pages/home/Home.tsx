@@ -1,21 +1,17 @@
-import "./Home.scss";
+import "./home.scss";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
-import LanguageSelector from "../../components/ui/language/LanguageSelector";
 
 const Home = () => {
   const { logout } = useAuthContext();
   const { t } = useTranslation();
 
   return (
-    <div className="page">
-      <main className="page-content">
-        <header className="toolbar">
-          <h1>{t("bienvenida")}</h1>
-          <button onClick={logout}>Logout</button>
-          <LanguageSelector />
-        </header>
-      </main>
+    <div className="home-page">
+      <header className="toolbar">
+        <h1>{t("bienvenida")}</h1>
+        <button onClick={logout}>{t("buttons.logout")}</button>
+      </header>
     </div>
   );
 };

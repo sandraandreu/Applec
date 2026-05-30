@@ -1,0 +1,64 @@
+{
+  "title": "Notificaciones",
+  "sections": {
+    "today": "Hoy",
+    "thisWeek": "Esta semana"
+  },
+  "joinRequest": {
+    "title": "Pere Mas Carbonell",
+    "message": "Ha pedido unirse a Falla Convento Jerusalén."
+  },
+  "deadlineSoonSopar": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 20 de junio: Sopar de Germandat. Solo 3 días para el cierre de confirmaciones."
+  },
+  "newEventBerenar": {
+    "title": "Nuevo evento creado",
+    "message": "Vicent Ferrer ha creado Berenar de Xiquets el 30 de agosto a las 18:00 en el local social. El plazo de confirmación es el 25 de agosto."
+  },
+  "eventModifiedReunio": {
+    "title": "Evento modificado",
+    "message": "Amparo Tortosa ha actualizado la Reunió de Junta. Se ha cambiado la ubicación del evento."
+  },
+  "deadlineSoonReunio": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 22 de junio: Reunió de Junta. Quedan 5 días para el cierre de confirmaciones."
+  },
+  "newEventMissa": {
+    "title": "Nuevo evento creado",
+    "message": "Amparo Tortosa ha creado Missa Fallera el 10 de julio a las 12:00 en la Parròquia de Sant Esteve. El plazo de confirmación es el 5 de julio."
+  },
+  "deadlineSoonAssembleaAdmin": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 1 de julio: Assemblea General. Quedan 14 días para el cierre de confirmaciones."
+  },
+  "eventModifiedSopar": {
+    "title": "Evento modificado",
+    "message": "Maria Ortega ha modificado el Sopar de Germandat. Revisa los detalles antes del 28 de junio."
+  },
+  "deadlineSoonAssemblea": {
+    "title": "Plazo a punto de cerrar",
+    "message": "Cierra el 1 de julio: Assemblea General. Confirma tu asistencia antes de que se cierre el plazo."
+  },
+  "roleChangedMember": {
+    "title": "Rol cambiado",
+    "message": "Maria Ortega te ha asignado el rol de Organitzadora en Falla Convento Jerusalén."
+  },
+  "newEventVisita": {
+    "title": "Nuevo evento creado",
+    "message": "Maria Ortega ha creado Visita al Museu Faller el 3 de agosto a las 11:00. El plazo de confirmación es el 28 de julio."
+  },
+  "joinRequestAccepted": {
+    "title": "Ferran Català",
+    "message": "Has aceptado su solicitud. Ya es miembro del grupo."
+  },
+  "requestsPage": {
+    "title": "Solicitudes",
+    "viewAll": "Ver todas las solicitudes",
+    "message": "Ha pedido unirse a Falla Convento Jerusalén.",
+    "pere": "Pere Mas Carbonell",
+    "julia": "Júlia Soler Navarro",
+    "andreu": "Andreu Ibáñez Llop",
+    "rosa": "Rosa Martínez Peris"
+  }
+}

@@ -1,0 +1,58 @@
+.attendance-donut {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-content);
+
+  &__bar {
+    display: flex;
+    height: 12px;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    gap: 2px;
+    background: var(--color-bg-neutral);
+  }
+
+  &__bar-segment {
+    &--going { background: var(--color-going); }
+    &--not-going { background: var(--color-not-going); }
+    &--pending { background: var(--color-pending); }
+    &--empty { background: transparent; }
+  }
+
+  &__stats {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__stat {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--size-8);
+  }
+
+  &__stat-dot {
+    width: var(--size-8);
+    height: var(--size-8);
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &--total { background: var(--color-bg-neutral-mid); }
+    &--going { background: var(--color-going); }
+    &--not-going { background: var(--color-not-going); }
+    &--pending { background: var(--color-pending); }
+  }
+
+  &__stat-count {
+    font-size: var(--font-size-body-l);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    min-width: var(--size-20);
+  }
+
+  &__stat-label {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+}

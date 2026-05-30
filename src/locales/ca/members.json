@@ -1,0 +1,58 @@
+{
+  "members": {
+    "title": "Membres",
+    "search": "Buscar membre...",
+    "onlyMember": "Ets l'únic membre",
+    "onlyMemberSubtitle": "Convida més persones per començar",
+    "invite": "Convidar",
+    "emptySearch": "No s'han trobat membres amb aqueix nom.",
+    "emptyFilter": "No hi ha membres amb aquest rol.",
+    "loading": "Carregant membres...",
+    "you": "Tu",
+    "filters": {
+      "all": "Tots {{count}}"
+    },
+    "roles": {
+      "admin": "Administrador",
+      "organizer": "Organitzador",
+      "organizers": "Organitzadors",
+      "member": "Membre",
+      "members": "Membres"
+    },
+    "chips": {
+      "admin": "Admin",
+      "organizer": "Org."
+    }
+  },
+  "detail": {
+    "linked": "Acompanyants",
+    "changeRoleTitle": "Canviar rol",
+    "makeRole": {
+      "admin": "Fer Administrador",
+      "organizer": "Fer Organitzador",
+      "member": "Fer Membre"
+    },
+    "roleDescription": {
+      "admin": "Control total del grup. Pot crear i gestionar esdeveniments, afegir i eliminar membres, canviar rols i veure l'assistència completa. Màxim 3 per grup.",
+      "organizer": "Pot crear i gestionar els seus propis esdeveniments, aprovar sol·licituds d'entrada i afegir membres. No pot canviar rols ni eliminar membres.",
+      "member": "Pot veure el calendari d'esdeveniments i confirmar la seua pròpia assistència. No té accés a la gestió del grup."
+    },
+    "adminLimitReached": "Ja hi ha 3 administradors al grup. Per assignar aquest rol, canvia primer el d'un dels administradors actuals.",
+    "roleInfoLabel": "Veure descripció del rol",
+    "adminConfirmHeader": "Fer Administrador?",
+    "adminConfirmMessage": "Aquest membre tindrà control total del grup. Podràs canviar el seu rol més endavant si cal.",
+    "adminConfirmCancel": "Cancel·lar",
+    "adminConfirmSubmit": "Sí, fer Administrador",
+    "removeMember": "Eliminar membre",
+    "save": "Guardar canvis",
+    "cancel": "Cancel·lar",
+    "deleteConfirm": "Eliminar membre",
+    "deleteMessage": "Estàs segur que vols eliminar aquest membre del grup?",
+    "deleteCancel": "Cancel·lar",
+    "deleteSubmit": "Eliminar",
+    "saveError": "No s'han pogut guardar els canvis.",
+    "deleteError": "No s'ha pogut eliminar el membre.",
+    "roleUpdated": "Rol actualitzat correctament",
+    "memberDeleted": "Membre eliminat correctament"
+  }
+}

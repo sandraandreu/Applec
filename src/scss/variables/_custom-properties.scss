@@ -1,0 +1,190 @@
+:root {
+
+  // ─── PRIMITIVOS ───────────────────────────────────────
+
+  // Neutrals
+  --neutral-900: #121212;
+  --neutral-600: #4C4C4C;
+  --neutral-400: #7D7D7D;
+  --neutral-300: #E0E0E0;
+  --neutral-200: #D5D5D5;
+  --neutral-50:  #FAFAFA;
+  --white:       #FFFFFF;
+
+  // Blue
+  --blue-500: #0068FF;
+  --blue-400: #3772FF;
+  --blue-200: #CCE1FF;
+  --blue-100: #E5F0FF;
+
+  // Red
+  --red-500: #FF1C4E;
+  --red-100: #FFD2DC;
+  --red-50:  #FFE8ED;
+
+  // Teal
+  --teal-500: #00C8C5;
+  --teal-200: #CCF4F3;
+  --teal-100: #B2EEEE;
+  --teal-50:  #EAFBFA;
+
+  // Orange
+  --orange-500: #FF7E00;
+  --orange-100: #FFE5CC;
+
+  // Purple
+  --purple-500: #F581FF;
+  --purple-100: #FCE6FF;
+
+  // Yellow
+  --yellow-500: #FBFF85;
+  --yellow-100: #FEFFE7;
+
+  // Sizes
+  --size-2:   2px;
+  --size-4:   4px;
+  --size-6:   6px;
+  --size-8:   8px;
+  --size-10:  10px;
+  --size-12:  12px;
+  --size-14:  14px;
+  --size-16:  16px;
+  --size-18:  18px;
+  --size-20:  20px;
+  --size-22:  22px;
+  --size-24:  24px;
+  --size-32:  32px;
+  --size-40:  40px;
+  --size-48:  48px;
+  --size-100: 100px;
+  --size-120: 120px;
+
+  // Font families
+  --font-bricolage:    'Bricolage Grotesque', "Bricolage Fallback", sans-serif;
+  --font-general-sans: 'General Sans', "General Sans Fallback", sans-serif;
+
+
+  // ─── SEMÁNTICOS — COLORES ─────────────────────────────
+
+  // Text
+  --color-text-primary:   var(--neutral-900);
+  --color-text-secondary: var(--neutral-600);
+  --color-text-muted:     var(--neutral-400);
+  --color-text-inverse:   var(--neutral-50);
+
+  // Brand
+  --color-brand: var(--blue-500);
+  --color-link:  var(--blue-400);
+
+  // Icons
+  --color-icon:        var(--neutral-600);
+  --color-icon-active: var(--blue-500);
+
+  // Feedback
+  --color-error:     var(--red-500);
+  --color-going:     var(--teal-500);
+  --color-not-going: var(--red-500);
+  --color-pending:   var(--orange-500);
+
+  // Surfaces
+  --color-surface: var(--white);
+
+  // Overlays
+  --color-overlay-backdrop:   hsl(0 0% 0% / 0.4);
+  --color-overlay-white:      hsl(0 0% 100% / 0.75);
+  --color-overlay-white-soft: hsl(0 0% 100% / 0.6);
+  --color-stepper-inactive:   var(--neutral-400);
+  --color-stepper-active:   var(--blue-500);
+
+  // Shadows
+  --shadow-card:   0 4px 24px hsl(0 0% 0% / 0.1);
+  --shadow-menu:   0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-sticky: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-toggle: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  // Borders
+  --color-border:       var(--neutral-200);
+  --color-border-light: var(--neutral-300);
+  --color-border-muted: var(--neutral-400);
+
+  // Accents
+  --color-accent-teal:   var(--teal-500);
+  --color-accent-orange: var(--orange-500);
+  --color-accent-purple: var(--purple-500);
+  --color-accent-yellow: var(--yellow-500);
+
+  // Pastel backgrounds
+  --color-bg-blue:        var(--blue-100);
+  --color-bg-blue-mid:    var(--blue-200);
+  --color-bg-teal:        var(--teal-100);
+  --color-bg-purple:      var(--purple-100);
+  --color-bg-yellow:      var(--yellow-100);
+  --color-bg-neutral:     var(--neutral-300);
+  --color-bg-neutral-mid: var(--neutral-400);
+
+  // Gradient backgrounds
+  --color-bg-gradient-blue:      linear-gradient(to bottom, var(--blue-200),   var(--yellow-100));
+  --color-bg-gradient-teal:      linear-gradient(to bottom, var(--teal-100),   var(--yellow-100));
+  --color-bg-gradient-pink:      linear-gradient(180deg, #FDE6FF 0%, var(--yellow-100) 46.15%);
+  --color-bg-gradient-red:       linear-gradient(to bottom, var(--red-100),    var(--yellow-100));
+  --color-bg-gradient-yellow:    linear-gradient(180deg, var(--yellow-100) 0%, var(--teal-200) 62%);
+  --color-bg-gradient-orange:    linear-gradient(180deg, var(--orange-100) 0%, var(--yellow-100) 52.4%);
+  --color-bg-gradient-teal-dark: linear-gradient(180deg, var(--teal-200) 0%, var(--yellow-100) 49.5%);
+
+
+  // ─── SEMÁNTICOS — RADIUS ──────────────────────────────
+
+  --radius-input:  var(--size-10);
+  --radius-card:   var(--size-12);
+  --radius-chip:   var(--size-12);
+  --radius-button: var(--size-22);
+  --radius-pill:   var(--size-100);
+  --radius-sheet:  var(--size-20);
+
+
+  // ─── SEMÁNTICOS — TIPOGRAFÍA ──────────────────────────
+
+  // Font families
+  --font-display: var(--font-bricolage);
+  --font-body:    var(--font-general-sans);
+
+  // Font weights
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
+  // Font sizes
+  --font-size-display:    var(--size-40);
+  --font-size-h1:         var(--size-32);
+  --font-size-h2:         var(--size-24);
+  --font-size-button:     var(--size-20);
+  --font-size-date-title: var(--size-18);
+  --font-size-date:       var(--size-16);
+  --font-size-body-l:     var(--size-20);
+  --font-size-body-m:     var(--size-18);
+  --font-size-body-s:     var(--size-16);
+  --font-size-pill:       var(--size-12);
+
+
+  // ─── SEMÁNTICOS — ESPACIADO ───────────────────────────
+
+  // Gaps
+  --gap-tight:   var(--size-4);
+  --gap-items:   var(--size-8);
+  --gap-compact: var(--size-12);
+  --gap-form:    var(--size-16);
+  --gap-content: var(--size-24);
+  --gap-section: var(--size-48);
+
+  // Paddings
+  --padding-side:   var(--size-16);
+  --padding-page:   var(--size-24) var(--padding-side);
+  --padding-card:   var(--size-14);
+  --padding-input:  var(--size-12) var(--size-14);
+  --padding-chip:   var(--size-6)  var(--size-12);
+  --padding-bar:    var(--size-16);
+  --padding-action: var(--size-8);
+  --padding-empty:  var(--size-40) 0;
+}

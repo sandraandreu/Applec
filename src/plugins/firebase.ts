@@ -1,4 +1,11 @@
 import { initializeApp } from 'firebase/app';
+import {
+  browserLocalPersistence,
+  indexedDBLocalPersistence,
+  initializeAuth,
+} from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -10,5 +17,12 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+// initializeAuth con indexedDB es necesario para Capacitor (móvil nativo no tiene localStorage)
+export const auth = initializeAuth(app, {
+  persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+});
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 export default app;

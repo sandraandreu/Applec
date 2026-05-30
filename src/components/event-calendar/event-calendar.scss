@@ -1,0 +1,96 @@
+.rdp-root {
+  --rdp-accent-color: var(--color-brand);
+  --rdp-accent-background-color: var(--color-brand);
+  --rdp-day-width: 38px;
+  --rdp-day-height: 38px;
+  --rdp-weekday-font-size: var(--font-size-body-s);
+  --rdp-day-font: var(--font-body);
+  margin: 0;
+  width: 100%;
+}
+
+.rdp-months {
+  width: 100%;
+}
+
+.rdp-month {
+  width: 100%;
+}
+
+.rdp-month_grid {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.rdp-month_caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--size-20);
+}
+
+.rdp-caption_label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-m);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  flex: 1;
+  justify-content: center;
+}
+
+.rdp-button_previous,
+.rdp-button_next {
+  color: var(--color-brand);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.rdp-weekday {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+}
+
+.rdp-day_button {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.rdp-day--sunday .rdp-day_button {
+  color: var(--color-error);
+}
+
+.rdp-selected .rdp-day_button {
+  background-color: var(--color-brand);
+  color: var(--color-surface);
+}
+
+.rdp-today:not(.rdp-selected) .rdp-day_button {
+  font-weight: var(--font-weight-bold);
+
+  &::after {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--color-brand);
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.rdp-outside .rdp-day_button {
+  color: var(--color-text-muted);
+}

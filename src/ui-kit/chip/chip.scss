@@ -1,0 +1,24 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-chip);
+  padding: var(--padding-chip);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-regular);
+  white-space: nowrap;
+
+  &--admin {
+    background: var(--red-50);
+    color: var(--red-500);
+  }
+
+  &--organizer {
+    background: var(--teal-200);
+    color: var(--color-accent-teal);
+  }
+
+  &--member {
+    background: var(--blue-100);
+    color: var(--color-brand);
+  }
+}

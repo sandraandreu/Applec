@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Bricolage Fallback";
+  src: local("Arial");
+  size-adjust: 104%;
+  ascent-override: 88%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "General Sans Fallback";
+  src: local("Arial");
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-body-s);
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-h1);
+  line-height: 1;
+}
+
+.h1--large {
+  font-size: var(--font-size-display);
+  line-height: 42px;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-h2);
+  line-height: 1.1;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-body-l);
+  line-height: 1.2;
+}
+
+p {
+  font-size: var(--font-size-body-s);
+  line-height: 1.5;
+}
+
+small {
+  font-size: var(--font-size-body-s);
+}
+
+a {
+  color: var(--color-link);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

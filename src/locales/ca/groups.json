@@ -1,17 +1,53 @@
 {
   "createGroup": {
-    "title": "Crear una falla",
-    "name": "Nom de la falla",
+    "title": "La teua falla comença ací",
+    "subtitle": "Com a administrador podràs convidar membres i gestionar tots els esdeveniments des d'un mateix lloc.",
+    "name": "Nom",
     "namePlaceholder": "Nom de la teua falla",
-    "nameCounter": "{{count}}/50",
-    "description": "Descripció",
-    "descriptionPlaceholder": "Descriu la teua falla (opcional)",
-    "descriptionCounter": "{{count}}/200",
+    "image": "Foto o logo",
     "button": "Crear falla",
     "errors": {
-      "nameRequired": "El nom de la falla és obligatori",
-      "nameTooLong": "El nom no pot superar els 50 caràcters",
-      "descriptionTooLong": "La descripció no pot superar els 200 caràcters"
+      "nameRequired": "El nom és obligatori",
+      "nameTooLong": "El nom no pot tindre més de 50 caràcters",
+      "imageTooLarge": "La imatge no pot pesar més de 5 MB"
     }
+  },
+  "joinGroup": {
+    "title": "Unir-se a una falla",
+    "subtitle": "Demana a l’administrador de la teua falla que et compartisca el codi o l’enllaç d’invitació.",
+    "code": "Codi d'invitació",
+    "codePlaceholder": "Introdueix el codi",
+    "button": "Buscar falla",
+    "groupFound": "Hem trobat la teua falla!",
+    "joinButton": "Sol·licitar unir-me",
+    "requestSent": {
+      "title": "Pendent d'aprovació",
+      "subtitle": "L'administrador rebrà una notificació i t'avisarem quan accepte la teua sol·licitud.",
+      "button": "Entesos"
+    },
+    "errors": {
+      "codeRequired": "El codi d'invitació és obligatori",
+      "codeNotFound": "El codi no és vàlid o no existeix",
+      "alreadyMember": "Ja pertanys a aquesta falla",
+      "alreadyInGroup": "Ja pertanys a una falla. Has d'eixir primer per unir-te a una altra"
+    }
+  },
+  "invite": {
+    "titleCreate": "La teua falla està llesta!",
+    "subtitleCreate": "Ara convida als membres perquè s'unisquen.",
+    "titleInvite": "Convida més membres",
+    "subtitleInvite": "Comparteix el codi amb les persones que vulgues afegir a la teua falla.",
+    "code": "Copia el codi",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "Copiat!",
+    "skip": "Ara no, invitaré més tard",
+    "shareTitle": "Applec",
+    "shareText": "Uneix-te a la meua falla amb el codi: {{inviteCode}}",
+    "regenerate": "Regenerar codi",
+    "regenerateConfirmTitle": "Regenerar codi",
+    "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
+    "regenerateCancel": "Cancel·lar",
+    "regenerateConfirm": "Regenerar"
   }
 }

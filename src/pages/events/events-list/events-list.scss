@@ -1,0 +1,29 @@
+.events-list-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: var(--padding-page);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--size-24);
+  }
+
+  &__title {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-items);
+    font-size: var(--font-size-body-m);
+    color: var(--color-error);
+    padding: var(--padding-empty);
+  }
+}

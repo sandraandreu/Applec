@@ -1,0 +1,16 @@
+.stepper {
+  display: flex;
+  justify-content: center;
+  gap: var(--gap-items);
+
+  &__dot {
+    width: var(--size-8);
+    height: var(--size-8);
+    border-radius: 50%;
+    background: var(--color-stepper-inactive);
+
+    &--active {
+      background: var(--color-stepper-active);
+    }
+  }
+}

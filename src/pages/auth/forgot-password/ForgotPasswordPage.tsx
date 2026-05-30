@@ -1,0 +1,143 @@
+﻿import "./forgot-password.scss";
+import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Modal from "../../../components/modal/Modal";
+import { useNavigate, Link } from "react-router-dom";
+import Loading from "../../../components/loading/Loading";
+import Button from "../../../ui-kit/button/Button";
+import Input from "../../../ui-kit/input/Input";
+import { sendPasswordReset } from "../../../services/auth.service";
+import { isFirebaseError } from "../../../utils/firebase-errors";
+import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
+
+interface ForgotPasswordFormData {
+  email: string;
+}
+
+const ForgotPasswordPage = () => {
+  const { t } = useTranslation("auth");
+  const { t: tCommon } = useTranslation("common");
+  const navigate = useNavigate();
+
+  const [submitState, setSubmitState] = useState({ isLoading: false, error: "" });
+  const [forgotPasswordState, setForgotPasswordState] = useState<"form" | "success">("form");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ForgotPasswordFormData>();
+
+  const onSubmit = (data: ForgotPasswordFormData) => {
+    handleForgotPassword(data.email);
+  };
+
+  const handleForgotPassword = async (email: string) => {
+    setSubmitState({ isLoading: true, error: "" });
+    try {
+      await sendPasswordReset(email);
+      setForgotPasswordState("success");
+      setSubmitState({ isLoading: false, error: "" });
+    } catch (error: unknown) {
+      const errorMessage = isFirebaseError(error) && error.code === "auth/network-request-failed"
+        ? tCommon("errors.noConnection")
+        : tCommon("errors.unknown");
+      setSubmitState({ isLoading: false, error: errorMessage });
+    }
+  };
+
+  return (
+    <div className="forgot-password-page">
+      {submitState.isLoading && <Loading />}
+
+      <BackButton />
+
+      <div className="forgot-password-page__center">
+        <div className="forgot-password-page__header">
+          <h1 className="forgot-password-page__title">
+            {t("forgotPassword.title")}
+          </h1>
+          <p className="forgot-password-page__description">
+            {t("forgotPassword.description")}
+          </p>
+        </div>
+
+        <form
+          className="forgot-password-page__form"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="forgot-password-page__fields">
+            <Input
+              id="forgot_password-email"
+              label={tCommon("fields.email")}
+              placeholder={t("forgotPassword.emailPlaceholder")}
+              type="text"
+              required
+              maxLength={254}
+              registration={register("email", {
+                required: true,
+                maxLength: 254,
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              })}
+              error={
+                errors.email?.type === "required"
+                  ? tCommon("errors.required")
+                  : errors.email?.type === "pattern"
+                    ? tCommon("errors.emailInvalid")
+                    : undefined
+              }
+            />
+
+            {submitState.error && (
+              <span className="forgot-password-page__error">
+                <svg
+                  className="icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M11 15H13V17H11V15ZM11 7H13V13H11V7ZM12 2C6.47 2 2 6.5 2 12C2 14.6522 3.05357 17.1957 4.92893 19.0711C5.85752 19.9997 6.95991 20.7362 8.17317 21.2388C9.38642 21.7413 10.6868 22 12 22C14.6522 22 17.1957 20.9464 19.0711 19.0711C20.9464 17.1957 22 14.6522 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7362 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C9.87827 20 7.84344 19.1571 6.34315 17.6569C4.84285 16.1566 4 14.1217 4 12C4 9.87827 4.84285 7.84344 6.34315 6.34315C7.84344 4.84285 9.87827 4 12 4C14.1217 4 16.1566 4.84285 17.6569 6.34315C19.1571 7.84344 20 9.87827 20 12C20 14.1217 19.1571 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                {submitState.error}
+              </span>
+            )}
+          </div>
+
+          <div className="forgot-password-page__actions">
+            <Button
+              text={t("forgotPassword.button")}
+              type="submit"
+              disabled={Object.keys(errors).length > 0}
+              isLoading={submitState.isLoading}
+            />
+            <Link className="forgot-password-page__login" to="/login">
+              {t("forgotPassword.back")}
+            </Link>
+          </div>
+        </form>
+      </div>
+
+      <Modal
+        isOpen={forgotPasswordState === "success"}
+        header={t("forgotPassword.successTitle")}
+        message={t("forgotPassword.successMessage")}
+        onDismiss={() => setForgotPasswordState("form")}
+        buttons={[
+          {
+            text: t("forgotPassword.loginButton"),
+            handler: () => navigate("/login"),
+          },
+        ]}
+      />
+    </div>
+  );
+};
+
+export default ForgotPasswordPage;

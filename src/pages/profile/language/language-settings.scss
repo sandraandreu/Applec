@@ -1,0 +1,28 @@
+.language-settings-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: var(--color-surface);
+  padding: var(--padding-page);
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-section);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-compact);
+    text-align: center;
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+  }
+}

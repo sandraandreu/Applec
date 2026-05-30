@@ -1,0 +1,37 @@
+.verify-email-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--color-bg-gradient-orange);
+  min-height: 100vh;
+  padding: var(--padding-page);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: var(--size-16);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__resend-success {
+    text-align: center;
+    color: var(--color-text-secondary);
+  }
+}

@@ -1,0 +1,214 @@
+﻿.edit-event {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--color-bg-gradient-orange);
+
+  &--special {
+    background: var(--color-bg-gradient-pink);
+  }
+
+  &__form-wrapper {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__scroll-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__gradient-zone {
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__content {
+    background-color: var(--color-surface);
+    padding: var(--padding-page);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    flex: 1;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+  }
+
+  &__section-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-content);
+
+    textarea.field__input {
+      min-height: 120px;
+    }
+  }
+
+  // Calendar card
+
+  &__calendar-card {
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    padding: var(--size-20);
+
+    &--error {
+      border-color: var(--color-error);
+    }
+  }
+
+  // Time fields
+
+  &__time-box {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    padding: var(--padding-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    background-color: var(--color-surface);
+  }
+
+  &__time-icon {
+    color: var(--color-brand);
+    flex-shrink: 0;
+  }
+
+  &__time-input {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    font-family: var(--font-body);
+    color: var(--color-text-muted);
+    width: 100%;
+
+
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
+
+  // Settings rows
+
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+
+    > * + * {
+      border-top: 1px solid var(--color-border);
+    }
+  }
+
+  &__setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px var(--gap-content);
+    gap: var(--gap-items);
+
+    &--button {
+      background: none;
+      border: none;
+      border-radius: 0;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  &__setting-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-tight);
+  }
+
+  &__setting-label {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  &__setting-hint {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: var(--color-icon);
+    transition: transform 0.2s ease;
+
+    &--open {
+      transform: rotate(90deg);
+    }
+  }
+
+  // Deadline expandable panel
+
+  &__deadline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__deadline-panel {
+    padding: 0 var(--gap-content) var(--gap-content);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  // Error message
+
+  &__error {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-s);
+    color: var(--color-error);
+    text-align: center;
+  }
+
+  &__actions {
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--size-16) var(--size-32);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__delete-btn {
+    background: none;
+    border: none;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-error);
+    padding: var(--size-8) 0;
+    width: 100%;
+    text-align: left;
+  }
+}

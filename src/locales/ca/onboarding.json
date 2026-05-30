@@ -1,8 +1,19 @@
 {
+  "landing": {
+    "title": "Tot el que necessita la teua comissió.",
+    "subtitle": "Esdeveniments, assistència i la teua falla, en un sol lloc.",
+    "register": "Crea el teu compte",
+    "login": "Ja tinc compte",
+    "terms": "En continuar acceptes els ",
+    "termsLink": "Termes i condicions"
+  },
   "welcome": {
-    "title": "Hola, {{name}}",
-    "subtitle": "Ens alegra tindre't ací.",
-    "description": "Applec és l'espai de la teua falla per organitzar-vos, compartir i estar connectats."
+    "title": "Hola, {{name}}!",
+    "subtitle": "La teua falla t'estava esperant.",
+    "description": "La teua falla organitzada i sempre al dia. Tots els esdeveniments de la teua comissió en un mateix lloc.",
+    "groupDeletedTitle": "La teua falla ha sigut eliminada",
+    "groupDeletedMessage": "L'administrador ha eliminat el grup. Pots crear una nova falla o unir-te a una altra.",
+    "groupDeletedButton": "Entesos"
   },
   "language": {
     "title": "En quin idioma prefereixes usar Applec?",
@@ -10,8 +21,8 @@
   },
   "group": {
     "title": "A quina falla pertanys?",
-    "description": "Crea una nova falla o uneix-te a una existent amb un enllaç d'invitació.",
+    "description": "Crea una nova falla o uneix-te a una existent amb un codi d'invitació.",
     "createGroup": "Crear una falla",
-    "joinGroup": "Tinc un enllaç d'invitació"
+    "joinGroup": "Unir-me amb codi"
   }
 }

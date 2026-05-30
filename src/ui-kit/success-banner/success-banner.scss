@@ -1,0 +1,38 @@
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.success-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-items);
+  padding: var(--size-24) var(--size-32);
+  background: var(--teal-50);
+  color: var(--color-going);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-semibold);
+  animation: slideDown 0.25s ease-out;
+
+  &--dismissing {
+    animation: slideUp 0.25s ease-in forwards;
+  }
+}

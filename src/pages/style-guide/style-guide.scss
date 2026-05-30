@@ -1,0 +1,208 @@
+.style-guide {
+  padding: 32px 24px 80px;
+
+  &__title {
+    margin-bottom: 48px;
+  }
+
+  &__section {
+    margin-bottom: 64px;
+  }
+
+  &__section-title {
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-text-primary);
+  }
+
+  &__component {
+    margin-bottom: 40px;
+  }
+
+  &__component-name {
+    margin-bottom: 16px;
+    color: var(--color-text-muted);
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+    margin-bottom: 32px;
+  }
+
+  &__label {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-muted);
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--gap-compact);
+
+    &--centered {
+      align-items: center;
+    }
+  }
+
+  &__stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__filter-row {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__loading-preview {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transform: translateZ(0);
+  }
+
+  // ── Colores ──────────────────────────────────────────
+
+  &__swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--gap-compact);
+  }
+
+  &__swatch {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  &__swatch-color {
+    height: 64px;
+  }
+
+  &__swatch-info {
+    padding: 8px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__swatch-var {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-primary);
+    word-break: break-all;
+  }
+
+  &__swatch-hex {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-muted);
+  }
+
+  // ── Tipografía showcase ───────────────────────────────
+
+  &__type-button {
+    font-family: var(--font-display);
+    font-size: var(--font-size-button);
+    font-weight: 700;
+  }
+
+  &__type-date-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-date-title);
+    font-weight: 700;
+  }
+
+  &__type-date {
+    font-family: var(--font-display);
+    font-size: var(--font-size-date);
+    font-weight: 700;
+  }
+
+  &__type-body-l {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-l);
+  }
+
+  &__type-body-m {
+    font-family: var(--font-body);
+    font-size: var(--font-size-body-m);
+  }
+
+  &__type-pill {
+    font-family: var(--font-body);
+    font-size: var(--font-size-pill);
+    font-weight: 600;
+  }
+
+  &__type--bold {
+    font-weight: 600;
+  }
+
+  // ── Icons ─────────────────────────────────────────────
+
+  &__icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--gap-compact);
+  }
+
+  &__icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__icon-name {
+    font-size: var(--font-size-pill);
+    font-family: monospace;
+    color: var(--color-text-muted);
+    text-align: center;
+    word-break: break-all;
+  }
+
+  // ── ErrorBoundary preview ─────────────────────────────
+
+  &__error-preview {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-card);
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  // ── Border Radius ─────────────────────────────────────
+
+  &__radius-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-content);
+    align-items: flex-end;
+  }
+
+  &__radius-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__radius-box {
+    width: 100px;
+    height: 40px;
+    background: var(--color-bg-blue);
+    border: 2px solid var(--color-brand);
+  }
+}

@@ -1,0 +1,89 @@
+.button {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-items);
+  border: none;
+  background-color: var(--color-brand);
+  color: var(--color-text-inverse);
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-button);
+  border-radius: var(--radius-pill);
+  padding: var(--size-14) var(--size-48);
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.45;
+  }
+
+  &--secondary {
+    background-color: transparent;
+    border: 1px solid var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  &--especial {
+    background: var(--color-accent-yellow);
+    color: var(--color-text-primary);
+  }
+
+  &--pending {
+    background-color: transparent;
+    border: 1px solid var(--color-pending);
+    color: var(--color-pending);
+  }
+
+  &--danger {
+    background: var(--color-error);
+    color: var(--white);
+  }
+
+  &--going-no-active {
+    background: var(--color-not-going);
+    color: var(--white);
+  }
+
+  &--going-yes {
+    background: transparent;
+    border: 3px solid var(--color-accent-teal);
+    color: var(--color-accent-teal);
+  }
+
+  &--going-yes-active {
+    background: var(--color-accent-teal);
+    color: var(--white);
+  }
+
+  &--linked {
+    background: transparent;
+    border: 2px dashed var(--color-brand);
+    color: var(--color-brand);
+    border-radius: var(--radius-card);
+    padding: 20px 24px;
+  }
+
+  &--compact {
+    width: auto;
+    padding: var(--size-8) var(--size-18);
+    font-size: var(--font-size-body-s);
+  }
+
+  &--language {
+    width: 280px;
+    height: 80px;
+    gap: var(--gap-compact);
+    flex-direction: row-reverse;
+    background-color: var(--neutral-50);
+    border: 1px solid var(--color-text-muted);
+    border-radius: var(--radius-button);
+    padding: var(--size-12) var(--size-40);
+    color: var(--color-text-primary);
+
+    &--active {
+      background-color: var(--blue-200);
+      border-color: var(--color-brand);
+    }
+  }
+}

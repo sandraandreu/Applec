@@ -1,45 +1,73 @@
-import { type ReactNode, useEffect, useState } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { AuthContext } from "./AuthContext";
-import { getAuth, signOut, onAuthStateChanged, User } from "firebase/auth";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
-import app from "../../plugins/firebase";
-
-const auth = getAuth(app);
-const db = getFirestore(app);
+import { onAuthStateChanged, type User as FirebaseUser } from "firebase/auth";
+import { auth } from "../../plugins/firebase";
+import { logoutUser } from "../../services/auth.service";
+import { getUserProfile } from "../../services/user.service";
+import type { UserProfile, User } from "../../models/user.model";
+import { computePermissions } from "../../models/user.model";
 
 export interface AuthContextProviderProps {
   children: ReactNode;
 }
 
 export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
-  const logout = async () => {
-    await signOut(auth);
-  };
+  const user = useMemo<User | null>(() => {
+    if (!firebaseUser) return null;
+    return { ...firebaseUser, permissions: computePermissions(profile?.role) } as User;
+  }, [firebaseUser, profile]);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser);
-      if (firebaseUser) {
-        const docRef = doc(db, "users", firebaseUser.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setUserName(docSnap.data().userName);
-        }
-      } else {
-        setUserName(null);
-      }
-      setIsLoading(false);
-    });
-
-    return unsubscribe;
-     
+  const logout = useCallback(async () => {
+    await logoutUser();
   }, []);
 
-  const contextValue = { user, userName, isLoading, logout };
+  const refreshProfile = useCallback(async () => {
+    if (!firebaseUser) return;
+    setProfile(await getUserProfile(firebaseUser.uid));
+  }, [firebaseUser]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+      if (!isMounted) return;
+      setIsLoading(true);
+      setFirebaseUser(fbUser);
+
+      if (fbUser) {
+        const userProfile = await getUserProfile(fbUser.uid);
+        if (isMounted) setProfile(userProfile);
+      } else {
+        if (isMounted) setProfile(null);
+      }
+
+      if (isMounted) {
+        setIsLoading(false);
+        setIsInitialized(true);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({ user, profile, isLoading, isInitialized, logout, refreshProfile }),
+    [user, profile, isLoading, isInitialized, logout, refreshProfile],
+  );
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

@@ -1,6 +1,7 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Applec",
+  "name": "Applec — Falles App",
+  "description": "Gestiona la teua falla: membres, esdeveniments i assistències.",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
@@ -16,6 +17,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
+  "theme_color": "#1a1a1a",
   "background_color": "#ffffff"
 }

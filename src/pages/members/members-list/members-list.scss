@@ -1,0 +1,50 @@
+.members-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-content);
+  padding: var(--padding-page);
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__invite-btn {
+    white-space: nowrap;
+  }
+
+  &__title {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--color-text-primary);
+  }
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-items);
+  }
+
+  &__filter-btn {
+    padding: var(--size-6) var(--size-14);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-body-s);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    &--active {
+      background: var(--color-brand);
+      color: var(--color-text-inverse);
+      border-color: var(--color-brand);
+    }
+  }
+}

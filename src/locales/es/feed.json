@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "today": "Hoy",
+    "thisWeek": "Esta semana"
+  },
+  "postDetail": "Publicación",
+  "like": "Me gusta",
+  "unlike": "Ya no me gusta",
+  "comments": "Comentarios",
+  "reply": "Responder",
+  "writeComment": "Escribe un comentario...",
+  "newPost": "Nueva publicación"
+}

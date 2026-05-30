@@ -1,0 +1,92 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: var(--page-bg, transparent);
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(env(safe-area-inset-top), var(--padding-bar)) var(--padding-side) var(--padding-bar);
+  &__logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+  }
+
+  &__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-action);
+    background: none;
+    border: none;
+    color: var(--color-icon);
+  }
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-compact);
+  color: var(--color-icon);
+  padding-top: env(safe-area-inset-top);
+
+  .back-button {
+    color: inherit;
+  }
+
+  &__title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+.tab-bar {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+
+  &__items {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--padding-bar) var(--padding-side) max(env(safe-area-inset-bottom), var(--padding-bar));
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-action);
+    color: var(--color-icon);
+
+    &[aria-current="page"] {
+      color: var(--color-icon-active);
+    }
+  }
+
+  &__bell {
+    display: flex;
+  }
+
+  &__profile-photo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}

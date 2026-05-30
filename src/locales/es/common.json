@@ -8,16 +8,56 @@
     "close": "Cerrar",
     "back": "Volver",
     "continue": "Continuar",
+    "cancel": "Cancelar",
     "start": "Empezar",
-    "resendEmail": "Reenviar correo"
+    "resendEmail": "Reenviar correo",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "logout": "Cerrar sesión",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "accept": "Aceptar",
+    "reject": "Rechazar"
+  },
+  "search": {
+    "label": "Buscar"
   },
   "fields": {
     "email": "Correo electrónico",
-    "password": "Contraseña"
+    "password": "Contraseña",
+    "optional": "opcional"
   },
   "errors": {
     "required": "Este campo es obligatorio",
     "emailInvalid": "Introduce un correo electrónico válido",
-    "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo"
+    "noConnection": "Sin conexión. Comprueba tu red e inténtalo de nuevo",
+    "unknown": "Ha ocurrido un error inesperado. Inténtalo de nuevo"
+  },
+  "calendar": {
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente"
+  },
+  "errorBoundary": {
+    "title": "Algo ha ido mal",
+    "subtitle": "Ha ocurrido un error inesperado. Recarga la página para continuar.",
+    "reload": "Recargar"
+  },
+  "discard": {
+    "title": "¿Descartar cambios?",
+    "message": "Perderás los cambios que no hayas guardado.",
+    "confirm": "Descartar"
+  },
+  "stepper": {
+    "step": "Paso {{current}} de {{total}}"
+  },
+  "nav": {
+    "tabBar": "Navegación principal",
+    "feed": "Feed",
+    "events": "Eventos",
+    "calendar": "Calendario",
+    "members": "Miembros",
+    "profile": "Perfil",
+    "createEvent": "Crear evento",
+    "notifications": "Notificaciones"
   }
 }

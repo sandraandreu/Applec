@@ -1,0 +1,39 @@
+.group-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--color-bg-purple);
+  min-height: 100vh;
+  padding: var(--padding-page);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-section);
+    margin: auto 0;
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: var(--size-16);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+}

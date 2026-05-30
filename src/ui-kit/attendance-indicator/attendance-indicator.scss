@@ -1,0 +1,26 @@
+.attendance-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-4);
+  padding: var(--size-6) var(--size-12);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-body-s);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+
+  &--going {
+    background: var(--color-going);
+    color: var(--white);
+  }
+
+  &--not-going {
+    background: var(--color-not-going);
+    color: var(--white);
+  }
+
+  &--pending {
+    background: transparent;
+    color: var(--color-pending);
+    border: 1.5px solid var(--color-pending);
+  }
+}
