@@ -5,23 +5,25 @@
 
   &__bar {
     display: flex;
-    height: 12px;
-    border-radius: var(--radius-pill);
-    overflow: hidden;
+    height: 8px;
     gap: 2px;
-    background: var(--color-bg-neutral);
+    background: transparent;
   }
 
   &__bar-segment {
+    border-radius: var(--radius-pill);
+    min-width: 4px;
+
     &--going { background: var(--color-going); }
     &--not-going { background: var(--color-not-going); }
     &--pending { background: var(--color-pending); }
-    &--empty { background: transparent; }
+    &--empty { background: var(--color-bg-neutral); flex: 1; }
   }
 
   &__stats {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: var(--gap-compact);
   }
 
