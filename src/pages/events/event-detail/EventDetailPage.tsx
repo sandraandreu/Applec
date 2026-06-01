@@ -211,7 +211,10 @@ const EventDetailPage = () => {
             firstName: linkedMember.firstName,
             lastName: linkedMember.lastName,
             relationship: linkedMember.relationship ?? "",
+            type: linkedMember.type,
           }))}
+          allowExternalGuests={event.allowExternalGuests}
+          maxExternalGuests={event.maxExternalGuests}
           onAddLinked={() => {
             setShowVoteSheet(false);
             navigate("/members/linked/new", {
@@ -241,6 +244,8 @@ const EventDetailPage = () => {
           myResponse={myResponse}
           myLinkedMembers={myLinkedMembers.map(lm => ({ id: lm.id, firstName: lm.firstName }))}
           myLinkedResponses={myLinkedResponses}
+          allowExternalGuests={event.allowExternalGuests}
+          maxExternalGuests={event.maxExternalGuests}
           deadline={
             event.confirmationDeadline
               ? event.confirmationDeadline.toLocaleDateString(

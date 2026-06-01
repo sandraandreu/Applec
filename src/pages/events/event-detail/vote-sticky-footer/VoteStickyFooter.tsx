@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Button from "../../../../ui-kit/button/Button";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
+import AttendanceIndicator from "../../../../ui-kit/attendance-indicator/AttendanceIndicator";
 
 interface Props {
   eventStatus: "activo" | "plazo-cerrado" | "finalizado";
@@ -9,6 +10,8 @@ interface Props {
   myLinkedMembers: { id: string; firstName: string }[];
   myLinkedResponses: Record<string, "going" | "not-going">;
   deadline?: string;
+  allowExternalGuests?: boolean;
+  maxExternalGuests?: number;
   voteError: string | null;
   onVoteClick: () => void;
 }
@@ -20,49 +23,34 @@ const VoteStickyFooter = ({
   myLinkedMembers,
   myLinkedResponses,
   deadline,
+  allowExternalGuests,
+  maxExternalGuests,
   voteError,
   onVoteClick,
 }: Props) => {
   const { t } = useTranslation("events");
 
+  const votedCompanions = myLinkedMembers.filter(lm => myLinkedResponses[lm.id]);
+
   return (
     <div className="event-detail-page__vote-sticky">
       {hasVoted ? (
         <div className="event-detail-page__vote-summary">
-          <div className="event-detail-page__vote-own-row">
-            <span className="event-detail-page__vote-label">{t("vote.myVote")}</span>
-            {myResponse ? (
-              <span className={`event-detail-page__vote-own-chip event-detail-page__vote-own-chip--${myResponse}`}>
-                <Icon name={myResponse === "going" ? "check-bold" : "x-mark"} size={20} aria-hidden="true" />
-                {myResponse === "going" ? t("attendance.going") : t("attendance.notGoing")}
-              </span>
-            ) : (
-              <span className="event-detail-page__vote-own-chip event-detail-page__vote-own-chip--pending">
-                –
-              </span>
-            )}
+          <div className="event-detail-page__vote-row">
+            <span className="event-detail-page__vote-row-name">{t("vote.you")}</span>
+            <AttendanceIndicator attendance={myResponse ?? "pending"} />
           </div>
-          {myLinkedMembers.filter(linked => myLinkedResponses[linked.id]).length > 0 && (
-            <ul className="event-detail-page__vote-linked-list">
-              {myLinkedMembers
-                .filter(linked => myLinkedResponses[linked.id])
-                .map(linked => (
-                  <li key={linked.id} className="event-detail-page__vote-linked-row">
-                    <span className="event-detail-page__vote-linked-name">
-                      {linked.firstName}
-                    </span>
-                    <span className={`event-detail-page__vote-linked-chip event-detail-page__vote-linked-chip--${myLinkedResponses[linked.id]}`}>
-                      <Icon name={myLinkedResponses[linked.id] === "going" ? "check-bold" : "x-mark"} size={16} aria-hidden="true" />
-                      {myLinkedResponses[linked.id] === "going" ? t("vote.yes") : t("vote.no")}
-                    </span>
-                  </li>
-                ))}
+          {votedCompanions.length > 0 && (
+            <ul className="event-detail-page__vote-companions-names">
+              {votedCompanions.map(lm => (
+                <li key={lm.id}>{lm.firstName}</li>
+              ))}
             </ul>
           )}
           {eventStatus === "activo" && (
             <Button
               variant="primary"
-              text={t("vote.modify")}
+              text={votedCompanions.length > 0 ? t("vote.modifyPlural") : t("vote.modify")}
               onClick={onVoteClick}
             />
           )}
@@ -77,8 +65,16 @@ const VoteStickyFooter = ({
                   {t("vote.deadline", { date: deadline })}
                 </p>
               )}
+              {allowExternalGuests && (
+                <p className="event-detail-page__vote-external">
+                  <Icon name="users" size={20} aria-hidden="true" />
+                  {maxExternalGuests
+                    ? t("vote.externalAllowedMax", { count: maxExternalGuests })
+                    : t("vote.externalAllowed")}
+                </p>
+              )}
               <Button
-                variant="especial"
+                variant="primary"
                 text={t("vote.cta")}
                 onClick={onVoteClick}
               />
