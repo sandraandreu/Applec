@@ -192,7 +192,10 @@ const EventDetailPage = () => {
           </div>
         )}
         {event.requiresConfirmation && (
-          <EventAttendanceSection allMembers={allMembers} />
+          <EventAttendanceSection
+            allMembers={allMembers}
+            canSeeFullAttendance={user?.permissions.canCreateEvents ?? false}
+          />
         )}
 
         <VoteSheet

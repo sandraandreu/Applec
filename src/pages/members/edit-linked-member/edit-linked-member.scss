@@ -31,10 +31,8 @@
     gap: var(--gap-compact);
   }
 
-  &__type-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-items);
+  &__toggle-section {
+    margin-top: calc(var(--gap-section) - var(--gap-content));
   }
 
   &__error {

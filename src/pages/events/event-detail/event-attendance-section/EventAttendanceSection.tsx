@@ -25,13 +25,14 @@ export interface AttendanceMember {
 
 interface Props {
   allMembers: AttendanceMember[];
+  canSeeFullAttendance: boolean;
 }
 
 const ATTENDEES_PREVIEW = 4;
 
-const EventAttendanceSection = ({ allMembers }: Props) => {
+const EventAttendanceSection = ({ allMembers, canSeeFullAttendance }: Props) => {
   const { t } = useTranslation("events");
-  const [attendeeFilter, setAttendeeFilter] = useState("all");
+  const [attendeeFilter, setAttendeeFilter] = useState(canSeeFullAttendance ? "all" : "going");
   const [showAllAttendees, setShowAllAttendees] = useState(false);
   const [expandedMembers, setExpandedMembers] = useState<Set<string>>(new Set());
 
@@ -70,6 +71,8 @@ const EventAttendanceSection = ({ allMembers }: Props) => {
 
   const targetAttendance = attendeeFilter === "all" ? null : attendeeFilter as "going" | "not-going" | "pending";
 
+  const attendanceOrder: Record<string, number> = { going: 0, "not-going": 1, pending: 2 };
+
   const filteredMembers = useMemo(
     () => allMembers
       .filter(member => {
@@ -79,7 +82,8 @@ const EventAttendanceSection = ({ allMembers }: Props) => {
       .map(member => {
         if (!targetAttendance) return member;
         return { ...member, linkedMembers: member.linkedMembers.filter(lm => lm.attendance === targetAttendance) };
-      }),
+      })
+      .sort((a, b) => attendanceOrder[a.attendance] - attendanceOrder[b.attendance]),
     [allMembers, targetAttendance]
   );
 
@@ -101,29 +105,28 @@ const EventAttendanceSection = ({ allMembers }: Props) => {
         <span className="event-detail-page__section-label">
           {t("attendanceList.title")}
         </span>
-        <AttendanceDonut
-          goingCount={goingCount}
-          notGoingCount={notGoingCount}
-          pendingCount={pendingCount}
-          total={totalMembers}
-        />
+        {canSeeFullAttendance && (
+          <AttendanceDonut
+            goingCount={goingCount}
+            notGoingCount={notGoingCount}
+            pendingCount={pendingCount}
+            total={totalMembers}
+          />
+        )}
       </div>
 
       <div className="event-detail-page__attendees">
-        <div className="event-detail-page__attendees-header">
-          <div className="event-detail-page__attendees-left">
-            <span className="event-detail-page__attendees-label">
-              {t("detail.attendees")}
-            </span>
+        {canSeeFullAttendance && (
+          <div className="event-detail-page__attendees-header">
+            <div className="event-detail-page__attendees-right">
+              <EventsFilter
+                options={attendeeFilterOptions}
+                selected={attendeeFilter}
+                onChange={handleFilterChange}
+              />
+            </div>
           </div>
-          <div className="event-detail-page__attendees-right">
-            <EventsFilter
-              options={attendeeFilterOptions}
-              selected={attendeeFilter}
-              onChange={handleFilterChange}
-            />
-          </div>
-        </div>
+        )}
 
         {filteredMembers.length === 0 ? (
           <EmptyState title={t("detail.attendeesEmpty")} variant="light" />

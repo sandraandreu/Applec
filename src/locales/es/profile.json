@@ -8,7 +8,7 @@
     "notifications": "Notificaciones",
     "language": "Idioma",
     "shareAccess": "Compartir acceso",
-    "groupSettings": "Configuración del grupo",
+    "groupSettings": "Configuración de la falla",
     "logout": "Cerrar sesión",
     "logoutConfirmTitle": "Cerrar sesión",
     "logoutConfirmMessage": "¿Seguro que quieres cerrar sesión?",
@@ -44,30 +44,23 @@
     "errorDefault": "No se pudo cambiar la contraseña. Inténtalo de nuevo."
   },
   "groupSettings": {
-    "title": "Configuración del grupo",
-    "groupName": "Nombre del grupo",
+    "title": "Configuración de la falla",
+    "groupName": "Nombre de la falla",
     "changeImage": "Cambiar imagen",
     "save": "Guardar cambios",
     "saveSuccess": "Cambios guardados",
     "saveError": "No se pudo guardar. Inténtalo de nuevo.",
     "dangerZone": "Zona de peligro",
-    "deleteGroup": "Eliminar grupo",
-    "deleteConfirmTitle": "Eliminar grupo",
+    "deleteGroup": "Eliminar falla",
+    "deleteConfirmTitle": "Eliminar falla",
     "deleteConfirmMessage": "Esta acción es irreversible. Todos los miembros perderán el acceso inmediatamente.",
     "deleteCancel": "Cancelar",
     "deleteConfirm": "Eliminar",
-    "deleteError": "No se pudo eliminar el grupo. Inténtalo de nuevo.",
+    "deleteError": "No se pudo eliminar la falla. Inténtalo de nuevo.",
     "errors": {
       "nameRequired": "El nombre es obligatorio",
       "nameTooLong": "El nombre no puede tener más de 60 caracteres"
     }
-  },
-  "inviteGroup": {
-    "regenerateCode": "Regenerar código",
-    "regenerateConfirmTitle": "Regenerar código",
-    "regenerateConfirmMessage": "El enlace anterior dejará de funcionar. ¿Quieres continuar?",
-    "regenerateConfirmCancel": "Cancelar",
-    "regenerateConfirmSubmit": "Regenerar"
   },
   "languageSettings": {
     "title": "Idioma",
@@ -79,7 +72,7 @@
     "sections": {
       "events": "Eventos",
       "feed": "Feed",
-      "group": "Grupo"
+      "group": "Falla"
     },
     "items": {
       "newEvent": "Nuevo evento creado",
@@ -99,7 +92,7 @@
       "newRequests": "Nuevas solicitudes",
       "newRequestsDesc": "Personas que quieren unirse",
       "accepted": "Has sido aceptado",
-      "acceptedDesc": "Confirmación de acceso al grupo",
+      "acceptedDesc": "Confirmación de acceso a la falla",
       "roleChanged": "Cambio de rol",
       "roleChangedDesc": "Cuando tu rol en la falla cambia"
     }

@@ -10,13 +10,12 @@ import EmptyState from "../../ui-kit/empty-state/EmptyState";
 
 interface MembersListProps {
   searchValue: string;
-  activeFilter: "all" | "admin" | "organizer" | "member";
 }
 
 const ROLE_ORDER = ["admin", "organizer", "member"] as const;
 type MemberRole = typeof ROLE_ORDER[number];
 
-const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
+const MembersList = ({ searchValue }: MembersListProps) => {
   const { t } = useTranslation("members");
   const navigate = useNavigate();
   const { group, isLoading } = useGroupContext();
@@ -24,21 +23,22 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
 
   const filteredMembers = useMemo(() => group?.members.filter((member) => {
     const fullName = `${member.firstName} ${member.lastName}`.toLowerCase();
-    const matchesSearch = fullName.includes(searchValue.toLowerCase()) || member.firstName.toLowerCase().includes(searchValue.toLowerCase());
-    const matchesFilter = activeFilter === "all" || member.role === activeFilter;
-    return matchesSearch && matchesFilter;
-  }) ?? [], [group?.members, searchValue, activeFilter]);
+    return fullName.includes(searchValue.toLowerCase()) || member.firstName.toLowerCase().includes(searchValue.toLowerCase());
+  }) ?? [], [group?.members, searchValue]);
 
-  const membersByRole = useMemo(() =>
-    filteredMembers.reduce<Record<MemberRole, typeof filteredMembers>>(
-      (grouped, member) => {
-        grouped[member.role].push(member);
-        return grouped;
+  const membersByRole = useMemo(() => {
+    const grouped = filteredMembers.reduce<Record<MemberRole, typeof filteredMembers>>(
+      (acc, member) => {
+        acc[member.role].push(member);
+        return acc;
       },
       { admin: [], organizer: [], member: [] }
-    ),
-    [filteredMembers]
-  );
+    );
+    const byName = (a: typeof filteredMembers[0], b: typeof filteredMembers[0]) =>
+      `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
+    ROLE_ORDER.forEach(role => grouped[role].sort(byName));
+    return grouped;
+  }, [filteredMembers]);
 
   const roleLabels: Record<MemberRole, string> = {
     admin: t("members.roles.admin"),
@@ -46,7 +46,7 @@ const MembersList = ({ searchValue, activeFilter }: MembersListProps) => {
     member: t("members.roles.members"),
   };
 
-  const isOnlyMember = (group?.members.length ?? 0) === 1 && activeFilter === "all" && searchValue === "";
+  const isOnlyMember = (group?.members.length ?? 0) === 1 && searchValue === "";
 
   if (isLoading) return <Loading message={t("members.loading")} />;
 

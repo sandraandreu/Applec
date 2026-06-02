@@ -8,7 +8,7 @@
     "notifications": "Notificacions",
     "language": "Idioma",
     "shareAccess": "Compartir accés",
-    "groupSettings": "Configuració del grup",
+    "groupSettings": "Configuració de la falla",
     "logout": "Tancar sessió",
     "logoutConfirmTitle": "Tancar sessió",
     "logoutConfirmMessage": "Segur que vols tancar sessió?",
@@ -44,30 +44,23 @@
     "errorDefault": "No s'ha pogut canviar la contrasenya. Torna-ho a intentar."
   },
   "groupSettings": {
-    "title": "Configuració del grup",
-    "groupName": "Nom del grup",
+    "title": "Configuració de la falla",
+    "groupName": "Nom de la falla",
     "changeImage": "Canviar imatge",
     "save": "Guardar canvis",
     "saveSuccess": "Canvis guardats",
     "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
     "dangerZone": "Zona de perill",
-    "deleteGroup": "Eliminar grup",
-    "deleteConfirmTitle": "Eliminar grup",
+    "deleteGroup": "Eliminar falla",
+    "deleteConfirmTitle": "Eliminar falla",
     "deleteConfirmMessage": "Aquesta acció és irreversible. Tots els membres perdran l'accés immediatament.",
     "deleteCancel": "Cancel·lar",
     "deleteConfirm": "Eliminar",
-    "deleteError": "No s'ha pogut eliminar el grup. Torna-ho a intentar.",
+    "deleteError": "No s'ha pogut eliminar la falla. Torna-ho a intentar.",
     "errors": {
       "nameRequired": "El nom és obligatori",
       "nameTooLong": "El nom no pot tindre més de 60 caràcters"
     }
-  },
-  "inviteGroup": {
-    "regenerateCode": "Regenerar codi",
-    "regenerateConfirmTitle": "Regenerar codi",
-    "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
-    "regenerateConfirmCancel": "Cancel·lar",
-    "regenerateConfirmSubmit": "Regenerar"
   },
   "languageSettings": {
     "title": "Idioma",
@@ -79,7 +72,7 @@
     "sections": {
       "events": "Esdeveniments",
       "feed": "Feed",
-      "group": "Grup"
+      "group": "Falla"
     },
     "items": {
       "newEvent": "Nou esdeveniment creat",
@@ -99,7 +92,7 @@
       "newRequests": "Noves sol·licituds",
       "newRequestsDesc": "Persones que volen unir-se",
       "accepted": "Has sigut acceptat",
-      "acceptedDesc": "Confirmació d'accés al grup",
+      "acceptedDesc": "Confirmació d'accés a la falla",
       "roleChanged": "Canvi de rol",
       "roleChangedDesc": "Quan el teu rol a la falla canvia"
     }

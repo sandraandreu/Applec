@@ -1,23 +1,16 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../../ui-kit/avatar/Avatar";
+import Chip from "../../../ui-kit/chip/Chip";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import type { FeedPostData } from "../feed.mock";
 import "./feed-post.scss";
-
-const roleBadgeLabel = (role: "admin" | "organizer" | "member") => {
-  if (role === "admin") return "Admin.";
-  if (role === "organizer") return "Org.";
-  return null;
-};
 
 interface FeedPostProps {
   post: FeedPostData;
 }
 
 const FeedPost = ({ post }: FeedPostProps) => {
-  const badge = roleBadgeLabel(post.author.role);
-
   return (
     <Link to={`/feed/${post.id}`} className="feed-post">
       <div className="feed-post__header">
@@ -29,11 +22,13 @@ const FeedPost = ({ post }: FeedPostProps) => {
         />
         <div className="feed-post__author">
           <span className="feed-post__name">{post.author.firstName} {post.author.lastName}</span>
-          <span className="feed-post__time">{post.timeAgo}</span>
+          <div className="feed-post__author-meta">
+            <span className="feed-post__time">{post.timeAgo}</span>
+            {post.author.role !== "member" && (
+              <Chip role={post.author.role} variant="full" />
+            )}
+          </div>
         </div>
-        {badge && (
-          <span className={`feed-post__badge feed-post__badge--${post.author.role}`}>{badge}</span>
-        )}
       </div>
 
       {post.linkedEvent && (

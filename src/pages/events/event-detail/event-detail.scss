@@ -122,6 +122,7 @@
 
   &__section-label {
     font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
   }
 
@@ -172,20 +173,8 @@
 
   &__attendees-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
     background: var(--white);
-  }
-
-  &__attendees-left {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-  }
-
-  &__attendees-label {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
   }
 
   &__attendees-right {

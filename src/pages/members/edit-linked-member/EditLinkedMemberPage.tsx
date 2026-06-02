@@ -12,7 +12,7 @@ import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
 import Modal from "../../../components/modal/Modal";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
+import ToggleRow from "../../../ui-kit/toggle-row/ToggleRow";
 import "./edit-linked-member.scss";
 
 interface EditLinkedMemberFormData {
@@ -29,7 +29,7 @@ const EditLinkedMemberPage = () => {
   const { user, profile } = useAuthContext();
   const { group, refreshGroup } = useGroupContext();
 
-  const [type, setType] = useState<"fallero" | "extern">("fallero");
+  const [isFallero, setIsFallero] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
   const [showDiscardModal, setShowDiscardModal] = useState(false);
@@ -50,7 +50,7 @@ const EditLinkedMemberPage = () => {
       navigate("/members/linked", { replace: true });
       return;
     }
-    setType(linked.type ?? "fallero");
+    setIsFallero((linked.type ?? "fallero") === "fallero");
     reset({
       firstName: linked.firstName,
       lastName: linked.lastName,
@@ -72,7 +72,7 @@ const EditLinkedMemberPage = () => {
     if (!profile?.groupId || !user?.uid || !id) return;
     try {
       setIsLoading(true);
-      await editLinkedMember(profile.groupId, id, user.uid, { ...data, type });
+      await editLinkedMember(profile.groupId, id, user.uid, { ...data, type: isFallero ? "fallero" : "extern" });
       await refreshGroup();
       navigate("/members/linked", { replace: true, state: { linkedMemberUpdated: true } });
     } catch {
@@ -116,19 +116,6 @@ const EditLinkedMemberPage = () => {
           className="edit-linked-member-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="edit-linked-member-page__type-field">
-            <p>{t("linked.type")}</p>
-            <PillSelector
-              aria-label={t("linked.type")}
-              options={[
-                { value: "fallero", label: t("linked.typeFallero"), description: t("linked.typeFalleroDesc") },
-                { value: "extern", label: t("linked.typeExtern"), description: t("linked.typeExternDesc") },
-              ]}
-              value={type}
-              onChange={(value) => setType(value as "fallero" | "extern")}
-            />
-          </div>
-
           <div className="edit-linked-member-page__fields">
             <Input
               label={t("linked.firstName")}
@@ -153,6 +140,14 @@ const EditLinkedMemberPage = () => {
               required
               registration={register("relationship", { required: true })}
               error={errors.relationship?.type === "required" ? tCommon("errors.required") : undefined}
+            />
+          </div>
+
+          <div className="edit-linked-member-page__toggle-section">
+            <ToggleRow
+              label={t("linked.belongsToFalla")}
+              checked={isFallero}
+              onChange={setIsFallero}
             />
           </div>
 

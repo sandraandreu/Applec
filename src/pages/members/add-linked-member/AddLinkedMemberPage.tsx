@@ -11,7 +11,7 @@ import Button from "../../../ui-kit/button/Button";
 import Input from "../../../ui-kit/input/Input";
 import Loading from "../../../components/loading/Loading";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
+import ToggleRow from "../../../ui-kit/toggle-row/ToggleRow";
 import "./add-linked-member.scss";
 
 interface LocationState {
@@ -34,7 +34,7 @@ const AddLinkedMemberPage = () => {
   const { user, profile } = useAuthContext();
   const { refreshGroup } = useGroupContext();
 
-  const [type, setType] = useState<"fallero" | "extern">("fallero");
+  const [isFallero, setIsFallero] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
 
@@ -59,7 +59,7 @@ const AddLinkedMemberPage = () => {
     if (!profile?.groupId || !user?.uid) return;
     try {
       setIsLoading(true);
-      await addLinkedMember(profile.groupId, user.uid, { ...data, type });
+      await addLinkedMember(profile.groupId, user.uid, { ...data, type: isFallero ? "fallero" : "extern" });
       await refreshGroup();
       handleBack();
     } catch {
@@ -95,19 +95,6 @@ const AddLinkedMemberPage = () => {
           className="add-linked-member-page__form"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="add-linked-member-page__type-field">
-            <p>{t("linked.type")}</p>
-            <PillSelector
-              aria-label={t("linked.type")}
-              options={[
-                { value: "fallero", label: t("linked.typeFallero"), description: t("linked.typeFalleroDesc") },
-                { value: "extern", label: t("linked.typeExtern"), description: t("linked.typeExternDesc") },
-              ]}
-              value={type}
-              onChange={(value) => setType(value as "fallero" | "extern")}
-            />
-          </div>
-
           <div className="add-linked-member-page__fields">
             <Input
               label={t("linked.firstName")}
@@ -130,6 +117,14 @@ const AddLinkedMemberPage = () => {
               required
               registration={register("relationship", { required: true })}
               error={errors.relationship?.type === "required" ? tCommon("errors.required") : undefined}
+            />
+          </div>
+
+          <div className="add-linked-member-page__toggle-section">
+            <ToggleRow
+              label={t("linked.belongsToFalla")}
+              checked={isFallero}
+              onChange={setIsFallero}
             />
           </div>
 

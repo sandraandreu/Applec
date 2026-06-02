@@ -4,7 +4,7 @@
     "empty": "Todavía no hay eventos",
     "emptySubtitleAdmin": "Crea el primero y empieza a organizar el grupo",
     "emptySubtitleMember": "Cuando el equipo organice algo, lo verás aquí",
-    "emptyFilter": "No hay eventos con este filtro",
+    "emptyFilter": "No hay eventos programados",
     "emptyGroupCta": "Crear evento",
     "error": "Error al cargar los eventos",
     "filters": {
@@ -123,7 +123,7 @@
     "next": "Siguiente",
     "save": "Confirmar",
     "update": "Guardar",
-    "cta": "¿Vienes al evento?",
+    "cta": "¿Vas?",
     "modify": "Cambiar respuesta",
     "modifyPlural": "Cambiar respuestas",
     "closed": "El plazo ya está cerrado",
@@ -156,6 +156,7 @@
     "typeFalleroDesc": "Pertenece a la falla pero no tiene cuenta en la app",
     "typeExtern": "Externo/a",
     "typeExternDesc": "No es de la falla, viene contigo como invitado/a",
+    "belongsToFalla": "¿Pertenece a la falla?",
     "firstName": "Nombre",
     "firstNamePlaceholder": "María",
     "lastName": "Apellidos",
@@ -184,7 +185,7 @@
     "success": "Asistencia guardada correctamente"
   },
   "attendanceList": {
-    "title": "Asistencia",
+    "title": "¿Quién viene?",
     "going": "Van",
     "notGoing": "No van",
     "noResponse": "Sin respuesta",

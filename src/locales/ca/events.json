@@ -4,7 +4,7 @@
     "empty": "Encara no hi ha esdeveniments",
     "emptySubtitleAdmin": "Crea el primer i comença a organitzar el grup",
     "emptySubtitleMember": "Quan l'equip organitzi alguna cosa, ho veuràs aquí",
-    "emptyFilter": "No hi ha esdeveniments amb aquest filtre",
+    "emptyFilter": "No hi ha actes programats",
     "emptyGroupCta": "Crear esdeveniment",
     "error": "Error en carregar els esdeveniments",
     "filters": {
@@ -123,7 +123,7 @@
     "next": "Següent",
     "save": "Confirmar",
     "update": "Guardar",
-    "cta": "Hi véns a l'acte?",
+    "cta": "Hi vas?",
     "modify": "Canviar resposta",
     "modifyPlural": "Canviar respostes",
     "closed": "El termini ja està tancat",
@@ -156,6 +156,7 @@
     "typeFalleroDesc": "Pertany a la falla però no té compte en l'app",
     "typeExtern": "Extern/a",
     "typeExternDesc": "No és de la falla, ve amb tu com a convidat/da",
+    "belongsToFalla": "Pertany a la falla?",
     "firstName": "Nom",
     "firstNamePlaceholder": "Maria",
     "lastName": "Cognoms",
@@ -184,7 +185,7 @@
     "success": "Assistència desada correctament"
   },
   "attendanceList": {
-    "title": "Assistència",
+    "title": "Qui ve?",
     "going": "Hi van",
     "notGoing": "No hi van",
     "noResponse": "Sense resposta",

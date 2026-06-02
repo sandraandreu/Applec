@@ -44,39 +44,38 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
 
   return (
     <div className={cardClass}>
-      <Link to={`/events/${event.id}`} className="event-card__content">
-        <div className="event-card__date">
-          <span className="event-card__day">{day}</span>
-          <span className="event-card__month">{month}</span>
-        </div>
-        <div className="event-card__info">
-          <span className="event-card__name">
-            {event.name}
-          </span>
+      <div className="event-card__date">
+        <span className="event-card__day">{day}</span>
+        <span className="event-card__month">{month}</span>
+      </div>
+      <div className="event-card__info">
+        <Link to={`/events/${event.id}`} className="event-card__name-link">
+          <span className="event-card__name">{event.name}</span>
+        </Link>
+        <div className="event-card__bottom">
           <span className="event-card__meta">
             {event.startTime} · {event.location}
           </span>
+          <div className="event-card__action">
+            {isFinished && (
+              <EventStatusBadge variant="finalizado" label={t("status.finalizado")} />
+            )}
+            {!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
+            {!isFinished && isNotGoing && <AttendanceIndicator attendance="not-going" />}
+            {!isFinished && isPending && isDeadlineClosed && (
+              <EventStatusBadge variant="plazo-cerrado" label={t("status.plazo-cerrado")} />
+            )}
+            {!isFinished && isPending && !isDeadlineClosed && (
+              <Button
+                variant="pending"
+                className="button--compact"
+                text={t("card.confirm")}
+                to={`/events/${event.id}`}
+                state={{ openVoteSheet: true }}
+              />
+            )}
+          </div>
         </div>
-      </Link>
-
-      <div className="event-card__action">
-        {isFinished && (
-          <EventStatusBadge variant="finalizado" label={t("status.finalizado")} />
-        )}
-        {!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
-        {!isFinished && isNotGoing && <AttendanceIndicator attendance="not-going" />}
-        {!isFinished && isPending && isDeadlineClosed && (
-          <EventStatusBadge variant="plazo-cerrado" label={t("status.plazo-cerrado")} />
-        )}
-        {!isFinished && isPending && !isDeadlineClosed && (
-          <Button
-            variant="pending"
-            className="button--compact"
-            text={t("card.confirm")}
-            to={`/events/${event.id}`}
-            state={{ openVoteSheet: true }}
-          />
-        )}
       </div>
     </div>
   );
