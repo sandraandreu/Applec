@@ -4,7 +4,6 @@ import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import Avatar from "../../../../ui-kit/avatar/Avatar";
 import Button from "../../../../ui-kit/button/Button";
-import BackButton from "../../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
 import "./vote-sheet.scss";
 
@@ -19,47 +18,40 @@ export interface VoteLinkedMember {
 interface VoteSheetProps {
   isOpen: boolean;
   onDismiss: () => void;
-  deadline?: string;
+  myResponse?: "going" | "not-going";
   linkedMembers: VoteLinkedMember[];
   allowExternalGuests?: boolean;
   maxExternalGuests?: number;
   onAddLinked: () => void;
-  initialResponse?: "going" | "not-going";
   initialLinkedResponses?: Record<string, "going" | "not-going">;
-  onSave: (response: "going" | "not-going" | undefined, linkedResponses: Record<string, "going" | "not-going">) => Promise<void>;
+  onSaveCompanions: (linkedResponses: Record<string, "going" | "not-going">) => Promise<void>;
 }
 
 const VoteSheet = ({
   isOpen,
   onDismiss,
-  deadline,
+  myResponse,
   linkedMembers,
   allowExternalGuests,
   maxExternalGuests,
   onAddLinked,
-  initialResponse,
   initialLinkedResponses,
-  onSave,
+  onSaveCompanions,
 }: VoteSheetProps) => {
   const { t } = useTranslation("events");
   const dialogRef = useRef<HTMLDialogElement>(null);
   const sheetRef = useRef<HTMLDivElement | null>(null);
-  const [step, setStep] = useState<1 | 2>(1);
-  const [selectedResponse, setSelectedResponse] = useState<"going" | "not-going" | null>(
-    initialResponse ?? null
-  );
+  const initialVotesRef = useRef<Record<string, "going" | "not-going" | null>>({});
   const [linkedVotes, setLinkedVotes] = useState<Record<string, "going" | "not-going" | null>>({});
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
-    setStep(1);
-    setSelectedResponse(initialResponse ?? null);
     const initial: Record<string, "going" | "not-going" | null> = {};
     linkedMembers.forEach((member) => {
       initial[member.id] = initialLinkedResponses?.[member.id] ?? null;
     });
     setLinkedVotes(initial);
+    initialVotesRef.current = { ...initial };
   }, [isOpen]);
 
   useEffect(() => {
@@ -76,6 +68,21 @@ const VoteSheet = ({
     }
   }, [isOpen]);
 
+  const isDirty = Object.entries(linkedVotes).some(
+    ([id, vote]) => vote !== (initialVotesRef.current[id] ?? null)
+  );
+
+  const handleDismiss = () => {
+    if (isDirty) {
+      const filteredVotes: Record<string, "going" | "not-going"> = {};
+      Object.entries(linkedVotes).forEach(([id, vote]) => {
+        if (vote !== null) filteredVotes[id] = vote;
+      });
+      onSaveCompanions(filteredVotes).catch(() => undefined);
+    }
+    onDismiss();
+  };
+
   const { ref: swipeRef, ...swipeHandlers } = useSwipeable({
     onSwiping: ({ deltaY }) => {
       if (!sheetRef.current || deltaY <= 0) return;
@@ -85,7 +92,7 @@ const VoteSheet = ({
     onSwipedDown: ({ deltaY, velocity }) => {
       if (!sheetRef.current) return;
       if (velocity > 0.5 || deltaY > 100) {
-        onDismiss();
+        handleDismiss();
       } else {
         sheetRef.current.style.transition = "transform 0.22s ease";
         sheetRef.current.style.transform = "translateY(0)";
@@ -101,23 +108,13 @@ const VoteSheet = ({
     preventScrollOnSwipe: true,
   });
 
-  const handleSave = async () => {
-    if (isSaving) return;
-    setIsSaving(true);
-    const filteredLinkedVotes: Record<string, "going" | "not-going"> = {};
-    Object.entries(linkedVotes).forEach(([id, vote]) => {
-      if (vote !== null) filteredLinkedVotes[id] = vote;
-    });
-    try {
-      await onSave(selectedResponse ?? undefined, filteredLinkedVotes);
-      onDismiss();
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const falleroMembers = linkedMembers.filter(lm => (lm.type ?? "fallero") === "fallero");
-  const externMembers = linkedMembers.filter(lm => lm.type === "extern");
+  const filteredMembers = allowExternalGuests === false
+    ? linkedMembers.filter(lm => lm.type !== "extern")
+    : linkedMembers;
+  const visibleMembers = [
+    ...filteredMembers.filter(lm => (lm.type ?? "fallero") === "fallero"),
+    ...filteredMembers.filter(lm => lm.type === "extern"),
+  ];
 
   const goingExternalsCount = linkedMembers
     .filter(lm => lm.type === "extern" && linkedVotes[lm.id] === "going")
@@ -125,34 +122,31 @@ const VoteSheet = ({
   const externalLimitReached = allowExternalGuests && maxExternalGuests !== undefined
     && goingExternalsCount >= maxExternalGuests;
 
-  const isDisabled = (member: VoteLinkedMember) => {
-    if (allowExternalGuests === false && member.type === "extern") return true;
-    if (externalLimitReached && member.type === "extern" && linkedVotes[member.id] !== "going") return true;
-    return false;
-  };
+  const isDisabled = (member: VoteLinkedMember) =>
+    !!(externalLimitReached && member.type === "extern" && linkedVotes[member.id] !== "going");
+
+  const companionsDesc = allowExternalGuests === false
+    ? t("vote.companionsDescFallersOnly")
+    : myResponse === "not-going"
+      ? t("vote.companionsDescNotGoing")
+      : t("vote.companionsDesc");
 
   const renderLinkedMember = (member: VoteLinkedMember) => {
     const disabled = isDisabled(member);
-    const externalNotAllowed = allowExternalGuests === false && member.type === "extern";
+    const isFallero = (member.type ?? "fallero") === "fallero";
     return (
       <li
         key={member.id}
-        className={`vote-sheet__linked-item${disabled ? " vote-sheet__linked-item--disabled" : ""}`}
+        className={`vote-sheet__linked-item${isFallero ? " vote-sheet__linked-item--fallero" : ""}${disabled ? " vote-sheet__linked-item--disabled" : ""}`}
       >
         <Avatar firstName={member.firstName} lastName={member.lastName} size="md" />
         <div className="vote-sheet__linked-info">
           <span className="vote-sheet__linked-name">
             {member.firstName} {member.lastName}
           </span>
-          {externalNotAllowed ? (
-            <span className="vote-sheet__linked-warning">
-              {t("vote.externalNotAllowed")}
-            </span>
-          ) : (
-            <span className="vote-sheet__linked-relationship">
-              {member.relationship}
-            </span>
-          )}
+          <span className="vote-sheet__linked-relationship">
+            {member.relationship}
+          </span>
         </div>
         {!disabled && (
           <div className="vote-sheet__linked-actions">
@@ -180,17 +174,11 @@ const VoteSheet = ({
     );
   };
 
-  const companionsDesc = linkedMembers.length === 0
-    ? t("vote.companionsEmpty")
-    : allowExternalGuests === false
-      ? t("vote.companionsDescFallersOnly")
-      : t("vote.companionsDesc");
-
   return createPortal(
     <dialog
       ref={dialogRef}
       className="vote-sheet"
-      onClose={onDismiss}
+      onClose={handleDismiss}
       aria-labelledby="vote-sheet-title"
     >
       <div
@@ -202,105 +190,34 @@ const VoteSheet = ({
         {...swipeHandlers}
       >
         <div className="vote-sheet__handle" aria-hidden="true" />
+        <div className="vote-sheet__scroll">
+          <div className="vote-sheet__header">
+            <h2 id="vote-sheet-title" className="vote-sheet__header-title">
+              {t("vote.linkedLabel")}
+            </h2>
+            <p className="vote-sheet__header-desc">{companionsDesc}</p>
+          </div>
 
-        {step === 1 ? (
-          <>
-            <div className="vote-sheet__scroll">
-              <div className="vote-sheet__question">
-                <h2 id="vote-sheet-title" className="vote-sheet__question-title">
-                  {t("vote.title")}
-                </h2>
-                <p className="vote-sheet__question-desc">
-                  {deadline ? t("vote.ownDesc", { date: deadline }) : t("vote.ownDescNoDeadline")}
-                </p>
-                <div className="vote-sheet__own-buttons">
-                  <button
-                    type="button"
-                    className={`vote-sheet__own-btn vote-sheet__own-btn--yes${selectedResponse === "going" ? " vote-sheet__own-btn--active" : ""}`}
-                    aria-pressed={selectedResponse === "going"}
-                    onClick={() => setSelectedResponse(prev => prev === "going" ? null : "going")}
-                  >
-                    <Icon name="check-bold" size={20} aria-hidden="true" />
-                    {t("vote.yes")}
-                  </button>
-                  <button
-                    type="button"
-                    className={`vote-sheet__own-btn vote-sheet__own-btn--no${selectedResponse === "not-going" ? " vote-sheet__own-btn--active" : ""}`}
-                    aria-pressed={selectedResponse === "not-going"}
-                    onClick={() => setSelectedResponse(prev => prev === "not-going" ? null : "not-going")}
-                  >
-                    <Icon name="x-mark" size={20} aria-hidden="true" />
-                    {t("vote.no")}
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="vote-sheet__footer">
-              <Button
-                variant="primary"
-                text={t("vote.next")}
-                disabled={!selectedResponse}
-                onClick={() => setStep(2)}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="vote-sheet__scroll">
-              <div className="vote-sheet__companions-header">
-                <BackButton onClick={() => setStep(1)} />
-                <div className="vote-sheet__companions-info">
-                  <h2 id="vote-sheet-title" className="vote-sheet__companions-title">
-                    {t("vote.linkedLabel")}
-                  </h2>
-                  <p className="vote-sheet__companions-desc">{companionsDesc}</p>
-                </div>
-              </div>
+          {externalLimitReached && (
+            <p className="vote-sheet__limit-message">
+              {t("vote.externalLimit", { count: maxExternalGuests })}
+            </p>
+          )}
 
-              {linkedMembers.length > 0 && (
-                <div className="vote-sheet__linked-list">
-                  {falleroMembers.length > 0 && (
-                    <div className="vote-sheet__linked-section">
-                      {externMembers.length > 0 && (
-                        <p className="vote-sheet__linked-section-label">{t("linked.typeFallero")}</p>
-                      )}
-                      <ul>
-                        {falleroMembers.map(member => renderLinkedMember(member))}
-                      </ul>
-                    </div>
-                  )}
-                  {externMembers.length > 0 && (
-                    <div className="vote-sheet__linked-section">
-                      <p className="vote-sheet__linked-section-label">{t("linked.typeExtern")}</p>
-                      {externalLimitReached && (
-                        <p className="vote-sheet__limit-message">
-                          {t("vote.externalLimit", { count: maxExternalGuests })}
-                        </p>
-                      )}
-                      <ul>
-                        {externMembers.map(member => renderLinkedMember(member))}
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="vote-sheet__footer">
-              <Button
-                variant="secondary"
-                text={t("vote.addLinked")}
-                icon={<Icon name="plus" size={22} />}
-                onClick={onAddLinked}
-              />
-              <Button
-                variant="primary"
-                text={t("vote.save")}
-                onClick={handleSave}
-                isLoading={isSaving}
-              />
-            </div>
-          </>
-        )}
+          {visibleMembers.length > 0 && (
+            <ul className="vote-sheet__linked-list">
+              {visibleMembers.map(member => renderLinkedMember(member))}
+            </ul>
+          )}
+        </div>
+        <div className="vote-sheet__footer">
+          <Button
+            variant="secondary"
+            text={t("vote.addLinked")}
+            icon={<Icon name="plus" size={22} />}
+            onClick={onAddLinked}
+          />
+        </div>
       </div>
     </dialog>,
     document.body

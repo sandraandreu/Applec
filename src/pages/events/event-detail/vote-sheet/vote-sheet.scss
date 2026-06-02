@@ -38,134 +38,44 @@
   &__scroll {
     flex: 1;
     overflow-y: auto;
-    padding: var(--gap-content) var(--size-32);
+    padding: var(--padding-page);
     display: flex;
     flex-direction: column;
     gap: var(--gap-content);
     overscroll-behavior: contain;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  // ─── Step 1 ───────────────────────────────────────────
+  // ─── Header ───────────────────────────────────────────
 
-  &__question {
-    background: var(--color-bg-blue);
-    border-radius: var(--size-16);
-    padding: var(--size-20);
+  &__header {
     display: flex;
     flex-direction: column;
     gap: var(--gap-compact);
   }
 
-  &__question-title {
+  &__header-title {
     font-family: var(--font-display);
     font-size: var(--font-size-body-m);
     font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
   }
 
-  &__question-desc {
+  &__header-desc {
     font-size: var(--font-size-body-s);
     color: var(--color-text-secondary);
   }
 
-  &__own-buttons {
-    display: flex;
-    gap: var(--gap-compact);
-    margin-top: var(--size-8);
-  }
-
-  &__own-buttons:has(.vote-sheet__own-btn--active) {
-    .vote-sheet__own-btn:not(.vote-sheet__own-btn--active) {
-      border-color: var(--color-border);
-      color: var(--color-text-muted);
-
-      svg { color: var(--color-text-muted); }
-    }
-  }
-
-  &__own-btn {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap-items);
-    padding: var(--gap-compact) var(--size-16);
-    border-radius: var(--radius-pill);
-    border: 2px solid var(--color-brand);
-    background: transparent;
-    font-family: var(--font-display);
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-brand);
-
-    &--yes svg { color: var(--color-going); }
-    &--no svg { color: var(--color-not-going); }
-
-    &--yes.vote-sheet__own-btn--active {
-      background: var(--color-going);
-      border-color: var(--color-going);
-      color: var(--color-text-inverse);
-
-      svg { color: var(--color-text-inverse); }
-    }
-
-    &--no.vote-sheet__own-btn--active {
-      background: var(--color-not-going);
-      border-color: var(--color-not-going);
-      color: var(--color-text-inverse);
-
-      svg { color: var(--color-text-inverse); }
-    }
-  }
-
-  // ─── Step 2 ───────────────────────────────────────────
-
-  &__companions-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-content);
-  }
-
-  &__companions-info {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-compact);
-  }
-
-  &__companions-title {
-    font-family: var(--font-display);
-    font-size: var(--font-size-body-m);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-primary);
-  }
-
-  &__companions-desc {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-secondary);
-  }
+  // ─── List ───────────────────────────────────────────
 
   &__linked-list {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-content);
-  }
-
-  &__linked-section {
-    display: flex;
-    flex-direction: column;
     gap: var(--gap-items);
-
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap-items);
-    }
-  }
-
-  &__linked-section-label {
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-muted);
   }
 
   &__linked-item {
@@ -176,6 +86,10 @@
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-card);
     background: var(--color-surface);
+
+    &--fallero {
+      border: 2px solid var(--color-brand);
+    }
 
     &--disabled {
       opacity: 0.5;
@@ -202,12 +116,6 @@
   &__linked-relationship {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-  }
-
-  &__linked-warning {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-    font-style: italic;
   }
 
   &__linked-actions {
@@ -264,7 +172,7 @@
   // ─── Footer ───────────────────────────────────────────
 
   &__footer {
-    padding: var(--size-16) var(--size-32) var(--size-32);
+    padding: var(--padding-page);
     background: var(--color-surface);
     border-top: 1px solid var(--color-border-light);
     display: flex;

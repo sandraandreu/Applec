@@ -11,10 +11,11 @@ interface Props {
   event: FallesEvent;
   canEdit?: boolean;
   formattedDate: string;
+  deadline?: string;
   onDeleteRequest: () => void;
 }
 
-const EventDetailHeader = ({ event, canEdit, formattedDate, onDeleteRequest }: Props) => {
+const EventDetailHeader = ({ event, canEdit, formattedDate, deadline, onDeleteRequest }: Props) => {
   const navigate = useNavigate();
   const { t } = useTranslation("events");
   const [showMenu, setShowMenu] = useState(false);
@@ -74,6 +75,12 @@ const EventDetailHeader = ({ event, canEdit, formattedDate, onDeleteRequest }: P
 
       <h1 className="event-detail-page__name">{event.name}</h1>
 
+      {event.isSpecial && (
+        <span className="event-detail-page__type-chip">
+          {t("create.type.special")}
+        </span>
+      )}
+
       {eventStatus !== "activo" && (
         <EventStatusBadge variant={eventStatus} label={t(`status.${eventStatus}`)} />
       )}
@@ -118,6 +125,13 @@ const EventDetailHeader = ({ event, canEdit, formattedDate, onDeleteRequest }: P
               {t("detail.noConfirmationRequired")}
             </span>
           </div>
+        </div>
+      )}
+
+      {deadline && eventStatus === "activo" && (
+        <div className="event-detail-page__deadline">
+          <Icon name="clock" size={18} aria-hidden="true" />
+          <span>{t("vote.deadlineInfo", { date: deadline })}</span>
         </div>
       )}
     </div>
