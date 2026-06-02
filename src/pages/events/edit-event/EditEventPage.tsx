@@ -13,7 +13,7 @@ import Input from "../../../ui-kit/input/Input";
 import PageHeader from "../../../components/layout/PageHeader";
 import Toggle from "../../../ui-kit/toggle/Toggle";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import PillSelector from "../../../ui-kit/pill-selector/PillSelector";
+import ToggleRow from "../../../ui-kit/toggle-row/ToggleRow";
 import EventCalendar from "../../../components/event-calendar/EventCalendar";
 import Modal from "../../../components/modal/Modal";
 import { editEventReducer, initialState } from "./edit-event.reducer";
@@ -164,18 +164,6 @@ const EditEventPage = () => {
           </div>
         <div className="edit-event__content">
         <div className="edit-event__section">
-          <p className="edit-event__section-title">{t("create.typeSection")}</p>
-          <PillSelector
-            options={[
-              { value: "normal", label: t("create.type.normal"), description: t("create.type.normalDesc") },
-              { value: "special", label: t("create.type.special"), description: t("create.type.specialDesc") },
-            ]}
-            value={state.eventType}
-            onChange={(value) => dispatch({ type: "SET_EVENT_TYPE", payload: value as "normal" | "special" })}
-          />
-        </div>
-
-        <div className="edit-event__section">
           <p className="edit-event__section-title">{t("create.infoSection")}</p>
           <div className="edit-event__form">
             <Input
@@ -192,13 +180,20 @@ const EditEventPage = () => {
               id="event-description"
               label={t("create.descriptionLabel")}
               placeholder={t("create.descriptionPlaceholder")}
-              optional
+              required
               multiline
               maxLength={300}
               currentLength={descriptionLength}
-              registration={register("description", { maxLength: 300 })}
+              registration={register("description", { required: true, maxLength: 300 })}
+              error={errors.description ? t("validation.descriptionRequired") : undefined}
             />
           </div>
+          <ToggleRow
+            label={t("create.isSpecial")}
+            hint={t("create.type.specialDesc")}
+            checked={state.eventType === "special"}
+            onChange={(checked) => dispatch({ type: "SET_EVENT_TYPE", payload: checked ? "special" : "normal" })}
+          />
         </div>
 
         <div className="edit-event__section">

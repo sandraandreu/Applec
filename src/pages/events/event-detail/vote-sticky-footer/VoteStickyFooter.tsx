@@ -1,93 +1,119 @@
 import { useTranslation } from "react-i18next";
 import Button from "../../../../ui-kit/button/Button";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
-import AttendanceIndicator from "../../../../ui-kit/attendance-indicator/AttendanceIndicator";
 
 interface Props {
   eventStatus: "activo" | "plazo-cerrado" | "finalizado";
-  hasVoted: boolean;
   myResponse: "going" | "not-going" | undefined;
-  myLinkedMembers: { id: string; firstName: string }[];
+  visibleLinkedMembers: { id: string; firstName: string }[];
   myLinkedResponses: Record<string, "going" | "not-going">;
-  deadline?: string;
-  allowExternalGuests?: boolean;
-  maxExternalGuests?: number;
   voteError: string | null;
-  onVoteClick: () => void;
+  onVote: (response: "going" | "not-going") => void;
+  onCompanionsClick: () => void;
+  onAddLinked: () => void;
 }
 
 const VoteStickyFooter = ({
   eventStatus,
-  hasVoted,
   myResponse,
-  myLinkedMembers,
+  visibleLinkedMembers,
   myLinkedResponses,
-  deadline,
-  allowExternalGuests,
-  maxExternalGuests,
   voteError,
-  onVoteClick,
+  onVote,
+  onCompanionsClick,
+  onAddLinked,
 }: Props) => {
   const { t } = useTranslation("events");
 
-  const goingLinkedMembers = myLinkedMembers.filter(lm => myLinkedResponses[lm.id] === "going");
+  const hasVisibleCompanions = visibleLinkedMembers.length > 0;
+  const noneVoted = visibleLinkedMembers.every(lm => !myLinkedResponses[lm.id]);
+  const goingMembers = visibleLinkedMembers.filter(lm => myLinkedResponses[lm.id] === "going");
+  const pendingCount = visibleLinkedMembers.filter(lm => !myLinkedResponses[lm.id]).length;
+
+  const companionSubtitle = (() => {
+    if (!hasVisibleCompanions) return null;
+    if (noneVoted) return t("vote.companionsPrompt");
+    const goingNames = goingMembers.map(lm => lm.firstName).join(", ");
+    if (goingNames && pendingCount > 0) return `${goingNames} · ${t("vote.companionsPending", { count: pendingCount })}`;
+    if (goingNames) return goingNames;
+    if (pendingCount > 0) return t("vote.companionsPending", { count: pendingCount });
+    return null;
+  })();
 
   return (
     <div className="event-detail-page__vote-sticky">
-      {hasVoted ? (
-        <div className="event-detail-page__vote-summary">
-          <div className="event-detail-page__vote-row">
-            <span className="event-detail-page__vote-row-name">{t("vote.you")}</span>
-            <AttendanceIndicator attendance={myResponse ?? "pending"} />
+      {eventStatus === "activo" && (
+        <>
+          <p className="event-detail-page__vote-question">{t("vote.questionTitle")}</p>
+          <div className="event-detail-page__vote-own-buttons">
+            <button
+              type="button"
+              className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--yes${myResponse === "going" ? " event-detail-page__vote-own-btn--active" : ""}`}
+              aria-pressed={myResponse === "going"}
+              onClick={() => onVote("going")}
+            >
+              <Icon name="check-bold" size={20} aria-hidden="true" />
+              {t("vote.yes")}
+            </button>
+            <button
+              type="button"
+              className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--no${myResponse === "not-going" ? " event-detail-page__vote-own-btn--active" : ""}`}
+              aria-pressed={myResponse === "not-going"}
+              onClick={() => onVote("not-going")}
+            >
+              <Icon name="x-mark" size={20} aria-hidden="true" />
+              {t("vote.no")}
+            </button>
           </div>
-          {goingLinkedMembers.length > 0 && (
-            <div className="event-detail-page__vote-linked">
-              <span className="event-detail-page__vote-linked-title">{t("vote.linkedMembersGoing")}</span>
-              <ul className="event-detail-page__vote-companions-names">
-                {goingLinkedMembers.map(lm => (
-                  <li key={lm.id}>{lm.firstName}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {eventStatus === "activo" && (
+          {hasVisibleCompanions ? (
             <Button
-              variant="primary"
-              text={goingLinkedMembers.length > 0 ? t("vote.modifyPlural") : t("vote.modify")}
-              onClick={onVoteClick}
+              variant={myResponse === "not-going" ? "secondary" : "primary"}
+              text={t("vote.companions")}
+              onClick={onCompanionsClick}
+            />
+          ) : (
+            <Button
+              variant="secondary"
+              text={t("vote.addLinked")}
+              icon={<Icon name="plus" size={20} />}
+              onClick={onAddLinked}
             />
           )}
-        </div>
-      ) : (
-        <>
-          {eventStatus === "activo" && (
-            <>
-              {deadline && (
-                <p className="event-detail-page__vote-deadline">
-                  <Icon name="clock" size={20} aria-hidden="true" />
-                  {t("vote.deadline", { date: deadline })}
-                </p>
-              )}
-              {allowExternalGuests && (
-                <p className="event-detail-page__vote-external">
-                  <Icon name="users" size={20} aria-hidden="true" />
-                  {maxExternalGuests
-                    ? t("vote.externalAllowedMax", { count: maxExternalGuests })
-                    : t("vote.externalAllowed")}
-                </p>
-              )}
-              <Button
-                variant="primary"
-                text={t("vote.cta")}
-                onClick={onVoteClick}
-              />
-            </>
-          )}
-          {eventStatus === "plazo-cerrado" && (
-            <p className="event-detail-page__vote-closed-info">
-              {t("vote.closed")}
+          {companionSubtitle && (
+            <p className="event-detail-page__vote-companions-subtitle">
+              {companionSubtitle}
             </p>
           )}
+        </>
+      )}
+      {eventStatus === "plazo-cerrado" && (
+        <>
+          <div className="event-detail-page__vote-own-buttons event-detail-page__vote-own-buttons--readonly">
+            <button
+              type="button"
+              disabled
+              className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--yes${myResponse === "going" ? " event-detail-page__vote-own-btn--active" : ""}`}
+            >
+              <Icon name="check-bold" size={20} aria-hidden="true" />
+              {t("vote.yes")}
+            </button>
+            <button
+              type="button"
+              disabled
+              className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--no${myResponse === "not-going" ? " event-detail-page__vote-own-btn--active" : ""}`}
+            >
+              <Icon name="x-mark" size={20} aria-hidden="true" />
+              {t("vote.no")}
+            </button>
+          </div>
+          {goingMembers.length > 0 && (
+            <p className="event-detail-page__vote-companions-subtitle">
+              {goingMembers.map(lm => lm.firstName).join(", ")}
+            </p>
+          )}
+          <p className="event-detail-page__vote-closed-info">
+            {t("vote.closed")}
+          </p>
         </>
       )}
       {voteError && (

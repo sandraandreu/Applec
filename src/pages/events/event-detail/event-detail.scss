@@ -37,6 +37,17 @@
     color: var(--color-text-primary);
   }
 
+  &__type-chip {
+    font-size: var(--font-size-pill);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--padding-chip);
+    border-radius: var(--radius-pill);
+    align-self: flex-start;
+    background-color: var(--white);
+    border: 1.5px solid var(--color-brand);
+    color: var(--color-brand);
+  }
+
   &__menu-wrapper {
     position: relative;
     flex-shrink: 0;
@@ -126,6 +137,15 @@
     color: var(--color-text-muted);
   }
 
+  &__deadline {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-items);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-brand);
+  }
+
   &__description {
     display: flex;
     flex-direction: column;
@@ -202,29 +222,84 @@
   &__vote-sticky {
     background: var(--white);
     box-shadow: var(--shadow-sticky);
-    padding: var(--size-20) var(--size-32);
+    padding: var(--padding-page);
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: var(--gap-compact);
   }
 
-  &__vote-deadline {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap-items);
-    font-size: var(--font-size-body-s);
-    color: var(--color-brand);
+  &__vote-question {
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    text-align: center;
   }
 
-  &__vote-external {
+  &__vote-own-buttons {
     display: flex;
+    gap: var(--gap-compact);
+
+    &--readonly {
+      .event-detail-page__vote-own-btn:not(.event-detail-page__vote-own-btn--active) {
+        opacity: 0.35;
+        border-color: var(--color-border);
+        color: var(--color-text-muted);
+
+        svg { color: var(--color-text-muted); }
+      }
+    }
+
+    &:has(.event-detail-page__vote-own-btn--active) {
+      .event-detail-page__vote-own-btn:not(.event-detail-page__vote-own-btn--active) {
+        border-color: var(--color-border);
+        color: var(--color-text-muted);
+
+        svg { color: var(--color-text-muted); }
+      }
+    }
+  }
+
+  &__vote-own-btn {
+    flex: 1;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--gap-items);
+    padding: var(--gap-compact) var(--size-16);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--color-brand);
+    background: transparent;
+    font-family: var(--font-display);
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-brand);
+
+    &--yes svg { color: var(--color-going); }
+    &--no svg { color: var(--color-not-going); }
+
+    &--yes.event-detail-page__vote-own-btn--active {
+      background: var(--color-going);
+      border-color: var(--color-going);
+      color: var(--color-text-inverse);
+
+      svg { color: var(--color-text-inverse); }
+    }
+
+    &--no.event-detail-page__vote-own-btn--active {
+      background: var(--color-not-going);
+      border-color: var(--color-not-going);
+      color: var(--color-text-inverse);
+
+      svg { color: var(--color-text-inverse); }
+    }
+  }
+
+  &__vote-companions-subtitle {
     font-size: var(--font-size-body-s);
     color: var(--color-text-secondary);
+    text-align: center;
   }
 
   &__vote-closed-info {
@@ -232,45 +307,6 @@
     color: var(--color-text-muted);
     text-align: center;
     padding: var(--size-4) 0;
-  }
-
-  &__vote-summary {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-form);
-  }
-
-  &__vote-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__vote-row-name {
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-  }
-
-  &__vote-linked {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--gap-compact);
-  }
-
-  &__vote-linked-title {
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-text-primary);
-  }
-
-  &__vote-companions-names {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-compact);
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-secondary);
   }
 
   &__vote-error {

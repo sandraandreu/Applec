@@ -23,14 +23,16 @@ interface MemberCardProps {
   onClick?: () => void;
   onEdit?: () => void;
   isOwnProfile?: boolean;
+  className?: string;
 }
 
-const MemberCard = ({ firstName, lastName, relationship, role, photoUrl, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit, isOwnProfile = false }: MemberCardProps) => {
+const MemberCard = ({ firstName, lastName, relationship, role, photoUrl, showChevron = true, showRole = true, attendance, isLinked = false, isExpandable = false, isExpanded = false, onToggle, onClick, onEdit, isOwnProfile = false, className }: MemberCardProps) => {
   const { t } = useTranslation("common");
   const { t: tMembers } = useTranslation("members");
   const classes = [
     "member-card",
     isLinked ? "member-card--linked" : "",
+    className ?? "",
   ].filter(Boolean).join(" ");
 
   const isInteractive = isExpandable || !!onClick;

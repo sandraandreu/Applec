@@ -14,7 +14,6 @@ import EventAttendanceSection from "./event-attendance-section/EventAttendanceSe
 import type { AttendanceMember } from "./event-attendance-section/EventAttendanceSection";
 import type { FallesEvent } from "../../../models/event.model";
 import Loading from "../../../components/loading/Loading";
-import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Modal from "../../../components/modal/Modal";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import "./event-detail.scss";
@@ -40,7 +39,6 @@ const EventDetailPage = () => {
   const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
-  const [showVoteSuccess, setShowVoteSuccess] = useState(false);
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
     trackMouse: false,
@@ -95,8 +93,6 @@ const EventDetailPage = () => {
   const myResponse = user?.uid ? attendance.members[user.uid] : undefined;
   const myLinkedResponses = user?.uid ? (attendance.linked[user.uid] ?? {}) : {};
 
-  const hasVoted = !!myResponse || myLinkedMembers.some(lm => myLinkedResponses[lm.id]);
-
   const allMembers = useMemo(
     (): AttendanceMember[] => (group?.members ?? []).map(member => ({
       ...member,
@@ -121,6 +117,25 @@ const EventDetailPage = () => {
   const eventStatus = getEventStatus(event);
   const isPast = eventStatus === "finalizado";
 
+  const formattedDeadline = event.confirmationDeadline
+    ? event.confirmationDeadline.toLocaleDateString(
+        getIntlLocale(i18n.language),
+        { day: "numeric", month: "long" },
+      )
+    : undefined;
+
+  const visibleLinkedMembers = event.allowExternalGuests === false
+    ? myLinkedMembers.filter(lm => (lm.type ?? "fallero") === "fallero")
+    : myLinkedMembers;
+
+  const handleAddLinked = () => {
+    setShowVoteSheet(false);
+    navigate("/members/linked/new", {
+      replace: true,
+      state: { returnTo: `/events/${id}`, openVoteSheet: true },
+    });
+  };
+
   const rawDate = event.date.toLocaleDateString(
     getIntlLocale(i18n.language),
     { weekday: "long", day: "numeric", month: "long" },
@@ -138,45 +153,56 @@ const EventDetailPage = () => {
     }
   };
 
-  const handleVoteSave = async (
-    response: "going" | "not-going" | undefined,
-    linkedVotes: Record<string, "going" | "not-going">
-  ) => {
+  const handleVote = async (response: "going" | "not-going") => {
     if (!profile?.groupId || !id || !user?.uid) return;
+    const newResponse = myResponse === response ? undefined : response;
     try {
       await saveAttendance(profile.groupId, id, user.uid, {
-        response,
-        linkedResponses: linkedVotes,
+        response: newResponse,
+        linkedResponses: myLinkedResponses,
       });
       setAttendance(prev => {
         const members = { ...prev.members };
-        if (response) {
-          members[user.uid] = response;
+        if (newResponse) {
+          members[user.uid] = newResponse;
         } else {
           delete members[user.uid];
         }
-        return {
-          members,
-          linked: { ...prev.linked, [user.uid]: linkedVotes },
-        };
+        return { ...prev, members };
       });
       setVoteError(null);
-      setShowVoteSuccess(true);
     } catch {
       setVoteError(t("attendance.error"));
     }
   };
 
+  const handleSaveCompanions = async (linkedVotes: Record<string, "going" | "not-going">) => {
+    if (!profile?.groupId || !id || !user?.uid) return;
+    try {
+      await saveAttendance(profile.groupId, id, user.uid, {
+        response: myResponse,
+        linkedResponses: linkedVotes,
+      });
+      setAttendance(prev => ({
+        ...prev,
+        linked: { ...prev.linked, [user.uid]: linkedVotes },
+      }));
+      setVoteError(null);
+    } catch {
+      setVoteError(t("attendance.error"));
+      throw new Error();
+    }
+  };
+
   return (
     <div className={`event-detail-page${isPast ? " event-detail-page--past" : ""}`} {...swipeHandlers}>
-      {showVoteSuccess && (
-        <SuccessBanner message={t("attendance.success")} onDismiss={() => setShowVoteSuccess(false)} />
-      )}
+
       <div className="event-detail-page__scroll-area">
       <EventDetailHeader
         event={event}
         canEdit={canEdit}
         formattedDate={formattedDate}
+        deadline={formattedDeadline}
         onDeleteRequest={() => setShowDeleteAlert(true)}
       />
 
@@ -201,14 +227,7 @@ const EventDetailPage = () => {
         <VoteSheet
           isOpen={showVoteSheet}
           onDismiss={() => setShowVoteSheet(false)}
-          deadline={
-            event.confirmationDeadline
-              ? event.confirmationDeadline.toLocaleDateString(
-                  getIntlLocale(i18n.language),
-                  { day: "numeric", month: "long" },
-                )
-              : undefined
-          }
+          myResponse={myResponse}
           linkedMembers={myLinkedMembers.map((linkedMember) => ({
             id: linkedMember.id,
             firstName: linkedMember.firstName,
@@ -218,16 +237,9 @@ const EventDetailPage = () => {
           }))}
           allowExternalGuests={event.allowExternalGuests}
           maxExternalGuests={event.maxExternalGuests}
-          onAddLinked={() => {
-            setShowVoteSheet(false);
-            navigate("/members/linked/new", {
-              replace: true,
-              state: { returnTo: `/events/${id}`, openVoteSheet: true },
-            });
-          }}
-          initialResponse={myResponse}
+          onAddLinked={handleAddLinked}
           initialLinkedResponses={myLinkedResponses}
-          onSave={handleVoteSave}
+          onSaveCompanions={handleSaveCompanions}
         />
 
         {deleteState.error && (
@@ -243,22 +255,13 @@ const EventDetailPage = () => {
       {eventStatus !== "finalizado" && event.requiresConfirmation && (
         <VoteStickyFooter
           eventStatus={eventStatus}
-          hasVoted={hasVoted}
           myResponse={myResponse}
-          myLinkedMembers={myLinkedMembers.map(lm => ({ id: lm.id, firstName: lm.firstName }))}
+          visibleLinkedMembers={visibleLinkedMembers.map(lm => ({ id: lm.id, firstName: lm.firstName }))}
           myLinkedResponses={myLinkedResponses}
-          allowExternalGuests={event.allowExternalGuests}
-          maxExternalGuests={event.maxExternalGuests}
-          deadline={
-            event.confirmationDeadline
-              ? event.confirmationDeadline.toLocaleDateString(
-                  getIntlLocale(i18n.language),
-                  { day: "numeric", month: "long" },
-                )
-              : undefined
-          }
           voteError={voteError}
-          onVoteClick={() => setShowVoteSheet(true)}
+          onVote={handleVote}
+          onCompanionsClick={() => setShowVoteSheet(true)}
+          onAddLinked={handleAddLinked}
         />
       )}
 

@@ -44,14 +44,13 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
 
   return (
     <div className={cardClass}>
+      <Link to={`/events/${event.id}`} className="event-card__link" aria-label={event.name} />
       <div className="event-card__date">
         <span className="event-card__day">{day}</span>
         <span className="event-card__month">{month}</span>
       </div>
       <div className="event-card__info">
-        <Link to={`/events/${event.id}`} className="event-card__name-link">
-          <span className="event-card__name">{event.name}</span>
-        </Link>
+        <span className="event-card__name">{event.name}</span>
         <div className="event-card__bottom">
           <span className="event-card__meta">
             {event.startTime} · {event.location}

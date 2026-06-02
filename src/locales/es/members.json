@@ -26,11 +26,11 @@
   },
   "detail": {
     "linked": "Acompañantes",
-    "changeRoleTitle": "Cambiar rol",
+    "changeRoleTitle": "¿Qué papel tiene en la falla?",
     "makeRole": {
-      "admin": "Hacer Administrador",
-      "organizer": "Hacer Organizador",
-      "member": "Hacer Miembro"
+      "admin": "Administrador",
+      "organizer": "Organizador",
+      "member": "Miembro"
     },
     "roleDescription": {
       "admin": "Control total del grupo. Puede crear y gestionar eventos, añadir y eliminar miembros, cambiar roles y ver la asistencia completa. Máximo 3 por grupo.",
@@ -43,7 +43,7 @@
     "adminConfirmMessage": "Este miembro tendrá control total del grupo. Podrás cambiar su rol más adelante si es necesario.",
     "adminConfirmCancel": "Cancelar",
     "adminConfirmSubmit": "Sí, hacer Administrador",
-    "removeMember": "Eliminar miembro",
+    "removeMember": "Eliminar a {{name}}",
     "save": "Guardar cambios",
     "cancel": "Cancelar",
     "deleteConfirm": "Eliminar miembro",

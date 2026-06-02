@@ -401,10 +401,6 @@ const StyleGuide = () => {
               <Button text="Cancelar" variant="secondary" />
             </div>
             <div className="style-guide__item">
-              <span className="style-guide__label">especial</span>
-              <Button text="Guardar" variant="especial" />
-            </div>
-            <div className="style-guide__item">
               <span className="style-guide__label">danger · con icono</span>
               <Button
                 text="Eliminar evento"
@@ -492,32 +488,6 @@ const StyleGuide = () => {
                       d="M20 6L9 17L4 12"
                       stroke="currentColor"
                       strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                }
-              />
-            </div>
-            <div className="style-guide__item">
-              <span className="style-guide__label">linked · disabled</span>
-              <Button
-                text="Votar por mis acompañantes"
-                variant="linked"
-                disabled
-                icon={
-                  <svg
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                  >
-                    <path
-                      d="M25 15.9985H7M16 6.99854V24.9985V6.99854Z"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />

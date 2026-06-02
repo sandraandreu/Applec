@@ -169,6 +169,8 @@
   &__role-info-btn {
     color: var(--color-brand);
     flex-shrink: 0;
+    width: var(--size-40);
+    height: var(--size-40);
   }
 
   &__role-option-description {

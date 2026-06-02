@@ -53,6 +53,7 @@ const LinkedMembersPage = () => {
       showChevron={false}
       showRole={false}
       onEdit={() => navigate(`/members/linked/${linkedMember.id}/edit`)}
+      className={(linkedMember.type ?? "fallero") === "fallero" ? "member-card--fallero" : undefined}
     />
   );
 
@@ -76,23 +77,12 @@ const LinkedMembersPage = () => {
           <EmptyState title={t("linked.empty")} variant="light" expand />
         ) : (
           <div className="linked-members-page__list">
-            {falleroLinked.length > 0 && (
-              <div className="linked-members-page__section">
-                <p className="linked-members-page__section-label">{t("linked.typeFallero")}</p>
-                {falleroLinked.map(renderCard)}
-              </div>
-            )}
-            {externLinked.length > 0 && (
-              <div className="linked-members-page__section">
-                <p className="linked-members-page__section-label">{t("linked.typeExtern")}</p>
-                {externLinked.map(renderCard)}
-              </div>
-            )}
+            {[...falleroLinked, ...externLinked].map(renderCard)}
           </div>
         )}
 
         <Button
-          variant="linked"
+          variant="secondary"
           text={t("linked.addButton")}
           icon={<Icon name="plus" size={20} />}
           onClick={() => navigate("/members/linked/new")}

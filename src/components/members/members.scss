@@ -37,6 +37,10 @@
     margin-left: var(--size-32);
   }
 
+  &--fallero {
+    border: 2px solid var(--color-brand);
+  }
+
   &__you-tag {
     display: inline-block;
     font-size: var(--font-size-body-s);

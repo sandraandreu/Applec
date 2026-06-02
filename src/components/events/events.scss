@@ -1,4 +1,5 @@
 .event-card {
+  position: relative;
   display: flex;
   align-items: stretch;
   border: 1px solid var(--color-border);
@@ -47,9 +48,9 @@
     padding: var(--size-14);
   }
 
-  &__name-link {
-    display: block;
-    text-decoration: none;
+  &__link {
+    position: absolute;
+    inset: 0;
   }
 
   &__name {
@@ -76,6 +77,8 @@
   }
 
   &__action {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     flex-shrink: 0;
