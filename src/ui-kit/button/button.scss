@@ -24,11 +24,6 @@
     color: var(--color-brand);
   }
 
-  &--especial {
-    background: var(--color-accent-yellow);
-    color: var(--color-text-primary);
-  }
-
   &--pending {
     background-color: transparent;
     border: 1px solid var(--color-pending);
@@ -54,14 +49,6 @@
   &--going-yes-active {
     background: var(--color-accent-teal);
     color: var(--white);
-  }
-
-  &--linked {
-    background: transparent;
-    border: 2px dashed var(--color-brand);
-    color: var(--color-brand);
-    border-radius: var(--radius-card);
-    padding: 20px 24px;
   }
 
   &--compact {

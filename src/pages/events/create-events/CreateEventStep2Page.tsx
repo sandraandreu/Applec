@@ -87,21 +87,20 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
 
   return (
     <div className={`create-events-step2${eventType === "special" ? " create-events-step2--special" : ""}`}>
-      <div className="create-events-step2__gradient-zone">
-        <div className="create-events-step2__topbar">
-          <BackButton onClick={handleBack} />
-          <Stepper currentStep={2} totalSteps={3} />
-          <span className="create-events-step2__topbar-spacer" aria-hidden="true" />
-        </div>
-
-        <div className="create-events-step2__header">
-          <h1 className="create-events-step2__title">{t("create.step2Title")}</h1>
-          <p className="create-events-step2__description">{t("create.step2Description")}</p>
-        </div>
-      </div>
-
-      <form className="create-events-step2__content" onSubmit={handleSubmit(onSubmit, () => { if (!selectedDate) setDateError(true); })}>
-
+      <form onSubmit={handleSubmit(onSubmit, () => { if (!selectedDate) setDateError(true); })}>
+        <div className="create-events-step2__scroll-area">
+          <div className="create-events-step2__gradient-zone">
+            <div className="create-events-step2__topbar">
+              <BackButton onClick={handleBack} />
+              <Stepper currentStep={2} totalSteps={3} />
+              <span className="create-events-step2__topbar-spacer" aria-hidden="true" />
+            </div>
+            <div className="create-events-step2__header">
+              <h1 className="create-events-step2__title">{t("create.step2Title")}</h1>
+              <p className="create-events-step2__description">{t("create.step2Description")}</p>
+            </div>
+          </div>
+          <div className="create-events-step2__content">
         <div className="create-events-step2__form">
           <div className="field">
             <label className="field__label">
@@ -171,7 +170,11 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
           />
         </div>
 
-        <Button type="submit" text={t("create.continue")} variant="secondary" />
+          </div>
+        </div>
+        <div className="create-events-step2__actions">
+          <Button type="submit" text={t("create.continue")} variant="secondary" iconRight={<Icon name="arrow-right" size={24} aria-hidden />} />
+        </div>
       </form>
     </div>
   );

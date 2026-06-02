@@ -100,19 +100,20 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
   return (
     <div className={`create-events-step3${step1Data.eventType === "special" ? " create-events-step3--special" : ""}`}>
-      <div className="create-events-step3__gradient-zone">
-        <div className="create-events-step3__topbar">
-          <BackButton onClick={handleBack} />
-          <Stepper currentStep={3} totalSteps={3} />
-          <span className="create-events-step3__topbar-spacer" aria-hidden="true" />
-        </div>
-        <div className="create-events-step3__header">
-          <h1 className="create-events-step3__title">{t("create.step3Title")}</h1>
-          <p className="create-events-step3__description">{t("create.step3Description")}</p>
-        </div>
-      </div>
-
-      <form className="create-events-step3__content" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <div className="create-events-step3__scroll-area">
+          <div className="create-events-step3__gradient-zone">
+            <div className="create-events-step3__topbar">
+              <BackButton onClick={handleBack} />
+              <Stepper currentStep={3} totalSteps={3} />
+              <span className="create-events-step3__topbar-spacer" aria-hidden="true" />
+            </div>
+            <div className="create-events-step3__header">
+              <h1 className="create-events-step3__title">{t("create.step3Title")}</h1>
+              <p className="create-events-step3__description">{t("create.step3Description")}</p>
+            </div>
+          </div>
+          <div className="create-events-step3__content">
 
         <div className="create-events-step3__summary">
           <p className="create-events-step3__summary-name">{step1Data.eventName}</p>
@@ -264,16 +265,19 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
         </div>
 
-        {errorKey && (
-          <span className="create-events-step3__error">{i18n.t(errorKey)}</span>
-        )}
-
-        <Button
-          type="submit"
-          text={t("create.submit")}
-          variant="especial"
-          disabled={isLoading}
-        />
+          </div>
+        </div>
+        <div className="create-events-step3__actions">
+          {errorKey && (
+            <span className="create-events-step3__error">{i18n.t(errorKey)}</span>
+          )}
+          <Button
+            type="submit"
+            text={t("create.submit")}
+            variant="primary"
+            disabled={isLoading}
+          />
+        </div>
       </form>
     </div>
   );

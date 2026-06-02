@@ -49,7 +49,8 @@ const MemberDetailPage = () => {
   if (isLoading || !member) return <Loading />;
 
   const canManage = (user?.permissions.canManageMembers ?? false) && member.uid !== user?.uid;
-  const availableRoles = (["admin", "organizer", "member"] as const).filter(role => role !== member.role);
+  const allRoles = ["admin", "organizer", "member"] as const;
+  const selectedRole = pendingRole ?? member.role;
   const adminCount = group?.members.filter(member => member.role === "admin").length ?? 0;
   const isAdminLimitReached = adminCount >= 3;
   const memberLinked = group?.linkedMembers.filter(linkedMember => linkedMember.ownerUid === uid) ?? [];
@@ -125,20 +126,18 @@ const MemberDetailPage = () => {
         {canManage && (
           <>
             <div className="member-detail-page__section">
-              <div className="member-detail-page__section-header">
-                <h2 className="member-detail-page__section-title">{t("detail.changeRoleTitle")}</h2>
-                <Chip role={member.role} variant="full" />
-              </div>
+              <h2 className="member-detail-page__section-title">{t("detail.changeRoleTitle")}</h2>
               <div className="member-detail-page__action-card">
-                {availableRoles.map((role, index) => {
-                  const isDisabled = role === "admin" && isAdminLimitReached;
+                {allRoles.map((role, index) => {
+                  const isCurrentRole = role === member.role;
+                  const isDisabled = role === "admin" && isAdminLimitReached && !isCurrentRole;
                   return (
                     <div
                       key={role}
                       className={[
                         "member-detail-page__role-option",
                         index > 0 ? "member-detail-page__role-option--bordered" : "",
-                        pendingRole === role ? "member-detail-page__role-option--selected" : "",
+                        selectedRole === role ? "member-detail-page__role-option--selected" : "",
                         isDisabled ? "member-detail-page__role-option--disabled" : "",
                       ].filter(Boolean).join(" ")}
                     >
@@ -147,18 +146,18 @@ const MemberDetailPage = () => {
                           className="member-detail-page__role-option-select"
                           onClick={() => {
                             if (isDisabled) return;
-                            setPendingRole(prev => prev === role ? null : role);
+                            setPendingRole(isCurrentRole ? null : role);
                             setExpandedDescription(null);
                           }}
-                          aria-pressed={pendingRole === role}
+                          aria-pressed={selectedRole === role}
                           aria-disabled={isDisabled}
                         >
-                          <RadioCircle selected={pendingRole === role} />
+                          <RadioCircle selected={selectedRole === role} />
                           {t(`detail.makeRole.${role}`)}
                         </button>
                         <IconButton
                           name="info-circle"
-                          size={26}
+                          size={24}
                           ariaLabel={t("detail.roleInfoLabel")}
                           onClick={() => setExpandedDescription(prev => prev === role ? null : role)}
                           className="member-detail-page__role-info-btn"
@@ -209,7 +208,7 @@ const MemberDetailPage = () => {
                   onClick={() => setShowDeleteAlert(true)}
                 >
                   <Icon name="trash" size={24} className="member-detail-page__action-icon" />
-                  <span className="member-detail-page__action-text">{t("detail.removeMember")}</span>
+                  <span className="member-detail-page__action-text">{t("detail.removeMember", { name: member.firstName })}</span>
                   <Icon name="chevron-right" size={20} className="member-detail-page__action-chevron" />
                 </button>
               </div>

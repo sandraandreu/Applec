@@ -26,11 +26,11 @@
   },
   "detail": {
     "linked": "Acompanyants",
-    "changeRoleTitle": "Canviar rol",
+    "changeRoleTitle": "Quin paper té a la falla?",
     "makeRole": {
-      "admin": "Fer Administrador",
-      "organizer": "Fer Organitzador",
-      "member": "Fer Membre"
+      "admin": "Administrador",
+      "organizer": "Organitzador",
+      "member": "Membre"
     },
     "roleDescription": {
       "admin": "Control total del grup. Pot crear i gestionar esdeveniments, afegir i eliminar membres, canviar rols i veure l'assistència completa. Màxim 3 per grup.",
@@ -43,7 +43,7 @@
     "adminConfirmMessage": "Aquest membre tindrà control total del grup. Podràs canviar el seu rol més endavant si cal.",
     "adminConfirmCancel": "Cancel·lar",
     "adminConfirmSubmit": "Sí, fer Administrador",
-    "removeMember": "Eliminar membre",
+    "removeMember": "Eliminar a {{name}}",
     "save": "Guardar canvis",
     "cancel": "Cancel·lar",
     "deleteConfirm": "Eliminar membre",

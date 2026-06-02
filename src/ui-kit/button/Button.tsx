@@ -7,8 +7,9 @@ interface ButtonProps {
   to?: string;
   state?: unknown;
   type?: "submit" | "button" | "reset";
-  variant?: "primary" | "secondary" | "language" | "especial" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "linked" | "pending";
+  variant?: "primary" | "secondary" | "language" | "danger" | "going-no-active" | "going-yes" | "going-yes-active" | "pending";
   icon?: ReactNode;
+  iconRight?: ReactNode;
   isActiveLanguage?: boolean;
   onClick?: () => void;
   disabled?: boolean;
@@ -23,6 +24,7 @@ const Button = ({
   type = "button",
   variant = "primary",
   icon,
+  iconRight,
   isActiveLanguage,
   onClick,
   disabled = false,
@@ -38,6 +40,7 @@ const Button = ({
       <Link to={to} state={state} className={classes}>
         {icon}
         {text}
+        {iconRight}
       </Link>
     );
   }
@@ -51,6 +54,7 @@ const Button = ({
     >
       {icon}
       {text}
+      {iconRight}
     </button>
   );
 };
