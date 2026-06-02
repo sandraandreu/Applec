@@ -263,6 +263,19 @@
     color: var(--color-text-primary);
   }
 
+  &__vote-linked {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--gap-compact);
+  }
+
+  &__vote-linked-title {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
+
   &__vote-companions-names {
     display: flex;
     flex-wrap: wrap;

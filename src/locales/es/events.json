@@ -133,6 +133,7 @@
     "addLinked": "Añadir acompañante",
     "linkedLabel": "Acompañantes",
     "you": "Tú",
+    "linkedMembersGoing": "Tus acompañantes:",
     "companionsDesc": "¿Vienen contigo? Indica su asistencia para que el organizador pueda contar con ellos.",
     "companionsDescFallersOnly": "Este acto es solo para falleros. Solo aparecen tus acompañantes de la falla.",
     "companionsEmpty": "Puedes añadir personas que vienen contigo aunque no tengan cuenta en la app: falleros de la falla o invitados externos. Se guardarán en tu lista para futuros actos.",

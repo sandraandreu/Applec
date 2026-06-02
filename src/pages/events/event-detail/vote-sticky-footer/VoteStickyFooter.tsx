@@ -30,7 +30,7 @@ const VoteStickyFooter = ({
 }: Props) => {
   const { t } = useTranslation("events");
 
-  const votedCompanions = myLinkedMembers.filter(lm => myLinkedResponses[lm.id]);
+  const goingLinkedMembers = myLinkedMembers.filter(lm => myLinkedResponses[lm.id] === "going");
 
   return (
     <div className="event-detail-page__vote-sticky">
@@ -40,17 +40,20 @@ const VoteStickyFooter = ({
             <span className="event-detail-page__vote-row-name">{t("vote.you")}</span>
             <AttendanceIndicator attendance={myResponse ?? "pending"} />
           </div>
-          {votedCompanions.length > 0 && (
-            <ul className="event-detail-page__vote-companions-names">
-              {votedCompanions.map(lm => (
-                <li key={lm.id}>{lm.firstName}</li>
-              ))}
-            </ul>
+          {goingLinkedMembers.length > 0 && (
+            <div className="event-detail-page__vote-linked">
+              <span className="event-detail-page__vote-linked-title">{t("vote.linkedMembersGoing")}</span>
+              <ul className="event-detail-page__vote-companions-names">
+                {goingLinkedMembers.map(lm => (
+                  <li key={lm.id}>{lm.firstName}</li>
+                ))}
+              </ul>
+            </div>
           )}
           {eventStatus === "activo" && (
             <Button
               variant="primary"
-              text={votedCompanions.length > 0 ? t("vote.modifyPlural") : t("vote.modify")}
+              text={goingLinkedMembers.length > 0 ? t("vote.modifyPlural") : t("vote.modify")}
               onClick={onVoteClick}
             />
           )}

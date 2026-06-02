@@ -133,6 +133,7 @@
     "addLinked": "Afegir acompanyant",
     "linkedLabel": "Acompanyants",
     "you": "Tu",
+    "linkedMembersGoing": "Els teus acompanyants:",
     "companionsDesc": "Vénen amb tu? Indica la seua assistència perquè l'organitzador puga comptar-hi.",
     "companionsDescFallersOnly": "Aquest acte és només per a fallers. Només apareixen els teus acompanyants de la falla.",
     "companionsEmpty": "Pots afegir persones que vénen amb tu encara que no tinguen compte a l'app: fallers de la falla o convidats externs. Es guardaran a la teua llista per a futurs actes.",
