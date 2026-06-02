@@ -52,17 +52,15 @@
     flex: 1;
   }
 
+  &__toggle-section {
+    margin-top: calc(var(--gap-section) - var(--gap-content));
+  }
+
   &__fields {
     display: flex;
     flex-direction: column;
     gap: var(--gap-compact);
     flex: 1;
-  }
-
-  &__type-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-items);
   }
 
   &__error {

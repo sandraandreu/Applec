@@ -29,27 +29,15 @@
     text-overflow: ellipsis;
   }
 
+  &__author-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-compact);
+  }
+
   &__time {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-  }
-
-  &__badge {
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-semibold);
-    padding: var(--gap-tight) var(--gap-compact);
-    border-radius: var(--radius-pill);
-    flex-shrink: 0;
-
-    &--admin {
-      color: var(--red-500);
-      background: var(--red-50);
-    }
-
-    &--organizer {
-      color: var(--teal-500);
-      background: var(--teal-50);
-    }
   }
 
   &__event {

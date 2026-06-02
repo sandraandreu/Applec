@@ -122,6 +122,7 @@
 
   &__section-label {
     font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
     color: var(--color-text-muted);
   }
 
@@ -172,20 +173,8 @@
 
   &__attendees-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
     background: var(--white);
-  }
-
-  &__attendees-left {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-  }
-
-  &__attendees-label {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
   }
 
   &__attendees-right {
@@ -229,6 +218,15 @@
     color: var(--color-brand);
   }
 
+  &__vote-external {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-items);
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
+  }
+
   &__vote-closed-info {
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
@@ -239,83 +237,40 @@
   &__vote-summary {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-content);
+    gap: var(--gap-form);
   }
 
-  &__vote-label {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
-  &__vote-own-row {
+  &__vote-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  &__vote-own-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--gap-items);
-    padding: var(--size-10) var(--size-20);
-    border-radius: var(--radius-pill);
-    font-family: var(--font-display);
+  &__vote-row-name {
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
-
-    &--going {
-      background: var(--color-going);
-      color: var(--color-text-inverse);
-    }
-
-    &--not-going {
-      background: var(--color-not-going);
-      color: var(--color-text-inverse);
-    }
-
-    &--pending {
-      background: var(--color-border-light);
-      color: var(--color-text-muted);
-    }
+    color: var(--color-text-primary);
   }
 
-  &__vote-linked-list {
-    padding: var(--gap-content) 0 0;
-    border-top: 1px solid var(--color-border-light);
+  &__vote-linked {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: baseline;
     gap: var(--gap-compact);
   }
 
-  &__vote-linked-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__vote-linked-name {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-secondary);
-  }
-
-  &__vote-linked-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--size-4);
-    padding: var(--size-6) var(--size-14);
-    border-radius: var(--radius-pill);
+  &__vote-linked-title {
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+  }
 
-    &--going {
-      background: var(--teal-50);
-      color: var(--color-going);
-    }
-
-    &--not-going {
-      background: var(--red-50);
-      color: var(--color-not-going);
-    }
+  &__vote-companions-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-compact);
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-secondary);
   }
 
   &__vote-error {

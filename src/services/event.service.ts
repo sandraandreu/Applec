@@ -34,6 +34,8 @@ const toEvent = (id: string, data: DocumentData): FallesEvent => ({
     ? toDate(data.confirmationDeadline)
     : undefined,
   isSpecial: data.isSpecial,
+  allowExternalGuests: data.allowExternalGuests,
+  maxExternalGuests: data.maxExternalGuests,
 });
 
 export const getEvents = async (groupId: string): Promise<FallesEvent[] | null> => {

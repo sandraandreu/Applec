@@ -7,8 +7,6 @@ import { getMyAttendances } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import EventList from "../../../components/events/EventList";
-import EventsFilter from "../../../components/events/EventsFilter";
-import type { FilterKey, FilterOption } from "../../../components/events/EventsFilter";
 import Loading from "../../../components/loading/Loading";
 import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import Icon from "../../../ui-kit/icons/icon/Icon";
@@ -25,7 +23,6 @@ const EventsListPage = () => {
   const [attendances, setAttendances] = useState<Record<string, "going" | "not-going">>({});
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [filter, setFilter] = useState<FilterKey>("upcoming");
   const [showEventUpdated, setShowEventUpdated] = useState(
     !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
   );
@@ -69,22 +66,10 @@ const EventsListPage = () => {
     return () => { isMounted = false; };
   }, [profile?.groupId, user]);
 
-  const filterOptions: FilterOption[] = useMemo(() => {
-    const countEvents = (predicate: (event: FallesEvent) => boolean) => events.filter(predicate).length;
-    return [
-      { key: "upcoming", label: t("events.filters.upcoming"), count: countEvents(event => getEventStatus(event) !== "finalizado") },
-      { key: "past",     label: t("events.filters.past"),     count: countEvents(event => getEventStatus(event) === "finalizado") },
-      { key: "all",      label: t("events.filters.all"),      count: events.length },
-    ];
-  }, [events, t]);
-
-  const filteredEvents = useMemo(() => {
-    switch (filter) {
-      case "upcoming": return events.filter(event => getEventStatus(event) !== "finalizado");
-      case "past":     return events.filter(event => getEventStatus(event) === "finalizado");
-      default:         return events;
-    }
-  }, [events, filter]);
+  const upcomingEvents = useMemo(
+    () => events.filter(event => getEventStatus(event) !== "finalizado"),
+    [events]
+  );
 
   return (
     <div className="events-list-page">
@@ -93,9 +78,6 @@ const EventsListPage = () => {
       )}
       <div className="events-list-page__header">
         <h1 className="events-list-page__title">{t("events.title")}</h1>
-        {!isLoading && !hasError && (
-          <EventsFilter options={filterOptions} selected={filter} onChange={setFilter} />
-        )}
       </div>
 
       {isLoading && <Loading />}
@@ -108,7 +90,7 @@ const EventsListPage = () => {
       )}
 
       {!isLoading && !hasError && user && (
-        <EventList events={filteredEvents} permissions={user.permissions} attendances={attendances} hasAnyEvents={events.length > 0} />
+        <EventList events={upcomingEvents} permissions={user.permissions} attendances={attendances} hasAnyEvents={events.length > 0} />
       )}
     </div>
   );

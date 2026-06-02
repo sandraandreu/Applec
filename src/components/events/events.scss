@@ -1,18 +1,10 @@
 .event-card {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   overflow: hidden;
   background-color: var(--color-surface);
-
-  &__content {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    min-width: 0;
-    text-decoration: none;
-  }
 
   &__date {
     display: flex;
@@ -25,7 +17,6 @@
     border-right: 1px solid var(--color-border);
 
     .event-card--special & {
-      align-self: stretch;
       border-right: none;
       background: var(--color-bg-gradient-blue);
     }
@@ -49,22 +40,33 @@
   &__info {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-tight);
+    justify-content: center;
+    gap: var(--gap-items);
     flex: 1;
     min-width: 0;
-    padding: var(--size-18) var(--size-14);
+    padding: var(--size-14);
+  }
+
+  &__name-link {
+    display: block;
+    text-decoration: none;
   }
 
   &__name {
     font-size: var(--font-size-body-m);
     font-weight: var(--font-weight-bold);
     color: var(--color-text-secondary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-compact);
   }
 
   &__meta {
+    flex: 1;
+    min-width: 0;
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-muted);
@@ -73,18 +75,17 @@
     text-overflow: ellipsis;
   }
 
+  &__action {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
   &--finished {
     .event-card__day { color: var(--color-text-muted); }
     .event-card__month { color: var(--color-text-muted); }
     .event-card__name { color: var(--color-text-muted); }
     .event-card__meta { color: var(--color-text-muted); }
-  }
-
-  &__action {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    padding-right: var(--size-14);
   }
 
 }

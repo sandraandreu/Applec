@@ -34,20 +34,14 @@
   },
   "invite": {
     "titleCreate": "La teua falla està llesta!",
-    "subtitleCreate": "Ara convida als membres perquè s'unisquen.",
-    "titleInvite": "Convida més membres",
-    "subtitleInvite": "Comparteix el codi amb les persones que vulgues afegir a la teua falla.",
+    "subtitle": "Comparteix aquest codi amb amics, familiars o qualsevol persona que vulgues que s'unisca a la teua falla.",
+    "titleInvite": "Convida qui vulgues",
     "code": "Copia el codi",
     "share": "Compartir",
     "copy": "Copiar",
     "copied": "Copiat!",
     "skip": "Ara no, invitaré més tard",
     "shareTitle": "Applec",
-    "shareText": "Uneix-te a la meua falla amb el codi: {{inviteCode}}",
-    "regenerate": "Regenerar codi",
-    "regenerateConfirmTitle": "Regenerar codi",
-    "regenerateConfirmMessage": "L'enllaç anterior deixarà de funcionar. Vols continuar?",
-    "regenerateCancel": "Cancel·lar",
-    "regenerateConfirm": "Regenerar"
+    "shareText": "Uneix-te a la meua falla amb el codi: {{inviteCode}}"
   }
 }
