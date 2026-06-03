@@ -21,15 +21,25 @@
     "groupFound": "¡Hemos encontrado tu falla!",
     "joinButton": "Solicitar unirme",
     "requestSent": {
-      "title": "Pendiente de aprobación",
-      "subtitle": "El administrador recibirá una notificación y te avisaremos cuando acepte tu solicitud.",
+      "title": "Solicitud enviada",
+      "subtitle": "El administrador o el organizador revisará tu solicitud y te avisaremos cuando sea aceptada o rechazada.",
       "button": "Entendido"
+    },
+    "pending": {
+      "title": "Solicitud pendiente",
+      "subtitle": "Tu solicitud está siendo revisada. Te avisaremos cuando el administrador o el organizador responda."
+    },
+    "rejected": {
+      "title": "Solicitud rechazada",
+      "message": "Tu solicitud para unirte a la falla ha sido rechazada. Puedes intentarlo con otro código de invitación.",
+      "button": "Buscar otra falla"
     },
     "errors": {
       "codeRequired": "El código de invitación es obligatorio",
       "codeNotFound": "El código no es válido o no existe",
       "alreadyMember": "Ya perteneces a esta falla",
-      "alreadyInGroup": "Ya perteneces a una falla. Debes salir primero para unirte a otra"
+      "alreadyInGroup": "Ya perteneces a una falla. Debes salir primero para unirte a otra",
+      "sendError": "No se pudo enviar la solicitud. Inténtalo de nuevo."
     }
   },
   "invite": {

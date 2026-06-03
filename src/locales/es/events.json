@@ -199,6 +199,9 @@
     "error": "Error al cargar la asistencia",
     "total": "Total"
   },
+  "joinAccepted": {
+    "message": "¡Ya eres miembro! Tu solicitud ha sido aceptada."
+  },
   "validation": {
     "nameRequired": "El nombre del evento es obligatorio",
     "descriptionRequired": "La descripción es obligatoria",

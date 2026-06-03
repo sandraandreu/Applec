@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEvents } from "../../../services/event.service";
 import { getMyAttendances } from "../../../services/attendance.service";
+import { clearJoinAcceptedFlag } from "../../../services/user.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import EventList from "../../../components/events/EventList";
@@ -14,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./events-list.scss";
 
 const EventsListPage = () => {
-  const { user, profile } = useAuthContext();
+  const { user, profile, refreshProfile } = useAuthContext();
   const { t } = useTranslation("events");
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,6 +27,9 @@ const EventsListPage = () => {
   const [showEventUpdated, setShowEventUpdated] = useState(
     !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
   );
+  const [showJoinAccepted, setShowJoinAccepted] = useState(
+    profile?.joinAccepted === true
+  );
 
   useLayoutBackground(profile?.role);
 
@@ -34,6 +38,13 @@ const EventsListPage = () => {
       navigate(location.pathname, { replace: true, state: null });
     }
   }, [showEventUpdated, navigate, location.pathname]);
+
+  useEffect(() => {
+    if (showJoinAccepted && user?.uid) {
+      clearJoinAcceptedFlag(user.uid);
+      refreshProfile();
+    }
+  }, [showJoinAccepted, user?.uid, refreshProfile]);
 
   useEffect(() => {
     if (!profile?.groupId || !user) return;
@@ -73,6 +84,12 @@ const EventsListPage = () => {
 
   return (
     <div className="events-list-page">
+      {showJoinAccepted && (
+        <SuccessBanner
+          message={t("joinAccepted.message")}
+          onDismiss={() => setShowJoinAccepted(false)}
+        />
+      )}
       {showEventUpdated && (
         <SuccessBanner message={t("edit.success")} onDismiss={() => setShowEventUpdated(false)} />
       )}

@@ -199,6 +199,9 @@
     "error": "Error en carregar l'assistència",
     "total": "Total"
   },
+  "joinAccepted": {
+    "message": "Ja ets membre! La teua sol·licitud ha sigut acceptada."
+  },
   "validation": {
     "nameRequired": "El nom de l'esdeveniment és obligatori",
     "descriptionRequired": "La descripció és obligatòria",
