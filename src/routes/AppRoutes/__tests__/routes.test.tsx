@@ -39,6 +39,7 @@ const renderWithRouter = (element: React.ReactElement, initialPath = "/protected
       <Routes>
         <Route path="/protected" element={element} />
         <Route path="/landing" element={<div>landing</div>} />
+        <Route path="/verify-email" element={<div>verify-email</div>} />
         <Route path="/onboarding/welcome" element={<div>welcome</div>} />
         <Route path="/events" element={<div>events</div>} />
       </Routes>
@@ -63,10 +64,10 @@ describe("PrivateRoutes", () => {
     expect(screen.getByText("landing")).toBeInTheDocument();
   });
 
-  it("redirige a /landing si el email no está verificado", () => {
+  it("redirige a /verify-email si el email no está verificado", () => {
     mockAuth({ user: { emailVerified: false } as any });
     renderWithRouter(<PrivateRoutes><div>contenido</div></PrivateRoutes>);
-    expect(screen.getByText("landing")).toBeInTheDocument();
+    expect(screen.getByText("verify-email")).toBeInTheDocument();
   });
 
   it("redirige a /onboarding/welcome si requiresGroup y el usuario no tiene grupo", () => {

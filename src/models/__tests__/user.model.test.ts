@@ -10,6 +10,8 @@ describe("computePermissions", () => {
       canEditAllEvents: true,
       canManageMembers: true,
       canInviteMembers: true,
+      canManageGroup: true,
+      canShareAccess: true,
     });
   });
 
@@ -21,6 +23,8 @@ describe("computePermissions", () => {
       canEditAllEvents: false,
       canManageMembers: false,
       canInviteMembers: true,
+      canManageGroup: false,
+      canShareAccess: true,
     });
   });
 
@@ -32,6 +36,8 @@ describe("computePermissions", () => {
       canEditAllEvents: false,
       canManageMembers: false,
       canInviteMembers: false,
+      canManageGroup: false,
+      canShareAccess: false,
     });
   });
 
@@ -43,6 +49,8 @@ describe("computePermissions", () => {
       canEditAllEvents: false,
       canManageMembers: false,
       canInviteMembers: false,
+      canManageGroup: false,
+      canShareAccess: false,
     });
   });
 });
