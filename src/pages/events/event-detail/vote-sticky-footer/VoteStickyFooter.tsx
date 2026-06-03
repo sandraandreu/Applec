@@ -65,11 +65,6 @@ const VoteStickyFooter = ({
               {t("vote.no")}
             </button>
           </div>
-          {companionSubtitle && (
-            <p className="event-detail-page__vote-question">
-              {companionSubtitle}
-            </p>
-          )}
           {hasVisibleCompanions ? (
             <Button
               variant={myResponse === "not-going" ? "secondary" : "primary"}
@@ -83,6 +78,11 @@ const VoteStickyFooter = ({
               icon={<Icon name="plus" size={20} />}
               onClick={onAddLinked}
             />
+          )}
+          {companionSubtitle && (
+            <p className="event-detail-page__vote-companions-subtitle">
+              {companionSubtitle}
+            </p>
           )}
         </>
       )}
