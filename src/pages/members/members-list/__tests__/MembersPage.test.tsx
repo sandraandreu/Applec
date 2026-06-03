@@ -1,7 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router-dom";
 import MembersPage from "../MembersPage";
+
+vi.mock("react-router-dom", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-router-dom")>();
+  return { ...actual, useNavigate: vi.fn() };
+});
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
 
@@ -45,12 +50,14 @@ const renderPage = (state: object = {}) =>
     </MemoryRouter>
   );
 
+const mockNavigate = vi.fn();
+
 describe("MembersPage - SuccessBanner", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockAuth();
     mockGroup();
-    vi.spyOn(window.history, "replaceState").mockImplementation(() => {});
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
   });
 
   it("muestra el banner de rol actualizado cuando location.state tiene roleUpdated", () => {
@@ -71,6 +78,6 @@ describe("MembersPage - SuccessBanner", () => {
 
   it("limpia el history state al montar para evitar que el banner reaparezca", () => {
     renderPage({ roleUpdated: true });
-    expect(window.history.replaceState).toHaveBeenCalledWith(null, "");
+    expect(mockNavigate).toHaveBeenCalledWith("/members", { replace: true, state: null });
   });
 });
