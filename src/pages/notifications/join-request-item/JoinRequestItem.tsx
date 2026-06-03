@@ -11,8 +11,8 @@ interface JoinRequestItemProps {
   iconBg: NotificationIconBg;
   title: string;
   message: string;
-  onAccept?: () => Promise<void>;
-  onReject?: () => Promise<void>;
+  onAccept: () => Promise<void>;
+  onReject: () => Promise<void>;
 }
 
 const JoinRequestItem = ({ iconName, iconBg, title, message, onAccept, onReject }: JoinRequestItemProps) => {
@@ -26,7 +26,6 @@ const JoinRequestItem = ({ iconName, iconBg, title, message, onAccept, onReject 
   const isLoading = isAccepting || isRejecting;
 
   const handleAccept = async () => {
-    if (!onAccept) return;
     setIsAccepting(true);
     setError(null);
     try {
@@ -39,7 +38,6 @@ const JoinRequestItem = ({ iconName, iconBg, title, message, onAccept, onReject 
   };
 
   const handleReject = async () => {
-    if (!onReject) return;
     setIsRejecting(true);
     setError(null);
     try {

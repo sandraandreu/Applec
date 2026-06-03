@@ -194,11 +194,13 @@ export const addMemberToGroup = async (
 export const sendJoinRequest = async (
   groupId: string,
   uid: string,
-  data: { firstName: string; lastName: string; email: string },
+  { firstName, lastName, email }: { firstName: string; lastName: string; email: string },
 ): Promise<void> => {
   await setDoc(doc(db, "groups", groupId, "joinRequests", uid), {
     uid,
-    ...data,
+    firstName,
+    lastName,
+    email,
     requestedAt: serverTimestamp(),
   });
 };
@@ -211,7 +213,7 @@ export const getJoinRequests = async (groupId: string): Promise<JoinRequest[]> =
       firstName: d.data().firstName as string,
       lastName: d.data().lastName as string,
       email: d.data().email as string,
-      requestedAt: (d.data().requestedAt?.toDate() as Date | undefined) ?? new Date(),
+      requestedAt: d.data().requestedAt?.toDate() ?? new Date(),
     }));
   } catch {
     return [];

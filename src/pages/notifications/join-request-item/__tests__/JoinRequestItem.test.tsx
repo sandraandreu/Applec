@@ -32,9 +32,11 @@ const defaultProps = {
   iconBg: "teal" as const,
   title: "Pere Mas Carbonell",
   message: "Ha pedido unirse a la falla.",
+  onAccept: vi.fn().mockResolvedValue(undefined),
+  onReject: vi.fn().mockResolvedValue(undefined),
 };
 
-const renderItem = (props = {}) =>
+const renderItem = (props: Partial<typeof defaultProps> = {}) =>
   render(<JoinRequestItem {...defaultProps} {...props} />);
 
 describe("JoinRequestItem", () => {
@@ -47,53 +49,41 @@ describe("JoinRequestItem", () => {
   });
 
   it("muestra los botones de aceptar y rechazar", () => {
-    renderItem({
-      onAccept: vi.fn().mockResolvedValue(undefined),
-      onReject: vi.fn().mockResolvedValue(undefined),
-    });
+    renderItem();
     expect(screen.getByText("buttons.accept")).toBeTruthy();
     expect(screen.getByText("buttons.reject")).toBeTruthy();
   });
 
   it("llama a onAccept al pulsar aceptar", async () => {
     const onAccept = vi.fn().mockResolvedValue(undefined);
-    const onReject = vi.fn().mockResolvedValue(undefined);
-    renderItem({ onAccept, onReject });
+    renderItem({ onAccept });
     await userEvent.click(screen.getByText("buttons.accept"));
     expect(onAccept).toHaveBeenCalledOnce();
-    expect(onReject).not.toHaveBeenCalled();
+    expect(defaultProps.onReject).not.toHaveBeenCalled();
   });
 
   it("llama a onReject al pulsar rechazar", async () => {
-    const onAccept = vi.fn().mockResolvedValue(undefined);
     const onReject = vi.fn().mockResolvedValue(undefined);
-    renderItem({ onAccept, onReject });
+    renderItem({ onReject });
     await userEvent.click(screen.getByText("buttons.reject"));
     expect(onReject).toHaveBeenCalledOnce();
-    expect(onAccept).not.toHaveBeenCalled();
+    expect(defaultProps.onAccept).not.toHaveBeenCalled();
   });
 
   it("muestra error si onAccept lanza excepción", async () => {
-    const onAccept = vi.fn().mockRejectedValue(new Error("fail"));
-    const onReject = vi.fn().mockResolvedValue(undefined);
-    renderItem({ onAccept, onReject });
+    renderItem({ onAccept: vi.fn().mockRejectedValue(new Error("fail")) });
     await userEvent.click(screen.getByText("buttons.accept"));
     expect(screen.getByText("requestsPage.acceptError")).toBeTruthy();
   });
 
   it("muestra error si onReject lanza excepción", async () => {
-    const onAccept = vi.fn().mockResolvedValue(undefined);
-    const onReject = vi.fn().mockRejectedValue(new Error("fail"));
-    renderItem({ onAccept, onReject });
+    renderItem({ onReject: vi.fn().mockRejectedValue(new Error("fail")) });
     await userEvent.click(screen.getByText("buttons.reject"));
     expect(screen.getByText("requestsPage.rejectError")).toBeTruthy();
   });
 
   it("no muestra error en estado inicial", () => {
-    renderItem({
-      onAccept: vi.fn().mockResolvedValue(undefined),
-      onReject: vi.fn().mockResolvedValue(undefined),
-    });
+    renderItem();
     expect(screen.queryByText("requestsPage.acceptError")).toBeNull();
     expect(screen.queryByText("requestsPage.rejectError")).toBeNull();
   });

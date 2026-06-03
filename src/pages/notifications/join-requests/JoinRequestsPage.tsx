@@ -36,19 +36,22 @@ const JoinRequestsPage = () => {
     return () => { isMounted = false; };
   }, [profile?.groupId]);
 
+  const removeRequest = (uid: string) =>
+    setRealRequests(prev => prev.filter(r => r.uid !== uid));
+
   const handleApprove = async (request: JoinRequest) => {
     if (!profile?.groupId) return;
     await approveJoinRequest(profile.groupId, request.uid, {
       firstName: request.firstName,
       lastName: request.lastName,
     });
-    setRealRequests(prev => prev.filter(r => r.uid !== request.uid));
+    removeRequest(request.uid);
   };
 
   const handleReject = async (request: JoinRequest) => {
     if (!profile?.groupId) return;
     await rejectJoinRequest(profile.groupId, request.uid);
-    setRealRequests(prev => prev.filter(r => r.uid !== request.uid));
+    removeRequest(request.uid);
   };
 
   const dismissDemo = (id: string) => {

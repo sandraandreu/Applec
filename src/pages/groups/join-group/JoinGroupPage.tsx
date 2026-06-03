@@ -70,7 +70,7 @@ const JoinGroupPage = () => {
   const handleSendRequest = async () => {
     if (!user || !groupFound || !profile) return;
     try {
-      setSubmitState(prev => ({ ...prev, isLoading: true, errorConnection: "" }));
+      setSubmitState({ isLoading: true, errorConnection: "", errorCode: "" });
       await sendJoinRequest(groupFound.id, user.uid, {
         firstName: profile.firstName,
         lastName: profile.lastName,
