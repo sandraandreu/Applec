@@ -7,13 +7,12 @@ import EventStatusBadge from "../../ui-kit/event-status-badge/EventStatusBadge";
 import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 import Button from "../../ui-kit/button/Button";
 import "./events.scss";
+import type { AttendanceVote } from "../../models/attendance.model";
 import { getIntlLocale } from "../../utils/dates";
-
-type AttendanceResponse = "going" | "not-going" | null;
 
 interface EventCardProps {
   event: FallesEvent;
-  attendanceResponse?: AttendanceResponse;
+  attendanceResponse?: AttendanceVote | null;
 }
 
 const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {

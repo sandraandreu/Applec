@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import type { AttendanceVote } from "../../models/attendance.model";
 import Icon from "../icons/icon/Icon";
 import "./attendance-indicator.scss";
 
-export type AttendanceStatus = "going" | "not-going" | "pending";
+export type AttendanceStatus = AttendanceVote | "pending";
 
 interface AttendanceIndicatorProps {
   attendance: AttendanceStatus;
-  showPendingLabel?: boolean;
 }
 
 const AttendanceIndicator = ({ attendance }: AttendanceIndicatorProps) => {

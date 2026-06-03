@@ -26,7 +26,7 @@ const LinkedMembersPage = () => {
 
   useLayoutEffect(() => {
     if (showUpdated) navigate(location.pathname, { replace: true, state: null });
-  }, []);
+  }, [showUpdated, navigate, location.pathname]);
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),

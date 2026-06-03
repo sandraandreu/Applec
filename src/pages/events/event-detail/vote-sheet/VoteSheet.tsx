@@ -52,7 +52,7 @@ const VoteSheet = ({
     });
     setLinkedVotes(initial);
     initialVotesRef.current = { ...initial };
-  }, [isOpen]);
+  }, [isOpen, linkedMembers, initialLinkedResponses]);
 
   useEffect(() => {
     const dialog = dialogRef.current;

@@ -33,7 +33,7 @@ const EventsListPage = () => {
     if (showEventUpdated) {
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, []);
+  }, [showEventUpdated, navigate, location.pathname]);
 
   useEffect(() => {
     if (!profile?.groupId || !user) return;

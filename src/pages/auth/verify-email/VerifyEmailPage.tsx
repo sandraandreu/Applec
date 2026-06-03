@@ -34,7 +34,7 @@ const VerifyEmailPage = () => {
 
   const handleLogin = () => {
     logout();
-    navigate("/login");
+    navigate("/login", { replace: true });
   };
 
   const title = emailSent

@@ -1,9 +1,10 @@
 import { memo } from "react";
+import type { AttendanceVote } from "../../models/attendance.model";
 import "./avatar.scss";
 
 type AvatarRole = "admin" | "organizer" | "member";
 type AvatarSize = "sm" | "md" | "lg";
-export type AvatarAttendance = "going" | "pending" | "not-going";
+export type AvatarAttendance = AttendanceVote | "pending";
 
 interface AvatarProps {
   firstName: string;
