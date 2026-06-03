@@ -195,7 +195,7 @@ const EventDetailPage = () => {
   };
 
   return (
-    <div className={`event-detail-page${isPast ? " event-detail-page--past" : ""}`} {...swipeHandlers}>
+    <div className={["event-detail-page", isPast ? "event-detail-page--past" : event.isSpecial ? "event-detail-page--special" : ""].filter(Boolean).join(" ")} {...swipeHandlers}>
 
       <div className="event-detail-page__scroll-area">
       <EventDetailHeader
