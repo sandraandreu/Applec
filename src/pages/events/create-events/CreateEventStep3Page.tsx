@@ -117,9 +117,11 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
         <div className="create-events-step3__summary">
           <p className="create-events-step3__summary-name">{step1Data.eventName}</p>
-          <span className={`create-events-step3__type-chip create-events-step3__type-chip--${step1Data.eventType}`}>
-            {t(`create.type.${step1Data.eventType}`)}
-          </span>
+          {step1Data.eventType === "special" && (
+            <span className="create-events-step3__type-chip">
+              {t("create.type.special")}
+            </span>
+          )}
           <div className="create-events-step3__field">
             <div className="create-events-step3__field-icon">
               <Icon name="calendar" size={28} />

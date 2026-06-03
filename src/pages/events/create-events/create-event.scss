@@ -189,18 +189,11 @@
     font-size: var(--font-size-pill);
     font-weight: var(--font-weight-semibold);
     padding: var(--padding-chip);
-    border-radius: var(--radius-chip);
+    border-radius: var(--radius-pill);
     align-self: flex-start;
-
-    &--normal {
-      background-color: var(--color-bg-blue);
-      color: var(--color-brand);
-    }
-
-    &--special {
-      background-color: var(--color-bg-purple);
-      color: var(--color-accent-purple);
-    }
+    background-color: var(--white);
+    border: 1.5px solid var(--color-brand);
+    color: var(--color-brand);
   }
 
   &__summary-name {
