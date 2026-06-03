@@ -60,7 +60,7 @@ const LoginPage = () => {
         return;
       }
       dispatch({ type: "LOGIN_SUCCESS" });
-      navigate("/events");
+      navigate("/events", { replace: true });
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "auth/invalid-credential") {
         dispatch({

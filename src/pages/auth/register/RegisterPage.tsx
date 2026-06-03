@@ -102,7 +102,7 @@ const RegisterPage = () => {
       return;
     }
 
-    navigate("/verify-email", { state: { emailSent: verificationEmailSent } });
+    navigate("/verify-email", { replace: true, state: { emailSent: verificationEmailSent } });
   };
 
   const {
