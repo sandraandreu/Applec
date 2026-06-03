@@ -197,6 +197,8 @@ const NotificationsPage = () => {
                       iconBg={item.iconBg}
                       title={item.title}
                       message={item.message}
+                      onAccept={() => Promise.resolve()}
+                      onReject={() => Promise.resolve()}
                     />
                   ) : (
                     <NotificationItem
