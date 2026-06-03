@@ -26,7 +26,7 @@ const MembersPage = () => {
     if (showRoleUpdated || showMemberDeleted) {
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, []);
+  }, [showRoleUpdated, showMemberDeleted, navigate, location.pathname]);
 
   return (
     <div className="members-page">

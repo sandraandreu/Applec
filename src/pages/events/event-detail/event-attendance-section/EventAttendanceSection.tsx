@@ -1,4 +1,6 @@
 import { useState, useMemo } from "react";
+
+const attendanceOrder: Record<string, number> = { going: 0, "not-going": 1, pending: 2 };
 import { useTranslation } from "react-i18next";
 import AttendanceDonut from "../attendance-donut/AttendanceDonut";
 import EventsFilter from "../../../../components/events/EventsFilter";
@@ -70,8 +72,6 @@ const EventAttendanceSection = ({ allMembers, canSeeFullAttendance }: Props) => 
   const totalMembers = allRows.length;
 
   const targetAttendance = attendeeFilter === "all" ? null : attendeeFilter as "going" | "not-going" | "pending";
-
-  const attendanceOrder: Record<string, number> = { going: 0, "not-going": 1, pending: 2 };
 
   const filteredMembers = useMemo(
     () => allMembers

@@ -33,7 +33,7 @@ const ProfilePage = () => {
     if (showProfileUpdated || showPasswordUpdated || showGroupUpdated) {
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, []);
+  }, [showProfileUpdated, showPasswordUpdated, showGroupUpdated, navigate, location.pathname]);
 
   if (!profile || !user) return null;
 
