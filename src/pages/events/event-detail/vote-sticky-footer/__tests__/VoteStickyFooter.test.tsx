@@ -24,11 +24,11 @@ const threeMembers = [
 ];
 
 const defaultProps = {
-  eventStatus: "activo" as const,
-  myResponse: undefined,
-  visibleLinkedMembers: [],
-  myLinkedResponses: {},
-  voteError: null,
+  eventStatus: "activo" as "activo" | "plazo-cerrado" | "finalizado",
+  myResponse: undefined as "going" | "not-going" | undefined,
+  visibleLinkedMembers: [] as { id: string; firstName: string }[],
+  myLinkedResponses: {} as Record<string, "going" | "not-going">,
+  voteError: null as string | null,
   onVote: vi.fn(),
   onCompanionsClick: vi.fn(),
   onAddLinked: vi.fn(),
