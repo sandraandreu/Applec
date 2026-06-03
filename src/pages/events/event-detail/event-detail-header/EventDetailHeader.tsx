@@ -130,7 +130,7 @@ const EventDetailHeader = ({ event, canEdit, formattedDate, deadline, onDeleteRe
 
       {deadline && eventStatus === "activo" && (
         <div className="event-detail-page__deadline">
-          <Icon name="clock" size={18} aria-hidden="true" />
+          <Icon name="clock" size={20} aria-hidden="true" />
           <span>{t("vote.deadlineInfo", { date: deadline })}</span>
         </div>
       )}

@@ -157,7 +157,7 @@ const VoteSheet = ({
               aria-pressed={linkedVotes[member.id] === "going"}
               onClick={() => setLinkedVotes(prev => ({ ...prev, [member.id]: prev[member.id] === "going" ? null : "going" }))}
             >
-              <Icon name="check-bold" size={18} aria-hidden="true" />
+              <Icon name="check-bold" size={20} aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -166,7 +166,7 @@ const VoteSheet = ({
               aria-pressed={linkedVotes[member.id] === "not-going"}
               onClick={() => setLinkedVotes(prev => ({ ...prev, [member.id]: prev[member.id] === "not-going" ? null : "not-going" }))}
             >
-              <Icon name="x-mark" size={18} aria-hidden="true" />
+              <Icon name="x-mark" size={20} aria-hidden="true" />
             </button>
           </div>
         )}

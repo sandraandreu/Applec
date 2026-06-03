@@ -58,7 +58,7 @@ const EventsFilter = ({ options, selected, onChange }: EventsFilterProps) => {
         </span>
         <Icon
           name="chevron-down"
-          size={18}
+          size={20}
           className={`events-filter__chevron${isOpen ? " events-filter__chevron--open" : ""}`}
         />
       </button>

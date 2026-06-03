@@ -23,7 +23,7 @@ const SuccessBanner = ({ message, onDismiss }: SuccessBannerProps) => {
 
   return (
     <div className={`success-banner${isDismissing ? " success-banner--dismissing" : ""}`} role="status">
-      <Icon name="check-bold" size={18} />
+      <Icon name="check-bold" size={20} />
       {message}
     </div>
   );
