@@ -17,7 +17,7 @@ import {
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
 import type { GroupData } from "../context/group/GroupContext";
-import type { JoinRequest } from "../models/user.model";
+import type { JoinRequest, AcceptedRequest } from "../models/user.model";
 
 export const getGroupById = async (
   groupId: string,
@@ -101,7 +101,8 @@ export const findGroupByInviteCode = async (
   code: string,
 ): Promise<{ id: string; name: string; imageUrl?: string } | null> => {
   try {
-    const q = query(collection(db, "groups"), where("inviteCode", "==", code));
+    const normalized = code.trim().toUpperCase();
+    const q = query(collection(db, "groups"), where("inviteCode", "==", normalized));
     const snap = await getDocs(q);
     if (snap.empty) return null;
     const groupDoc = snap.docs[0];
@@ -236,7 +237,26 @@ export const approveJoinRequest = async (
     pendingJoinGroupId: deleteField(),
   });
   batch.delete(doc(db, "groups", groupId, "joinRequests", uid));
+  batch.set(doc(db, "groups", groupId, "acceptedRequests", uid), {
+    firstName: memberData.firstName,
+    lastName: memberData.lastName,
+    acceptedAt: serverTimestamp(),
+  });
   await batch.commit();
+};
+
+export const getAcceptedRequests = async (groupId: string): Promise<AcceptedRequest[]> => {
+  try {
+    const snap = await getDocs(collection(db, "groups", groupId, "acceptedRequests"));
+    return snap.docs.map(d => ({
+      uid: d.id,
+      firstName: d.data().firstName as string,
+      lastName: d.data().lastName as string,
+      acceptedAt: d.data().acceptedAt?.toDate() ?? new Date(),
+    }));
+  } catch {
+    return [];
+  }
 };
 
 export const rejectJoinRequest = async (

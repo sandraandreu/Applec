@@ -77,10 +77,10 @@ Solo el Admin puede cambiar roles y expulsar miembros. Los permisos se derivan d
 
 Solo Admin y Organizadores pueden crear eventos.
 
-Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción opcional; (2) fecha, hora de inicio, hora de fin opcional y lugar; (3) configuración de confirmación obligatoria, recordatorio, fecha límite de confirmación y configuración de acompañantes externos.
+Flujo de 3 pasos: (1) tipo de evento (normal / especial) + nombre + descripción; (2) fecha, hora de inicio, hora de fin opcional y lugar; (3) configuración de confirmación obligatoria, recordatorio, fecha límite de confirmación y configuración de acompañantes externos.
 
-**Campos obligatorios:** nombre (máx. 80 caracteres), fecha, hora de inicio, lugar.
-**Campos opcionales:** descripción (máx. 500 caracteres), hora de fin, fecha límite de confirmación.
+**Campos obligatorios:** nombre (máx. 50 caracteres), descripción (máx. 300 caracteres), fecha, hora de inicio, lugar.
+**Campos opcionales:** hora de fin, fecha límite de confirmación.
 
 La fecha límite de confirmación no puede ser posterior a la fecha del evento.
 

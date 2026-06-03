@@ -103,7 +103,8 @@
     "maxExternalGuestsHint": "Deja vacío para no poner límite",
     "continue": "Continuar",
     "submit": "Crear evento",
-    "error": "Error al crear el evento"
+    "error": "Error al crear el evento",
+    "success": "Evento creado correctamente"
   },
   "edit": {
     "title": "Editar evento",
@@ -124,6 +125,7 @@
     "no": "No",
     "next": "Siguiente",
     "save": "Guardar",
+    "saveError": "No se pudo guardar. Inténtalo de nuevo.",
     "update": "Guardar",
     "cta": "¿Vas?",
     "modify": "Cambiar respuesta",
@@ -211,7 +213,7 @@
     "locationRequired": "El lugar es obligatorio",
     "endTimeBeforeStart": "La hora de fin debe ser posterior a la de inicio",
     "deadlineAfterDate": "El plazo no puede ser posterior a la fecha del evento",
-    "nameMaxLength": "El nombre no puede superar los 80 caracteres",
-    "descriptionMaxLength": "La descripción no puede superar los 500 caracteres"
+    "nameMaxLength": "El nombre no puede superar los 50 caracteres",
+    "descriptionMaxLength": "La descripción no puede superar los 300 caracteres"
   }
 }

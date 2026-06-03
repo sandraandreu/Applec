@@ -72,7 +72,7 @@ const RegisterPage = () => {
           message: tCommon("errors.noConnection"),
         });
       } else {
-        dispatch({ type: "REGISTER_ERROR" });
+        dispatch({ type: "ERROR_CONNECTION", message: tCommon("errors.unknown") });
       }
       return;
     }
@@ -98,7 +98,7 @@ const RegisterPage = () => {
       } catch {
         /* rollback best-effort */
       }
-      dispatch({ type: "REGISTER_ERROR" });
+      dispatch({ type: "ERROR_CONNECTION", message: tCommon("errors.unknown") });
       return;
     }
 

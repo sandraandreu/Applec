@@ -86,6 +86,8 @@ const CreateGroupPage = () => {
     } catch (error: unknown) {
       if (isFirebaseError(error) && error.code === "auth/network-request-failed") {
         setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
+      } else {
+        setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.unknown") }));
       }
     } finally {
       setSubmitState(prev => ({ ...prev, isLoading: false }));

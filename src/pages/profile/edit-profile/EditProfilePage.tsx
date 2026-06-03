@@ -1,5 +1,6 @@
 import "./edit-profile.scss";
 import { useState, useRef, type ChangeEvent } from "react";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
@@ -28,6 +29,7 @@ const EditProfilePage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [photoSuccess, setPhotoSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useLayoutBackground(profile?.role);
@@ -48,11 +50,13 @@ const EditProfilePage = () => {
     if (!file) return;
     setIsLoading(true);
     setError(null);
+    setPhotoSuccess(false);
     try {
       const photoUrl = await uploadProfilePhoto(user.uid, file);
       await updateUserFields(user.uid, { photoUrl });
       if (profile.groupId) await updateMemberFields(profile.groupId, user.uid, { photoUrl });
       await Promise.all([refreshProfile(), refreshGroup()]);
+      setPhotoSuccess(true);
     } catch {
       setError(t("editProfile.saveError"));
     } finally {
@@ -79,6 +83,9 @@ const EditProfilePage = () => {
 
   return (
     <div className="edit-profile-page">
+      {photoSuccess && (
+        <SuccessBanner message={t("editProfile.photoSuccess")} onDismiss={() => setPhotoSuccess(false)} />
+      )}
       <PageHeader title={t("editProfile.title")} onBack={() => navigate(-1)} />
       <div className="edit-profile-page__avatar-section">
         <button

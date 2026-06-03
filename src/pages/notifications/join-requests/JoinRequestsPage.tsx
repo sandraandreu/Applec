@@ -30,7 +30,7 @@ const JoinRequestsPage = () => {
     let isMounted = true;
     getJoinRequests(profile.groupId).then(requests => {
       if (!isMounted) return;
-      setRealRequests(requests);
+      setRealRequests(requests.sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()));
       setIsLoading(false);
     });
     return () => { isMounted = false; };
@@ -62,7 +62,10 @@ const JoinRequestsPage = () => {
     });
   };
 
-  const visibleDemoRequests = DEMO_REQUESTS.filter(id => !dismissedDemoIds.has(id));
+  const realNames = new Set(realRequests.map(r => `${r.firstName} ${r.lastName}`));
+  const visibleDemoRequests = DEMO_REQUESTS.filter(id =>
+    !dismissedDemoIds.has(id) && !realNames.has(t(`requestsPage.${id}`))
+  );
   const isEmpty = !isLoading && realRequests.length === 0 && visibleDemoRequests.length === 0;
 
   return (

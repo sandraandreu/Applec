@@ -15,7 +15,7 @@ import {
 import { updateUserFields } from "../../../services/user.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import requestPendingIllustration from "../../../assets/images/request-pending-illustration.png";
+import joinRequestIllustration from "../../../assets/images/join-request-illustration.png";
 
 interface JoinGroupFormData {
   code: string;
@@ -99,7 +99,7 @@ const JoinGroupPage = () => {
             </p>
           </div>
           <img
-            src={requestPendingIllustration}
+            src={joinRequestIllustration}
             alt=""
             aria-hidden="true"
             className="join-group-page__pending-illustration"

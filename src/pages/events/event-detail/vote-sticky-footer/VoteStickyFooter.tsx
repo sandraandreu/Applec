@@ -8,6 +8,7 @@ interface Props {
   visibleLinkedMembers: { id: string; firstName: string }[];
   myLinkedResponses: Record<string, "going" | "not-going">;
   voteError: string | null;
+  isVoting: boolean;
   onVote: (response: "going" | "not-going") => void;
   onCompanionsClick: () => void;
   onAddLinked: () => void;
@@ -19,6 +20,7 @@ const VoteStickyFooter = ({
   visibleLinkedMembers,
   myLinkedResponses,
   voteError,
+  isVoting,
   onVote,
   onCompanionsClick,
   onAddLinked,
@@ -50,6 +52,7 @@ const VoteStickyFooter = ({
               type="button"
               className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--yes${myResponse === "going" ? " event-detail-page__vote-own-btn--active" : ""}`}
               aria-pressed={myResponse === "going"}
+              disabled={isVoting}
               onClick={() => onVote("going")}
             >
               <Icon name="check-bold" size={20} aria-hidden="true" />
@@ -59,6 +62,7 @@ const VoteStickyFooter = ({
               type="button"
               className={`event-detail-page__vote-own-btn event-detail-page__vote-own-btn--no${myResponse === "not-going" ? " event-detail-page__vote-own-btn--active" : ""}`}
               aria-pressed={myResponse === "not-going"}
+              disabled={isVoting}
               onClick={() => onVote("not-going")}
             >
               <Icon name="x-mark" size={20} aria-hidden="true" />

@@ -24,6 +24,7 @@
     "emailHint": "El correu electrònic l'uses per a iniciar sessió i no es pot canviar",
     "save": "Guardar canvis",
     "saveSuccess": "Perfil actualitzat",
+    "photoSuccess": "Foto actualitzada correctament",
     "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
     "errors": {
       "firstNameRequired": "El nom és obligatori",
@@ -49,6 +50,7 @@
     "changeImage": "Canviar imatge",
     "save": "Guardar canvis",
     "saveSuccess": "Canvis guardats",
+    "imageSuccess": "Imatge actualitzada correctament",
     "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
     "dangerZone": "Zona de perill",
     "deleteGroup": "Eliminar falla",

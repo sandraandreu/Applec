@@ -39,6 +39,7 @@ const EventDetailPage = () => {
   const [deleteState, setDeleteState] = useState<{ isLoading: boolean; error: string | null }>({ isLoading: false, error: null });
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
+  const [isVoting, setIsVoting] = useState(false);
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate(-1),
     trackMouse: false,
@@ -154,8 +155,9 @@ const EventDetailPage = () => {
   };
 
   const handleVote = async (response: "going" | "not-going") => {
-    if (!profile?.groupId || !id || !user?.uid) return;
+    if (!profile?.groupId || !id || !user?.uid || isVoting) return;
     const newResponse = myResponse === response ? undefined : response;
+    setIsVoting(true);
     try {
       await saveAttendance(profile.groupId, id, user.uid, {
         response: newResponse,
@@ -173,6 +175,8 @@ const EventDetailPage = () => {
       setVoteError(null);
     } catch {
       setVoteError(t("attendance.error"));
+    } finally {
+      setIsVoting(false);
     }
   };
 
@@ -259,6 +263,7 @@ const EventDetailPage = () => {
           visibleLinkedMembers={visibleLinkedMembers.map(lm => ({ id: lm.id, firstName: lm.firstName }))}
           myLinkedResponses={myLinkedResponses}
           voteError={voteError}
+          isVoting={isVoting}
           onVote={handleVote}
           onCompanionsClick={() => setShowVoteSheet(true)}
           onAddLinked={handleAddLinked}

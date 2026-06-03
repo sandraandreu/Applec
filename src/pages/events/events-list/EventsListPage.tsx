@@ -15,7 +15,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./events-list.scss";
 
 const EventsListPage = () => {
-  const { user, profile, refreshProfile } = useAuthContext();
+  const { user, profile } = useAuthContext();
   const { t } = useTranslation("events");
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,7 +25,10 @@ const EventsListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [showEventUpdated, setShowEventUpdated] = useState(
-    !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
+    !!(location.state as { eventUpdated?: boolean; eventCreated?: boolean } | null)?.eventUpdated
+  );
+  const [showEventCreated, setShowEventCreated] = useState(
+    !!(location.state as { eventCreated?: boolean } | null)?.eventCreated
   );
   const [showJoinAccepted, setShowJoinAccepted] = useState(
     profile?.joinAccepted === true
@@ -34,17 +37,16 @@ const EventsListPage = () => {
   useLayoutBackground(profile?.role);
 
   useEffect(() => {
-    if (showEventUpdated) {
+    if (showEventUpdated || showEventCreated) {
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, [showEventUpdated, navigate, location.pathname]);
+  }, [showEventUpdated, showEventCreated, navigate, location.pathname]);
 
   useEffect(() => {
     if (showJoinAccepted && user?.uid) {
       clearJoinAcceptedFlag(user.uid);
-      refreshProfile();
     }
-  }, [showJoinAccepted, user?.uid, refreshProfile]);
+  }, [showJoinAccepted, user?.uid]);
 
   useEffect(() => {
     if (!profile?.groupId || !user) return;
@@ -89,6 +91,9 @@ const EventsListPage = () => {
           message={t("joinAccepted.message")}
           onDismiss={() => setShowJoinAccepted(false)}
         />
+      )}
+      {showEventCreated && (
+        <SuccessBanner message={t("create.success")} onDismiss={() => setShowEventCreated(false)} />
       )}
       {showEventUpdated && (
         <SuccessBanner message={t("edit.success")} onDismiss={() => setShowEventUpdated(false)} />

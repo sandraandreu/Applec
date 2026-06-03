@@ -24,6 +24,7 @@
     "emailHint": "El correo electrónico lo usas para iniciar sesión y no se puede cambiar",
     "save": "Guardar cambios",
     "saveSuccess": "Perfil actualizado",
+    "photoSuccess": "Foto actualizada correctamente",
     "saveError": "No se pudo guardar. Inténtalo de nuevo.",
     "errors": {
       "firstNameRequired": "El nombre es obligatorio",
@@ -49,6 +50,7 @@
     "changeImage": "Cambiar imagen",
     "save": "Guardar cambios",
     "saveSuccess": "Cambios guardados",
+    "imageSuccess": "Imagen actualizada correctamente",
     "saveError": "No se pudo guardar. Inténtalo de nuevo.",
     "dangerZone": "Zona de peligro",
     "deleteGroup": "Eliminar falla",

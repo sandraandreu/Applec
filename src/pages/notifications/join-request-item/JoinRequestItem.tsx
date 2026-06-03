@@ -58,10 +58,7 @@ const JoinRequestItem = ({ iconName, iconBg, title, message, onAccept, onReject 
         <span className="join-request-item__title">{title}</span>
         <p className="join-request-item__message">{message}</p>
         {error && (
-          <p className="join-request-item__error">
-            <Icon name="error-circle" size={18} aria-hidden="true" />
-            {error}
-          </p>
+          <p className="join-request-item__error">{error}</p>
         )}
         <div className="join-request-item__actions">
           <Button

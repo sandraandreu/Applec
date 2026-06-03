@@ -33,6 +33,13 @@ export interface JoinRequest {
   requestedAt: Date;
 }
 
+export interface AcceptedRequest {
+  uid: string;
+  firstName: string;
+  lastName: string;
+  acceptedAt: Date;
+}
+
 export type UserProfileCreate = Omit<UserProfile, "groupId">;
 
 export interface UserPermissions {

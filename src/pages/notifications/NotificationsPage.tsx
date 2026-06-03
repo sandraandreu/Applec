@@ -1,5 +1,9 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
+import { useGroupContext } from "../../context/group/GroupContext";
+import { getJoinRequests, approveJoinRequest, rejectJoinRequest, getAcceptedRequests } from "../../services/group.service";
+import type { JoinRequest, AcceptedRequest } from "../../models/user.model";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
 import NotificationItem from "./notification-item/NotificationItem";
 import JoinRequestItem from "./join-request-item/JoinRequestItem";
@@ -27,9 +31,55 @@ interface NotificationSection {
 
 const NotificationsPage = () => {
   const { t } = useTranslation("notifications");
-  const { user } = useAuthContext();
+  const { user, profile } = useAuthContext();
+  const { group } = useGroupContext();
 
   const isAdminOrOrg = !!user?.permissions.canCreateEvents;
+
+  useEffect(() => {
+    const update = () => localStorage.setItem("notificationsLastSeen", Date.now().toString());
+    update();
+    return () => update();
+  }, []);
+
+  const [realRequests, setRealRequests] = useState<JoinRequest[]>([]);
+  const [acceptedRequests, setAcceptedRequests] = useState<AcceptedRequest[]>([]);
+
+  useEffect(() => {
+    if (!isAdminOrOrg || !profile?.groupId) return;
+    let isMounted = true;
+    const groupId = profile.groupId;
+    Promise.all([
+      getJoinRequests(groupId),
+      getAcceptedRequests(groupId),
+    ]).then(([joinRequests, accepted]) => {
+      if (!isMounted) return;
+      setRealRequests(joinRequests.sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()));
+      setAcceptedRequests(accepted.sort((a, b) => b.acceptedAt.getTime() - a.acceptedAt.getTime()));
+    });
+    return () => { isMounted = false; };
+  }, [isAdminOrOrg, profile?.groupId]);
+
+  const removeRequest = (uid: string) =>
+    setRealRequests(prev => prev.filter(r => r.uid !== uid));
+
+  const handleApprove = async (request: JoinRequest) => {
+    if (!profile?.groupId) return;
+    const groupId = profile.groupId;
+    await approveJoinRequest(groupId, request.uid, {
+      firstName: request.firstName,
+      lastName: request.lastName,
+    });
+    removeRequest(request.uid);
+    const updated = await getAcceptedRequests(groupId);
+    setAcceptedRequests(updated.sort((a, b) => b.acceptedAt.getTime() - a.acceptedAt.getTime()));
+  };
+
+  const handleReject = async (request: JoinRequest) => {
+    if (!profile?.groupId) return;
+    await rejectJoinRequest(profile.groupId, request.uid);
+    removeRequest(request.uid);
+  };
 
   const adminSections: NotificationSection[] = [
     {
@@ -37,14 +87,6 @@ const NotificationsPage = () => {
       label: t("sections.today"),
       hasDot: true,
       items: [
-        {
-          id: "join-request",
-          iconName: "person-add",
-          iconBg: "teal",
-          title: t("joinRequest.title"),
-          message: t("joinRequest.message"),
-          variant: "joinRequest",
-        },
         {
           id: "deadline-soon-sopar",
           iconName: "clock-simple",
@@ -164,6 +206,16 @@ const NotificationsPage = () => {
 
   const sections = isAdminOrOrg ? adminSections : memberSections;
 
+  const isToday = (date: Date) => {
+    const now = new Date();
+    return date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth() &&
+      date.getDate() === now.getDate();
+  };
+
+  const todayAccepted = acceptedRequests.filter(r => isToday(r.acceptedAt));
+  const thisWeekAccepted = acceptedRequests.filter(r => !isToday(r.acceptedAt));
+
   return (
     <PageTransition>
     <div className="notifications-page">
@@ -172,6 +224,16 @@ const NotificationsPage = () => {
         <h1 className="notifications-page__title">{t("title")}</h1>
       </div>
       <div className="notifications-page__content">
+        {isAdminOrOrg && (
+          <div className="notifications-page__requests-btn">
+            <Button
+              text={t("requestsPage.viewAll")}
+              variant="secondary"
+              className="button--compact"
+              to="/notifications/requests"
+            />
+          </div>
+        )}
         {sections.map(section => (
           <section key={section.id} className="notifications-page__section">
             <div className="notifications-page__section-header">
@@ -179,16 +241,38 @@ const NotificationsPage = () => {
               <span className="notifications-page__section-label">{section.label}</span>
             </div>
             <ul className="notifications-page__list">
-              {section.id === "today" && isAdminOrOrg && (
-                <li className="notifications-page__view-all">
-                  <Button
-                    text={t("requestsPage.viewAll")}
-                    variant="secondary"
-                    className="button--compact"
-                    to="/notifications/requests"
+              {section.id === "today" && todayAccepted.map(r => (
+                <li key={`accepted-${r.uid}`}>
+                  <NotificationItem
+                    iconName="person-add"
+                    iconBg="teal"
+                    title={`${r.firstName} ${r.lastName}`}
+                    message={t("joinRequestAccepted.message")}
                   />
                 </li>
-              )}
+              ))}
+              {section.id === "this-week" && thisWeekAccepted.map(r => (
+                <li key={`accepted-${r.uid}`}>
+                  <NotificationItem
+                    iconName="person-add"
+                    iconBg="teal"
+                    title={`${r.firstName} ${r.lastName}`}
+                    message={t("joinRequestAccepted.message")}
+                  />
+                </li>
+              ))}
+              {section.id === "today" && isAdminOrOrg && realRequests.map(request => (
+                <li key={request.uid}>
+                  <JoinRequestItem
+                    iconName="person-add"
+                    iconBg="teal"
+                    title={`${request.firstName} ${request.lastName}`}
+                    message={t("requestsPage.realMessage", { group: group?.name ?? "" })}
+                    onAccept={async () => handleApprove(request)}
+                    onReject={async () => handleReject(request)}
+                  />
+                </li>
+              ))}
               {section.items.map(item => (
                 <li key={item.id}>
                   {item.variant === "joinRequest" ? (

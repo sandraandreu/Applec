@@ -11,14 +11,15 @@ import Stepper from "../../../ui-kit/stepper/Stepper";
 import SlideTransition from "../../../ui-kit/slide-transition/SlideTransition";
 import Modal from "../../../components/modal/Modal";
 import groupIllustration from "../../../assets/images/group-onboarding-illustration.png";
-import requestPendingIllustration from "../../../assets/images/request-pending-illustration.png";
+import joinRequestIllustration from "../../../assets/images/join-request-illustration.png";
 
 const GroupPage = () => {
   const { t } = useTranslation("onboarding");
   const { t: tGroups } = useTranslation("groups");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
-  const { profile, user, refreshProfile } = useAuthContext();
+  const { profile, user, refreshProfile, logout } = useAuthContext();
 
   const [showRejectedModal, setShowRejectedModal] = useState(
     profile?.joinRejected === true
@@ -60,10 +61,12 @@ const GroupPage = () => {
               </p>
             </div>
             <div className="group-page__img">
-              <img src={requestPendingIllustration} alt="" aria-hidden="true" />
+              <img src={joinRequestIllustration} alt="" aria-hidden="true" />
             </div>
           </div>
-          <Stepper currentStep={3} totalSteps={3} />
+          <button className="group-page__logout" onClick={logout} type="button">
+            {tCommon("buttons.logout")}
+          </button>
         </div>
       </SlideTransition>
     );
