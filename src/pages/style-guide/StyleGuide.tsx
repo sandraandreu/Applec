@@ -27,7 +27,9 @@ import type {
   FilterOption,
   FilterKey,
 } from "../../components/events/EventsFilter";
-import type { FallesEvent } from "../../models/event.model";
+import type { FallesEvent, FallesEventCreate } from "../../models/event.model";
+import { createEvent } from "../../services/event.service";
+import { useAuthContext } from "../../context/auth/AuthContext";
 
 const mockEventBase: FallesEvent = {
   id: "evt-1",
@@ -153,6 +155,20 @@ const StyleGuide = () => {
   const [eventsFilter, setEventsFilter] = useState<FilterKey>("active");
   const [bombKey, setBombKey] = useState(0);
   const [showBomb, setShowBomb] = useState(false);
+  const [seedStates, setSeedStates] = useState<Record<string, "idle" | "loading" | "done" | "error">>({});
+
+  const { user, profile } = useAuthContext();
+
+  const seedEvent = async (key: string, data: Omit<FallesEventCreate, "groupId" | "createdBy">) => {
+    if (!profile?.groupId || !user?.uid) return;
+    setSeedStates(prev => ({ ...prev, [key]: "loading" }));
+    try {
+      await createEvent(profile.groupId, { ...data, groupId: profile.groupId, createdBy: user.uid });
+      setSeedStates(prev => ({ ...prev, [key]: "done" }));
+    } catch {
+      setSeedStates(prev => ({ ...prev, [key]: "error" }));
+    }
+  };
 
   return (
     <div className="style-guide">
@@ -943,6 +959,74 @@ const StyleGuide = () => {
               { text: "Cancelar", role: "cancel" },
             ]}
           />
+        </div>
+      </section>
+
+      <section className="style-guide__section">
+        <h2 className="style-guide__section-title">Seed de Datos</h2>
+        <p className="style-guide__label">Crea eventos de prueba en tu grupo actual.</p>
+
+        <div className="style-guide__stack">
+
+          <div className="style-guide__item">
+            <span className="style-guide__label">Especial · invitados externos · max 3 · con plazo</span>
+            <Button
+              text={seedStates["cena"] === "done" ? "✓ Creada" : seedStates["cena"] === "error" ? "Error" : "Crear Cena de la Falla Major"}
+              variant={seedStates["cena"] === "done" ? "secondary" : "primary"}
+              isLoading={seedStates["cena"] === "loading"}
+              onClick={() => seedEvent("cena", {
+                name: "Cena de la Falla Major",
+                date: new Date(2026, 6, 5, 21, 0),
+                startTime: "21:00",
+                location: "Restaurante El Mercat",
+                description: "Cena especial de la falla. Podeu portar fins a 3 convidats externs.",
+                isSpecial: true,
+                requiresConfirmation: true,
+                sendReminder: true,
+                confirmationDeadline: new Date(2026, 5, 28, 23, 59),
+                allowExternalGuests: true,
+                maxExternalGuests: 3,
+              })}
+            />
+          </div>
+
+          <div className="style-guide__item">
+            <span className="style-guide__label">Solo falleros · sin invitados externos · con plazo</span>
+            <Button
+              text={seedStates["passeig"] === "done" ? "✓ Creat" : seedStates["passeig"] === "error" ? "Error" : "Crear Passeig de Fallers"}
+              variant={seedStates["passeig"] === "done" ? "secondary" : "primary"}
+              isLoading={seedStates["passeig"] === "loading"}
+              onClick={() => seedEvent("passeig", {
+                name: "Passeig de Fallers",
+                date: new Date(2026, 6, 15, 18, 0),
+                startTime: "18:00",
+                location: "Plaça del Poble",
+                description: "Passeig pels carrers de la falla. Només per a fallers.",
+                requiresConfirmation: true,
+                sendReminder: true,
+                confirmationDeadline: new Date(2026, 6, 10, 23, 59),
+                allowExternalGuests: false,
+              })}
+            />
+          </div>
+
+          <div className="style-guide__item">
+            <span className="style-guide__label">Sin confirmación · sin restricción de invitados</span>
+            <Button
+              text={seedStates["berenar"] === "done" ? "✓ Creat" : seedStates["berenar"] === "error" ? "Error" : "Crear Berenar del Grup"}
+              variant={seedStates["berenar"] === "done" ? "secondary" : "primary"}
+              isLoading={seedStates["berenar"] === "loading"}
+              onClick={() => seedEvent("berenar", {
+                name: "Berenar del Grup",
+                date: new Date(2026, 7, 1, 17, 30),
+                startTime: "17:30",
+                location: "Local Social",
+                requiresConfirmation: false,
+                sendReminder: false,
+              })}
+            />
+          </div>
+
         </div>
       </section>
     </div>
