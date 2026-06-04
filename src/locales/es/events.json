@@ -32,7 +32,7 @@
     "location": "Lugar",
     "description": "Descripción del evento",
     "attendees": "Asistentes",
-    "attendeesEmpty": "Todavía no hay ningún miembro en tu falla",
+    "attendeesEmpty": "Todavía no hay nadie en tu falla",
     "viewAll": "Ver asistentes",
     "menuOptions": "Opciones del evento",
     "edit": "Editar evento",
@@ -130,7 +130,8 @@
     "cta": "¿Vas?",
     "modify": "Cambiar respuesta",
     "modifyPlural": "Cambiar respuestas",
-    "closed": "Ya cerró el plazo",
+    "closedWithResponse": "El plazo ha cerrado, ya no puedes cambiar tu respuesta",
+    "closedNoResponse": "No confirmaste tu asistencia, el plazo ya ha cerrado",
     "myVote": "Tu asistencia",
     "going": "Vas",
     "notGoing": "No vas",
@@ -202,7 +203,7 @@
     "total": "Total"
   },
   "joinAccepted": {
-    "message": "¡Ya eres miembro! Tu solicitud ha sido aceptada."
+    "message": "¡Tu solicitud ha sido aceptada! Ya formas parte de la falla."
   },
   "validation": {
     "nameRequired": "El nombre del evento es obligatorio",

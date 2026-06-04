@@ -54,7 +54,7 @@ const MembersList = ({ searchValue }: MembersListProps) => {
     <div className="members-list">
       {filteredMembers.length === 0 ? (
         <EmptyState
-          title={searchValue ? t("members.emptySearch") : t("members.emptyFilter")}
+          title={t("members.emptySearch")}
           variant="light"
           expand
         />

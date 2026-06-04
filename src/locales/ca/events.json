@@ -32,7 +32,7 @@
     "location": "Lloc",
     "description": "Descripció de l'event",
     "attendees": "Assistents",
-    "attendeesEmpty": "Encara no hi ha cap membre a la teua falla",
+    "attendeesEmpty": "Encara no hi ha ningú a la teua falla",
     "viewAll": "Veure assistents",
     "menuOptions": "Opcions de l'event",
     "edit": "Editar event",
@@ -130,7 +130,8 @@
     "cta": "Hi vas?",
     "modify": "Canviar resposta",
     "modifyPlural": "Canviar respostes",
-    "closed": "Ja ha tancat el termini",
+    "closedWithResponse": "El termini ha tancat, ja no pots canviar la teua resposta",
+    "closedNoResponse": "No vas confirmar l'assistència, el termini ja ha tancat",
     "myVote": "La teua assistència",
     "going": "Hi vas",
     "notGoing": "No hi vas",
@@ -202,7 +203,7 @@
     "total": "Total"
   },
   "joinAccepted": {
-    "message": "Ja ets membre! La teua sol·licitud ha sigut acceptada."
+    "message": "La teua sol·licitud ha sigut acceptada! Ja formes part de la falla."
   },
   "validation": {
     "nameRequired": "El nom de l'esdeveniment és obligatori",
