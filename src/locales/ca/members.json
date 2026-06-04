@@ -1,23 +1,22 @@
 {
   "members": {
-    "title": "Membres",
-    "search": "Buscar membre...",
-    "onlyMember": "Ets l'únic membre",
+    "title": "Fallers/es",
+    "search": "Buscar faller/a...",
+    "onlyMember": "Encara no hi ha fallers/es a la teua falla",
     "onlyMemberSubtitle": "Convida més persones per començar",
     "invite": "Convidar",
-    "emptySearch": "No s'han trobat membres amb aqueix nom.",
-    "emptyFilter": "No hi ha membres amb aquest rol.",
-    "loading": "Carregant membres...",
+    "emptySearch": "No s'han trobat resultats.",
+    "loading": "Carregant...",
     "you": "Tu",
     "filters": {
       "all": "Tots {{count}}"
     },
     "roles": {
-      "admin": "Administrador",
-      "organizer": "Organitzador",
-      "organizers": "Organitzadors",
-      "member": "Membre",
-      "members": "Membres"
+      "admin": "Administrador/a",
+      "organizer": "Organitzador/a",
+      "organizers": "Organitzadors/es",
+      "member": "Faller/a",
+      "members": "Fallers/es"
     },
     "chips": {
       "admin": "Admin",
@@ -28,31 +27,31 @@
     "linked": "Acompanyants",
     "changeRoleTitle": "Quin paper té a la falla?",
     "makeRole": {
-      "admin": "Administrador",
-      "organizer": "Organitzador",
-      "member": "Membre"
+      "admin": "Administrador/a",
+      "organizer": "Organitzador/a",
+      "member": "Faller/a"
     },
     "roleDescription": {
-      "admin": "Control total del grup. Pot crear i gestionar esdeveniments, afegir i eliminar membres, canviar rols i veure l'assistència completa. Màxim 3 per grup.",
-      "organizer": "Pot crear i gestionar els seus propis esdeveniments, aprovar sol·licituds d'entrada i afegir membres. No pot canviar rols ni eliminar membres.",
+      "admin": "Control total del grup. Pot crear i gestionar esdeveniments, afegir i eliminar fallers/es, canviar rols i veure l'assistència completa. Màxim 3 per grup.",
+      "organizer": "Pot crear i gestionar els seus propis esdeveniments, aprovar sol·licituds d'entrada i afegir fallers/es. No pot canviar rols ni eliminar fallers/es.",
       "member": "Pot veure el calendari d'esdeveniments i confirmar la seua pròpia assistència. No té accés a la gestió del grup."
     },
-    "adminLimitReached": "Ja hi ha 3 administradors al grup. Per assignar aquest rol, canvia primer el d'un dels administradors actuals.",
+    "adminLimitReached": "El grup ja té 3 administradors/es. Per assignar aquest rol, canvia primer el d'algun dels actuals.",
     "roleInfoLabel": "Veure descripció del rol",
-    "adminConfirmHeader": "Fer Administrador?",
-    "adminConfirmMessage": "Aquest membre tindrà control total del grup. Podràs canviar el seu rol més endavant si cal.",
+    "adminConfirmHeader": "Fer Administrador/a?",
+    "adminConfirmMessage": "Aquesta persona tindrà control total del grup. Podràs canviar el seu rol més endavant si cal.",
     "adminConfirmCancel": "Cancel·lar",
-    "adminConfirmSubmit": "Sí, fer Administrador",
+    "adminConfirmSubmit": "Sí, fer Administrador/a",
     "removeMember": "Eliminar a {{name}}",
     "save": "Guardar canvis",
     "cancel": "Cancel·lar",
-    "deleteConfirm": "Eliminar membre",
-    "deleteMessage": "Estàs segur que vols eliminar aquest membre del grup?",
+    "deleteConfirm": "Eliminar faller/a",
+    "deleteMessage": "Segur que vols eliminar aquesta persona del grup?",
     "deleteCancel": "Cancel·lar",
     "deleteSubmit": "Eliminar",
     "saveError": "No s'han pogut guardar els canvis.",
-    "deleteError": "No s'ha pogut eliminar el membre.",
+    "deleteError": "No s'ha pogut completar l'eliminació.",
     "roleUpdated": "Rol actualitzat correctament",
-    "memberDeleted": "Membre eliminat correctament"
+    "memberDeleted": "Eliminat del grup correctament"
   }
 }

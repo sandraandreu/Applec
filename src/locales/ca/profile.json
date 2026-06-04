@@ -55,7 +55,7 @@
     "dangerZone": "Zona de perill",
     "deleteGroup": "Eliminar falla",
     "deleteConfirmTitle": "Eliminar falla",
-    "deleteConfirmMessage": "Aquesta acció és irreversible. Tots els membres perdran l'accés immediatament.",
+    "deleteConfirmMessage": "Aquesta acció és irreversible. Totes les persones del grup perdran l'accés immediatament.",
     "deleteCancel": "Cancel·lar",
     "deleteConfirm": "Eliminar",
     "deleteError": "No s'ha pogut eliminar la falla. Torna-ho a intentar.",

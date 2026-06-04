@@ -55,7 +55,7 @@
     "dangerZone": "Zona de peligro",
     "deleteGroup": "Eliminar falla",
     "deleteConfirmTitle": "Eliminar falla",
-    "deleteConfirmMessage": "Esta acción es irreversible. Todos los miembros perderán el acceso inmediatamente.",
+    "deleteConfirmMessage": "Esta acción es irreversible. Todas las personas del grupo perderán el acceso inmediatamente.",
     "deleteCancel": "Cancelar",
     "deleteConfirm": "Eliminar",
     "deleteError": "No se pudo eliminar la falla. Inténtalo de nuevo.",

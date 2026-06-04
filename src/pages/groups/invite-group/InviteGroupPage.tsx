@@ -15,6 +15,7 @@ const InviteGroupPage = () => {
   const fromCreate = location.state?.fromCreate === true;
 
   const [copied, setCopied] = useState<boolean>(false);
+  const [copyError, setCopyError] = useState<boolean>(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -25,9 +26,14 @@ const InviteGroupPage = () => {
 
   const handleCopy = async () => {
     if (!inviteCode) return;
-    await navigator.clipboard.writeText(inviteCode);
-    setCopied(true);
-    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(inviteCode);
+      setCopied(true);
+      setCopyError(false);
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopyError(true);
+    }
   };
 
   const handleShare = async () => {
@@ -91,6 +97,13 @@ const InviteGroupPage = () => {
           {tGroups("invite.share")}
         </button>
       </div>
+
+      {copyError && (
+        <p className="invite-group-page__copy-error">
+          <Icon name="error-circle" size={20} aria-hidden />
+          {tGroups("invite.copyError")}
+        </p>
+      )}
 
       {fromCreate && (
         <Link to="/events" className="invite-group-page__skip">{tGroups("invite.skip")}</Link>

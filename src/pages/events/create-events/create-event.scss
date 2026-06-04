@@ -198,8 +198,9 @@
     }
 
     &--special {
-      background-color: var(--color-bg-purple);
-      color: var(--color-accent-purple);
+      background-color: var(--white);
+      border: 1.5px solid var(--color-brand);
+      color: var(--color-brand);
     }
   }
 

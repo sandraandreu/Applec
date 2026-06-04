@@ -19,19 +19,19 @@
 
     .event-card--special & {
       border-right: none;
-      background: var(--color-bg-gradient-blue);
+      background: var(--color-brand);
     }
   }
 
   &__day {
-    font-size: var(--font-size-h2);
+    font-size: var(--font-size-h1);
     font-weight: var(--font-weight-bold);
     color: var(--color-brand);
     line-height: 1.2;
   }
 
   &__month {
-    font-size: var(--font-size-body-s);
+    font-size: var(--font-size-body-m);
     font-weight: var(--font-weight-medium);
     color: var(--color-text-secondary);
     text-transform: uppercase;
@@ -82,6 +82,11 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+  }
+
+  &--special {
+    .event-card__day { color: var(--white); }
+    .event-card__month { color: var(--white); }
   }
 
   &--finished {

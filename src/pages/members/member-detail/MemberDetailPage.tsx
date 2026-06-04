@@ -44,7 +44,10 @@ const MemberDetailPage = () => {
     if (!isLoading && !member) {
       navigate("/members", { replace: true });
     }
-  }, [isLoading, member, navigate]);
+    if (!(user?.permissions.canViewMemberDetail ?? false)) {
+      navigate("/members", { replace: true });
+    }
+  }, [isLoading, member, navigate, user]);
 
   if (isLoading || !member) return <Loading />;
 
@@ -178,6 +181,13 @@ const MemberDetailPage = () => {
                 })}
               </div>
 
+              {saveState.error && (
+                <p className="member-detail-page__error">
+                  <Icon name="error-circle" size={20} />
+                  {saveState.error}
+                </p>
+              )}
+
               {pendingRole && (
                 <div className="member-detail-page__buttons">
                   <Button
@@ -191,13 +201,6 @@ const MemberDetailPage = () => {
                     onClick={() => setPendingRole(null)}
                   />
                 </div>
-              )}
-
-              {saveState.error && (
-                <p className="member-detail-page__error">
-                  <Icon name="error-circle" size={20} />
-                  {saveState.error}
-                </p>
               )}
             </div>
 

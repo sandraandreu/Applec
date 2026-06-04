@@ -1,23 +1,22 @@
 {
   "members": {
-    "title": "Miembros",
-    "search": "Buscar miembro...",
-    "onlyMember": "Eres el único miembro",
+    "title": "Falleros/as",
+    "search": "Buscar fallero/a...",
+    "onlyMember": "Aún no hay falleros/as en tu falla",
     "onlyMemberSubtitle": "Invita a más personas para empezar",
     "invite": "Invitar",
-    "emptySearch": "No se encontraron miembros con ese nombre.",
-    "emptyFilter": "No hay miembros con este rol.",
-    "loading": "Cargando miembros...",
+    "emptySearch": "No se encontraron resultados.",
+    "loading": "Cargando...",
     "you": "Tú",
     "filters": {
       "all": "Todos {{count}}"
     },
     "roles": {
-      "admin": "Administrador",
-      "organizer": "Organizador",
-      "organizers": "Organizadores",
-      "member": "Miembro",
-      "members": "Miembros"
+      "admin": "Administrador/a",
+      "organizer": "Organizador/a",
+      "organizers": "Organizadores/as",
+      "member": "Fallero/a",
+      "members": "Falleros/as"
     },
     "chips": {
       "admin": "Admin",
@@ -28,31 +27,31 @@
     "linked": "Acompañantes",
     "changeRoleTitle": "¿Qué papel tiene en la falla?",
     "makeRole": {
-      "admin": "Administrador",
-      "organizer": "Organizador",
-      "member": "Miembro"
+      "admin": "Administrador/a",
+      "organizer": "Organizador/a",
+      "member": "Fallero/a"
     },
     "roleDescription": {
-      "admin": "Control total del grupo. Puede crear y gestionar eventos, añadir y eliminar miembros, cambiar roles y ver la asistencia completa. Máximo 3 por grupo.",
-      "organizer": "Puede crear y gestionar sus propios eventos, aprobar solicitudes de entrada y añadir miembros. No puede cambiar roles ni eliminar miembros.",
+      "admin": "Control total del grupo. Puede crear y gestionar eventos, añadir y eliminar falleros/as, cambiar roles y ver la asistencia completa. Máximo 3 por grupo.",
+      "organizer": "Puede crear y gestionar sus propios eventos, aprobar solicitudes de entrada y añadir falleros/as. No puede cambiar roles ni eliminar falleros/as.",
       "member": "Puede ver el calendario de eventos y confirmar su propia asistencia. No tiene acceso a la gestión del grupo."
     },
-    "adminLimitReached": "Ya hay 3 administradores en el grupo. Para asignar este rol, cambia primero el de uno de los administradores actuales.",
+    "adminLimitReached": "El grupo ya tiene 3 administradores/as. Para asignar este rol, cambia primero el de alguno de los actuales.",
     "roleInfoLabel": "Ver descripción del rol",
-    "adminConfirmHeader": "¿Hacer Administrador?",
-    "adminConfirmMessage": "Este miembro tendrá control total del grupo. Podrás cambiar su rol más adelante si es necesario.",
+    "adminConfirmHeader": "¿Hacer Administrador/a?",
+    "adminConfirmMessage": "Esta persona tendrá control total del grupo. Podrás cambiar su rol más adelante si es necesario.",
     "adminConfirmCancel": "Cancelar",
-    "adminConfirmSubmit": "Sí, hacer Administrador",
+    "adminConfirmSubmit": "Sí, hacer Administrador/a",
     "removeMember": "Eliminar a {{name}}",
     "save": "Guardar cambios",
     "cancel": "Cancelar",
-    "deleteConfirm": "Eliminar miembro",
-    "deleteMessage": "¿Estás seguro de que quieres eliminar a este miembro del grupo?",
+    "deleteConfirm": "Eliminar fallero/a",
+    "deleteMessage": "¿Seguro que quieres eliminar a esta persona del grupo?",
     "deleteCancel": "Cancelar",
     "deleteSubmit": "Eliminar",
     "saveError": "No se han podido guardar los cambios.",
-    "deleteError": "No se ha podido eliminar al miembro.",
+    "deleteError": "No se ha podido completar la eliminación.",
     "roleUpdated": "Rol actualizado correctamente",
-    "memberDeleted": "Miembro eliminado correctamente"
+    "memberDeleted": "Eliminado del grupo correctamente"
   }
 }

@@ -1,7 +1,7 @@
 {
   "createGroup": {
     "title": "La teua falla comença ací",
-    "subtitle": "Com a administrador podràs convidar membres i gestionar tots els esdeveniments des d'un mateix lloc.",
+    "subtitle": "Com a administrador/a podràs convidar fallers/es i gestionar tots els esdeveniments des d'un mateix lloc.",
     "name": "Nom",
     "namePlaceholder": "Nom de la teua falla",
     "image": "Foto o logo",
@@ -22,12 +22,12 @@
     "joinButton": "Sol·licitar unir-me",
     "requestSent": {
       "title": "Sol·licitud enviada",
-      "subtitle": "L'administrador o l'organitzador revisarà la teua sol·licitud i t'avisarem quan siga acceptada o rebutjada.",
+      "subtitle": "L'administrador/a o l'organitzador/a revisarà la teua sol·licitud i t'avisarem quan siga acceptada o rebutjada.",
       "button": "Entesos"
     },
     "pending": {
       "title": "Sol·licitud pendent",
-      "subtitle": "La teua sol·licitud està sent revisada. T'avisarem quan l'administrador o l'organitzador responga."
+      "subtitle": "La teua sol·licitud està sent revisada. T'avisarem quan l'administrador/a o l'organitzador/a responga."
     },
     "rejected": {
       "title": "Sol·licitud rebutjada",
@@ -50,6 +50,7 @@
     "share": "Compartir",
     "copy": "Copiar",
     "copied": "Copiat!",
+    "copyError": "No s'ha pogut copiar el codi. Torna-ho a intentar.",
     "skip": "Ara no, invitaré més tard",
     "shareTitle": "Applec",
     "shareText": "Uneix-te a la meua falla amb el codi: {{inviteCode}}"

@@ -1,7 +1,7 @@
 {
   "createGroup": {
     "title": "Tu falla empieza aquí",
-    "subtitle": "Como administrador podrás invitar miembros y gestionar todos los eventos desde un mismo lugar.",
+    "subtitle": "Como administrador/a podrás invitar falleros/as y gestionar todos los eventos desde un mismo lugar.",
     "name": "Nombre",
     "namePlaceholder": "Nombre de tu falla",
     "image": "Foto o logo",
@@ -22,12 +22,12 @@
     "joinButton": "Solicitar unirme",
     "requestSent": {
       "title": "Solicitud enviada",
-      "subtitle": "El administrador o el organizador revisará tu solicitud y te avisaremos cuando sea aceptada o rechazada.",
+      "subtitle": "El administrador/a o el organizador/a revisará tu solicitud y te avisaremos cuando sea aceptada o rechazada.",
       "button": "Entendido"
     },
     "pending": {
       "title": "Solicitud pendiente",
-      "subtitle": "Tu solicitud está siendo revisada. Te avisaremos cuando el administrador o el organizador responda."
+      "subtitle": "Tu solicitud está siendo revisada. Te avisaremos cuando el administrador/a o el organizador/a responda."
     },
     "rejected": {
       "title": "Solicitud rechazada",
@@ -50,6 +50,7 @@
     "share": "Compartir",
     "copy": "Copiar",
     "copied": "¡Copiado!",
+    "copyError": "No se pudo copiar el código. Inténtalo de nuevo.",
     "skip": "Ahora no, invitaré más tarde",
     "shareTitle": "Applec",
     "shareText": "Únete a mi falla con el código: {{inviteCode}}"

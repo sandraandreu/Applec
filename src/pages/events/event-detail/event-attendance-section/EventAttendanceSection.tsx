@@ -129,7 +129,15 @@ const EventAttendanceSection = ({ allMembers, canSeeFullAttendance }: Props) => 
         )}
 
         {filteredMembers.length === 0 ? (
-          <EmptyState title={t("detail.attendeesEmpty")} variant="light" />
+          <EmptyState
+            title={
+              attendeeFilter === "going" ? t("detail.attendeesEmptyGoing") :
+              attendeeFilter === "not-going" ? t("detail.attendeesEmptyNotGoing") :
+              attendeeFilter === "pending" ? t("detail.attendeesEmptyPending") :
+              t("detail.attendeesEmpty")
+            }
+            variant="light"
+          />
         ) : (
           <>
             {(showAllAttendees ? filteredMembers : filteredMembers.slice(0, ATTENDEES_PREVIEW)).map(member => {
