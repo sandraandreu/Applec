@@ -144,11 +144,11 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
           <div className="create-events-step3__form-section">
           <p className="create-events-step3__section-label">{t("create.sectionConfirmation")}</p>
-          <div className="create-events-step3__settings-group">
-            <div className="create-events-step3__setting-row">
-              <div className="create-events-step3__setting-text">
-                <span className="create-events-step3__setting-label">{t("create.requiresConfirmation")}</span>
-                <span className="create-events-step3__setting-hint">{t("create.requiresConfirmationHint")}</span>
+          <div className="event-form__settings-group">
+            <div className="event-form__setting-row">
+              <div className="event-form__setting-text">
+                <span className="event-form__setting-label">{t("create.requiresConfirmation")}</span>
+                <span className="event-form__setting-hint">{t("create.requiresConfirmationHint")}</span>
               </div>
               <Toggle
                 checked={requiresConfirmation}
@@ -158,24 +158,24 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
             </div>
 
             {requiresConfirmation && (
-              <div className="create-events-step3__deadline">
+              <div className="event-form__deadline">
                 <button
                   type="button"
-                  className="create-events-step3__setting-row create-events-step3__setting-row--button"
+                  className="event-form__setting-row event-form__setting-row--button"
                   onClick={() => setDeadlineOpen(!deadlineOpen)}
                   aria-expanded={deadlineOpen}
                 >
-                  <span className="create-events-step3__setting-label">{t("create.deadline")}</span>
+                  <span className="event-form__setting-label">{t("create.deadline")}</span>
                   <Icon
                     name="chevron-right"
                     size={20}
-                    className={`create-events-step3__chevron${deadlineOpen ? " create-events-step3__chevron--open" : ""}`}
+                    className={`event-form__chevron${deadlineOpen ? " event-form__chevron--open" : ""}`}
                   />
                 </button>
 
                 {deadlineOpen && (
-                  <div className="create-events-step3__deadline-panel">
-                    <div className="create-events-step3__calendar-card">
+                  <div className="event-form__deadline-panel">
+                    <div className="event-form__calendar-card">
                       <EventCalendar
                         selected={deadlineDate}
                         month={deadlineMonth}
@@ -187,12 +187,12 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
                         disabled={[{ before: today }, { after: deadlineMax }]}
                       />
                     </div>
-                    <div className="create-events-step3__time-box">
-                      <Icon name="clock" size={24} className="create-events-step3__time-icon" />
+                    <div className="event-form__time-box">
+                      <Icon name="clock" size={24} className="event-form__time-icon" />
                       <input
                         id="deadline-time"
                         type="time"
-                        className="create-events-step3__time-input"
+                        className="event-form__time-input"
                         aria-label={t("create.deadlineTime")}
                         value={deadlineTime}
                         onChange={(event) => setDeadlineTime(event.target.value)}
@@ -207,11 +207,11 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
           <div className="create-events-step3__form-section">
           <p className="create-events-step3__section-label">{t("create.sectionGuests")}</p>
-          <div className="create-events-step3__settings-group">
-            <div className="create-events-step3__setting-row">
-              <div className="create-events-step3__setting-text">
-                <span className="create-events-step3__setting-label">{t("create.allowExternalGuests")}</span>
-                <span className="create-events-step3__setting-hint">{t("create.allowExternalGuestsHint")}</span>
+          <div className="event-form__settings-group">
+            <div className="event-form__setting-row">
+              <div className="event-form__setting-text">
+                <span className="event-form__setting-label">{t("create.allowExternalGuests")}</span>
+                <span className="event-form__setting-hint">{t("create.allowExternalGuestsHint")}</span>
               </div>
               <Toggle
                 checked={allowExternalGuests}
@@ -224,10 +224,10 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
             </div>
 
             {allowExternalGuests && (
-              <div className="create-events-step3__setting-row">
-                <div className="create-events-step3__setting-text">
-                  <span className="create-events-step3__setting-label">{t("create.maxExternalGuests")}</span>
-                  <span className="create-events-step3__setting-hint">{t("create.maxExternalGuestsHint")}</span>
+              <div className="event-form__setting-row">
+                <div className="event-form__setting-text">
+                  <span className="event-form__setting-label">{t("create.maxExternalGuests")}</span>
+                  <span className="event-form__setting-hint">{t("create.maxExternalGuestsHint")}</span>
                 </div>
                 <input
                   type="number"
@@ -248,11 +248,11 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
 
           <div className="create-events-step3__form-section">
           <p className="create-events-step3__section-label">{t("create.sectionReminder")}</p>
-          <div className="create-events-step3__settings-group">
-            <div className="create-events-step3__setting-row">
-              <div className="create-events-step3__setting-text">
-                <span className="create-events-step3__setting-label">{t("create.sendReminder")}</span>
-                <span className="create-events-step3__setting-hint">{t("create.sendReminderHint")}</span>
+          <div className="event-form__settings-group">
+            <div className="event-form__setting-row">
+              <div className="event-form__setting-text">
+                <span className="event-form__setting-label">{t("create.sendReminder")}</span>
+                <span className="event-form__setting-hint">{t("create.sendReminderHint")}</span>
               </div>
               <Toggle
                 checked={sendReminder}

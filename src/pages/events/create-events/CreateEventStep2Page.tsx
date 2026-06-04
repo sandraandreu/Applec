@@ -107,7 +107,7 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
               {t("create.date")}
             </label>
             {dateError && <span className="field__error">{t("validation.dateRequired")}</span>}
-            <div className={`create-events-step2__calendar-card${dateError ? " create-events-step2__calendar-card--error" : ""}`}>
+            <div className={`event-form__calendar-card${dateError ? " event-form__calendar-card--error" : ""}`}>
               <EventCalendar
                 selected={selectedDate}
                 month={currentMonth}
@@ -128,12 +128,12 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
             <label className="field__label" htmlFor="start-time">
               {t("create.startTime")}
             </label>
-            <div className="create-events-step2__time-box">
-              <Icon name="clock" size={24} className="create-events-step2__time-icon" />
+            <div className="event-form__time-box">
+              <Icon name="clock" size={24} className="event-form__time-icon" />
               <input
                 id="start-time"
                 type="time"
-                className="create-events-step2__time-input"
+                className="event-form__time-input"
                 {...register("startTime", { required: true })}
               />
             </div>
@@ -144,12 +144,12 @@ const CreateEventStep2Page = forwardRef<StepHandle, Props>(({ onComplete, onBack
             <label className="field__label" htmlFor="end-time">
               {t("create.endTime")}<span className="field__optional"> ({tCommon("fields.optional")})</span>
             </label>
-            <div className="create-events-step2__time-box">
-              <Icon name="clock" size={24} className="create-events-step2__time-icon" />
+            <div className="event-form__time-box">
+              <Icon name="clock" size={24} className="event-form__time-icon" />
               <input
                 id="end-time"
                 type="time"
-                className="create-events-step2__time-input"
+                className="event-form__time-input"
                 {...register("endTime", {
                   validate: (value) => !value || value > startTime || t("validation.endTimeBeforeStart"),
                 })}

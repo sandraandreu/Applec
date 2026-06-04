@@ -92,49 +92,6 @@
     background-color: var(--color-border);
     align-self: center;
   }
-
-  &__calendar-card {
-    border: 1px solid var(--color-border);
-    border-radius: var(--size-24);
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
-    padding: var(--size-20);
-
-    &--error {
-      border-color: var(--color-error);
-    }
-  }
-
-  &__time-box {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-    padding: var(--padding-input);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-input);
-    background-color: var(--color-surface);
-  }
-
-  &__time-icon {
-    color: var(--color-brand);
-    flex-shrink: 0;
-  }
-
-  &__time-input {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: var(--font-size-body-s);
-    font-weight: var(--font-weight-medium);
-    font-family: var(--font-body);
-    color: var(--color-text-muted);
-    width: 100%;
-
-
-    &::-webkit-calendar-picker-indicator {
-      display: none;
-    }
-  }
 }
 
 // Step 1
@@ -185,7 +142,6 @@
   }
 
   &__type-chip {
-    font-family: var(--font-body);
     font-size: var(--font-size-pill);
     font-weight: var(--font-weight-semibold);
     padding: var(--padding-chip);
@@ -255,25 +211,12 @@
     }
   }
 
-  &__settings-group {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-
-    > * + * {
-      border-top: 1px solid var(--color-border);
-    }
-  }
-
   &__number-input {
     border: 1px solid var(--color-border);
     border-radius: var(--radius-input);
     padding: var(--size-8) var(--size-12);
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-medium);
-    font-family: var(--font-body);
     color: var(--color-text-primary);
     background: none;
     width: var(--size-48);
@@ -297,65 +240,7 @@
     color: var(--color-text-primary);
   }
 
-  &__setting-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--padding-row);
-    gap: var(--gap-items);
-
-    &--button {
-      background: none;
-      border: none;
-      border-radius: 0;
-      text-align: left;
-      width: 100%;
-    }
-  }
-
-  &__setting-text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-tight);
-  }
-
-  &__setting-label {
-    font-family: var(--font-body);
-    font-size: var(--font-size-body-m);
-    font-weight: var(--font-weight-medium);
-    color: var(--color-text-primary);
-  }
-
-  &__setting-hint {
-    font-family: var(--font-body);
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-  }
-
-  &__chevron {
-    flex-shrink: 0;
-    color: var(--color-icon);
-    transition: transform 0.2s ease;
-
-    &--open {
-      transform: rotate(90deg);
-    }
-  }
-
-  &__deadline {
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__deadline-panel {
-    padding: 0 var(--size-24) var(--size-24);
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-compact);
-  }
-
   &__error {
-    font-family: var(--font-body);
     font-size: var(--font-size-body-s);
     color: var(--color-error);
     text-align: center;

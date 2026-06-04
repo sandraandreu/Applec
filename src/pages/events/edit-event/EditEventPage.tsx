@@ -204,7 +204,7 @@ const EditEventPage = () => {
                 {t("create.date")}
               </label>
               <div
-                className={`edit-event__calendar-card${state.dateError ? " edit-event__calendar-card--error" : ""}`}
+                className={`event-form__calendar-card${state.dateError ? " event-form__calendar-card--error" : ""}`}
               >
                 <EventCalendar
                   selected={state.selectedDate}
@@ -222,12 +222,12 @@ const EditEventPage = () => {
               <label className="field__label" htmlFor="start-time">
                 {t("create.startTime")}
               </label>
-              <div className="edit-event__time-box">
-                <Icon name="clock" size={24} className="edit-event__time-icon" />
+              <div className="event-form__time-box">
+                <Icon name="clock" size={24} className="event-form__time-icon" />
                 <input
                   id="start-time"
                   type="time"
-                  className="edit-event__time-input"
+                  className="event-form__time-input"
                   {...register("startTime", { required: true })}
                 />
               </div>
@@ -240,12 +240,12 @@ const EditEventPage = () => {
               <label className="field__label" htmlFor="end-time">
                 {t("create.endTime")}<span className="field__optional"> ({tCommon("fields.optional")})</span>
               </label>
-              <div className="edit-event__time-box">
-                <Icon name="clock" size={24} className="edit-event__time-icon" />
+              <div className="event-form__time-box">
+                <Icon name="clock" size={24} className="event-form__time-icon" />
                 <input
                   id="end-time"
                   type="time"
-                  className="edit-event__time-input"
+                  className="event-form__time-input"
                   {...register("endTime")}
                 />
               </div>
@@ -264,13 +264,13 @@ const EditEventPage = () => {
           </div>
         </div>
 
-        <div className="edit-event__settings">
-          <div className="edit-event__setting-row">
-            <div className="edit-event__setting-text">
-              <span className="edit-event__setting-label">
+        <div className="event-form__settings-group">
+          <div className="event-form__setting-row">
+            <div className="event-form__setting-text">
+              <span className="event-form__setting-label">
                 {t("create.requiresConfirmation")}
               </span>
-              <span className="edit-event__setting-hint">
+              <span className="event-form__setting-hint">
                 {t("create.requiresConfirmationHint")}
               </span>
             </div>
@@ -281,12 +281,12 @@ const EditEventPage = () => {
             />
           </div>
 
-          <div className="edit-event__setting-row">
-            <div className="edit-event__setting-text">
-              <span className="edit-event__setting-label">
+          <div className="event-form__setting-row">
+            <div className="event-form__setting-text">
+              <span className="event-form__setting-label">
                 {t("create.sendReminder")}
               </span>
-              <span className="edit-event__setting-hint">
+              <span className="event-form__setting-hint">
                 {t("create.sendReminderHint")}
               </span>
             </div>
@@ -297,26 +297,26 @@ const EditEventPage = () => {
             />
           </div>
 
-          <div className="edit-event__deadline">
+          <div className="event-form__deadline">
             <button
               type="button"
-              className="edit-event__setting-row edit-event__setting-row--button"
+              className="event-form__setting-row event-form__setting-row--button"
               onClick={() => dispatch({ type: "TOGGLE_DEADLINE" })}
               aria-expanded={state.deadlineOpen}
             >
-              <span className="edit-event__setting-label">
+              <span className="event-form__setting-label">
                 {t("create.deadline")}
               </span>
               <Icon
                 name="chevron-right"
                 size={20}
-                className={`edit-event__chevron${state.deadlineOpen ? " edit-event__chevron--open" : ""}`}
+                className={`event-form__chevron${state.deadlineOpen ? " event-form__chevron--open" : ""}`}
               />
             </button>
 
             {state.deadlineOpen && (
-              <div className="edit-event__deadline-panel">
-                <div className="edit-event__calendar-card">
+              <div className="event-form__deadline-panel">
+                <div className="event-form__calendar-card">
                   <EventCalendar
                     selected={state.deadlineDate}
                     month={state.deadlineMonth}
@@ -325,11 +325,11 @@ const EditEventPage = () => {
                     disabled={{ before: today }}
                   />
                 </div>
-                <div className="edit-event__time-box">
-                  <Icon name="clock" size={24} className="edit-event__time-icon" />
+                <div className="event-form__time-box">
+                  <Icon name="clock" size={24} className="event-form__time-icon" />
                   <input
                     type="time"
-                    className="edit-event__time-input"
+                    className="event-form__time-input"
                     aria-label={t("create.deadlineTime")}
                     value={state.deadlineTime}
                     onChange={(changeEvent) => dispatch({ type: "SET_DEADLINE_TIME", payload: changeEvent.target.value })}
