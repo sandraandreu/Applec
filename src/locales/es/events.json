@@ -219,5 +219,28 @@
     "deadlineAfterDate": "El plazo no puede ser posterior a la fecha del evento",
     "nameMaxLength": "El nombre no puede superar los 50 caracteres",
     "descriptionMaxLength": "La descripción no puede superar los 300 caracteres"
+  },
+  "calendar": {
+    "title": "Calendario",
+    "tabs": {
+      "month": "Mes",
+      "week": "Semana",
+      "day": "Día"
+    },
+    "nav": {
+      "today": "Hoy",
+      "seeAll": "Ver todos",
+      "prevMonth": "Mes anterior",
+      "nextMonth": "Mes siguiente"
+    },
+    "week": {
+      "seeMore": "Ver más (+{{count}})"
+    },
+    "empty": {
+      "day": "Todavía no hay eventos para este día",
+      "week": "No hay eventos esta semana"
+    },
+    "error": "Error al cargar el calendario",
+    "create": "Crear evento"
   }
 }

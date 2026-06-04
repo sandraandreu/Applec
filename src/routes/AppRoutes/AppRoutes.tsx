@@ -65,6 +65,7 @@ const ChangePasswordPage = lazy(() => import("../../pages/profile/change-passwor
 const GroupSettingsPage = lazy(() => import("../../pages/profile/group-settings/GroupSettingsPage"));
 const NotificationsSettingsPage = lazy(() => import("../../pages/profile/notifications-settings/NotificationsSettingsPage"));
 const LanguageSettingsPage = lazy(() => import("../../pages/profile/language/LanguageSettingsPage"));
+const CalendarPage = lazy(() => import("../../pages/calendar/CalendarPage"));
 
 const AppRoutes = () => (
   <BrowserRouter>
@@ -263,6 +264,17 @@ const AppRoutes = () => (
           element={
             <PrivateRoutes requiresGroup>
               <CreateEventPage />
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/calendar"
+          element={
+            <PrivateRoutes requiresGroup>
+              <MainLayout>
+                <CalendarPage />
+              </MainLayout>
             </PrivateRoutes>
           }
         />

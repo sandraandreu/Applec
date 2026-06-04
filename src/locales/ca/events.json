@@ -219,5 +219,28 @@
     "deadlineAfterDate": "El termini no pot ser posterior a la data de l'esdeveniment",
     "nameMaxLength": "El nom no pot superar els 50 caràcters",
     "descriptionMaxLength": "La descripció no pot superar els 300 caràcters"
+  },
+  "calendar": {
+    "title": "Calendari",
+    "tabs": {
+      "month": "Mes",
+      "week": "Setmana",
+      "day": "Dia"
+    },
+    "nav": {
+      "today": "Avui",
+      "seeAll": "Veure tots",
+      "prevMonth": "Mes anterior",
+      "nextMonth": "Mes següent"
+    },
+    "week": {
+      "seeMore": "Veure més (+{{count}})"
+    },
+    "empty": {
+      "day": "Encara no hi ha esdeveniments per a aquest dia",
+      "week": "No hi ha esdeveniments aquesta setmana"
+    },
+    "error": "Error en carregar el calendari",
+    "create": "Crear esdeveniment"
   }
 }

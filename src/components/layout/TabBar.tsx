@@ -6,7 +6,7 @@ import "./layout.scss";
 
 const getActiveTab = (pathname: string) => {
   if (pathname === "/feed") return "feed";
-  if (pathname === "/events/calendar") return "calendar";
+  if (pathname === "/calendar") return "calendar";
   if (pathname.startsWith("/events")) return "events";
   if (pathname.startsWith("/members")) return "members";
   if (pathname.startsWith("/profile")) return "profile";
@@ -36,7 +36,7 @@ const TabBar = () => {
         </Link>
 
         <Link
-          to="/events/calendar"
+          to="/calendar"
           className="tab-bar__item"
           aria-current={active === "calendar" ? "page" : undefined}
           aria-label={t("nav.calendar")}

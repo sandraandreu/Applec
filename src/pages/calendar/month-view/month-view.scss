@@ -1,0 +1,216 @@
+.month-view {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-compact) var(--padding-side) 0;
+  gap: var(--gap-content);
+
+  // ─── Tarjeta del calendario ───────────────────────────
+
+  &__card {
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border-radius: var(--radius-sheet);
+    padding: var(--padding-side);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--gap-compact);
+  }
+
+  &__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-32);
+    height: var(--size-32);
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+    color: var(--white);
+    border: none;
+    flex-shrink: 0;
+  }
+
+  &__month-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+  }
+
+  // ─── Celda de día (dayCellContent) ────────────────────
+
+  &__day-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-2);
+    width: 100%;
+  }
+
+  &__day-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-32);
+    height: var(--size-32);
+    border-radius: var(--radius-pill);
+    font-size: var(--font-size-body-s);
+    font-family: var(--font-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+
+    &--sunday {
+      color: var(--color-error);
+    }
+  }
+
+  &__day-dot {
+    display: block;
+    width: var(--size-6);
+    height: var(--size-6);
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+  }
+
+  // ─── Hoy (sin seleccionar): outline azul ─────────────
+
+  .fc-day-today:not(.month-view__day--selected) .month-view__day-number {
+    border: 2px solid var(--color-brand);
+    color: var(--color-brand);
+    font-weight: var(--font-weight-bold);
+  }
+
+  // ─── Seleccionado: relleno azul ───────────────────────
+
+  .month-view__day--selected .month-view__day-number {
+    background: var(--color-brand);
+    color: var(--white);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .month-view__day--selected .month-view__day-dot {
+    background: var(--white);
+  }
+
+  // ─── Días de otros meses ──────────────────────────────
+
+  .fc-day-other .month-view__day-number {
+    color: var(--color-text-muted);
+  }
+
+  // ─── Overrides de FullCalendar ────────────────────────
+
+  .fc-scrollgrid,
+  .fc-scrollgrid-sync-table {
+    border: none !important;
+  }
+
+  .fc td,
+  .fc th {
+    border: none !important;
+  }
+
+  .fc-day-today {
+    background: transparent !important;
+  }
+
+  .fc-daygrid-day-events {
+    display: none;
+  }
+
+  .fc-daygrid-day-top {
+    justify-content: center;
+  }
+
+  .fc-daygrid-day-number {
+    text-decoration: none;
+    padding: var(--size-4) 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .fc-daygrid-day-frame {
+    min-height: var(--size-48);
+  }
+
+  .fc-col-header-cell-cushion {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: var(--size-4) 0 var(--size-8);
+  }
+
+  .fc-day-sun .fc-col-header-cell-cushion {
+    color: var(--color-error);
+  }
+
+  .fc-daygrid-body {
+    width: 100% !important;
+  }
+
+  .fc-scrollgrid-sync-table {
+    width: 100% !important;
+  }
+
+  // ─── Sección día seleccionado ─────────────────────────
+
+  &__selected-day {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+    padding-bottom: var(--padding-side);
+  }
+
+  &__day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__day-title {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+  }
+
+  &__see-all {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-link);
+    text-decoration: none;
+    font-family: var(--font-body);
+  }
+
+  &__events {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-compact);
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-content);
+    padding: var(--padding-empty);
+  }
+
+  &__empty-text {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+}
