@@ -1,7 +1,7 @@
 ﻿import "./verify-email.scss";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../../../ui-kit/button/Button";
 import { sendVerificationEmail } from "../../../services/auth.service";
 import { useAuthContext } from "../../../context/auth/AuthContext";
@@ -20,13 +20,19 @@ const VerifyEmailPage = () => {
   const emailSent =
     (location.state as VerifyEmailLocationState)?.emailSent ?? true;
 
-  const [resendState, setResendState] = useState({ isLoading: false, success: false });
+  const [resendState, setResendState] = useState({ isLoading: false, success: false, error: false, cooldownActive: false });
+  const cooldownTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleResend = async () => {
-    setResendState(prev => ({ ...prev, isLoading: true }));
+    setResendState(prev => ({ ...prev, isLoading: true, error: false }));
     try {
       await sendVerificationEmail();
-      setResendState(prev => ({ ...prev, success: true }));
+      setResendState(prev => ({ ...prev, success: true, cooldownActive: true }));
+      cooldownTimeoutRef.current = setTimeout(() => {
+        setResendState(prev => ({ ...prev, cooldownActive: false }));
+      }, 30000);
+    } catch {
+      setResendState(prev => ({ ...prev, error: true }));
     } finally {
       setResendState(prev => ({ ...prev, isLoading: false }));
     }
@@ -59,6 +65,7 @@ const VerifyEmailPage = () => {
             text={tCommon("buttons.resendEmail")}
             onClick={handleResend}
             isLoading={resendState.isLoading}
+            disabled={resendState.cooldownActive}
           />
           <Button
             text={t("register.verifyLoginButton")}
@@ -67,6 +74,11 @@ const VerifyEmailPage = () => {
           {resendState.success && (
             <p className="verify-email-page__resend-success">
               {t("register.verifyResendSuccess")}
+            </p>
+          )}
+          {resendState.error && (
+            <p className="verify-email-page__resend-error">
+              {t("register.verifyResendError")}
             </p>
           )}
         </div>

@@ -134,6 +134,10 @@ const ForgotPasswordPage = () => {
             text: t("forgotPassword.loginButton"),
             handler: () => navigate("/login"),
           },
+          {
+            text: tCommon("buttons.close"),
+            role: "cancel" as const,
+          },
         ]}
       />
     </div>

@@ -84,23 +84,30 @@ const ProfilePage = () => {
           </div>
         </section>
 
+        {(user.permissions.canShareAccess || user.permissions.canManageGroup) && (
+          <section className="profile-page__section">
+            <h2 className="profile-page__section-title">{t("profile.myGroup")}</h2>
+            <div className="profile-page__card">
+              {user.permissions.canShareAccess && (
+                <SettingsRow
+                  label={t("profile.shareAccess")}
+                  iconName="person-add"
+                  onClick={() => navigate("/invite-group", { state: { fromProfile: true } })}
+                />
+              )}
+              {user.permissions.canManageGroup && (
+                <SettingsRow
+                  label={t("profile.groupSettings")}
+                  iconName="settings"
+                  to="/profile/group-settings"
+                />
+              )}
+            </div>
+          </section>
+        )}
+
         <section className="profile-page__section">
-          <h2 className="profile-page__section-title">{t("profile.myGroup")}</h2>
           <div className="profile-page__card">
-            {user.permissions.canShareAccess && (
-              <SettingsRow
-                label={t("profile.shareAccess")}
-                iconName="person-add"
-                onClick={() => navigate("/invite-group", { state: { fromProfile: true } })}
-              />
-            )}
-            {user.permissions.canManageGroup && (
-              <SettingsRow
-                label={t("profile.groupSettings")}
-                iconName="settings"
-                to="/profile/group-settings"
-              />
-            )}
             <SettingsRow
               label={t("profile.logout")}
               iconName="logout"

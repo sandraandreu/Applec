@@ -116,7 +116,7 @@ const VoteStickyFooter = ({
             </p>
           )}
           <p className="event-detail-page__vote-closed-info">
-            {t("vote.closed")}
+            {myResponse ? t("vote.closedWithResponse") : t("vote.closedNoResponse")}
           </p>
         </>
       )}

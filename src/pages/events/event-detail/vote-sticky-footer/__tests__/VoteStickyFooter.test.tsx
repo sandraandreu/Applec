@@ -147,9 +147,14 @@ describe("VoteStickyFooter", () => {
       buttons.forEach(btn => expect(btn).toBeDisabled());
     });
 
-    it("muestra el mensaje de plazo cerrado", () => {
+    it("muestra el mensaje de plazo cerrado sin respuesta", () => {
       renderFooter({ eventStatus: "plazo-cerrado" });
-      expect(screen.getByText("vote.closed")).toBeInTheDocument();
+      expect(screen.getByText("vote.closedNoResponse")).toBeInTheDocument();
+    });
+
+    it("muestra el mensaje de plazo cerrado con respuesta", () => {
+      renderFooter({ eventStatus: "plazo-cerrado", myResponse: "going" });
+      expect(screen.getByText("vote.closedWithResponse")).toBeInTheDocument();
     });
 
     it("muestra los nombres going en plazo-cerrado", () => {

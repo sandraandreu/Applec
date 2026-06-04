@@ -50,6 +50,7 @@
     "share": "Compartir",
     "copy": "Copiar",
     "copied": "Copiat!",
+    "copyError": "No s'ha pogut copiar el codi. Torna-ho a intentar.",
     "skip": "Ara no, invitaré més tard",
     "shareTitle": "Applec",
     "shareText": "Uneix-te a la meua falla amb el codi: {{inviteCode}}"
