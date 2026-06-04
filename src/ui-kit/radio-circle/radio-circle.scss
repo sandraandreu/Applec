@@ -1,6 +1,6 @@
 .radio-circle {
-  width: 20px;
-  height: 20px;
+  width: var(--size-20);
+  height: var(--size-20);
   border-radius: 50%;
   border: 2px solid var(--color-border);
   flex-shrink: 0;
@@ -14,8 +14,8 @@
     &::after {
       content: '';
       display: block;
-      width: 10px;
-      height: 10px;
+      width: var(--size-10);
+      height: var(--size-10);
       border-radius: 50%;
       background: var(--color-brand);
     }

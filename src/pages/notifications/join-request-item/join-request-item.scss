@@ -11,17 +11,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
+    width: var(--size-48);
+    height: var(--size-48);
     border-radius: var(--radius-card);
     flex-shrink: 0;
 
-    &--blue   { background: var(--blue-100);   color: var(--blue-500);   }
-    &--red    { background: var(--red-50);      color: var(--red-500);    }
-    &--teal   { background: var(--teal-50);     color: var(--teal-500);   }
-    &--purple { background: var(--purple-100);  color: var(--purple-500); }
-    &--orange { background: var(--orange-100);  color: var(--orange-500); }
-    &--brand  { background: var(--blue-500);    color: var(--white);      }
+    &--blue   { background: var(--color-bg-blue);    color: var(--color-brand);         }
+    &--red    { background: var(--red-50);            color: var(--color-error);         }
+    &--teal   { background: var(--teal-50);          color: var(--color-accent-teal);   }
+    &--purple { background: var(--color-bg-purple);  color: var(--color-accent-purple); }
+    &--orange { background: var(--orange-100);        color: var(--color-accent-orange); }
+    &--brand  { background: var(--color-brand);      color: var(--color-surface);       }
   }
 
   &__info {

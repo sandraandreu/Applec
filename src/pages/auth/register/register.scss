@@ -67,8 +67,8 @@
   }
 
   &__password-requirements-dot {
-    width: 8px;
-    height: 8px;
+    width: var(--size-8);
+    height: var(--size-8);
     border-radius: 50%;
     background: var(--color-text-muted);
     flex-shrink: 0;

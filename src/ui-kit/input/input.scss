@@ -33,7 +33,7 @@
   }
 
   &--with-icon {
-    padding-right: 44px;
+    padding-right: var(--size-44);
   }
 
   &:disabled {

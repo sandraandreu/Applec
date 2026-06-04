@@ -6,7 +6,7 @@
 
   &__gradient-zone {
     padding: var(--padding-page);
-    padding-bottom: var(--gap-section);
+    padding-bottom: var(--size-48);
     display: flex;
     flex-direction: column;
     gap: var(--gap-content);
@@ -46,7 +46,7 @@
   &__content {
     background: var(--white);
     padding: var(--padding-page);
-    padding-top: var(--gap-content);
+    padding-top: var(--size-24);
     display: flex;
     flex-direction: column;
     gap: var(--gap-section);
@@ -90,7 +90,7 @@
     width: 100%;
     background: none;
     border: none;
-    padding: var(--size-16) var(--size-14);
+    padding: var(--padding-list-item);
     text-align: left;
 
     &--selected {
@@ -129,7 +129,7 @@
   }
 
   &__role-option {
-    padding: var(--size-16) var(--size-14);
+    padding: var(--padding-list-item);
     display: flex;
     flex-direction: column;
     gap: var(--gap-items);

@@ -80,12 +80,12 @@
   &::after {
     content: "";
     display: block;
-    width: 4px;
-    height: 4px;
+    width: var(--size-4);
+    height: var(--size-4);
     border-radius: 50%;
     background-color: var(--color-brand);
     position: absolute;
-    bottom: 2px;
+    bottom: var(--size-2);
     left: 50%;
     transform: translateX(-50%);
   }
