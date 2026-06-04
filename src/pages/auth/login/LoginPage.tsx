@@ -1,7 +1,7 @@
 ﻿import "./login.scss";
 import { useTranslation } from "react-i18next";
 import { useForm } from "react-hook-form";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginReducer, initialLoginState } from "./login.reducer";
 import Modal from "../../../components/modal/Modal";
@@ -29,6 +29,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [state, dispatch] = useReducer(loginReducer, initialLoginState);
+  const [resendSuccess, setResendSuccess] = useState(false);
+  const [resendError, setResendError] = useState(false);
   const {
     isLoading,
     loginState,
@@ -84,8 +86,14 @@ const LoginPage = () => {
   };
 
   const handleResendEmail = async () => {
-    if (unverifiedUser) {
+    if (!unverifiedUser) return;
+    setResendSuccess(false);
+    setResendError(false);
+    try {
       await sendVerificationEmail(unverifiedUser);
+      setResendSuccess(true);
+    } catch {
+      setResendError(true);
     }
   };
 
@@ -176,8 +184,18 @@ const LoginPage = () => {
       <Modal
         isOpen={loginState === "unverified"}
         header={t("login.errors.emailNotVerifiedTitle")}
-        message={t("login.errors.emailNotVerified")}
-        onDismiss={() => dispatch({ type: "DISMISS_UNVERIFIED" })}
+        message={
+          resendSuccess
+            ? t("login.errors.resendSuccess")
+            : resendError
+              ? t("login.errors.resendError")
+              : t("login.errors.emailNotVerified")
+        }
+        onDismiss={() => {
+          dispatch({ type: "DISMISS_UNVERIFIED" });
+          setResendSuccess(false);
+          setResendError(false);
+        }}
         buttons={[
           {
             text: tCommon("buttons.resendEmail"),

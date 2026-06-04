@@ -69,7 +69,7 @@ const CreateEventPage = () => {
         ...(data.confirmationDeadline && { confirmationDeadline: data.confirmationDeadline }),
         ...(data.allowExternalGuests && data.maxExternalGuests && { maxExternalGuests: data.maxExternalGuests }),
       });
-      navigate("/events", { replace: true });
+      navigate("/events", { replace: true, state: { eventCreated: true } });
     } catch (error) {
       dispatch({ type: "SET_ERROR", payload: getErrorKey(error) });
     }

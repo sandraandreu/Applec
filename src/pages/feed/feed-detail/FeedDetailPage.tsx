@@ -3,17 +3,13 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Avatar from "../../../ui-kit/avatar/Avatar";
+import Chip from "../../../ui-kit/chip/Chip";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import PageTransition from "../../../ui-kit/page-transition/PageTransition";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { FEED_POSTS } from "../feed.mock";
 import "./feed-detail.scss";
 
-const roleBadgeLabel = (role: "admin" | "organizer" | "member") => {
-  if (role === "admin") return "Admin.";
-  if (role === "organizer") return "Org.";
-  return null;
-};
 
 const FeedDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +20,6 @@ const FeedDetailPage = () => {
 
   const [liked, setLiked] = useState(post.likedByMe);
   const likesCount = post.likesCount - (post.likedByMe ? 1 : 0) + (liked ? 1 : 0);
-  const badge = roleBadgeLabel(post.author.role);
 
   return (
     <PageTransition>
@@ -47,8 +42,8 @@ const FeedDetailPage = () => {
                 <span className="feed-detail__author-name">{post.author.firstName} {post.author.lastName}</span>
                 <span className="feed-detail__author-time">{post.timeAgo}</span>
               </div>
-              {badge && (
-                <span className={`feed-detail__badge feed-detail__badge--${post.author.role}`}>{badge}</span>
+              {post.author.role !== "member" && (
+                <Chip role={post.author.role} variant="full" />
               )}
             </div>
 
@@ -95,7 +90,6 @@ const FeedDetailPage = () => {
             <h2 className="feed-detail__comments-title">{t("comments")}</h2>
             <ul className="feed-detail__comments-list">
               {post.comments.map(comment => {
-                const commentBadge = roleBadgeLabel(comment.author.role);
                 return (
                   <li key={comment.id} className="feed-detail__comment">
                     <Avatar
@@ -107,8 +101,8 @@ const FeedDetailPage = () => {
                     <div className="feed-detail__comment-body">
                       <div className="feed-detail__comment-meta">
                         <span className="feed-detail__comment-name">{comment.author.firstName} {comment.author.lastName}</span>
-                        {commentBadge && (
-                          <span className={`feed-detail__badge feed-detail__badge--${comment.author.role}`}>{commentBadge}</span>
+                        {comment.author.role !== "member" && (
+                          <Chip role={comment.author.role} variant="full" />
                         )}
                       </div>
                       <span className="feed-detail__comment-time">{comment.timeAgo}</span>

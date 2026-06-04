@@ -23,8 +23,11 @@ const PrivateRoutes = ({
   if (!user) return <Navigate to="/landing" replace />;
   if (!user.emailVerified) return <Navigate to="/verify-email" replace />;
 
-  if (requiresGroup && !profile?.groupId)
+  if (requiresGroup && !profile?.groupId) {
+    if (profile?.pendingJoinGroupId)
+      return <Navigate to="/onboarding/group" replace />;
     return <Navigate to="/onboarding/welcome" replace />;
+  }
 
   if (requiresNoGroup && profile?.groupId)
     return <Navigate to="/events" replace />;

@@ -19,7 +19,25 @@ export interface UserProfile {
   role: "admin" | "organizer" | "member";
   groupId?: string;
   groupDeleted?: boolean;
+  pendingJoinGroupId?: string;
+  joinAccepted?: boolean;
+  joinRejected?: boolean;
   linkedMembers?: LinkedMember[];
+}
+
+export interface JoinRequest {
+  uid: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  requestedAt: Date;
+}
+
+export interface AcceptedRequest {
+  uid: string;
+  firstName: string;
+  lastName: string;
+  acceptedAt: Date;
 }
 
 export type UserProfileCreate = Omit<UserProfile, "groupId">;

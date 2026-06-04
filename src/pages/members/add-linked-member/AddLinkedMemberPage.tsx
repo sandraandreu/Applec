@@ -44,11 +44,11 @@ const AddLinkedMemberPage = () => {
     formState: { errors },
   } = useForm<AddLinkedMemberFormData>();
 
-  const handleBack = () => {
+  const handleBack = (keepSheetState = false) => {
     if (locationState.returnTo) {
       navigate(locationState.returnTo, {
         replace: true,
-        state: locationState.openVoteSheet ? { openVoteSheet: true } : null,
+        state: keepSheetState && locationState.openVoteSheet ? { openVoteSheet: true } : null,
       });
     } else {
       navigate(-1);
@@ -61,7 +61,7 @@ const AddLinkedMemberPage = () => {
       setIsLoading(true);
       await addLinkedMember(profile.groupId, user.uid, { ...data, type: isFallero ? "fallero" : "extern" });
       await refreshGroup();
-      handleBack();
+      handleBack(true);
     } catch {
       setErrorConnection(t("linked.saveError"));
     } finally {
@@ -70,7 +70,7 @@ const AddLinkedMemberPage = () => {
   };
 
   const swipeHandlers = useSwipeable({
-    onSwipedRight: handleBack,
+    onSwipedRight: () => handleBack(),
     trackMouse: false,
     preventScrollOnSwipe: true,
     delta: 60,
@@ -82,7 +82,7 @@ const AddLinkedMemberPage = () => {
 
       <div className="add-linked-member-page__gradient-zone">
         <div className="add-linked-member-page__top-bar">
-          <BackButton onClick={handleBack} />
+          <BackButton onClick={() => handleBack()} />
         </div>
         <div className="add-linked-member-page__header">
           <h1 className="add-linked-member-page__title">{t("linked.title")}</h1>
@@ -146,7 +146,7 @@ const AddLinkedMemberPage = () => {
             <Button
               variant="secondary"
               text={t("linked.cancel")}
-              onClick={handleBack}
+              onClick={() => handleBack()}
             />
           </div>
         </form>

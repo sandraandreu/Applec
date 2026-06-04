@@ -37,6 +37,27 @@
     border: none;
     color: var(--color-icon);
   }
+
+  &__bell {
+    position: relative;
+    display: flex;
+  }
+
+  &__bell-badge {
+    position: absolute;
+    top: -1px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background: var(--color-brand);
+    border-radius: 50%;
+    animation: bell-badge-beat 5s ease-in-out infinite;
+  }
+
+  @keyframes bell-badge-beat {
+    0%, 16%, 100% { transform: scale(1); }
+    8% { transform: scale(1.4); }
+  }
 }
 
 .page-header {

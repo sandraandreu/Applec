@@ -50,3 +50,11 @@ export const clearGroupDeletedFlag = async (uid: string): Promise<void> => {
   await updateDoc(doc(db, "users", uid), { groupDeleted: deleteField() });
 };
 
+export const clearJoinAcceptedFlag = async (uid: string): Promise<void> => {
+  await updateDoc(doc(db, "users", uid), { joinAccepted: deleteField() });
+};
+
+export const clearJoinRejectedFlag = async (uid: string): Promise<void> => {
+  await updateDoc(doc(db, "users", uid), { joinRejected: deleteField() });
+};
+

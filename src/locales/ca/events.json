@@ -103,7 +103,8 @@
     "maxExternalGuestsHint": "Deixa buit per no posar límit",
     "continue": "Continuar",
     "submit": "Crear esdeveniment",
-    "error": "Error en crear l'esdeveniment"
+    "error": "Error en crear l'esdeveniment",
+    "success": "Esdeveniment creat correctament"
   },
   "edit": {
     "title": "Editar esdeveniment",
@@ -124,6 +125,7 @@
     "no": "No",
     "next": "Següent",
     "save": "Guardar",
+    "saveError": "No s'ha pogut guardar. Torna-ho a intentar.",
     "update": "Guardar",
     "cta": "Hi vas?",
     "modify": "Canviar resposta",
@@ -199,6 +201,9 @@
     "error": "Error en carregar l'assistència",
     "total": "Total"
   },
+  "joinAccepted": {
+    "message": "Ja ets membre! La teua sol·licitud ha sigut acceptada."
+  },
   "validation": {
     "nameRequired": "El nom de l'esdeveniment és obligatori",
     "descriptionRequired": "La descripció és obligatòria",
@@ -208,7 +213,7 @@
     "locationRequired": "El lloc és obligatori",
     "endTimeBeforeStart": "L'hora de fi ha de ser posterior a la d'inici",
     "deadlineAfterDate": "El termini no pot ser posterior a la data de l'esdeveniment",
-    "nameMaxLength": "El nom no pot superar els 80 caràcters",
-    "descriptionMaxLength": "La descripció no pot superar els 500 caràcters"
+    "nameMaxLength": "El nom no pot superar els 50 caràcters",
+    "descriptionMaxLength": "La descripció no pot superar els 300 caràcters"
   }
 }

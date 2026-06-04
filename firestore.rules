@@ -44,12 +44,20 @@ service cloud.firestore {
           !resource.data.keys().hasAll(['groupId']) ||
           resource.data.groupId == null
         );
+
+      // Admin puede aprobar o rechazar solicitudes de unión al grupo
+      allow update: if isAuthenticated() &&
+        resource.data.get('pendingJoinGroupId', null) != null &&
+        isAdminOfGroup(resource.data.get('pendingJoinGroupId', null)) &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['groupId', 'role', 'joinAccepted', 'joinRejected', 'pendingJoinGroupId']);
     }
 
     // ─── Grupos ────────────────────────────────────────────────────────────────
     match /groups/{groupId} {
-      // Solo los miembros del grupo pueden leer sus datos
-      allow read: if isMemberOfGroup(groupId);
+      // Leer un grupo concreto: solo miembros
+      allow get: if isMemberOfGroup(groupId);
+      // Queries (ej. buscar por inviteCode): cualquier usuario autenticado
+      allow list: if isAuthenticated();
 
       // Cualquier usuario autenticado puede crear un grupo
       allow create: if isAuthenticated();
@@ -91,6 +99,14 @@ service cloud.firestore {
         // Solo admins pueden aprobar o rechazar
         allow update: if isAdminOfGroup(groupId);
         allow delete: if isAdminOfGroup(groupId);
+      }
+
+      // ─── Solicitudes aceptadas ───────────────────────────────────────────────
+      match /acceptedRequests/{requestId} {
+        allow read: if isMemberOfGroup(groupId);
+        allow create: if isAdminOfGroup(groupId);
+        allow update: if false;
+        allow delete: if false;
       }
 
       // ─── Miembros vinculados (familiares) ─────────────────────────────────────

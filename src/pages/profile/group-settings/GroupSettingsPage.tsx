@@ -16,6 +16,7 @@ import Input from "../../../ui-kit/input/Input";
 import Button from "../../../ui-kit/button/Button";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import Modal from "../../../components/modal/Modal";
+import SuccessBanner from "../../../ui-kit/success-banner/SuccessBanner";
 
 interface FormFields {
   name: string;
@@ -32,6 +33,7 @@ const GroupSettingsPage = () => {
     isLoading: false,
     error: null,
   });
+  const [imageSuccess, setImageSuccess] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -50,11 +52,13 @@ const GroupSettingsPage = () => {
     const file = event.target.files?.[0];
     if (!file) return;
     setSaveState({ isLoading: true, error: null });
+    setImageSuccess(false);
     try {
       const imageUrl = await uploadGroupImage(file, group.groupId);
       await updateGroupImage(group.groupId, imageUrl);
       await refreshGroup();
       setSaveState({ isLoading: false, error: null });
+      setImageSuccess(true);
     } catch {
       setSaveState({ isLoading: false, error: t("groupSettings.saveError") });
     }
@@ -88,6 +92,9 @@ const GroupSettingsPage = () => {
 
   return (
     <div className="group-settings-page">
+      {imageSuccess && (
+        <SuccessBanner message={t("groupSettings.imageSuccess")} onDismiss={() => setImageSuccess(false)} />
+      )}
       <PageHeader title={t("groupSettings.title")} onBack={() => navigate(-1)} />
 
       <div className="group-settings-page__image-section">

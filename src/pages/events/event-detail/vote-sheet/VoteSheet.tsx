@@ -43,6 +43,8 @@ const VoteSheet = ({
   const sheetRef = useRef<HTMLDivElement | null>(null);
   const initialVotesRef = useRef<Record<string, "going" | "not-going" | null>>({});
   const [linkedVotes, setLinkedVotes] = useState<Record<string, "going" | "not-going" | null>>({});
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -72,15 +74,26 @@ const VoteSheet = ({
     ([id, vote]) => vote !== (initialVotesRef.current[id] ?? null)
   );
 
-  const handleDismiss = () => {
-    if (isDirty) {
-      const filteredVotes: Record<string, "going" | "not-going"> = {};
-      Object.entries(linkedVotes).forEach(([id, vote]) => {
-        if (vote !== null) filteredVotes[id] = vote;
-      });
-      onSaveCompanions(filteredVotes).catch(() => undefined);
+  const handleDismiss = async () => {
+    if (!isDirty) {
+      onDismiss();
+      return;
     }
-    onDismiss();
+    const filteredVotes: Record<string, "going" | "not-going"> = {};
+    Object.entries(linkedVotes).forEach(([id, vote]) => {
+      if (vote !== null) filteredVotes[id] = vote;
+    });
+    setIsSaving(true);
+    setSaveError(false);
+    try {
+      await onSaveCompanions(filteredVotes);
+      initialVotesRef.current = { ...linkedVotes };
+      onDismiss();
+    } catch {
+      setSaveError(true);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const { ref: swipeRef, ...swipeHandlers } = useSwipeable({
@@ -211,11 +224,18 @@ const VoteSheet = ({
           )}
         </div>
         <div className="vote-sheet__footer">
+          {saveError && (
+            <p className="vote-sheet__save-error">
+              <Icon name="error-circle" size={20} aria-hidden />
+              {t("vote.saveError")}
+            </p>
+          )}
           <Button
             variant="secondary"
             text={t("vote.addLinked")}
             icon={<Icon name="plus" size={22} />}
             onClick={onAddLinked}
+            disabled={isSaving}
           />
         </div>
       </div>

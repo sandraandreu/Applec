@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { getEvents } from "../../../services/event.service";
 import { getMyAttendances } from "../../../services/attendance.service";
+import { clearJoinAcceptedFlag } from "../../../services/user.service";
 import { getEventStatus } from "../../../models/event.model";
 import type { FallesEvent } from "../../../models/event.model";
 import EventList from "../../../components/events/EventList";
@@ -24,16 +25,28 @@ const EventsListPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [showEventUpdated, setShowEventUpdated] = useState(
-    !!(location.state as { eventUpdated?: boolean } | null)?.eventUpdated
+    !!(location.state as { eventUpdated?: boolean; eventCreated?: boolean } | null)?.eventUpdated
+  );
+  const [showEventCreated, setShowEventCreated] = useState(
+    !!(location.state as { eventCreated?: boolean } | null)?.eventCreated
+  );
+  const [showJoinAccepted, setShowJoinAccepted] = useState(
+    profile?.joinAccepted === true
   );
 
   useLayoutBackground(profile?.role);
 
   useEffect(() => {
-    if (showEventUpdated) {
+    if (showEventUpdated || showEventCreated) {
       navigate(location.pathname, { replace: true, state: null });
     }
-  }, [showEventUpdated, navigate, location.pathname]);
+  }, [showEventUpdated, showEventCreated, navigate, location.pathname]);
+
+  useEffect(() => {
+    if (showJoinAccepted && user?.uid) {
+      clearJoinAcceptedFlag(user.uid);
+    }
+  }, [showJoinAccepted, user?.uid]);
 
   useEffect(() => {
     if (!profile?.groupId || !user) return;
@@ -73,6 +86,15 @@ const EventsListPage = () => {
 
   return (
     <div className="events-list-page">
+      {showJoinAccepted && (
+        <SuccessBanner
+          message={t("joinAccepted.message")}
+          onDismiss={() => setShowJoinAccepted(false)}
+        />
+      )}
+      {showEventCreated && (
+        <SuccessBanner message={t("create.success")} onDismiss={() => setShowEventCreated(false)} />
+      )}
       {showEventUpdated && (
         <SuccessBanner message={t("edit.success")} onDismiss={() => setShowEventUpdated(false)} />
       )}

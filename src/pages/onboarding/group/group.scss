@@ -36,4 +36,14 @@
     gap: var(--gap-compact);
   }
 
+  &__logout {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-body-s);
+    padding: var(--size-16) 0;
+    text-align: center;
+    width: 100%;
+  }
+
 }

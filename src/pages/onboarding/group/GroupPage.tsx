@@ -1,19 +1,39 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
 import "./group.scss";
+import { useAuthContext } from "../../../context/auth/AuthContext";
+import { clearJoinRejectedFlag } from "../../../services/user.service";
 import Button from "../../../ui-kit/button/Button";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Stepper from "../../../ui-kit/stepper/Stepper";
 import SlideTransition from "../../../ui-kit/slide-transition/SlideTransition";
+import Modal from "../../../components/modal/Modal";
 import groupIllustration from "../../../assets/images/group-onboarding-illustration.png";
+import joinRequestIllustration from "../../../assets/images/join-request-illustration.png";
 
 const GroupPage = () => {
   const { t } = useTranslation("onboarding");
+  const { t: tGroups } = useTranslation("groups");
+  const { t: tCommon } = useTranslation("common");
   const navigate = useNavigate();
   const location = useLocation();
+  const { profile, user, refreshProfile, logout } = useAuthContext();
+
+  const [showRejectedModal, setShowRejectedModal] = useState(
+    profile?.joinRejected === true
+  );
 
   const direction = location.state?.direction ?? "forward";
+
+  const handleRejectedDismiss = () => {
+    setShowRejectedModal(false);
+    if (user) {
+      clearJoinRejectedFlag(user.uid);
+      refreshProfile();
+    }
+  };
 
   const swipeHandlers = useSwipeable({
     onSwipedRight: () => navigate("/onboarding/language", { state: { direction: "backward" } }),
@@ -27,9 +47,47 @@ const GroupPage = () => {
     touchEventOptions: { passive: false },
   });
 
+  if (profile?.pendingJoinGroupId) {
+    return (
+      <SlideTransition direction={direction}>
+        <div className="group-page">
+          <div className="group-page__content">
+            <div className="group-page__header">
+              <h1 className="group-page__title h1--large">
+                {tGroups("joinGroup.pending.title")}
+              </h1>
+              <p className="group-page__description">
+                {tGroups("joinGroup.pending.subtitle")}
+              </p>
+            </div>
+            <div className="group-page__img">
+              <img src={joinRequestIllustration} alt="" aria-hidden="true" />
+            </div>
+          </div>
+          <button className="group-page__logout" onClick={logout} type="button">
+            {tCommon("buttons.logout")}
+          </button>
+        </div>
+      </SlideTransition>
+    );
+  }
+
   return (
     <SlideTransition direction={direction}>
       <div {...swipeHandlers} className="group-page">
+        <Modal
+          isOpen={showRejectedModal}
+          header={tGroups("joinGroup.rejected.title")}
+          message={tGroups("joinGroup.rejected.message")}
+          onDismiss={handleRejectedDismiss}
+          buttons={[
+            {
+              text: tGroups("joinGroup.rejected.button"),
+              handler: handleRejectedDismiss,
+            },
+          ]}
+        />
+
         <BackButton to="/onboarding/language" state={{ direction: "backward" }} />
 
         <div className="group-page__content">

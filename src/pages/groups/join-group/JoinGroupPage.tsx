@@ -1,4 +1,4 @@
-﻿import "./join-group.scss";
+import "./join-group.scss";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -10,12 +10,12 @@ import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {
   findGroupByInviteCode,
-  addMemberToGroup,
+  sendJoinRequest,
 } from "../../../services/group.service";
 import { updateUserFields } from "../../../services/user.service";
 import BackButton from "../../../ui-kit/button/icon-buttons/back-button/BackButton";
 import Icon from "../../../ui-kit/icons/icon/Icon";
-import requestPendingIllustration from "../../../assets/images/request-pending-illustration.png";
+import joinRequestIllustration from "../../../assets/images/join-request-illustration.png";
 
 interface JoinGroupFormData {
   code: string;
@@ -67,31 +67,20 @@ const JoinGroupPage = () => {
     }
   };
 
-  const handleSendRequest = () => {
-    setRequestSent(true);
-  };
-
-  // TODO T14: replace with actual request logic (send join request, wait for admin approval)
-  const handleConfirmJoin = async () => {
-    if (!user || !groupFound) return;
+  const handleSendRequest = async () => {
+    if (!user || !groupFound || !profile) return;
     try {
-      setSubmitState(prev => ({ ...prev, isLoading: true }));
-
-      await Promise.all([
-        addMemberToGroup(
-          groupFound.id,
-          user.uid,
-          profile?.firstName ?? "",
-          profile?.lastName ?? "",
-        ),
-        updateUserFields(user.uid, { groupId: groupFound.id, role: "member" }),
-      ]);
+      setSubmitState({ isLoading: true, errorConnection: "", errorCode: "" });
+      await sendJoinRequest(groupFound.id, user.uid, {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        email: profile.email ?? "",
+      });
+      await updateUserFields(user.uid, { pendingJoinGroupId: groupFound.id });
       await refreshProfile();
-      navigate("/events", { replace: true });
-    } catch (error: unknown) {
-      if (isFirebaseError(error) && error.code === "unavailable") {
-        setSubmitState(prev => ({ ...prev, errorConnection: tCommon("errors.noConnection") }));
-      }
+      setRequestSent(true);
+    } catch {
+      setSubmitState(prev => ({ ...prev, errorConnection: t("joinGroup.errors.sendError") }));
     } finally {
       setSubmitState(prev => ({ ...prev, isLoading: false }));
     }
@@ -100,7 +89,6 @@ const JoinGroupPage = () => {
   if (requestSent) {
     return (
       <div className="join-group-page join-group-page--sent">
-        {submitState.isLoading && <Loading />}
         <div className="join-group-page__pending">
           <div className="join-group-page__pending-header">
             <h1 className="join-group-page__pending-title">
@@ -111,15 +99,14 @@ const JoinGroupPage = () => {
             </p>
           </div>
           <img
-            src={requestPendingIllustration}
+            src={joinRequestIllustration}
             alt=""
             aria-hidden="true"
             className="join-group-page__pending-illustration"
           />
           <Button
             text={t("joinGroup.requestSent.button")}
-            onClick={handleConfirmJoin}
-            isLoading={submitState.isLoading}
+            onClick={() => navigate("/onboarding/group", { replace: true })}
           />
         </div>
       </div>
@@ -202,6 +189,7 @@ const JoinGroupPage = () => {
               <Button
                 text={t("joinGroup.joinButton")}
                 onClick={handleSendRequest}
+                isLoading={submitState.isLoading}
               />
               <Button
                 variant="secondary"
@@ -209,6 +197,12 @@ const JoinGroupPage = () => {
                 onClick={() => setGroupFound(null)}
               />
             </div>
+            {submitState.errorConnection && (
+              <span className="join-group-page__error">
+                <Icon name="error-circle" size={24} className="icon" />
+                {submitState.errorConnection}
+              </span>
+            )}
           </div>
         )}
       </div>
