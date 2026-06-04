@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import FeedPost from "./feed-post/FeedPost";
 import PageTransition from "../../ui-kit/page-transition/PageTransition";
 import Icon from "../../ui-kit/icons/icon/Icon";
@@ -9,6 +10,7 @@ const TODAY_IDS = ["post-1", "post-2"];
 
 const FeedPage = () => {
   const { t } = useTranslation("feed");
+  const navigate = useNavigate();
 
   const todayPosts = FEED_POSTS.filter(post => TODAY_IDS.includes(post.id));
   const weekPosts = FEED_POSTS.filter(post => !TODAY_IDS.includes(post.id));
@@ -45,8 +47,8 @@ const FeedPage = () => {
           </section>
         </div>
 
-        <button className="feed-page__fab" aria-label={t("newPost")} type="button">
-          <Icon name="plus" size={28} />
+        <button className="feed-page__fab" aria-label={t("newPost")} type="button" onClick={() => navigate("/feed/new")}>
+          <Icon name="plus" size={32} />
         </button>
       </div>
     </PageTransition>

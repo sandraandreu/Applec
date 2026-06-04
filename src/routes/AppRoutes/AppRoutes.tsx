@@ -56,6 +56,7 @@ const VerifyEmailPage = lazy(
 );
 const FeedPage = lazy(() => import("../../pages/feed/FeedPage"));
 const FeedDetailPage = lazy(() => import("../../pages/feed/feed-detail/FeedDetailPage"));
+const CreatePostPage = lazy(() => import("../../pages/feed/create-post/CreatePostPage"));
 const NotificationsPage = lazy(() => import("../../pages/notifications/NotificationsPage"));
 const JoinRequestsPage = lazy(() => import("../../pages/notifications/join-requests/JoinRequestsPage"));
 const ProfilePage = lazy(() => import("../../pages/profile/profile/ProfilePage"));
@@ -89,6 +90,15 @@ const AppRoutes = () => (
               <MainLayout>
                 <FeedPage />
               </MainLayout>
+            </PrivateRoutes>
+          }
+        />
+
+        <Route
+          path="/feed/new"
+          element={
+            <PrivateRoutes requiresGroup>
+              <CreatePostPage />
             </PrivateRoutes>
           }
         />

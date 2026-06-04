@@ -9,5 +9,18 @@
   "comments": "Comentaris",
   "reply": "Respondre",
   "writeComment": "Escriu un comentari...",
-  "newPost": "Nova publicació"
+  "newPost": "Nova publicació",
+  "createPost": {
+    "title": "Nova publicació",
+    "placeholder": "Què vols compartir amb la falla?",
+    "addPhoto": "Foto",
+    "linkEvent": "Esdeveniment",
+    "removeEvent": "Treure esdeveniment",
+    "publish": "Publicar",
+    "eventSheet": {
+      "title": "Afegir esdeveniment",
+      "description": "Selecciona l'esdeveniment al qual fa referència la teua publicació. Apareixerà amb el teu text per donar context.",
+      "searchPlaceholder": "Cercar esdeveniment..."
+    }
+  }
 }

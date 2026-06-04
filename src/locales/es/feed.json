@@ -9,5 +9,18 @@
   "comments": "Comentarios",
   "reply": "Responder",
   "writeComment": "Escribe un comentario...",
-  "newPost": "Nueva publicación"
+  "newPost": "Nueva publicación",
+  "createPost": {
+    "title": "Nueva publicación",
+    "placeholder": "¿Qué quieres compartir con la falla?",
+    "addPhoto": "Foto",
+    "linkEvent": "Evento",
+    "removeEvent": "Quitar evento",
+    "publish": "Publicar",
+    "eventSheet": {
+      "title": "Añadir evento",
+      "description": "Selecciona el evento al que hace referencia tu publicación. Aparecerá junto a tu texto para dar contexto.",
+      "searchPlaceholder": "Buscar evento..."
+    }
+  }
 }
