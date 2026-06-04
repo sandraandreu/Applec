@@ -249,7 +249,7 @@ const StyleGuide = () => {
           <span className="style-guide__label">
             --font-size-display · Bricolage ExtraBold · 40px
           </span>
-          <h1 className="h1--large">Display</h1>
+          <h1 className="style-guide__type-display">Display</h1>
         </div>
         <div className="style-guide__item">
           <span className="style-guide__label">

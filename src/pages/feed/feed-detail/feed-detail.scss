@@ -23,7 +23,7 @@
   }
 
   &__post {
-    padding-bottom: var(--gap-content);
+    padding-bottom: var(--size-24);
   }
 
   &__post-header {
@@ -55,17 +55,17 @@
   &__badge {
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-semibold);
-    padding: var(--gap-tight) var(--gap-compact);
+    padding: var(--size-4) var(--size-12);
     border-radius: var(--radius-pill);
     flex-shrink: 0;
 
     &--admin {
-      color: var(--red-500);
+      color: var(--color-error);
       background: var(--red-50);
     }
 
     &--organizer {
-      color: var(--teal-500);
+      color: var(--color-accent-teal);
       background: var(--teal-50);
     }
   }
@@ -74,7 +74,7 @@
     display: flex;
     align-items: center;
     gap: var(--gap-compact);
-    padding: var(--size-12) var(--size-16);
+    padding: var(--padding-inline);
     border: 1.5px solid var(--color-brand);
     border-radius: var(--radius-card);
     background: var(--color-bg-blue);
@@ -86,7 +86,7 @@
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
-    min-width: 32px;
+    min-width: var(--size-32);
   }
 
   &__event-day {
@@ -153,7 +153,7 @@
     font-size: var(--font-size-body-s);
 
     &--active {
-      color: var(--red-500);
+      color: var(--color-error);
     }
   }
 
@@ -264,7 +264,7 @@
     width: var(--size-32);
     height: var(--size-32);
     border-radius: 50%;
-    background: var(--neutral-300);
+    background: var(--color-bg-neutral);
     flex-shrink: 0;
   }
 
@@ -275,6 +275,6 @@
     border: 1px solid var(--color-border);
     font-size: var(--font-size-body-s);
     color: var(--color-text-muted);
-    background: var(--neutral-50);
+    background: var(--color-surface);
   }
 }

@@ -56,7 +56,7 @@ const WelcomePage = () => {
         />
         <div className="welcome-page__content">
           <div className="welcome-page__header">
-            <h1 className="welcome-page__title h1--large">
+            <h1 className="welcome-page__title">
               {t("welcome.title", { name: profile?.firstName })}
             </h1>
             <h2 className="welcome-page__subtitle">{t("welcome.subtitle")}</h2>

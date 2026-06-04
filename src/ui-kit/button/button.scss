@@ -62,14 +62,14 @@
     height: 80px;
     gap: var(--gap-compact);
     flex-direction: row-reverse;
-    background-color: var(--neutral-50);
+    background-color: var(--color-surface);
     border: 1px solid var(--color-text-muted);
     border-radius: var(--radius-button);
     padding: var(--size-12) var(--size-40);
     color: var(--color-text-primary);
 
     &--active {
-      background-color: var(--blue-200);
+      background-color: var(--color-bg-blue-mid);
       border-color: var(--color-brand);
     }
   }

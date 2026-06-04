@@ -20,5 +20,5 @@
 
   &--admin::before    { background: var(--red-500); }
   &--organizer::before { background: var(--teal-500); }
-  &--member::before   { background: var(--blue-500); }
+  &--member::before   { background: var(--color-brand); }
 }

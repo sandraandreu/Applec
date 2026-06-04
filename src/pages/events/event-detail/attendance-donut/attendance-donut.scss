@@ -5,8 +5,8 @@
 
   &__bar {
     display: flex;
-    height: 8px;
-    gap: 2px;
+    height: var(--size-8);
+    gap: var(--size-2);
     background: transparent;
   }
 

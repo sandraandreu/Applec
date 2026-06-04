@@ -53,7 +53,7 @@ const GroupPage = () => {
         <div className="group-page">
           <div className="group-page__content">
             <div className="group-page__header">
-              <h1 className="group-page__title h1--large">
+              <h1 className="group-page__title">
                 {tGroups("joinGroup.pending.title")}
               </h1>
               <p className="group-page__description">
@@ -92,7 +92,7 @@ const GroupPage = () => {
 
         <div className="group-page__content">
           <div className="group-page__header">
-            <h1 className="group-page__title h1--large">{t("group.title")}</h1>
+            <h1 className="group-page__title">{t("group.title")}</h1>
             <p className="group-page__description">{t("group.description")}</p>
           </div>
 

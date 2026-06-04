@@ -55,6 +55,7 @@
   --size-24:  24px;
   --size-32:  32px;
   --size-40:  40px;
+  --size-44:  44px;
   --size-48:  48px;
   --size-100: 100px;
   --size-120: 120px;
@@ -179,12 +180,15 @@
   --gap-section: var(--size-48);
 
   // Paddings
-  --padding-side:   var(--size-16);
-  --padding-page:   var(--size-24) var(--padding-side);
-  --padding-card:   var(--size-14);
-  --padding-input:  var(--size-12) var(--size-14);
-  --padding-chip:   var(--size-6)  var(--size-12);
-  --padding-bar:    var(--size-16);
-  --padding-action: var(--size-8);
-  --padding-empty:  var(--size-40) 0;
+  --padding-side:      var(--size-16);
+  --padding-page:      var(--size-24) var(--padding-side);
+  --padding-card:      var(--size-14);
+  --padding-input:     var(--size-12) var(--size-14);
+  --padding-chip:      var(--size-6)  var(--size-12);
+  --padding-bar:       var(--size-16);
+  --padding-action:    var(--size-8);
+  --padding-empty:     var(--size-40) 0;
+  --padding-row:       var(--size-20) var(--size-24);
+  --padding-list-item: var(--size-16) var(--size-14);
+  --padding-inline:    var(--size-12) var(--size-16);
 }
