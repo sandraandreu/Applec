@@ -44,7 +44,10 @@ const MemberDetailPage = () => {
     if (!isLoading && !member) {
       navigate("/members", { replace: true });
     }
-  }, [isLoading, member, navigate]);
+    if (!(user?.permissions.canViewMemberDetail ?? false)) {
+      navigate("/members", { replace: true });
+    }
+  }, [isLoading, member, navigate, user]);
 
   if (isLoading || !member) return <Loading />;
 

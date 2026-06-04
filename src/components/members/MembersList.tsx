@@ -65,18 +65,24 @@ const MembersList = ({ searchValue }: MembersListProps) => {
             <div key={role}>
               <h2 className="members-list__section-title">{roleLabels[role]}</h2>
               <div className="members-list__cards">
-                {membersByRole[role].map((member) => (
-                  <MemberCard
-                    key={member.uid}
-                    firstName={member.firstName}
-                    lastName={member.lastName}
-                    role={member.role}
-                    photoUrl={member.photoUrl}
-                    isOwnProfile={member.uid === user?.uid}
-                    showRole={false}
-                    onClick={() => navigate(member.uid === user?.uid ? "/profile" : `/members/${member.uid}`)}
-                  />
-                ))}
+                {membersByRole[role].map((member) => {
+                  const isOwn = member.uid === user?.uid;
+                  const canView = user?.permissions.canViewMemberDetail ?? false;
+                  const isClickable = isOwn || canView;
+                  return (
+                    <MemberCard
+                      key={member.uid}
+                      firstName={member.firstName}
+                      lastName={member.lastName}
+                      role={member.role}
+                      photoUrl={member.photoUrl}
+                      isOwnProfile={isOwn}
+                      showRole={false}
+                      showChevron={isClickable}
+                      onClick={isClickable ? () => navigate(isOwn ? "/profile" : `/members/${member.uid}`) : undefined}
+                    />
+                  );
+                })}
               </div>
             </div>
           );
