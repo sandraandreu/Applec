@@ -191,11 +191,4 @@
     margin-top: var(--gap-items);
   }
 
-  &__error {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-    font-size: var(--font-size-body-s);
-    color: var(--color-error);
-  }
 }

@@ -148,7 +148,7 @@ const GroupSettingsPage = () => {
             }
           />
           {saveState.error && (
-            <p className="group-settings-page__error">
+            <p className="inline-error">
               <Icon name="error-circle" size={20} aria-hidden />
               {saveState.error}
             </p>
@@ -171,7 +171,7 @@ const GroupSettingsPage = () => {
           {t("groupSettings.deleteGroup")}
         </button>
         {deleteError && (
-          <p className="group-settings-page__error">
+          <p className="inline-error">
             <Icon name="error-circle" size={20} aria-hidden />
             {deleteError}
           </p>

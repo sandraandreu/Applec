@@ -138,7 +138,7 @@ const EditProfilePage = () => {
             disabled
           />
           {error && (
-            <p className="edit-profile-page__error">
+            <p className="inline-error">
               <Icon name="error-circle" size={20} aria-hidden />
               {error}
             </p>

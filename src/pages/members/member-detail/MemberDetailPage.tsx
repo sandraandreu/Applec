@@ -182,7 +182,7 @@ const MemberDetailPage = () => {
               </div>
 
               {saveState.error && (
-                <p className="member-detail-page__error">
+                <p className="inline-error">
                   <Icon name="error-circle" size={20} />
                   {saveState.error}
                 </p>
@@ -216,7 +216,7 @@ const MemberDetailPage = () => {
                 </button>
               </div>
               {deleteState.error && (
-                <p className="member-detail-page__error">
+                <p className="inline-error">
                   <Icon name="error-circle" size={20} />
                   {deleteState.error}
                 </p>

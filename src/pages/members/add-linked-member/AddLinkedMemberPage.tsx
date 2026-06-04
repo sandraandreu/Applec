@@ -129,7 +129,7 @@ const AddLinkedMemberPage = () => {
           </div>
 
           {errorConnection && (
-            <span className="add-linked-member-page__error">
+            <span className="inline-error">
               <Icon name="error-circle" size={24} className="icon" />
               {errorConnection}
             </span>

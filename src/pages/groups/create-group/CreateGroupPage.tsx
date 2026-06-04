@@ -139,7 +139,7 @@ const CreateGroupPage = () => {
             {t("createGroup.image")}
           </span>
           {imageError && (
-            <span className="create-group-page__image-error">
+            <span className="inline-error">
               <Icon name="error-circle" size={24} className="icon" />
               {imageError}
             </span>
@@ -172,7 +172,7 @@ const CreateGroupPage = () => {
           />
 
           {submitState.errorConnection && (
-            <span className="create-group-page__error">
+            <span className="create-group-page__error inline-error">
               <Icon name="error-circle" size={24} className="icon" />
               {submitState.errorConnection}
             </span>

@@ -29,11 +29,7 @@
   }
 
   &__error {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
     margin-top: var(--size-16);
-    color: var(--color-error);
   }
 
   &__button {

@@ -90,7 +90,7 @@ const ForgotPasswordPage = () => {
             />
 
             {submitState.error && (
-              <span className="forgot-password-page__error">
+              <span className="inline-error">
                 <svg
                   className="icon"
                   xmlns="http://www.w3.org/2000/svg"

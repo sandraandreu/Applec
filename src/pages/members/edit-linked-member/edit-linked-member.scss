@@ -35,18 +35,7 @@
     margin-top: calc(var(--gap-section) - var(--gap-content));
   }
 
-  &__error {
-    display: flex;
-    align-items: center;
-    gap: var(--gap-items);
-    font-size: var(--font-size-body-s);
-    color: var(--color-error);
-  }
-
   &__delete-btn {
-    background: none;
-    border: none;
-    font-family: var(--font-body);
     font-size: var(--font-size-body-s);
     font-weight: var(--font-weight-medium);
     color: var(--color-error);

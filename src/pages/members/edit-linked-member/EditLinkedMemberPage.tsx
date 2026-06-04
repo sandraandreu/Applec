@@ -152,7 +152,7 @@ const EditLinkedMemberPage = () => {
           </div>
 
           {(errorConnection || deleteState.error) && (
-            <span className="edit-linked-member-page__error">
+            <span className="inline-error">
               <Icon name="error-circle" size={24} className="icon" />
               {errorConnection || deleteState.error}
             </span>

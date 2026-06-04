@@ -157,13 +157,13 @@ const LoginPage = () => {
 
           <div className="login-page__actions">
             {errorConnection && (
-              <span className="login-page__error">
+              <span className="inline-error">
                 <Icon name="error-circle" size={24} className="icon" />
                 {errorConnection}
               </span>
             )}
             {errorCredentials && (
-              <span className="login-page__error">
+              <span className="inline-error">
                 <Icon name="error-circle" size={24} className="icon" />
                 {errorCredentials}
               </span>

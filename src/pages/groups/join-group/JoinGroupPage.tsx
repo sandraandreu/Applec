@@ -150,7 +150,7 @@ const JoinGroupPage = () => {
               />
 
               {submitState.errorConnection && (
-                <span className="join-group-page__error">
+                <span className="join-group-page__error inline-error">
                   <Icon name="error-circle" size={24} className="icon" />
                   {submitState.errorConnection}
                 </span>
@@ -198,7 +198,7 @@ const JoinGroupPage = () => {
               />
             </div>
             {submitState.errorConnection && (
-              <span className="join-group-page__error">
+              <span className="join-group-page__error inline-error">
                 <Icon name="error-circle" size={24} className="icon" />
                 {submitState.errorConnection}
               </span>

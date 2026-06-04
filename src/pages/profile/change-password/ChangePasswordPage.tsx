@@ -195,7 +195,7 @@ const ChangePasswordPage = () => {
           />
 
           {submitState.error && (
-            <p className="change-password-page__error">
+            <p className="inline-error">
               <Icon name="error-circle" size={20} aria-hidden />
               {submitState.error}
             </p>
