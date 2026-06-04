@@ -78,7 +78,6 @@
     padding: 0;
     color: var(--color-error);
     font-size: var(--font-size-body-s);
-    font-family: var(--font-body);
     text-decoration: underline;
 
     &:disabled {
@@ -92,7 +91,6 @@
     padding: 0;
     color: var(--color-brand);
     font-size: var(--font-size-body-s);
-    font-family: var(--font-body);
     text-align: center;
     text-decoration: underline;
   }

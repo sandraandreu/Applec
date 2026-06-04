@@ -43,11 +43,6 @@
     flex-direction: column;
     gap: var(--gap-content);
     overscroll-behavior: contain;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   // ─── Header ───────────────────────────────────────────
