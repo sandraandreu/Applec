@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import Button from "../../../../ui-kit/button/Button";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
@@ -26,6 +28,37 @@ const VoteStickyFooter = ({
   onAddLinked,
 }: Props) => {
   const { t } = useTranslation("events");
+  const [isMinimized, setIsMinimized] = useState(false);
+  const stickyRef = useRef<HTMLDivElement | null>(null);
+
+  const { ref: swipeRef, ...swipeHandlers } = useSwipeable({
+    onSwiping: ({ deltaY }) => {
+      if (!stickyRef.current || isMinimized || deltaY <= 0) return;
+      stickyRef.current.style.transition = "none";
+      stickyRef.current.style.transform = `translateY(${deltaY}px)`;
+    },
+    onSwipedDown: ({ deltaY, velocity }) => {
+      if (!stickyRef.current) return;
+      stickyRef.current.style.transition = "";
+      stickyRef.current.style.transform = "";
+      if (!isMinimized && (velocity > 0.5 || deltaY > 60)) {
+        setIsMinimized(true);
+      }
+    },
+    onSwipedUp: ({ deltaY, velocity }) => {
+      if (isMinimized && (velocity > 0.3 || Math.abs(deltaY) > 40)) {
+        setIsMinimized(false);
+      }
+    },
+    onSwiped: ({ dir }) => {
+      if (dir !== "Down" && stickyRef.current) {
+        stickyRef.current.style.transition = "";
+        stickyRef.current.style.transform = "";
+      }
+    },
+    trackMouse: false,
+    preventScrollOnSwipe: true,
+  });
 
   const hasVisibleCompanions = visibleLinkedMembers.length > 0;
   const noneVoted = visibleLinkedMembers.every(lm => !myLinkedResponses[lm.id]);
@@ -43,10 +76,26 @@ const VoteStickyFooter = ({
   })();
 
   return (
-    <div className="event-detail-page__vote-sticky">
+    <div
+      className={`event-detail-page__vote-sticky${isMinimized ? " event-detail-page__vote-sticky--minimized" : ""}`}
+      ref={(node) => { swipeRef(node); stickyRef.current = node; }}
+      {...swipeHandlers}
+    >
+      <button
+        type="button"
+        className="event-detail-page__vote-sticky-toggle"
+        aria-expanded={!isMinimized}
+        aria-label={isMinimized ? t("vote.expand") : t("vote.minimize")}
+        onClick={() => setIsMinimized(prev => !prev)}
+      >
+        <Icon name={isMinimized ? "chevron-up" : "chevron-down"} size={22} aria-hidden="true" />
+        <span className="event-detail-page__vote-sticky-title">
+          {eventStatus === "activo" ? t("vote.questionTitle") : t("vote.myVote")}
+        </span>
+      </button>
+      <div className="event-detail-page__vote-sticky-content">
       {eventStatus === "activo" && (
         <>
-          <p className="event-detail-page__vote-question">{t("vote.questionTitle")}</p>
           <div className="event-detail-page__vote-own-buttons">
             <button
               type="button"
@@ -126,6 +175,7 @@ const VoteStickyFooter = ({
           {voteError}
         </p>
       )}
+      </div>
     </div>
   );
 };
