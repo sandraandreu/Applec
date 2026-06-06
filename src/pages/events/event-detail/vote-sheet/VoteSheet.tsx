@@ -4,6 +4,7 @@ import { useSwipeable } from "react-swipeable";
 import { useTranslation } from "react-i18next";
 import Avatar from "../../../../ui-kit/avatar/Avatar";
 import Button from "../../../../ui-kit/button/Button";
+import EmptyState from "../../../../ui-kit/empty-state/EmptyState";
 import Icon from "../../../../ui-kit/icons/icon/Icon";
 import "./vote-sheet.scss";
 
@@ -217,7 +218,9 @@ const VoteSheet = ({
             </p>
           )}
 
-          {visibleMembers.length > 0 && (
+          {visibleMembers.length === 0 ? (
+            <EmptyState title={t("vote.companionsEmpty")} variant="light" />
+          ) : (
             <ul className="vote-sheet__linked-list">
               {visibleMembers.map(member => renderLinkedMember(member))}
             </ul>
