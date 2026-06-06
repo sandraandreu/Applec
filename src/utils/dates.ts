@@ -20,3 +20,12 @@ export const toLocalDateKey = (date: Date): string => {
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+
+export const formatDayLabel = (date: Date, locale: string): string => {
+  const weekday = date
+    .toLocaleDateString(locale, { weekday: "short" })
+    .replace(".", "")
+    .toUpperCase();
+  const dayMonth = new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(date);
+  return `${weekday} ${dayMonth}`;
+};

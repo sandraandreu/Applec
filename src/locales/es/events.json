@@ -154,7 +154,9 @@
     "externalAllowedMax": "Máx. {{count}} acompañantes invitados",
     "companionsPrompt": "¿Se apuntan?",
     "companionsPending": "{{count}} sin confirmar",
-    "deadlineInfo": "Puedes confirmar hasta el {{date}}"
+    "deadlineInfo": "Puedes confirmar hasta el {{date}}",
+    "minimize": "Minimizar panel de asistencia",
+    "expand": "Expandir panel de asistencia"
   },
   "linked": {
     "title": "Añadir acompañante",
@@ -231,14 +233,19 @@
       "today": "Hoy",
       "seeAll": "Ver todos",
       "prevMonth": "Mes anterior",
-      "nextMonth": "Mes siguiente"
+      "nextMonth": "Mes siguiente",
+      "prevWeek": "Semana anterior",
+      "nextWeek": "Semana siguiente",
+      "prevDay": "Día anterior",
+      "nextDay": "Día siguiente"
     },
     "week": {
       "seeMore": "Ver más (+{{count}})"
     },
     "empty": {
-      "day": "Todavía no hay eventos para este día",
-      "week": "No hay eventos esta semana"
+      "selected": "Sin eventos",
+      "day": "Sin eventos este día",
+      "week": "Sin eventos esta semana"
     },
     "error": "Error al cargar el calendario",
     "create": "Crear evento"

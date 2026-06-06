@@ -47,7 +47,7 @@ const LoginPage = () => {
   } = useForm<LoginFormData>({ mode: "onSubmit" });
 
   const onSubmit = (data: LoginFormData) => {
-    handleLogin(data.email, data.password);
+    handleLogin(data.email.trim(), data.password);
   };
 
   const handleLogin = async (email: string, password: string) => {

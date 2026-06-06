@@ -154,7 +154,9 @@
     "externalAllowedMax": "Màx. {{count}} acompanyants convidats",
     "companionsPrompt": "¿S'apunten?",
     "companionsPending": "{{count}} sense confirmar",
-    "deadlineInfo": "Pots confirmar fins al {{date}}"
+    "deadlineInfo": "Pots confirmar fins al {{date}}",
+    "minimize": "Minimitza el panell d'assistència",
+    "expand": "Expandeix el panell d'assistència"
   },
   "linked": {
     "title": "Afegir acompanyant",
@@ -231,14 +233,19 @@
       "today": "Avui",
       "seeAll": "Veure tots",
       "prevMonth": "Mes anterior",
-      "nextMonth": "Mes següent"
+      "nextMonth": "Mes següent",
+      "prevWeek": "Setmana anterior",
+      "nextWeek": "Setmana següent",
+      "prevDay": "Dia anterior",
+      "nextDay": "Dia següent"
     },
     "week": {
       "seeMore": "Veure més (+{{count}})"
     },
     "empty": {
-      "day": "Encara no hi ha esdeveniments per a aquest dia",
-      "week": "No hi ha esdeveniments aquesta setmana"
+      "selected": "Sense esdeveniments",
+      "day": "Sense esdeveniments en aquest dia",
+      "week": "Sense esdeveniments aquesta setmana"
     },
     "error": "Error en carregar el calendari",
     "create": "Crear esdeveniment"

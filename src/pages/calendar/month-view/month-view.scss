@@ -3,7 +3,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: var(--gap-compact) var(--padding-side) 0;
+  padding: var(--size-12) var(--padding-side) 0;
   gap: var(--gap-content);
 
   // ─── Tarjeta del calendario ───────────────────────────
@@ -21,20 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: var(--gap-compact);
-  }
-
-  &__nav-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--size-32);
-    height: var(--size-32);
-    border-radius: var(--radius-pill);
-    background: var(--color-brand);
-    color: var(--white);
-    border: none;
-    flex-shrink: 0;
+    margin-bottom: var(--size-12);
   }
 
   &__month-title {
@@ -200,17 +187,4 @@
     gap: var(--gap-compact);
   }
 
-  &__empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--gap-content);
-    padding: var(--padding-empty);
-  }
-
-  &__empty-text {
-    font-size: var(--font-size-body-s);
-    color: var(--color-text-muted);
-    text-align: center;
-  }
 }

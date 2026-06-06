@@ -9,6 +9,8 @@ import Loading from "../../components/loading/Loading";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import ViewTabs from "./view-tabs/ViewTabs";
 import MonthView from "./month-view/MonthView";
+import WeeklyView from "./weekly-view/WeeklyView";
+import DailyView from "./daily-view/DailyView";
 import "./calendar.scss";
 
 export type CalendarView = "month" | "week" | "day";
@@ -20,8 +22,7 @@ const CalendarPage = () => {
   const [activeView, setActiveView] = useState<CalendarView>("month");
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [events, setEvents] = useState<FallesEvent[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [{ isLoading, hasError }, setLoadState] = useState({ isLoading: true, hasError: false });
 
   useLayoutBackground(profile?.role);
 
@@ -29,7 +30,7 @@ const CalendarPage = () => {
     if (!profile?.groupId || !user) return;
 
     let isMounted = true;
-    setHasError(false);
+    setLoadState({ isLoading: true, hasError: false });
 
     const groupId = profile.groupId;
 
@@ -37,12 +38,11 @@ const CalendarPage = () => {
       const data = await getEvents(groupId);
       if (!isMounted) return;
       if (data === null) {
-        setHasError(true);
-        setIsLoading(false);
+        setLoadState({ isLoading: false, hasError: true });
         return;
       }
       setEvents(data);
-      setIsLoading(false);
+      setLoadState({ isLoading: false, hasError: false });
     })();
 
     return () => {
@@ -81,6 +81,22 @@ const CalendarPage = () => {
           <ViewTabs activeView={activeView} onChange={setActiveView} />
           {activeView === "month" && (
             <MonthView
+              eventsByDate={eventsByDate}
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+              canCreateEvent={canCreateEvent}
+            />
+          )}
+          {activeView === "week" && (
+            <WeeklyView
+              eventsByDate={eventsByDate}
+              selectedDate={selectedDate}
+              onDateSelect={setSelectedDate}
+              canCreateEvent={canCreateEvent}
+            />
+          )}
+          {activeView === "day" && (
+            <DailyView
               eventsByDate={eventsByDate}
               selectedDate={selectedDate}
               onDateSelect={setSelectedDate}

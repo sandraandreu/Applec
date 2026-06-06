@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { FallesEvent } from "../../../models/event.model";
-import { getIntlLocale, toLocalDateKey } from "../../../utils/dates";
+import { formatDayLabel, getIntlLocale, toLocalDateKey } from "../../../utils/dates";
 import EventCard from "../../../components/events/EventCard";
-import Button from "../../../ui-kit/button/Button";
+import EmptyState from "../../../ui-kit/empty-state/EmptyState";
 import Icon from "../../../ui-kit/icons/icon/Icon";
 import "./month-view.scss";
 
@@ -21,10 +21,13 @@ interface MonthViewProps {
 const MonthView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }: MonthViewProps) => {
   const calendarRef = useRef<FullCalendar>(null);
   const { t, i18n } = useTranslation("events");
+  const navigate = useNavigate();
 
   const [currentMonthDate, setCurrentMonthDate] = useState(
     new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
   );
+
+  const locale = useMemo(() => getIntlLocale(i18n.language), [i18n.language]);
 
   useEffect(() => {
     const api = calendarRef.current?.getApi();
@@ -60,33 +63,22 @@ const MonthView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }:
     }
   };
 
-  const locale = getIntlLocale(i18n.language);
-
-  const monthTitle = (() => {
+  const monthTitle = useMemo(() => {
     const month = currentMonthDate.toLocaleDateString(locale, { month: "long" });
     const year = currentMonthDate.getFullYear();
     return `${month.charAt(0).toUpperCase()}${month.slice(1)} ${year}`;
-  })();
+  }, [currentMonthDate, locale]);
 
   const selectedDateKey = toLocalDateKey(selectedDate);
   const eventsForSelectedDay = eventsByDate[selectedDateKey] ?? [];
-
-  const selectedDayLabel = (() => {
-    const weekday = selectedDate
-      .toLocaleDateString(locale, { weekday: "short" })
-      .replace(".", "")
-      .toUpperCase();
-    const day = selectedDate.getDate();
-    const month = selectedDate.toLocaleDateString(locale, { month: "long" });
-    return `${weekday} ${day} de ${month}`;
-  })();
+  const dayLabel = useMemo(() => formatDayLabel(selectedDate, locale), [selectedDate, locale]);
 
   return (
     <div className="month-view">
       <div className="month-view__card">
         <div className="month-view__nav">
           <button
-            className="month-view__nav-btn"
+            className="calendar-page__nav-btn"
             onClick={handlePrev}
             aria-label={t("calendar.nav.prevMonth")}
           >
@@ -94,7 +86,7 @@ const MonthView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }:
           </button>
           <span className="month-view__month-title">{monthTitle}</span>
           <button
-            className="month-view__nav-btn"
+            className="calendar-page__nav-btn"
             onClick={handleNext}
             aria-label={t("calendar.nav.nextMonth")}
           >
@@ -136,17 +128,16 @@ const MonthView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }:
 
       <div className="month-view__selected-day">
         <div className="month-view__day-header">
-          <span className="month-view__day-title">{selectedDayLabel}</span>
+          <span className="month-view__day-title">{dayLabel}</span>
           <Link to="/events" className="month-view__see-all">{t("calendar.nav.seeAll")}</Link>
         </div>
 
         {eventsForSelectedDay.length === 0 ? (
-          <div className="month-view__empty">
-            <p className="month-view__empty-text">{t("calendar.empty.day")}</p>
-            {canCreateEvent && (
-              <Button to="/events/create" text={t("calendar.create")} variant="primary" />
-            )}
-          </div>
+          <EmptyState
+            variant="light"
+            title={t("calendar.empty.selected")}
+            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/events/create") } : undefined}
+          />
         ) : (
           <div className="month-view__events">
             {eventsForSelectedDay.map(event => (

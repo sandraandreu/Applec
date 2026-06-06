@@ -84,6 +84,11 @@
     flex-shrink: 0;
   }
 
+  &__attendance-link {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
   &--special {
     .event-card__day { color: var(--white); }
     .event-card__month { color: var(--white); }

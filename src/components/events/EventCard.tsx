@@ -58,8 +58,16 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
             {isFinished && (
               <EventStatusBadge variant="finalizado" label={t("status.finalizado")} />
             )}
-            {!isFinished && isGoing && <AttendanceIndicator attendance="going" />}
-            {!isFinished && isNotGoing && <AttendanceIndicator attendance="not-going" />}
+            {!isFinished && isGoing && (
+              <Link to={`/events/${event.id}`} className="event-card__attendance-link">
+                <AttendanceIndicator attendance="going" />
+              </Link>
+            )}
+            {!isFinished && isNotGoing && (
+              <Link to={`/events/${event.id}`} className="event-card__attendance-link">
+                <AttendanceIndicator attendance="not-going" />
+              </Link>
+            )}
             {!isFinished && isPending && isDeadlineClosed && (
               <EventStatusBadge variant="plazo-cerrado" label={t("status.plazo-cerrado")} />
             )}
@@ -69,7 +77,6 @@ const EventCard = ({ event, attendanceResponse = null }: EventCardProps) => {
                 className="button--compact"
                 text={t("card.confirm")}
                 to={`/events/${event.id}`}
-                state={{ openVoteSheet: true }}
               />
             )}
           </div>

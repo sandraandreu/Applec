@@ -24,6 +24,19 @@
     flex-direction: column;
   }
 
+  &__nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--size-32);
+    height: var(--size-32);
+    border-radius: var(--radius-pill);
+    background: var(--color-brand);
+    color: var(--white);
+    border: none;
+    flex-shrink: 0;
+  }
+
   &__error {
     display: flex;
     align-items: center;
