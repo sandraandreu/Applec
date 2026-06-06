@@ -8,6 +8,8 @@ import { getEventAttendances, saveAttendance } from "../../../../services/attend
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
 import type { FallesEvent } from "../../../../models/event.model";
+import type { User, UserProfile } from "../../../../models/user.model";
+import type { GroupData } from "../../../../context/group/GroupContext";
 
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-router-dom")>();
@@ -102,18 +104,18 @@ const setupMocks = (locationState: object | null = null) => {
         canEditAllEvents: true, canManageMembers: true, canInviteMembers: true,
         canManageGroup: true, canShareAccess: true,
       },
-    } as any,
+    } as unknown as User,
     profile: {
       firstName: "Admin", lastName: "User", email: "admin@test.com",
       role: "admin" as const, groupId: "grp-1", createdAt: new Date(),
-    } as any,
+    } as unknown as UserProfile,
     isLoading: false,
     isInitialized: true,
     logout: vi.fn(),
     refreshProfile: vi.fn(),
   });
   vi.mocked(useGroupContext).mockReturnValue({
-    group: { id: "grp-1", members: [], linkedMembers: [] } as any,
+    group: { id: "grp-1", members: [], linkedMembers: [] } as unknown as GroupData,
     isLoading: false,
     refreshGroup: vi.fn(),
   });
@@ -132,8 +134,8 @@ describe("EventDetailPage", () => {
 
   it("muestra el spinner mientras cargan los datos", () => {
     setupMocks();
-    vi.mocked(getEventById).mockReturnValue(new Promise(() => {}));
-    vi.mocked(getEventAttendances).mockReturnValue(new Promise(() => {}));
+    vi.mocked(getEventById).mockReturnValue(new Promise(vi.fn()));
+    vi.mocked(getEventAttendances).mockReturnValue(new Promise(vi.fn()));
     render(<EventDetailPage />);
     expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
   });

@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getDocs } from "firebase/firestore";
-import { Timestamp } from "firebase/firestore";
+import { getDocs, Timestamp } from "firebase/firestore";
+import type { QuerySnapshot, DocumentData } from "firebase/firestore";
 import { getEvents } from "../event.service";
+import type { FallesEvent } from "../../models/event.model";
 
 vi.mock("../../plugins/firebase", () => ({ db: {} }));
 
@@ -48,23 +49,24 @@ describe("event.service — toEvent mapper", () => {
         date: Timestamp.fromDate(eventDate),
         createdAt: Timestamp.fromDate(createdAt),
       })],
-    } as any);
+    } as unknown as QuerySnapshot<DocumentData>);
 
     const events = await getEvents("grp-1");
+    const event = (events as FallesEvent[])[0];
 
     expect(events).toHaveLength(1);
-    expect(events![0].date).toEqual(eventDate);
-    expect(events![0].createdAt).toEqual(createdAt);
+    expect(event.date).toEqual(eventDate);
+    expect(event.createdAt).toEqual(createdAt);
   });
 
   it("confirmationDeadline es undefined cuando no viene de Firestore", async () => {
     vi.mocked(getDocs).mockResolvedValue({
       docs: [makeDoc(baseDocData)],
-    } as any);
+    } as unknown as QuerySnapshot<DocumentData>);
 
     const events = await getEvents("grp-1");
 
-    expect(events![0].confirmationDeadline).toBeUndefined();
+    expect((events as FallesEvent[])[0].confirmationDeadline).toBeUndefined();
   });
 
   it("confirmationDeadline se convierte a Date cuando está presente", async () => {
@@ -76,11 +78,11 @@ describe("event.service — toEvent mapper", () => {
         requiresConfirmation: true,
         confirmationDeadline: Timestamp.fromDate(deadline),
       })],
-    } as any);
+    } as unknown as QuerySnapshot<DocumentData>);
 
     const events = await getEvents("grp-1");
 
-    expect(events![0].confirmationDeadline).toEqual(deadline);
+    expect((events as FallesEvent[])[0].confirmationDeadline).toEqual(deadline);
   });
 
   it("devuelve null si Firestore falla", async () => {

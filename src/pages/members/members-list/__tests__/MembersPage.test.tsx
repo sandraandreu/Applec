@@ -9,6 +9,8 @@ vi.mock("react-router-dom", async (importOriginal) => {
 });
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
+import type { User } from "../../../../models/user.model";
+import type { GroupData } from "../../../../context/group/GroupContext";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -27,7 +29,7 @@ vi.mock("../../../../ui-kit/success-banner/SuccessBanner", () => ({
 
 const mockAuth = (overrides = {}) =>
   vi.mocked(useAuthContext).mockReturnValue({
-    user: { permissions: { canInviteMembers: false } } as any,
+    user: { permissions: { canInviteMembers: false } } as unknown as User,
     profile: null,
     isLoading: false,
     isInitialized: true,
@@ -38,7 +40,7 @@ const mockAuth = (overrides = {}) =>
 
 const mockGroup = () =>
   vi.mocked(useGroupContext).mockReturnValue({
-    group: { members: [] } as any,
+    group: { members: [] } as unknown as GroupData,
     isLoading: false,
     refreshGroup: vi.fn(),
   });

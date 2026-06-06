@@ -6,6 +6,7 @@ import JoinGroupPage from "../JoinGroupPage";
 import { findGroupByInviteCode, sendJoinRequest } from "../../../../services/group.service";
 import { updateUserFields } from "../../../../services/user.service";
 import { useAuthContext } from "../../../../context/auth/AuthContext";
+import type { User, UserProfile } from "../../../../models/user.model";
 
 vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react-router-dom")>();
@@ -77,8 +78,8 @@ const mockNavigate = vi.fn();
 
 const mockAuth = (overrides = {}) =>
   vi.mocked(useAuthContext).mockReturnValue({
-    user: { uid: "user-123" } as any,
-    profile: { firstName: "Anna", lastName: "Garriga", email: "anna@test.com" } as any,
+    user: { uid: "user-123" } as unknown as User,
+    profile: { firstName: "Anna", lastName: "Garriga", email: "anna@test.com" } as unknown as UserProfile,
     isLoading: false,
     isInitialized: true,
     logout: vi.fn(),

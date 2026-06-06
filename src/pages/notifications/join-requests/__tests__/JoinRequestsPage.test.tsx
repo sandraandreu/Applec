@@ -6,6 +6,8 @@ import JoinRequestsPage from "../JoinRequestsPage";
 import { getJoinRequests, approveJoinRequest, rejectJoinRequest } from "../../../../services/group.service";
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
+import type { UserProfile } from "../../../../models/user.model";
+import type { GroupData } from "../../../../context/group/GroupContext";
 
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string, opts?: Record<string, string>) => opts ? `${key}:${JSON.stringify(opts)}` : key }),
@@ -52,8 +54,8 @@ vi.mock("../../join-request-item/JoinRequestItem", () => ({
 
 const mockAuth = () =>
   vi.mocked(useAuthContext).mockReturnValue({
-    profile: { groupId: "grp-1" } as any,
-    user: null as any,
+    profile: { groupId: "grp-1" } as unknown as UserProfile,
+    user: null,
     isLoading: false,
     isInitialized: true,
     logout: vi.fn(),
@@ -62,7 +64,7 @@ const mockAuth = () =>
 
 const mockGroup = (name = "Falla Test") =>
   vi.mocked(useGroupContext).mockReturnValue({
-    group: { name } as any,
+    group: { name } as unknown as GroupData,
     isLoading: false,
     refreshGroup: vi.fn(),
   });
@@ -82,7 +84,7 @@ describe("JoinRequestsPage", () => {
   });
 
   it("muestra loading mientras carga", () => {
-    vi.mocked(getJoinRequests).mockReturnValue(new Promise(() => {}));
+    vi.mocked(getJoinRequests).mockReturnValue(new Promise(vi.fn()));
     renderPage();
     expect(screen.getByTestId("loading")).toBeTruthy();
   });
@@ -117,7 +119,8 @@ describe("JoinRequestsPage", () => {
 
     const items = screen.getAllByTestId("request-item");
     const realItem = items.find(el => el.textContent?.includes("Anna Garriga"));
-    await userEvent.click(realItem!.querySelector("button[onClick]") ?? realItem!.querySelectorAll("button")[0]);
+    if (!realItem) return;
+    await userEvent.click(realItem.querySelector("button[onClick]") ?? realItem.querySelectorAll("button")[0]);
 
     await waitFor(() => {
       expect(screen.queryByText("Anna Garriga")).toBeNull();
@@ -136,7 +139,8 @@ describe("JoinRequestsPage", () => {
 
     const items = screen.getAllByTestId("request-item");
     const realItem = items.find(el => el.textContent?.includes("Bernat Costa"));
-    await userEvent.click(realItem!.querySelectorAll("button")[1]);
+    if (!realItem) return;
+    await userEvent.click(realItem.querySelectorAll("button")[1]);
 
     await waitFor(() => {
       expect(screen.queryByText("Bernat Costa")).toBeNull();
@@ -152,7 +156,8 @@ describe("JoinRequestsPage", () => {
 
     const items = screen.getAllByTestId("request-item");
     const pereItem = items.find(el => el.textContent?.includes("requestsPage.pere"));
-    await userEvent.click(pereItem!.querySelectorAll("button")[0]);
+    if (!pereItem) return;
+    await userEvent.click(pereItem.querySelectorAll("button")[0]);
 
     await waitFor(() => {
       expect(screen.queryByText("requestsPage.pere")).toBeNull();

@@ -5,6 +5,7 @@ import PrivateRoutes from "../PrivateRoutes";
 import PublicRoutes from "../PublicRoutes";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
+import type { User, UserProfile } from "../../../models/user.model";
 
 vi.mock("../../../context/auth/AuthContext", () => ({ useAuthContext: vi.fn() }));
 vi.mock("../../../context/group/GroupContext", () => ({ useGroupContext: vi.fn() }));
@@ -12,7 +13,7 @@ vi.mock("../../../components/loading/Loading", () => ({
   default: () => <div data-testid="loading-spinner" />,
 }));
 
-const verifiedUser = { emailVerified: true } as any;
+const verifiedUser = { emailVerified: true } as unknown as User;
 
 const mockAuth = (overrides = {}) =>
   vi.mocked(useAuthContext).mockReturnValue({
@@ -65,13 +66,13 @@ describe("PrivateRoutes", () => {
   });
 
   it("redirige a /verify-email si el email no está verificado", () => {
-    mockAuth({ user: { emailVerified: false } as any });
+    mockAuth({ user: { emailVerified: false } as unknown as User });
     renderWithRouter(<PrivateRoutes><div>contenido</div></PrivateRoutes>);
     expect(screen.getByText("verify-email")).toBeInTheDocument();
   });
 
   it("redirige a /onboarding/welcome si requiresGroup y el usuario no tiene grupo", () => {
-    mockAuth({ user: verifiedUser, profile: { groupId: undefined } as any });
+    mockAuth({ user: verifiedUser, profile: { groupId: undefined } as unknown as UserProfile });
     renderWithRouter(
       <PrivateRoutes requiresGroup><div>contenido</div></PrivateRoutes>
     );
@@ -79,7 +80,7 @@ describe("PrivateRoutes", () => {
   });
 
   it("renderiza el contenido si el usuario está autenticado y tiene grupo", () => {
-    mockAuth({ user: verifiedUser, profile: { groupId: "grp-1" } as any });
+    mockAuth({ user: verifiedUser, profile: { groupId: "grp-1" } as unknown as UserProfile });
     renderWithRouter(
       <PrivateRoutes requiresGroup><div>contenido</div></PrivateRoutes>
     );
@@ -105,7 +106,7 @@ describe("PublicRoutes", () => {
   });
 
   it("redirige a /events si el usuario autenticado tiene grupo", () => {
-    mockAuth({ user: verifiedUser, profile: { groupId: "grp-1" } as any });
+    mockAuth({ user: verifiedUser, profile: { groupId: "grp-1" } as unknown as UserProfile });
     renderWithRouter(<PublicRoutes><div>página pública</div></PublicRoutes>);
     expect(screen.getByText("events")).toBeInTheDocument();
   });
