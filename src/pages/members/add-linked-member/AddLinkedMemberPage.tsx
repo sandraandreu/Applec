@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useSwipeable } from "react-swipeable";
@@ -25,6 +25,11 @@ interface AddLinkedMemberFormData {
   relationship: string;
 }
 
+interface PendingMember extends AddLinkedMemberFormData {
+  id: string;
+  isFallero: boolean;
+}
+
 const AddLinkedMemberPage = () => {
   const { t } = useTranslation("events");
   const { t: tCommon } = useTranslation("common");
@@ -37,12 +42,22 @@ const AddLinkedMemberPage = () => {
   const [isFallero, setIsFallero] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorConnection, setErrorConnection] = useState("");
+  const [queue, setQueue] = useState<PendingMember[]>([]);
 
   const {
     register,
     handleSubmit,
+    reset,
+    watch,
+    trigger,
+    getValues,
     formState: { errors },
-  } = useForm<AddLinkedMemberFormData>();
+  } = useForm<AddLinkedMemberFormData>({
+    defaultValues: { firstName: "", lastName: "", relationship: "" },
+  });
+
+  const { firstName: wFirst, lastName: wLast, relationship: wRel } = watch();
+  const isFormEmpty = !wFirst && !wLast && !wRel;
 
   const handleBack = (keepSheetState = false) => {
     if (locationState.returnTo) {
@@ -55,11 +70,23 @@ const AddLinkedMemberPage = () => {
     }
   };
 
-  const onSubmit = async (data: AddLinkedMemberFormData) => {
-    if (!profile?.groupId || !user?.uid) return;
+  const saveAll = async (members: PendingMember[]) => {
+    const groupId = profile?.groupId;
+    const uid = user?.uid;
+    if (!groupId || !uid) return;
+    setIsLoading(true);
+    setErrorConnection("");
     try {
-      setIsLoading(true);
-      await addLinkedMember(profile.groupId, user.uid, { ...data, type: isFallero ? "fallero" : "extern" });
+      await Promise.all(
+        members.map(member =>
+          addLinkedMember(groupId, uid, {
+            firstName: member.firstName,
+            lastName: member.lastName,
+            relationship: member.relationship,
+            type: member.isFallero ? "fallero" : "extern",
+          })
+        )
+      );
       await refreshGroup();
       handleBack(true);
     } catch {
@@ -67,6 +94,33 @@ const AddLinkedMemberPage = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleAddToQueue = handleSubmit((data) => {
+    setQueue(prev => [...prev, { id: Date.now().toString(), ...data, isFallero }]);
+    reset();
+    setIsFallero(true);
+    setErrorConnection("");
+  });
+
+  const handleSave = async () => {
+    if (isFormEmpty) {
+      if (queue.length > 0) {
+        await saveAll(queue);
+      } else {
+        await trigger();
+      }
+      return;
+    }
+    const isValid = await trigger();
+    if (isValid) {
+      const values = getValues();
+      await saveAll([...queue, { id: "current", ...values, isFallero }]);
+    }
+  };
+
+  const removeFromQueue = (id: string) => {
+    setQueue(prev => prev.filter(m => m.id !== id));
   };
 
   const swipeHandlers = useSwipeable({
@@ -91,10 +145,36 @@ const AddLinkedMemberPage = () => {
       </div>
 
       <div className="add-linked-member-page__content">
-        <form
-          className="add-linked-member-page__form"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <div className="add-linked-member-page__form">
+
+          {queue.length > 0 && (
+            <div className="add-linked-member-page__queue">
+              <span className="add-linked-member-page__queue-label">{t("linked.pendingLabel")}</span>
+              <ul className="add-linked-member-page__queue-list">
+                {queue.map(member => (
+                  <li key={member.id} className="add-linked-member-page__queue-item">
+                    <span className="add-linked-member-page__queue-item-info">
+                      <span className="add-linked-member-page__queue-item-name">
+                        {member.firstName} {member.lastName}
+                      </span>
+                      <span className="add-linked-member-page__queue-item-rel">
+                        {member.relationship}
+                      </span>
+                    </span>
+                    <button
+                      type="button"
+                      className="add-linked-member-page__queue-item-remove"
+                      aria-label={t("linked.removeFromQueue")}
+                      onClick={() => removeFromQueue(member.id)}
+                    >
+                      <Icon name="x-mark" size={24} aria-hidden="true" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="add-linked-member-page__fields">
             <Input
               label={t("linked.firstName")}
@@ -134,22 +214,25 @@ const AddLinkedMemberPage = () => {
               {errorConnection}
             </span>
           )}
+        </div>
+      </div>
 
-          <div className="add-linked-member-page__actions">
-            <Button
-              variant="primary"
-              text={t("linked.save")}
-              type="submit"
-              disabled={Object.keys(errors).length > 0}
-              isLoading={isLoading}
-            />
-            <Button
-              variant="secondary"
-              text={t("linked.cancel")}
-              onClick={() => handleBack()}
-            />
-          </div>
-        </form>
+      <div className="add-linked-member-page__actions">
+        <Button
+          variant="primary"
+          text={t("linked.save")}
+          type="button"
+          onClick={handleSave}
+          isLoading={isLoading}
+          disabled={isFormEmpty && queue.length === 0}
+        />
+        <Button
+          variant="secondary"
+          text={t("linked.addAnother")}
+          type="button"
+          onClick={handleAddToQueue}
+          disabled={isFormEmpty}
+        />
       </div>
     </div>
   );

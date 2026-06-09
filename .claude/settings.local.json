@@ -52,7 +52,8 @@
       "Bash(node *)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('vote',{}\\), ensure_ascii=False, indent=2\\)\\)\")",
       "Bash(git merge *)",
-      "WebFetch(domain:sandraandreu.com)"
+      "WebFetch(domain:sandraandreu.com)",
+      "PowerShell($tools = @\\(\"exiftool\", \"magick\", \"dcraw\", \"rawpy\"\\); foreach \\($t in $tools\\) { $r = Get-Command $t -ErrorAction SilentlyContinue; if \\($r\\) { Write-Host \"$t encontrado: $\\($r.Source\\)\" } else { Write-Host \"$t no disponible\" } })"
     ]
   }
 }

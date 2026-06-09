@@ -134,9 +134,8 @@ const MonthView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }:
 
         {eventsForSelectedDay.length === 0 ? (
           <EmptyState
-            variant="light"
             title={t("calendar.empty.selected")}
-            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/events/create") } : undefined}
+            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/create-events") } : undefined}
           />
         ) : (
           <div className="month-view__events">

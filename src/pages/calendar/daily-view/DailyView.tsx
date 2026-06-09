@@ -62,7 +62,7 @@ const DailyView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }:
           <EmptyState
             expand
             title={t("calendar.empty.day")}
-            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/events/create") } : undefined}
+            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/create-events") } : undefined}
           />
         </div>
       ) : (

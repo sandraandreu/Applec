@@ -1,7 +1,8 @@
 .add-linked-member-page {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--color-bg-gradient-teal);
 
   &__gradient-zone {
@@ -43,13 +44,13 @@
     flex-direction: column;
     padding: var(--padding-page);
     flex: 1;
+    overflow-y: auto;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
     gap: var(--gap-content);
-    flex: 1;
   }
 
   &__toggle-section {
@@ -60,12 +61,76 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-compact);
-    flex: 1;
+  }
+
+  &__queue {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+    padding-bottom: var(--gap-content);
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  &__queue-label {
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-muted);
+  }
+
+  &__queue-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-items);
+  }
+
+  &__queue-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--padding-row);
+    background: var(--neutral-50);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-border-light);
+  }
+
+  &__queue-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+  }
+
+  &__queue-item-name {
+    font-size: var(--font-size-body-m);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+  }
+
+  &__queue-item-rel {
+    font-size: var(--font-size-body-s);
+    color: var(--color-text-muted);
+  }
+
+  &__queue-item-remove {
+    background: none;
+    border: none;
+    padding: var(--size-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
   }
 
   &__actions {
     display: flex;
     flex-direction: column;
     gap: var(--gap-items);
+    background: var(--white);
+    border-top: 1px solid var(--color-border-light);
+    padding: var(--size-16) var(--padding-page);
+    padding-bottom: max(env(safe-area-inset-bottom), var(--size-16));
   }
 }

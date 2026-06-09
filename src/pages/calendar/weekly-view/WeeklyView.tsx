@@ -171,7 +171,7 @@ const WeeklyView = ({ eventsByDate, selectedDate, onDateSelect, canCreateEvent }
           <EmptyState
             expand
             title={t("calendar.empty.week")}
-            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/events/create") } : undefined}
+            cta={canCreateEvent ? { text: t("calendar.create"), onClick: () => navigate("/create-events") } : undefined}
           />
         </div>
       )}
