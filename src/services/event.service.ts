@@ -4,10 +4,13 @@ import {
   getDocs,
   getDoc,
   addDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
   query,
   orderBy,
+  onSnapshot,
+  serverTimestamp,
   Timestamp,
   type DocumentData,
 } from "firebase/firestore";
@@ -16,6 +19,13 @@ import type { FallesEvent, FallesEventCreate } from "../models/event.model";
 
 const toDate = (value: unknown): Date =>
   value instanceof Timestamp ? value.toDate() : (value as Date);
+
+export interface EventNotif {
+  eventId: string;
+  title: string;
+  createdBy: string;
+  createdAt: Date;
+}
 
 const toEvent = (id: string, data: DocumentData): FallesEvent => ({
   id,
@@ -64,6 +74,15 @@ export const getEventById = async (
   }
 };
 
+const writeEventNotification = async (groupId: string, eventId: string, title: string, createdBy: string): Promise<void> => {
+  await setDoc(doc(db, "groups", groupId, "eventNotifications", eventId), {
+    eventId,
+    title,
+    createdBy,
+    createdAt: serverTimestamp(),
+  });
+};
+
 export const createEvent = async (
   groupId: string,
   data: FallesEventCreate,
@@ -72,7 +91,23 @@ export const createEvent = async (
     ...data,
     createdAt: new Date(),
   });
+  await writeEventNotification(groupId, ref.id, data.name, data.createdBy);
   return ref.id;
+};
+
+export const listenEventNotifications = (
+  groupId: string,
+  callback: (notifications: EventNotif[]) => void,
+): (() => void) => {
+  return onSnapshot(collection(db, "groups", groupId, "eventNotifications"), (snap) => {
+    const notifications = snap.docs.map(d => ({
+      eventId: d.data().eventId as string,
+      title: d.data().title as string,
+      createdBy: d.data().createdBy as string,
+      createdAt: d.data().createdAt?.toDate?.() ?? new Date(),
+    }));
+    callback(notifications);
+  });
 };
 
 export const updateEvent = async (

@@ -52,6 +52,10 @@
     "title": "Ferran Català",
     "message": "Has acceptat la seua sol·licitud. Ja forma part de la falla."
   },
+  "newEvent": {
+    "title": "Nou event creat",
+    "cta": "Veure l'event"
+  },
   "requestsPage": {
     "title": "Sol·licituds",
     "viewAll": "Veure totes les sol·licituds",

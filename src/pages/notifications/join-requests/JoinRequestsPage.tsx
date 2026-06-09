@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import {
-  getJoinRequests,
+  listenJoinRequests,
   approveJoinRequest,
   rejectJoinRequest,
 } from "../../../services/group.service";
@@ -27,13 +27,11 @@ const JoinRequestsPage = () => {
 
   useEffect(() => {
     if (!profile?.groupId) return;
-    let isMounted = true;
-    getJoinRequests(profile.groupId).then(requests => {
-      if (!isMounted) return;
+    const unsubscribe = listenJoinRequests(profile.groupId, (requests) => {
       setRealRequests(requests.sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()));
       setIsLoading(false);
     });
-    return () => { isMounted = false; };
+    return () => unsubscribe();
   }, [profile?.groupId]);
 
   const removeRequest = (uid: string) =>

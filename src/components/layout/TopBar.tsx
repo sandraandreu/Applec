@@ -14,6 +14,7 @@ const TopBar = () => {
   const { group } = useGroupContext();
 
   const [hasJoinRequests, setHasJoinRequests] = useState(false);
+  const [hasNewEvents, setHasNewEvents] = useState(false);
 
   useEffect(() => {
     if (!user?.permissions.canManageMembers || !profile?.groupId) return;
@@ -27,6 +28,24 @@ const TopBar = () => {
     );
     return () => unsubscribe();
   }, [user?.permissions.canManageMembers, profile?.groupId]);
+
+  useEffect(() => {
+    if (!profile?.groupId || !user?.uid) return;
+    const uid = user.uid;
+    const unsubscribe = onSnapshot(
+      collection(db, "groups", profile.groupId, "eventNotifications"),
+      (snap) => {
+        const lastSeen = Number(localStorage.getItem("notificationsLastSeen") ?? 0);
+        const hasNew = snap.docs.some(d => {
+          const createdAt = d.data().createdAt?.toMillis?.() ?? 0;
+          const createdBy = d.data().createdBy as string;
+          return createdAt > lastSeen && createdBy !== uid;
+        });
+        setHasNewEvents(hasNew);
+      },
+    );
+    return () => unsubscribe();
+  }, [profile?.groupId, user?.uid]);
 
   if (!profile || !group) return null;
 
@@ -63,7 +82,7 @@ const TopBar = () => {
         >
           <span className="top-bar__bell">
             <Icon name="bell" size={32} />
-            {hasJoinRequests && <span className="top-bar__bell-badge" aria-hidden="true" />}
+            {(hasJoinRequests || hasNewEvents) && <span className="top-bar__bell-badge" aria-hidden="true" />}
           </span>
         </Link>
       </div>

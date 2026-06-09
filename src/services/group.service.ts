@@ -10,6 +10,7 @@ import {
   query,
   where,
   getDocs,
+  onSnapshot,
   arrayUnion,
   runTransaction,
   serverTimestamp,
@@ -219,6 +220,22 @@ export const getJoinRequests = async (groupId: string): Promise<JoinRequest[]> =
   } catch {
     return [];
   }
+};
+
+export const listenJoinRequests = (
+  groupId: string,
+  callback: (requests: JoinRequest[]) => void,
+): (() => void) => {
+  return onSnapshot(collection(db, "groups", groupId, "joinRequests"), (snap) => {
+    const requests = snap.docs.map(d => ({
+      uid: d.id,
+      firstName: d.data().firstName as string,
+      lastName: d.data().lastName as string,
+      email: d.data().email as string,
+      requestedAt: d.data().requestedAt?.toDate?.() ?? new Date(),
+    }));
+    callback(requests);
+  });
 };
 
 export const approveJoinRequest = async (

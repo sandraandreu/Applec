@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
-import { getJoinRequests, approveJoinRequest, rejectJoinRequest, getAcceptedRequests } from "../../services/group.service";
+import { listenJoinRequests, approveJoinRequest, rejectJoinRequest, getAcceptedRequests } from "../../services/group.service";
+import { listenEventNotifications, type EventNotif } from "../../services/event.service";
 import type { JoinRequest, AcceptedRequest } from "../../models/user.model";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
 import NotificationItem from "./notification-item/NotificationItem";
@@ -42,23 +43,35 @@ const NotificationsPage = () => {
     return () => update();
   }, []);
 
+  const [visitedAt] = useState(() => Number(localStorage.getItem("notificationsLastSeen") ?? 0));
   const [realRequests, setRealRequests] = useState<JoinRequest[]>([]);
   const [acceptedRequests, setAcceptedRequests] = useState<AcceptedRequest[]>([]);
+  const [newEventNotifications, setNewEventNotifications] = useState<EventNotif[]>([]);
 
   useEffect(() => {
     if (!isAdminOrOrg || !profile?.groupId) return;
     let isMounted = true;
-    const groupId = profile.groupId;
-    Promise.all([
-      getJoinRequests(groupId),
-      getAcceptedRequests(groupId),
-    ]).then(([joinRequests, accepted]) => {
+    getAcceptedRequests(profile.groupId).then(accepted => {
       if (!isMounted) return;
-      setRealRequests(joinRequests.sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()));
       setAcceptedRequests(accepted.sort((a, b) => b.acceptedAt.getTime() - a.acceptedAt.getTime()));
     });
-    return () => { isMounted = false; };
+    const unsubscribe = listenJoinRequests(profile.groupId, (requests) => {
+      setRealRequests(requests.sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()));
+    });
+    return () => { isMounted = false; unsubscribe(); };
   }, [isAdminOrOrg, profile?.groupId]);
+
+  useEffect(() => {
+    if (!profile?.groupId || !user?.uid) return;
+    const uid = user.uid;
+    const unsubscribe = listenEventNotifications(profile.groupId, (notifications) => {
+      const filtered = notifications
+        .filter(notification => notification.createdBy !== uid && notification.createdAt.getTime() > visitedAt)
+        .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      setNewEventNotifications(filtered);
+    });
+    return () => unsubscribe();
+  }, [profile?.groupId, user?.uid, visitedAt]);
 
   const removeRequest = (uid: string) =>
     setRealRequests(prev => prev.filter(r => r.uid !== uid));
@@ -241,6 +254,28 @@ const NotificationsPage = () => {
               <span className="notifications-page__section-label">{section.label}</span>
             </div>
             <ul className="notifications-page__list">
+              {section.id === "today" && newEventNotifications.filter(notification => isToday(notification.createdAt)).map(notification => (
+                <li key={`event-${notification.eventId}`}>
+                  <NotificationItem
+                    iconName="calendar-plus"
+                    iconBg="blue"
+                    title={t("newEvent.title")}
+                    message={notification.title}
+                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}` }}
+                  />
+                </li>
+              ))}
+              {section.id === "this-week" && newEventNotifications.filter(notification => !isToday(notification.createdAt)).map(notification => (
+                <li key={`event-${notification.eventId}`}>
+                  <NotificationItem
+                    iconName="calendar-plus"
+                    iconBg="blue"
+                    title={t("newEvent.title")}
+                    message={notification.title}
+                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}` }}
+                  />
+                </li>
+              ))}
               {section.id === "today" && todayAccepted.map(r => (
                 <li key={`accepted-${r.uid}`}>
                   <NotificationItem

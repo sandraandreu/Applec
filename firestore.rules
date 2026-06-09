@@ -88,6 +88,14 @@ service cloud.firestore {
         }
       }
 
+      // ─── Notificaciones de evento ─────────────────────────────────────────────
+      match /eventNotifications/{notificationId} {
+        allow read: if isMemberOfGroup(groupId);
+        allow create: if isOrganizerOrAdmin(groupId);
+        allow delete: if isOrganizerOrAdmin(groupId);
+        allow update: if false;
+      }
+
       // ─── Solicitudes de unión ─────────────────────────────────────────────────
       match /joinRequests/{requestId} {
         // Solo admins pueden ver y gestionar solicitudes
