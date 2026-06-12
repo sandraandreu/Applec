@@ -1,0 +1,32 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isGroupAdmin(groupId) {
+      let userData = firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data;
+      return userData.get('groupId', null) == groupId && userData.get('role', '') == 'admin';
+    }
+
+    // Avatar propio
+    match /users/{userId}/avatar {
+      allow read: if isAuthenticated();
+      allow write: if request.auth.uid == userId;
+    }
+
+    // Fotos de miembros sin cuenta propia — solo el admin del grupo puede escribir
+    match /users/{userId}/member-avatars/{allPaths=**} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Imagen del grupo
+    match /groups/{groupId}/image {
+      allow read: if isAuthenticated();
+      allow write: if isGroupAdmin(groupId);
+    }
+  }
+}

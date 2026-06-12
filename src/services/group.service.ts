@@ -17,6 +17,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
+import { compressImage } from "../utils/compress-image";
 import type { GroupData } from "../context/group/GroupContext";
 import type { JoinRequest, AcceptedRequest } from "../models/user.model";
 
@@ -50,8 +51,9 @@ interface CreateGroupData {
 }
 
 export const uploadGroupImage = async (file: File, groupId: string): Promise<string> => {
+  const compressed = await compressImage(file);
   const storageRef = ref(storage, `groups/${groupId}/image`);
-  await uploadBytes(storageRef, file);
+  await uploadBytes(storageRef, compressed);
   return await getDownloadURL(storageRef);
 };
 

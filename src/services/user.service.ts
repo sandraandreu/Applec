@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
+import { compressImage } from "../utils/compress-image";
 import type { UserProfile, UserProfileCreate } from "../models/user.model";
 
 export type { UserProfile };
@@ -34,8 +35,9 @@ export const uploadProfilePhoto = async (
   uid: string,
   file: File,
 ): Promise<string> => {
+  const compressed = await compressImage(file);
   const storageRef = ref(storage, `users/${uid}/avatar`);
-  await uploadBytes(storageRef, file);
+  await uploadBytes(storageRef, compressed);
   return await getDownloadURL(storageRef);
 };
 
