@@ -249,7 +249,7 @@ const NotificationsPage = () => {
           </div>
         )}
         {!isAdminOrOrg && newEventNotifications.length === 0 && (
-          <EmptyState title={t("empty")} variant="light" />
+          <EmptyState title={t("empty")} variant="light" expand />
         )}
         {(isAdminOrOrg || newEventNotifications.length > 0) && sections.map(section => (
           <section key={section.id} className="notifications-page__section">
