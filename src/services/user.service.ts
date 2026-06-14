@@ -4,6 +4,7 @@ import {
   setDoc,
   updateDoc,
   deleteField,
+  onSnapshot,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../plugins/firebase";
@@ -11,6 +12,15 @@ import { compressImage } from "../utils/compress-image";
 import type { UserProfile, UserProfileCreate } from "../models/user.model";
 
 export type { UserProfile };
+
+export const listenUserProfile = (
+  uid: string,
+  callback: (profile: UserProfile | null) => void,
+): (() => void) => {
+  return onSnapshot(doc(db, "users", uid), (snap) => {
+    callback(snap.exists() ? (snap.data() as UserProfile) : null);
+  });
+};
 
 export const getUserProfile = async (
   uid: string,

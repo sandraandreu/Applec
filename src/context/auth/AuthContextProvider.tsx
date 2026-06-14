@@ -9,7 +9,7 @@ import { AuthContext } from "./AuthContext";
 import { onAuthStateChanged, type User as FirebaseUser } from "firebase/auth";
 import { auth } from "../../plugins/firebase";
 import { logoutUser } from "../../services/auth.service";
-import { getUserProfile } from "../../services/user.service";
+import { getUserProfile, listenUserProfile } from "../../services/user.service";
 import type { UserProfile, User } from "../../models/user.model";
 import { computePermissions } from "../../models/user.model";
 
@@ -39,28 +39,36 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   useEffect(() => {
     let isMounted = true;
+    let unsubscribeProfile: (() => void) | null = null;
 
-    const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (fbUser) => {
       if (!isMounted) return;
       setIsLoading(true);
       setFirebaseUser(fbUser);
 
-      if (fbUser) {
-        const userProfile = await getUserProfile(fbUser.uid);
-        if (isMounted) setProfile(userProfile);
-      } else {
-        if (isMounted) setProfile(null);
-      }
+      unsubscribeProfile?.();
+      unsubscribeProfile = null;
 
-      if (isMounted) {
-        setIsLoading(false);
-        setIsInitialized(true);
+      if (fbUser) {
+        unsubscribeProfile = listenUserProfile(fbUser.uid, (userProfile) => {
+          if (!isMounted) return;
+          setProfile(userProfile);
+          setIsLoading(false);
+          setIsInitialized(true);
+        });
+      } else {
+        if (isMounted) {
+          setProfile(null);
+          setIsLoading(false);
+          setIsInitialized(true);
+        }
       }
     });
 
     return () => {
       isMounted = false;
-      unsubscribe();
+      unsubscribeProfile?.();
+      unsubscribeAuth();
     };
   }, []);
 
