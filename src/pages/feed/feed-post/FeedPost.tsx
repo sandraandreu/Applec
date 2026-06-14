@@ -18,6 +18,7 @@ const FeedPost = ({ post }: FeedPostProps) => {
           firstName={post.author.firstName}
           lastName={post.author.lastName}
           role={post.author.role}
+          photoUrl={post.author.photoUrl}
           size="md"
         />
         <div className="feed-post__author">

@@ -36,6 +36,7 @@ const FeedDetailPage = () => {
                 firstName={post.author.firstName}
                 lastName={post.author.lastName}
                 role={post.author.role}
+                photoUrl={post.author.photoUrl}
                 size="md"
               />
               <div className="feed-detail__author">
@@ -96,6 +97,7 @@ const FeedDetailPage = () => {
                       firstName={comment.author.firstName}
                       lastName={comment.author.lastName}
                       role={comment.author.role}
+                      photoUrl={comment.author.photoUrl}
                       size="md"
                     />
                     <div className="feed-detail__comment-body">
