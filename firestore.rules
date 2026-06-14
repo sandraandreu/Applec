@@ -113,7 +113,7 @@ service cloud.firestore {
       match /acceptedRequests/{requestId} {
         allow read: if isMemberOfGroup(groupId);
         allow create: if isAdminOfGroup(groupId);
-        allow update: if false;
+        allow update: if isAdminOfGroup(groupId);
         allow delete: if false;
       }
 
