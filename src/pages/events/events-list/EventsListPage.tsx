@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import useLayoutBackground from "../../../hooks/useLayoutBackground";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
-import { getEvents } from "../../../services/event.service";
+import { listenEvents } from "../../../services/event.service";
 import { getMyAttendances } from "../../../services/attendance.service";
 import { clearJoinAcceptedFlag } from "../../../services/user.service";
 import { getEventStatus } from "../../../models/event.model";
@@ -55,9 +55,9 @@ const EventsListPage = () => {
     setHasError(false);
 
     const groupId = profile.groupId;
+    const uid = user.uid;
 
-    (async () => {
-      const eventsData = await getEvents(groupId);
+    const unsubscribe = listenEvents(groupId, async (eventsData) => {
       if (!isMounted) return;
       if (eventsData === null) {
         setHasError(true);
@@ -68,15 +68,18 @@ const EventsListPage = () => {
 
       if (eventsData.length > 0) {
         const eventIds = eventsData.map(event => event.id);
-        const attendancesData = await getMyAttendances(groupId, user.uid, eventIds);
+        const attendancesData = await getMyAttendances(groupId, uid, eventIds);
         if (!isMounted) return;
         setAttendances(attendancesData ?? {});
       }
 
       setIsLoading(false);
-    })();
+    });
 
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, [profile?.groupId, user]);
 
   const upcomingEvents = useMemo(

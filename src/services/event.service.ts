@@ -61,6 +61,21 @@ export const getEvents = async (groupId: string): Promise<FallesEvent[] | null> 
   }
 };
 
+export const listenEvents = (
+  groupId: string,
+  callback: (events: FallesEvent[] | null) => void,
+): (() => void) => {
+  const q = query(
+    collection(db, "groups", groupId, "events"),
+    orderBy("date", "asc"),
+  );
+  return onSnapshot(q, (snap) => {
+    callback(snap.docs.map((d) => toEvent(d.id, d.data())));
+  }, () => {
+    callback(null);
+  });
+};
+
 export const getEventById = async (
   groupId: string,
   eventId: string,
