@@ -38,13 +38,7 @@ const NotificationsPage = () => {
 
   const isAdminOrOrg = !!user?.permissions.canCreateEvents;
 
-  useEffect(() => {
-    const update = () => localStorage.setItem("notificationsLastSeen", Date.now().toString());
-    update();
-    return () => update();
-  }, []);
 
-  const [visitedAt] = useState(() => Number(localStorage.getItem("notificationsLastSeen") ?? 0));
   const [realRequests, setRealRequests] = useState<JoinRequest[]>([]);
   const [acceptedRequests, setAcceptedRequests] = useState<AcceptedRequest[]>([]);
   const [newEventNotifications, setNewEventNotifications] = useState<EventNotif[]>([]);
@@ -67,12 +61,12 @@ const NotificationsPage = () => {
     const uid = user.uid;
     const unsubscribe = listenEventNotifications(profile.groupId, (notifications) => {
       const filtered = notifications
-        .filter(notification => notification.createdBy !== uid && notification.createdAt.getTime() > visitedAt)
+        .filter(n => n.createdBy !== uid)
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
       setNewEventNotifications(filtered);
     });
     return () => unsubscribe();
-  }, [profile?.groupId, user?.uid, visitedAt]);
+  }, [profile?.groupId, user?.uid]);
 
   const removeRequest = (uid: string) =>
     setRealRequests(prev => prev.filter(r => r.uid !== uid));
