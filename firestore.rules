@@ -63,7 +63,10 @@ service cloud.firestore {
       allow create: if isAuthenticated();
 
       // Solo admins pueden modificar el grupo (nombre, código de invitación, miembros)
-      allow update: if isAdminOfGroup(groupId);
+      // Los miembros pueden actualizar solo el array members (para editar su propio nombre/foto)
+      allow update: if isAdminOfGroup(groupId) ||
+        (isMemberOfGroup(groupId) &&
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members']));
 
       // Los grupos nunca se eliminan
       allow delete: if false;
