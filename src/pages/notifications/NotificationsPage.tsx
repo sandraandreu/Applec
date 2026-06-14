@@ -6,6 +6,7 @@ import { listenJoinRequests, approveJoinRequest, rejectJoinRequest, getAcceptedR
 import { listenEventNotifications, type EventNotif } from "../../services/event.service";
 import type { JoinRequest, AcceptedRequest } from "../../models/user.model";
 import BackButton from "../../ui-kit/button/icon-buttons/back-button/BackButton";
+import EmptyState from "../../ui-kit/empty-state/EmptyState";
 import NotificationItem from "./notification-item/NotificationItem";
 import JoinRequestItem from "./join-request-item/JoinRequestItem";
 import Button from "../../ui-kit/button/Button";
@@ -247,7 +248,10 @@ const NotificationsPage = () => {
             />
           </div>
         )}
-        {sections.map(section => (
+        {!isAdminOrOrg && newEventNotifications.length === 0 && (
+          <EmptyState title={t("empty")} variant="light" />
+        )}
+        {(isAdminOrOrg || newEventNotifications.length > 0) && sections.map(section => (
           <section key={section.id} className="notifications-page__section">
             <div className="notifications-page__section-header">
               {section.hasDot && <span className="notifications-page__section-dot" aria-hidden="true" />}
@@ -308,7 +312,7 @@ const NotificationsPage = () => {
                   />
                 </li>
               ))}
-              {section.items.map(item => (
+              {isAdminOrOrg && section.items.map(item => (
                 <li key={item.id}>
                   {item.variant === "joinRequest" ? (
                     <JoinRequestItem
