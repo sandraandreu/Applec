@@ -118,7 +118,7 @@ const CreateEventStep3Page = forwardRef<StepHandle, Props>(({
         <div className="create-events-step3__summary">
           <p className="create-events-step3__summary-name">{step1Data.eventName}</p>
           {step1Data.eventType === "special" && (
-            <span className="create-events-step3__type-chip">
+            <span className="create-events-step3__type-chip create-events-step3__type-chip--special">
               {t("create.type.special")}
             </span>
           )}

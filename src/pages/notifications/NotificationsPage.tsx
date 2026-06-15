@@ -265,7 +265,7 @@ const NotificationsPage = () => {
                     iconBg="blue"
                     title={t("newEvent.title")}
                     message={notification.title}
-                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}` }}
+                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}`, state: { backTo: "/events" } }}
                   />
                 </li>
               ))}
@@ -276,7 +276,7 @@ const NotificationsPage = () => {
                     iconBg="blue"
                     title={t("newEvent.title")}
                     message={notification.title}
-                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}` }}
+                    cta={{ label: t("newEvent.cta"), to: `/events/${notification.eventId}`, state: { backTo: "/events" } }}
                   />
                 </li>
               ))}

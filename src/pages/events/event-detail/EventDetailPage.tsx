@@ -23,9 +23,9 @@ const EventDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const openVoteSheetOnLoad = useRef(
-    !!(location.state as { openVoteSheet?: boolean } | null)?.openVoteSheet
-  );
+  const locationState = location.state as { openVoteSheet?: boolean; backTo?: string } | null;
+  const openVoteSheetOnLoad = useRef(!!locationState?.openVoteSheet);
+  const backTo = locationState?.backTo;
   const { t, i18n } = useTranslation("events");
   const { profile, user } = useAuthContext();
   const { group } = useGroupContext();
@@ -40,8 +40,10 @@ const EventDetailPage = () => {
   const [showVoteSheet, setShowVoteSheet] = useState(false);
   const [voteError, setVoteError] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
+  const handleBack = () => backTo ? navigate(backTo) : navigate(-1);
+
   const swipeHandlers = useSwipeable({
-    onSwipedRight: () => navigate(-1),
+    onSwipedRight: handleBack,
     trackMouse: false,
     preventScrollOnSwipe: true,
     delta: 60,
@@ -208,6 +210,7 @@ const EventDetailPage = () => {
         formattedDate={formattedDate}
         deadline={formattedDeadline}
         onDeleteRequest={() => setShowDeleteAlert(true)}
+        onBack={handleBack}
       />
 
       <div className="event-detail-page__content">
