@@ -13,6 +13,8 @@ import Input from "../../ui-kit/input/Input";
 import Search from "../../ui-kit/search/Search";
 import Stepper from "../../ui-kit/stepper/Stepper";
 import Toggle from "../../ui-kit/toggle/Toggle";
+import ToggleRow from "../../ui-kit/toggle-row/ToggleRow";
+import AttendanceIndicator from "../../ui-kit/attendance-indicator/AttendanceIndicator";
 import Modal from "../../components/modal/Modal";
 import LanguageSelector from "../../components/language-selector/LanguageSelector";
 import Loading from "../../components/loading/Loading";
@@ -496,6 +498,10 @@ const StyleGuide = () => {
               />
             </div>
             <div className="style-guide__item">
+              <span className="style-guide__label">pending</span>
+              <Button text="¿Vas?" variant="pending" className="button--compact" />
+            </div>
+            <div className="style-guide__item">
               <span className="style-guide__label">disabled</span>
               <Button text="Acción no disponible" disabled />
             </div>
@@ -625,6 +631,24 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
+          <h3 className="style-guide__component-name">AttendanceIndicator</h3>
+          <div className="style-guide__stack">
+            <div className="style-guide__item">
+              <span className="style-guide__label">going</span>
+              <AttendanceIndicator attendance="going" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">not-going</span>
+              <AttendanceIndicator attendance="not-going" />
+            </div>
+            <div className="style-guide__item">
+              <span className="style-guide__label">pending</span>
+              <AttendanceIndicator attendance="pending" />
+            </div>
+          </div>
+        </div>
+
+        <div className="style-guide__component">
           <h3 className="style-guide__component-name">Chip</h3>
           <div className="style-guide__row">
             <Chip role="admin" variant="short" />
@@ -697,6 +721,23 @@ const StyleGuide = () => {
         </div>
 
         <div className="style-guide__component">
+          <h3 className="style-guide__component-name">ToggleRow</h3>
+          <div className="style-guide__stack">
+            <ToggleRow
+              label="Requiere confirmación"
+              hint="Los miembros deberán confirmar si van o no"
+              checked={false}
+              onChange={() => undefined}
+            />
+            <ToggleRow
+              label="Enviar recordatorio"
+              checked={true}
+              onChange={() => undefined}
+            />
+          </div>
+        </div>
+
+        <div className="style-guide__component">
           <h3 className="style-guide__component-name">EyeToggleIcon</h3>
           <div className="style-guide__row style-guide__row--centered">
             <EyeToggleIcon
@@ -713,26 +754,48 @@ const StyleGuide = () => {
             {(
               [
                 "arrow-left",
+                "arrow-right",
+                "chevron-left",
+                "chevron-right",
+                "chevron-up",
+                "chevron-down",
+                "chevron-left-circle",
+                "chevron-right-circle",
                 "eye-on",
                 "eye-off",
                 "search",
                 "error-circle",
                 "check",
+                "check-bold",
+                "x-mark",
+                "x-square",
+                "plus",
+                "trash",
                 "edit",
                 "camera",
+                "lock",
+                "link",
                 "globe",
                 "share",
                 "calendar",
-                "plus",
+                "calendar-plus",
+                "clock",
+                "clock-simple",
                 "bell",
                 "location",
+                "info-circle",
+                "menu-dots",
                 "users",
+                "person-add",
                 "profile",
                 "feed",
                 "ticket",
-                "chevron-right",
-                "chevron-down",
-                "menu-dots",
+                "chat-dots",
+                "heart",
+                "heart-filled",
+                "settings",
+                "logout",
+                "asterisk",
               ] as IconName[]
             ).map((name) => (
               <div key={name} className="style-guide__icon-item">
@@ -847,16 +910,8 @@ const StyleGuide = () => {
         <div className="style-guide__component">
           <h3 className="style-guide__component-name">EventCard</h3>
           <div className="style-guide__stack">
-            <span className="style-guide__label">Admin — botón editar</span>
-            <EventCard event={mockEventBase} />
-
             <span className="style-guide__label">
-              Organizador — evento de otro (sin editar)
-            </span>
-            <EventCard event={mockEventBase} />
-
-            <span className="style-guide__label">
-              Miembro — sin respuesta (punto naranja)
+              Pendiente — botón ¿Vas?
             </span>
             <EventCard
               event={mockEventBase}

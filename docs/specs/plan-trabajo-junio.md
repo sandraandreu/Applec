@@ -84,6 +84,7 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 - Lógica completa de votación conectada a Firestore: guardar respuesta, cargar voto previo al abrir el sheet, tarjeta resumen post-voto, bloqueo por `confirmationDeadline`
 - Filtros de eventos unificados para todos los roles (Activos · Plazo cerrado · Finalizados · Todos); indicador de asistencia visible para todos los roles en la lista
 - Eliminado permiso `canSeeDetailedFilters` (ya no necesario)
+- UX main flows (rama `feature/ux-main-flows`, 2026-05-29 → 2026-06-02): mejoras en flujo de asistencia (AttendanceIndicator con texto, botón ¿Vas?, filtros de asistentes), flujo de creación de evento (paso 3 restructurado en secciones, validación hora de fin, toggle especial, error de fecha visible), copy revisado en auth/groups/members, Feed integrado, `--padding-side` token compartido, `PillSelector` eliminado de ui-kit por falta de uso
 
 ---
 
@@ -100,7 +101,7 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 - ✅ **T03** · Notificaciones `/notifications` — HTML + SCSS con datos hardcodeados 🟢
 - ✅ **T04** · Pantalla de acciones de miembro en `/members` — HTML + SCSS 🟢
 - ✅ **T05** · Confirmación de asistencia de vinculados + pantalla añadir vinculados — HTML + SCSS 🟢
-- ⬜ **T06** · Feed `/feed` — HTML + SCSS con posts hardcodeados 🟡
+- ✅ **T06** · Feed `/feed` — HTML + SCSS con posts hardcodeados 🟡
 - ⬜ **T07** · Inicio calendario `/calendar` — instalar FullCalendar, estructura y SCSS 🔴
 
 ---
@@ -140,7 +141,7 @@ Esta forma de trabajar es equivalente a un pair programming donde Sandra es quie
 
 ## Semana 4 — 3-9 junio · Cierre técnico y Capacitor
 
-- ✅ **T19** · ~~Perfil funcional~~ ✅ completado en semana 3
+- ✅ **T40** · UX main flows — mejoras de usabilidad en flujo de asistencia, creación de evento y copy (ver rama `feature/ux-main-flows`) 🟡
 - ⬜ **T20** · Verificación i18n completo (todas las claves en `es` y `ca`) 🟢
 - ⬜ **T21** · Estados vacíos y casos límite en todas las pantallas 🟡
 - ⬜ **T22** · Corrección de bugs encontrados 🟡
