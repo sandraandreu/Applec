@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import JoinRequestsPage from "../JoinRequestsPage";
-import { getJoinRequests, approveJoinRequest, rejectJoinRequest } from "../../../../services/group.service";
+import { listenJoinRequests, approveJoinRequest, rejectJoinRequest } from "../../../../services/group.service";
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
 import type { UserProfile } from "../../../../models/user.model";
@@ -17,7 +17,7 @@ vi.mock("../../../../context/auth/AuthContext", () => ({ useAuthContext: vi.fn()
 vi.mock("../../../../context/group/GroupContext", () => ({ useGroupContext: vi.fn() }));
 
 vi.mock("../../../../services/group.service", () => ({
-  getJoinRequests: vi.fn(),
+  listenJoinRequests: vi.fn(),
   approveJoinRequest: vi.fn(),
   rejectJoinRequest: vi.fn(),
 }));
@@ -84,15 +84,16 @@ describe("JoinRequestsPage", () => {
   });
 
   it("muestra loading mientras carga", () => {
-    vi.mocked(getJoinRequests).mockReturnValue(new Promise(vi.fn()));
+    vi.mocked(listenJoinRequests).mockReturnValue(vi.fn());
     renderPage();
     expect(screen.getByTestId("loading")).toBeTruthy();
   });
 
   it("muestra solicitudes reales de Firestore", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([
-      { uid: "u1", firstName: "Anna", lastName: "Garriga", email: "a@a.com", requestedAt: new Date() },
-    ]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([{ uid: "u1", firstName: "Anna", lastName: "Garriga", email: "a@a.com", requestedAt: new Date() }]);
+      return vi.fn();
+    });
     renderPage();
     await waitFor(() => {
       expect(screen.getByText("Anna Garriga")).toBeTruthy();
@@ -100,7 +101,10 @@ describe("JoinRequestsPage", () => {
   });
 
   it("siempre muestra las solicitudes demo", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([]);
+      return vi.fn();
+    });
     renderPage();
     await waitFor(() => {
       expect(screen.getByText("requestsPage.pere")).toBeTruthy();
@@ -109,9 +113,10 @@ describe("JoinRequestsPage", () => {
   });
 
   it("elimina una solicitud real al aprobar", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([
-      { uid: "u1", firstName: "Anna", lastName: "Garriga", email: "a@a.com", requestedAt: new Date() },
-    ]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([{ uid: "u1", firstName: "Anna", lastName: "Garriga", email: "a@a.com", requestedAt: new Date() }]);
+      return vi.fn();
+    });
     vi.mocked(approveJoinRequest).mockResolvedValue(undefined);
     renderPage();
 
@@ -129,9 +134,10 @@ describe("JoinRequestsPage", () => {
   });
 
   it("elimina una solicitud real al rechazar", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([
-      { uid: "u2", firstName: "Bernat", lastName: "Costa", email: "b@b.com", requestedAt: new Date() },
-    ]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([{ uid: "u2", firstName: "Bernat", lastName: "Costa", email: "b@b.com", requestedAt: new Date() }]);
+      return vi.fn();
+    });
     vi.mocked(rejectJoinRequest).mockResolvedValue(undefined);
     renderPage();
 
@@ -149,7 +155,10 @@ describe("JoinRequestsPage", () => {
   });
 
   it("descarta solicitud demo al aceptarla", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([]);
+      return vi.fn();
+    });
     renderPage();
 
     await waitFor(() => screen.getByText("requestsPage.pere"));
@@ -166,7 +175,10 @@ describe("JoinRequestsPage", () => {
   });
 
   it("muestra empty state cuando no quedan solicitudes", async () => {
-    vi.mocked(getJoinRequests).mockResolvedValue([]);
+    vi.mocked(listenJoinRequests).mockImplementation((_groupId, callback) => {
+      callback([]);
+      return vi.fn();
+    });
     renderPage();
 
     await waitFor(() => screen.getAllByTestId("request-item"));

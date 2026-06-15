@@ -8,6 +8,7 @@ export interface RegisterState {
 
 export type RegisterAction =
   | { type: "REGISTER_START" }
+  | { type: "REGISTER_ERROR" }
   | { type: "ERROR_CONNECTION"; message: string }
   | { type: "ERROR_EMAIL_TAKEN" }
   | { type: "DISMISS_ERROR" }
@@ -26,6 +27,8 @@ export const registerReducer = (state: RegisterState, action: RegisterAction): R
   switch (action.type) {
     case "REGISTER_START":
       return { ...state, isLoading: true, errorConnection: "" };
+    case "REGISTER_ERROR":
+      return { ...state, isLoading: false };
     case "ERROR_CONNECTION":
       return { ...state, isLoading: false, errorConnection: action.message };
     case "ERROR_EMAIL_TAKEN":

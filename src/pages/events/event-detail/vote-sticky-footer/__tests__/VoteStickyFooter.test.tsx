@@ -29,6 +29,7 @@ const defaultProps = {
   visibleLinkedMembers: [] as { id: string; firstName: string }[],
   myLinkedResponses: {} as Record<string, "going" | "not-going">,
   voteError: null as string | null,
+  isVoting: false,
   onVote: vi.fn(),
   onCompanionsClick: vi.fn(),
   onAddLinked: vi.fn(),
@@ -143,8 +144,8 @@ describe("VoteStickyFooter", () => {
   describe("estado plazo-cerrado", () => {
     it("los botones de voto están desactivados", () => {
       renderFooter({ eventStatus: "plazo-cerrado" });
-      const buttons = screen.getAllByRole("button");
-      buttons.forEach(btn => expect(btn).toBeDisabled());
+      expect(screen.getByRole("button", { name: "vote.yes" })).toBeDisabled();
+      expect(screen.getByRole("button", { name: "vote.no" })).toBeDisabled();
     });
 
     it("muestra el mensaje de plazo cerrado sin respuesta", () => {

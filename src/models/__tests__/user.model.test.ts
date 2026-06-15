@@ -12,6 +12,7 @@ describe("computePermissions", () => {
       canInviteMembers: true,
       canManageGroup: true,
       canShareAccess: true,
+      canViewMemberDetail: true,
     });
   });
 
@@ -25,6 +26,7 @@ describe("computePermissions", () => {
       canInviteMembers: true,
       canManageGroup: false,
       canShareAccess: true,
+      canViewMemberDetail: true,
     });
   });
 
@@ -38,6 +40,7 @@ describe("computePermissions", () => {
       canInviteMembers: false,
       canManageGroup: false,
       canShareAccess: false,
+      canViewMemberDetail: false,
     });
   });
 
@@ -51,6 +54,7 @@ describe("computePermissions", () => {
       canInviteMembers: false,
       canManageGroup: false,
       canShareAccess: false,
+      canViewMemberDetail: false,
     });
   });
 });
