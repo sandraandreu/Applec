@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../plugins/firebase";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
+import { useNotificationsContext } from "../../context/notifications/NotificationsContext";
 import Icon from "../../ui-kit/icons/icon/Icon";
 import "./layout.scss";
 
@@ -12,40 +10,7 @@ const TopBar = () => {
   const { t } = useTranslation("common");
   const { user, profile } = useAuthContext();
   const { group } = useGroupContext();
-
-  const [hasJoinRequests, setHasJoinRequests] = useState(false);
-  const [hasNewEvents, setHasNewEvents] = useState(false);
-
-  useEffect(() => {
-    if (!user?.permissions.canManageMembers || !profile?.groupId) return;
-    const unsubscribe = onSnapshot(
-      collection(db, "groups", profile.groupId, "joinRequests"),
-      (snap) => {
-        const lastSeen = Number(localStorage.getItem("notificationsLastSeen") ?? 0);
-        const hasNew = snap.docs.some(d => (d.data().requestedAt?.toMillis?.() ?? Infinity) > lastSeen);
-        setHasJoinRequests(hasNew);
-      },
-    );
-    return () => unsubscribe();
-  }, [user?.permissions.canManageMembers, profile?.groupId]);
-
-  useEffect(() => {
-    if (!profile?.groupId || !user?.uid) return;
-    const uid = user.uid;
-    const unsubscribe = onSnapshot(
-      collection(db, "groups", profile.groupId, "eventNotifications"),
-      (snap) => {
-        const lastSeen = Number(localStorage.getItem("notificationsLastSeen") ?? 0);
-        const hasNew = snap.docs.some(d => {
-          const createdAt = d.data().createdAt?.toMillis?.() ?? 0;
-          const createdBy = d.data().createdBy as string;
-          return createdAt > lastSeen && createdBy !== uid;
-        });
-        setHasNewEvents(hasNew);
-      },
-    );
-    return () => unsubscribe();
-  }, [profile?.groupId, user?.uid]);
+  const { hasUnread } = useNotificationsContext();
 
   if (!profile || !group) return null;
 
@@ -82,7 +47,7 @@ const TopBar = () => {
         >
           <span className="top-bar__bell">
             <Icon name="bell" size={32} />
-            {(hasJoinRequests || hasNewEvents) && <span className="top-bar__bell-badge" aria-hidden="true" />}
+            {hasUnread && <span className="top-bar__bell-badge" aria-hidden="true" />}
           </span>
         </Link>
       </div>

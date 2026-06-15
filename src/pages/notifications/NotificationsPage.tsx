@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../context/auth/AuthContext";
 import { useGroupContext } from "../../context/group/GroupContext";
+import { useNotificationsContext } from "../../context/notifications/NotificationsContext";
 import { listenJoinRequests, approveJoinRequest, rejectJoinRequest, getAcceptedRequests } from "../../services/group.service";
 import { listenEventNotifications, type EventNotif } from "../../services/event.service";
 import type { JoinRequest, AcceptedRequest } from "../../models/user.model";
@@ -35,8 +36,13 @@ const NotificationsPage = () => {
   const { t } = useTranslation("notifications");
   const { user, profile } = useAuthContext();
   const { group } = useGroupContext();
+  const { markAsRead } = useNotificationsContext();
 
   const isAdminOrOrg = !!user?.permissions.canCreateEvents;
+
+  useEffect(() => {
+    markAsRead();
+  }, [markAsRead]);
 
 
   const [realRequests, setRealRequests] = useState<JoinRequest[]>([]);
