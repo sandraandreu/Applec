@@ -11,7 +11,7 @@ interface NotificationItemProps {
   iconBg: NotificationIconBg;
   title: string;
   message: string;
-  cta?: { label: string; to: string };
+  cta?: { label: string; to: string; state?: Record<string, unknown> };
 }
 
 const NotificationItem = ({ iconName, iconBg, title, message, cta }: NotificationItemProps) => (
@@ -23,7 +23,7 @@ const NotificationItem = ({ iconName, iconBg, title, message, cta }: Notificatio
       <span className="notification-item__title">{title}</span>
       <p className="notification-item__message">{message}</p>
       {cta && (
-        <Link to={cta.to} className="notification-item__cta">
+        <Link to={cta.to} state={cta.state} className="notification-item__cta">
           {cta.label}
         </Link>
       )}

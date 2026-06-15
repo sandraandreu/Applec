@@ -13,9 +13,10 @@ interface Props {
   formattedDate: string;
   deadline?: string;
   onDeleteRequest: () => void;
+  onBack: () => void;
 }
 
-const EventDetailHeader = ({ event, canEdit, formattedDate, deadline, onDeleteRequest }: Props) => {
+const EventDetailHeader = ({ event, canEdit, formattedDate, deadline, onDeleteRequest, onBack }: Props) => {
   const navigate = useNavigate();
   const { t } = useTranslation("events");
   const [showMenu, setShowMenu] = useState(false);
@@ -25,7 +26,7 @@ const EventDetailHeader = ({ event, canEdit, formattedDate, deadline, onDeleteRe
   return (
     <div className="event-detail-page__gradient-zone">
       <div className="event-detail-page__top-bar">
-        <BackButton />
+        <BackButton onClick={onBack} />
         {canEdit && (
           <div className="event-detail-page__menu-wrapper">
             <button
