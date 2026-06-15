@@ -19,47 +19,46 @@ export const GroupContextProvider = ({
   const [group, setGroup] = useState<GroupData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const isMountedRef = useRef(true);
+  const profileRef = useRef(profile);
+  useEffect(() => { profileRef.current = profile; });
 
   useEffect(() => {
     isMountedRef.current = true;
     return () => { isMountedRef.current = false; };
   }, []);
 
-  const loadGroup = useCallback(async () => {
-    setIsLoading(true);
-    if (!user || !profile) {
-      setIsLoading(false);
-      return;
-    }
+  const userId = user?.uid ?? null;
 
-    if (profile.groupId) {
-      const [groupData, linkedMembers] = await Promise.all([
-        getGroupById(profile.groupId),
-        getGroupLinkedMembers(profile.groupId),
-      ]);
-      if (!isMountedRef.current) return;
-      if (groupData) {
-        setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
-        const memberInGroup = groupData.members.find(member => member.uid === user.uid);
-        if (memberInGroup && memberInGroup.role !== profile.role) {
-          await updateUserFields(user.uid, { role: memberInGroup.role }).catch(() => undefined);
-        }
+  const loadGroup = useCallback(async (groupId: string) => {
+    const currentProfile = profileRef.current;
+    setIsLoading(true);
+
+    const [groupData, linkedMembers] = await Promise.all([
+      getGroupById(groupId),
+      getGroupLinkedMembers(groupId),
+    ]);
+    if (!isMountedRef.current) return;
+    if (groupData) {
+      setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
+      const memberInGroup = groupData.members.find(member => member.uid === userId);
+      if (memberInGroup && memberInGroup.role !== currentProfile?.role) {
+        await updateUserFields(userId, { role: memberInGroup.role }).catch(() => undefined);
       }
     }
     if (isMountedRef.current) setIsLoading(false);
-  }, [user, profile]);
+  }, [userId]);
 
   useEffect(() => {
     if (authLoading) return;
 
-    if (user === null) {
+    if (!userId || !profile?.groupId) {
       setGroup(null);
       setIsLoading(false);
       return;
     }
 
-    loadGroup();
-  }, [user, authLoading, loadGroup]);
+    loadGroup(profile.groupId);
+  }, [userId, authLoading, loadGroup, profile?.groupId]);
 
   const contextValue = useMemo(
     () => ({ group, isLoading, refreshGroup: loadGroup }),

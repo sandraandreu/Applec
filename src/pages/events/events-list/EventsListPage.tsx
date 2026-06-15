@@ -37,6 +37,12 @@ const EventsListPage = () => {
   useLayoutBackground(profile?.role);
 
   useEffect(() => {
+    if (profile?.joinAccepted === true) {
+      setShowJoinAccepted(true);
+    }
+  }, [profile?.joinAccepted]);
+
+  useEffect(() => {
     if (showEventUpdated || showEventCreated) {
       navigate(location.pathname, { replace: true, state: null });
     }
