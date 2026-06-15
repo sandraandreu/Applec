@@ -8,6 +8,8 @@ export const NotificationsContextProvider = ({ children }: { children: ReactNode
   const { user, profile } = useAuthContext();
 
   const lastSeenRef = useRef(Number(localStorage.getItem("notificationsLastSeen") ?? 0));
+  const latestEventTsRef = useRef(0);
+  const latestRequestTsRef = useRef(0);
   const [hasJoinRequests, setHasJoinRequests] = useState(false);
   const [hasNewEvents, setHasNewEvents] = useState(false);
 
@@ -16,9 +18,13 @@ export const NotificationsContextProvider = ({ children }: { children: ReactNode
     const unsubscribe = onSnapshot(
       collection(db, "groups", profile.groupId, "joinRequests"),
       (snap) => {
-        const hasNew = snap.docs.some(
-          (d) => (d.data().requestedAt?.toMillis?.() ?? Infinity) > lastSeenRef.current,
-        );
+        let maxTs = 0;
+        const hasNew = snap.docs.some((d) => {
+          const ts = d.data().requestedAt?.toMillis?.() ?? 0;
+          if (ts > maxTs) maxTs = ts;
+          return ts > lastSeenRef.current;
+        });
+        latestRequestTsRef.current = maxTs;
         setHasJoinRequests(hasNew);
       },
     );
@@ -31,11 +37,14 @@ export const NotificationsContextProvider = ({ children }: { children: ReactNode
     const unsubscribe = onSnapshot(
       collection(db, "groups", profile.groupId, "eventNotifications"),
       (snap) => {
+        let maxTs = 0;
         const hasNew = snap.docs.some((d) => {
           const createdAt = d.data().createdAt?.toMillis?.() ?? 0;
           const createdBy = d.data().createdBy as string;
+          if (createdAt > maxTs) maxTs = createdAt;
           return createdAt > lastSeenRef.current && createdBy !== uid;
         });
+        latestEventTsRef.current = maxTs;
         setHasNewEvents(hasNew);
       },
     );
@@ -43,8 +52,9 @@ export const NotificationsContextProvider = ({ children }: { children: ReactNode
   }, [profile?.groupId, user?.uid]);
 
   const markAsRead = useCallback(() => {
-    lastSeenRef.current = Date.now();
-    localStorage.setItem("notificationsLastSeen", String(lastSeenRef.current));
+    const lastSeen = Math.max(Date.now(), latestEventTsRef.current, latestRequestTsRef.current);
+    lastSeenRef.current = lastSeen;
+    localStorage.setItem("notificationsLastSeen", String(lastSeen));
     setHasJoinRequests(false);
     setHasNewEvents(false);
   }, []);
