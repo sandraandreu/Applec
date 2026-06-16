@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../context/group/GroupContext";
 import { getEventById, deleteEvent } from "../../../services/event.service";
-import { getEventAttendances, saveAttendance } from "../../../services/attendance.service";
+import { subscribeToEventAttendances, saveAttendance } from "../../../services/attendance.service";
 import { getEventStatus } from "../../../models/event.model";
 import VoteSheet from "./vote-sheet/VoteSheet";
 import VoteStickyFooter from "./vote-sticky-footer/VoteStickyFooter";
@@ -58,33 +58,50 @@ const EventDetailPage = () => {
       navigate("/events", { replace: true });
       return;
     }
+
     let isMounted = true;
+    const initialLoaded = { event: false, attendance: false };
     setIsLoading(true);
     setAttendance({ members: {}, linked: {} });
 
-    Promise.all([
-      getEventById(profile.groupId, id),
-      getEventAttendances(profile.groupId, id),
-    ]).then(([eventData, attendancesData]) => {
+    const checkAllLoaded = () => {
+      if (initialLoaded.event && initialLoaded.attendance && isMounted) setIsLoading(false);
+    };
+
+    getEventById(profile.groupId, id).then(eventData => {
       if (!isMounted) return;
-      setIsLoading(false);
       if (!eventData) {
         navigate("/events", { replace: true });
         return;
       }
       setEvent(eventData);
-      setAttendance({
-        members: attendancesData?.memberResponses ?? {},
-        linked: attendancesData?.linkedResponses ?? {},
-      });
       if (openVoteSheetOnLoad.current) {
         openVoteSheetOnLoad.current = false;
         setShowVoteSheet(true);
       }
+      initialLoaded.event = true;
+      checkAllLoaded();
     });
+
+    const unsubscribe = subscribeToEventAttendances(
+      profile.groupId,
+      id,
+      (attendancesData) => {
+        if (!isMounted) return;
+        setAttendance({
+          members: attendancesData.memberResponses,
+          linked: attendancesData.linkedResponses,
+        });
+        if (!initialLoaded.attendance) {
+          initialLoaded.attendance = true;
+          checkAllLoaded();
+        }
+      }
+    );
 
     return () => {
       isMounted = false;
+      unsubscribe();
     };
   }, [profile?.groupId, id, navigate]);
 
@@ -165,15 +182,6 @@ const EventDetailPage = () => {
         response: newResponse,
         linkedResponses: myLinkedResponses,
       });
-      setAttendance(prev => {
-        const members = { ...prev.members };
-        if (newResponse) {
-          members[user.uid] = newResponse;
-        } else {
-          delete members[user.uid];
-        }
-        return { ...prev, members };
-      });
       setVoteError(null);
     } catch {
       setVoteError(t("attendance.error"));
@@ -189,10 +197,6 @@ const EventDetailPage = () => {
         response: myResponse,
         linkedResponses: linkedVotes,
       });
-      setAttendance(prev => ({
-        ...prev,
-        linked: { ...prev.linked, [user.uid]: linkedVotes },
-      }));
       setVoteError(null);
     } catch {
       setVoteError(t("attendance.error"));

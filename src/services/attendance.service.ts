@@ -1,4 +1,4 @@
-import { collection, getDocs, setDoc, doc, getDoc, deleteField, serverTimestamp } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, setDoc, doc, getDoc, deleteField, serverTimestamp } from "firebase/firestore";
 import { db } from "../plugins/firebase";
 import type { EventAttendanceData } from "../models/attendance.model";
 
@@ -35,6 +35,33 @@ export const getEventAttendances = async (
   } catch {
     return null;
   }
+};
+
+export const subscribeToEventAttendances = (
+  groupId: string,
+  eventId: string,
+  onData: (data: EventAttendanceData) => void,
+): (() => void) => {
+  const ref = collection(db, "groups", groupId, "events", eventId, "attendances");
+  return onSnapshot(ref, (snap) => {
+    const memberResponses: Record<string, "going" | "not-going"> = {};
+    const linkedResponses: Record<string, Record<string, "going" | "not-going">> = {};
+    snap.docs.forEach(d => {
+      const data = d.data();
+      const response = normalizeResponse(data.response);
+      if (response) memberResponses[d.id] = response;
+      if (data.linkedResponses) {
+        linkedResponses[d.id] = Object.fromEntries(
+          Object.entries(data.linkedResponses as Record<string, string>)
+            .flatMap(([id, r]) => {
+              const normalized = normalizeResponse(r);
+              return normalized ? [[id, normalized]] : [];
+            })
+        );
+      }
+    });
+    onData({ memberResponses, linkedResponses });
+  });
 };
 
 export const getMyAttendances = async (

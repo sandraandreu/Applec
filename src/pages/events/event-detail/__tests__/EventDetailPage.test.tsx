@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import EventDetailPage from "../EventDetailPage";
 import { getEventById } from "../../../../services/event.service";
-import { getEventAttendances, saveAttendance } from "../../../../services/attendance.service";
+import { subscribeToEventAttendances, saveAttendance } from "../../../../services/attendance.service";
 import { useAuthContext } from "../../../../context/auth/AuthContext";
 import { useGroupContext } from "../../../../context/group/GroupContext";
 import type { FallesEvent } from "../../../../models/event.model";
@@ -31,7 +31,7 @@ vi.mock("../../../../services/event.service", () => ({
 }));
 
 vi.mock("../../../../services/attendance.service", () => ({
-  getEventAttendances: vi.fn(),
+  subscribeToEventAttendances: vi.fn(),
   saveAttendance: vi.fn(),
 }));
 
@@ -124,7 +124,10 @@ const setupMocks = (locationState: object | null = null) => {
 const setup = (eventOverrides: Partial<FallesEvent> = {}, locationState: object | null = null) => {
   setupMocks(locationState);
   vi.mocked(getEventById).mockResolvedValue({ ...baseEvent, ...eventOverrides });
-  vi.mocked(getEventAttendances).mockResolvedValue({ memberResponses: {}, linkedResponses: {} });
+  vi.mocked(subscribeToEventAttendances).mockImplementation((_g, _e, onData) => {
+    onData({ memberResponses: {}, linkedResponses: {} });
+    return vi.fn();
+  });
   vi.mocked(saveAttendance).mockResolvedValue(undefined);
   return render(<EventDetailPage />);
 };
@@ -135,7 +138,7 @@ describe("EventDetailPage", () => {
   it("muestra el spinner mientras cargan los datos", () => {
     setupMocks();
     vi.mocked(getEventById).mockReturnValue(new Promise(vi.fn()));
-    vi.mocked(getEventAttendances).mockReturnValue(new Promise(vi.fn()));
+    vi.mocked(subscribeToEventAttendances).mockReturnValue(vi.fn());
     render(<EventDetailPage />);
     expect(screen.getByTestId("loading-spinner")).toBeInTheDocument();
   });
