@@ -41,7 +41,7 @@ export const GroupContextProvider = ({
     if (groupData) {
       setGroup({ ...groupData, linkedMembers: linkedMembers ?? [] });
       const memberInGroup = groupData.members.find(member => member.uid === userId);
-      if (memberInGroup && memberInGroup.role !== currentProfile?.role) {
+      if (userId && memberInGroup && memberInGroup.role !== currentProfile?.role) {
         await updateUserFields(userId, { role: memberInGroup.role }).catch(() => undefined);
       }
     }
@@ -60,9 +60,13 @@ export const GroupContextProvider = ({
     loadGroup(profile.groupId);
   }, [userId, authLoading, loadGroup, profile?.groupId]);
 
+  const refreshGroup = useCallback(async () => {
+    if (profile?.groupId) await loadGroup(profile.groupId);
+  }, [loadGroup, profile?.groupId]);
+
   const contextValue = useMemo(
-    () => ({ group, isLoading, refreshGroup: loadGroup }),
-    [group, isLoading, loadGroup]
+    () => ({ group, isLoading, refreshGroup }),
+    [group, isLoading, refreshGroup]
   );
 
   return (
